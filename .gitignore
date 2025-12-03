@@ -1,0 +1,32 @@
+# ENV files
+.env
+*.env
+
+# Credentials / private keys
+*.json
+
+# Node
+node_modules/
+npm-debug.log
+
+# Backups
+backups/
+**/backups/
+
+# Logs
+*.log
+logs/
+
+# System scripts / autonomy
+scripts/autonomy/*.json
+scripts/backups/*.json
+scripts/autonomy/*
+scripts/backups/*
+
+# OS crap
+.DS_Store
+Thumbs.db
+
+# Compiled output
+dist/
+build/

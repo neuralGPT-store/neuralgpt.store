@@ -1,0 +1,15 @@
+NeuralGPT.store - Architecture Overview
+---------------------------------------
+Core structure includes:
+- layouts
+- pages
+- assets
+- modules
+- components
+- system
+- security
+- ui
+- i18n (EN/ES)
+
+Server: Node.js (app.cjs)
+Modules: products, cart, checkout
