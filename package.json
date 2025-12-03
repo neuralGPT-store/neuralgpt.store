@@ -1,0 +1,28 @@
+{
+  "name": "neuralgpt.store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pokerprofe/neuralgpt.store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/pokerprofe/neuralgpt.store/issues"
+  },
+  "homepage": "https://github.com/pokerprofe/neuralgpt.store#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
