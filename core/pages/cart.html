@@ -1,58 +1,35 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="es">
 <head>
-    <meta charset='UTF-8'>
-    <title>NeuralGPT.store</title>
-    <link rel='stylesheet' href='/core/assets/css/style.css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart · NeuralGPT.Store</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>body{margin:0;padding:0;background:#000;color:#ddd}</style>
 </head>
 <body>
-    <header class='ng-header'>
-        <div class='logo'>NeuralGPT.store</div>
-        <nav>
-            <a href='/core/pages/home.html'>Home</a>
-            <a href='/core/pages/marketplace.html'>Marketplace</a>
-            <a href='/core/pages/quantum.html'>Quantum Pass</a>
-            <a href='/core/pages/security.html'>Security</a>
-            <a href='/core/pages/legal.html'>Legal</a>
-        </nav>
-    </header>
+  <header><div class="container"><h1 class="site-title">NeuralGPT.Store · Ecosistema Cuántico</h1></div></header>
+  <nav><div class="container"><a href="../pages/home.html">Inicio</a> <a href="../pages/marketplace.html">Marketplace</a></div></nav>
+  <main><div class="container">
+    <section class="page-cart">
+      <header class="page-header"><h1>Your Cart</h1></header>
 
-    <main class='ng-main'>
-        <!DOCTYPE html>
-<html lang='en'><body>
-<div class='navbar'>
-  <div>NeuralGPT.store</div>
-  <div>
-    <a href='/home.html'>Home</a>
-    <a href='/marketplace.html'>Marketplace</a>
-    <a href='/products.html'>Products</a>
-    <a href='/cart.html'>Cart</a>
-    <a href='/checkout.html'>Checkout</a>
-    <a href='/quantum.html'>Quantum</a>
-    <a href='/security.html'>Security</a>
-    <a href='/about.html'>About</a>
-    <a href='/enterprise.html'>Enterprise</a>
-  </div>
-</div>
-<h1>Your Cart</h1>
-<div id='cart-items'></div>
-<h3 id='total'></h3>
-<a href='/checkout.html'>Go to Checkout</a>
-<script src='/modules/cart/cart.js'></script>
-<div class='footer'>
-  © 2025 NeuralGPT.store · Powered by PokerShadow Ink · Architect: Wilfredo Yera Díaz
-</div>
-<script src='/assets/js/ui.js'></script>
-<link rel='stylesheet' href='/assets/css/style.css' />
-</body></html>
+      <section id="cart-content" class="cart-content">
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-summary">
+          <h3 id="total">$0.00</h3>
+          <div class="cart-actions">
+            <a href="/pages/checkout.html" class="btn-primary">Go to Checkout</a>
+            <button id="clear-cart" class="btn-secondary">Clear Cart</button>
+          </div>
+        </div>
+      </section>
 
-
-
-    </main>
-
-    <footer class='ng-footer'>
-        <p> 2025 NeuralGPT.store � Quantum Systems Architecture</p>
-    </footer>
+      <footer class="cart-footer"><small>© 2025 NeuralGPT Store — Powered by PokerShadow Ink — Architect: Wilfredo Yera Díaz</small></footer>
+    </section>
+  </div></main>
+  <script src="/core/modules/cart/cart.js" defer></script>
+  <footer><div class="container">©2025 NeuralGPT.Store · PokerShadow.Ink · All Rights Reserved</div></footer>
 </body>
 </html>
 
