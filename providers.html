@@ -7,10 +7,20 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body class="site-root">
-    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
-      <nav class="main-nav" aria-label="Main navigation"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Marketplace</a></li><li><a href="/providers.html" aria-current="page">Proveedores</a></li><li><a href="/security.html">Seguridad IA</a></li><li><a href="/quantum.html">Quantum Pass</a></li><li><a href="/legal.html">Legal</a></li></ul></nav>
-      <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar"></div>
-    </div></header>
+    <header class="site-header premium-header rgb-border" role="banner">
+      <div class="wrap header-inner">
+        <a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+        <nav class="main-nav" aria-label="Principal">
+          <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/marketplace.html">Marketplace</a></li>
+            <li><a href="/providers.html" aria-current="page">Proveedores</a></li>
+            <li><a href="/security.html">Seguridad IA</a></li>
+          </ul>
+        </nav>
+        <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar" autocomplete="off"><div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias de búsqueda" hidden></div></div>
+      </div>
+    </header>
     <main class="wrap">
       <section class="slide-up">
         <h1 class="section-title">Únete como proveedor</h1>
@@ -37,7 +47,7 @@
 
       <section class="sections">
         <h2 class="section-title">Proveedores destacados</h2>
-        <div id="providers-list" class="grid grid-3"></div>
+        <div id="providers-list" class="market-grid"></div>
       </section>
 
       <section class="sections">
@@ -54,13 +64,7 @@
         </form>
         <div id="prov-msg" class="muted" style="margin-top:12px"></div>
       </section>
-      <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
-
       <!-- providers rendering moved to /assets/js/main.js -->
-      <section class="sections">
-        <h2 class="section-title">Proveedores</h2>
-        <div id="providers-list" class="market-grid"></div>
-      </section>
     </main>
     <script src="/assets/js/main.js"></script>
     <footer class="site-footer">

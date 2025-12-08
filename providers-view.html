@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body class="site-root">
-    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a></div></header>
+    <header class="site-header premium-header rgb-border" role="banner">
+      <div class="wrap header-inner">
+        <a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+        <nav class="main-nav" aria-label="Principal"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Marketplace</a></li><li><a href="/providers.html">Proveedores</a></li></ul></nav>
+        <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar" autocomplete="off"><div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias de búsqueda" hidden></div></div>
+      </div>
+    </header>
     <main class="wrap">
       <h1 class="section-title">Perfil de proveedor</h1>
       <p class="subtle">Página de perfil y formulario de contacto / demo para proveedores.</p>
@@ -52,7 +58,7 @@
       <h3 style="margin-top:18px">Proveedores en la categoría</h3>
       <div id="providers-by-category" class="market-grid"></div>
     </section>
-    <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
+    <footer class="site-footer premium-footer"><div class="wrap">© NeuralGPT.Store — 2025</div></footer>
     <script src="/assets/js/main.js"></script>
     <!-- provider view handlers moved to /assets/js/main.js -->
   </body>

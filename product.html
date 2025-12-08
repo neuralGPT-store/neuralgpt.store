@@ -7,9 +7,22 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body class="site-root">
-    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
-      <div class="search-wrap" style="flex:1;margin-left:18px"><input id="mp-search" class="search-input" placeholder="Buscar productos, proveedores..." /></div>
-    </div></header>
+    <header class="site-header premium-header rgb-border" role="banner">
+      <div class="wrap header-inner" style="align-items:center">
+        <a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+        <nav class="main-nav" aria-label="Principal">
+          <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/marketplace.html">Marketplace</a></li>
+            <li><a href="/providers.html">Proveedores</a></li>
+          </ul>
+        </nav>
+        <div class="search-wrap" style="margin-left:18px">
+          <input id="global-search" class="search-input" placeholder="Buscar productos, proveedores..." aria-label="Buscar" autocomplete="off" />
+          <div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias de búsqueda" hidden></div>
+        </div>
+      </div>
+    </header>
     <main class="wrap">
       <section>
           <div id="p-details"></div>
@@ -17,19 +30,25 @@
       </section>
       <section class="sections slide-up">
         <div class="grid grid-2">
-          <div class="card">
-            <img id="p-image" src="/assets/img/vision-pro.svg" alt="product image" class="card-img" style="max-width:100%;height:auto;margin-bottom:12px">
+          <div class="card" id="p-gallery">
+            <figure><img id="p-image" src="/assets/img/vision-pro.svg" alt="product image" class="card-img"></figure>
             <h1 id="p-title">Producto</h1>
             <div class="product-meta" id="p-price"></div>
             <p class="subtle" id="p-desc">Descripción breve del producto.</p>
             <div style="margin-top:12px">
               <a class="btn btn-primary" id="buy-btn" href="#">Comprar</a>
               <a class="btn" id="demo-btn" href="/providers.html#contact">Solicitar demo</a>
+              <button id="p-fav" class="btn">♡ Favorito</button>
             </div>
           </div>
           <div class="card">
             <h3>Detalles técnicos & Especificaciones</h3>
             <div id="p-details">Cargando detalles...</div>
+            <h4>Descripción extendida</h4>
+            <div id="p-long-desc" class="muted"></div>
+            <h4>Proveedor</h4>
+            <div id="p-vendor" class="muted"></div>
+            <div style="margin-top:8px"><strong id="p-stock"></strong></div>
             <h4>Tags</h4>
             <div id="p-tags" class="muted"></div>
           </div>

@@ -5,50 +5,70 @@
 */
 (function(){
   'use strict'
-  const state = { products: [], categories: [], filtered: [] }
+	const state = { products: [], categories: [], providers: [], filtered: [], categoryObjects: [] }
+	const CACHE_TTL = 1000 * 60 * 60 * 6 // 6 hours
+	const CACHE_KEYS = { catalog: 'ngs:catalog', cats: 'ngs:cats', providers: 'ngs:providers' }
 
   // Helpers
   const fmtPrice = p => (p===0||p===null||p===undefined) ? 'Contact' : (typeof p === 'number' ? `$${p.toLocaleString()}` : p)
   const qs = () => Object.fromEntries(new URLSearchParams(location.search))
   const el = id => document.getElementById(id)
 
-  // Fetch data with graceful fallback to embedded globals
-  async function loadJSON(url, fallback){
-	try{
-	  const r = await fetch(url, {cache:'no-cache'})
-	  if(!r.ok) throw new Error('not found')
-	  return await r.json()
-	}catch(e){
-	  return (typeof fallback !== 'undefined') ? fallback : []
+	// Fetch with simple localStorage cache and TTL
+	async function fetchWithCache(url, cacheKey, fallback){
+		try{
+			const raw = localStorage.getItem(cacheKey)
+			if(raw){
+				const parsed = JSON.parse(raw)
+				if(parsed && parsed.ts && (Date.now() - parsed.ts) < CACHE_TTL && parsed.payload) return parsed.payload
+			}
+		}catch(e){ /* ignore parse */ }
+		try{
+			const r = await fetch(url, {cache:'no-cache'})
+			if(!r.ok) throw new Error('not found')
+			const json = await r.json()
+			try{ localStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), payload: json })) }catch(e){}
+			return json
+		}catch(e){
+			return (typeof fallback !== 'undefined') ? fallback : []
+		}
 	}
-  }
 
   async function init(){
 	const embeddedProducts = (window.__PRODUCTS__ && Array.isArray(window.__PRODUCTS__)) ? window.__PRODUCTS__ : null
 	const embeddedCats = (window.__CATEGORIES__ && Array.isArray(window.__CATEGORIES__)) ? window.__CATEGORIES__ : null
 
 	// load and normalize data (prefer full product-catalog.json, fallback to product-data.json)
-	const rawCatalog = await loadJSON('/data/product-catalog.json', null)
-	const rawProducts = embeddedProducts || rawCatalog || await loadJSON('/data/product-data.json', embeddedProducts || [])
+	const rawCatalog = await fetchWithCache('/data/product-catalog.json', CACHE_KEYS.catalog, null)
+	const rawProducts = embeddedProducts || rawCatalog || await fetchWithCache('/data/product-data.json', CACHE_KEYS.catalog, embeddedProducts || [])
 	state.products = normalizeProducts(rawProducts)
 
 	// load categories and providers (optional assets)
-	const rawCats = embeddedCats || await loadJSON('/data/category-data.json', null) || await loadJSON('/data/categories.json', null)
-	state.providers = await loadJSON('/data/providers-data.json', [])
+	const rawCats = embeddedCats || await fetchWithCache('/data/category-data.json', CACHE_KEYS.cats, null) || await fetchWithCache('/data/categories.json', CACHE_KEYS.cats, null)
+	state.providers = await fetchWithCache('/data/providers-data.json', CACHE_KEYS.providers, [])
 	state.categories = normalizeCategories(rawCats, state.products)
 
 	// small slug helper and keep richer category objects available for rendering
 	function slugify(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') }
-	state.categoryObjects = Array.isArray(rawCats) ? rawCats.map(c=> {
+    state.categoryObjects = Array.isArray(rawCats) ? rawCats.map(c=> {
 		if(typeof c === 'string') return { id: slugify(c), name: c, icon: '' }
 		return { id: c.id || slugify(c.name||''), name: c.name || String(c), icon: c.icon || '' }
 	}) : []
 
 	state.filtered = state.products.slice()
 
-	bindGlobalSearch()
-	routeRender()
-	enhanceSite()
+		bindGlobalSearch()
+		routeRender()
+		enhanceSite()
+		// UI: header scroll behavior
+		window.addEventListener('scroll', ()=>{
+			const hdr = document.querySelector('.site-header')
+			if(!hdr) return
+			if(window.scrollY > 18) hdr.classList.add('scrolled')
+			else hdr.classList.remove('scrolled')
+		})
+		// load favorites
+		loadFavorites()
   }
 
   /* Data normalization helpers - ensure safe defaults and schema shape */
@@ -213,6 +233,20 @@
 
 		// trends
 		const t = el('trends-preview'); if(t){ t.innerHTML=''; const trends = state.products.slice().sort((a,b)=> (b.rating||0)-(a.rating||0)).slice(0,6); appendInBatches(t, trends, makeCard, 6) }
+
+		// helper: simple matching by category, tags or name
+		function matchesKeywords(p, keywords){
+			if(!p) return false
+			const txt = ((p.name||'') + ' ' + (p.category||'') + ' ' + (p.tags||[]).join(' ')).toLowerCase()
+			return keywords.some(k => txt.indexOf(k.toLowerCase()) !== -1)
+		}
+
+		// dynamic homepage sections
+		const tech = el('tech-2025'); if(tech){ tech.innerHTML=''; const techList = state.products.filter(p=> (p.tags||[]).includes('highlight') || (p.rating||0)>=4.5 || matchesKeywords(p,['ia','edge','accelerator','quantum','inference','neural'])).slice(0,8); appendInBatches(tech, techList, makeCard, 6) }
+		const boards = el('boards-top'); if(boards){ boards.innerHTML=''; const boardsList = state.products.filter(p=> matchesKeywords(p,['placa','board','devboard','development','stm32','arduino','raspberry','nucleo']) || (p.category||'').toLowerCase().indexOf('placas')!==-1).slice(0,8); appendInBatches(boards, boardsList, makeCard, 6) }
+		const robotics = el('robotics-advanced'); if(robotics){ robotics.innerHTML=''; const roboList = state.products.filter(p=> matchesKeywords(p,['robot','robotics','lidar','actuator','servo','slam']) || (p.category||'').toLowerCase().indexOf('robótica')!==-1).slice(0,8); appendInBatches(robotics, roboList, makeCard, 6) }
+		const printing = el('printing-3d'); if(printing){ printing.innerHTML=''; const printList = state.products.filter(p=> matchesKeywords(p,['3d','impresión','printer','filament','resina','fdm']) || (p.category||'').toLowerCase().indexOf('impresión')!==-1).slice(0,8); appendInBatches(printing, printList, makeCard, 6) }
+		const cyber = el('cyberfaces'); if(cyber){ cyber.innerHTML=''; const cyberList = state.products.filter(p=> matchesKeywords(p,['cyberface','biomec','biomech','prosthetic','cyber']) || (p.category||'').toLowerCase().indexOf('biomec')!==-1).slice(0,8); appendInBatches(cyber, cyberList, makeCard, 6) }
   }
 
   function renderMarketplace(){
@@ -280,6 +314,55 @@
 		// micro-interaction: subtle breathing animation class toggled on hover via CSS
 		return a
   }
+
+	// Favorites support (localStorage)
+	function loadFavorites(){
+		try{ const raw = localStorage.getItem('ngs:favs'); window.__FAVS__ = raw ? JSON.parse(raw) : {} }catch(e){ window.__FAVS__ = {} }
+	}
+	function saveFavorites(){ try{ localStorage.setItem('ngs:favs', JSON.stringify(window.__FAVS__||{})) }catch(e){} }
+	function isFavorite(id){ return !!(window.__FAVS__ && window.__FAVS__[id]) }
+	function toggleFavorite(id){ if(!window.__FAVS__) window.__FAVS__ = {}; if(window.__FAVS__[id]) delete window.__FAVS__[id]; else window.__FAVS__[id] = Date.now(); saveFavorites(); document.querySelectorAll(`[data-prod-fav="${id}"]`).forEach(el=> el.classList.toggle('fav-active', isFavorite(id))) }
+
+	// Quick view modal
+	function openQuickView(product){
+		// create modal container
+		let modal = document.getElementById('ngs-quickview')
+		if(modal) modal.remove()
+		modal = document.createElement('div'); modal.id='ngs-quickview'; modal.className='quick-view-modal'; modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true')
+		const c = document.createElement('div'); c.className='quick-view-card'
+		c.innerHTML = `
+			<div style="display:flex;gap:18px;align-items:flex-start">
+				<div style="flex:1;max-width:420px"><img src="${escapeHtml((product.images && product.images[0])||'/assets/img/vision-pro.svg')}" style="width:100%;border-radius:8px" alt="${escapeHtml(product.name)}"></div>
+				<div style="flex:1.6">
+					<h2>${escapeHtml(product.name)}</h2>
+					<div class="muted">${escapeHtml(product.category)} • ${fmtPrice(product.price)}</div>
+					<p class="subtle">${escapeHtml(product.short_description||'')}</p>
+					<div style="margin-top:12px">${product.specs && product.specs.length ? '<strong>Specs</strong><ul>'+product.specs.map(s=>`<li>${escapeHtml(s)}</li>`).join('')+'</ul>':''}</div>
+					<div style="margin-top:12px;display:flex;gap:8px"><a class="btn btn-primary" href="/product.html?id=${encodeURIComponent(product.id)}">Ficha completa</a><a class="btn" href="${escapeHtml(product.vendorLink||'#')}" target="_blank">Visitar proveedor</a><button class="btn" id="ngs-quick-fav">${isFavorite(product.id)?'💖 Favorito':'♡ Favorito'}</button></div>
+				</div>
+			</div>
+		`
+		modal.appendChild(c)
+		document.body.appendChild(modal)
+		// events
+		modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.remove() })
+		document.getElementById('ngs-quick-fav')?.addEventListener('click', ()=>{ toggleFavorite(product.id); document.getElementById('ngs-quick-fav').textContent = isFavorite(product.id)?'💖 Favorito':'♡ Favorito' })
+	}
+
+	// update makeCard to include quick view and favorites
+	;(function patchMakeCard(){
+		const original = makeCard
+		makeCard = function(p){
+			const node = original(p)
+			// quick view button
+			const controls = document.createElement('div'); controls.style.marginTop = '10px'; controls.style.display='flex'; controls.style.gap='8px'
+			const q = document.createElement('button'); q.className='btn'; q.textContent='Quick View'; q.addEventListener('click', ()=> openQuickView(p))
+			const fav = document.createElement('button'); fav.className='btn'; fav.dataset.prodFav = p.id; fav.setAttribute('data-prod-fav', p.id); fav.textContent = isFavorite(p.id)?'💖':'♡'; fav.addEventListener('click', ()=>{ toggleFavorite(p.id); fav.textContent = isFavorite(p.id)?'💖':'♡' })
+			controls.appendChild(q); controls.appendChild(fav)
+			node.appendChild(controls)
+			return node
+		}
+	})()
 
   function renderSpecialSections(){ const fp = el('featured-products'); if(fp){ fp.innerHTML=''; state.products.filter(p=> (p.tags||[]).includes('featured')).slice(0,8).forEach(p=> fp.appendChild(makeCard(p))) } }
 

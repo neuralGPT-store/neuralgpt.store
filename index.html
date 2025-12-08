@@ -4,27 +4,75 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
+  <meta name="description" content="NeuralGPT.Store — Marketplace premium para hardware, IA y servicios. Robótica, impresión 3D, placas de desarrollo y soluciones Edge."
+        />
+  <meta name="keywords" content="IA, marketplace, robótica, impresión 3D, placas de desarrollo, hardware, proveedores, edge AI" />
+  <meta property="og:title" content="NeuralGPT.Store — Marketplace" />
+  <meta property="og:description" content="Marketplace premium para hardware y soluciones de IA." />
+  <meta property="og:image" content="/core/assets/img/og-preview.png" />
   <title>NeuralGPT.Store — Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css" />
 </head>
 <body class="site-root">
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
-      <nav class="main-nav" aria-label="Main navigation">
+  <header class="site-header premium-header rgb-border" role="banner">
+    <div class="wrap header-inner" style="align-items:center">
+      <a class="brand" href="/" aria-label="NeuralGPT Store">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Principal">
         <ul>
           <li><a href="/">Inicio</a></li>
-          <li><a href="/marketplace.html">Marketplace</a></li>
+          <li class="has-mega" aria-haspopup="true">
+            <a href="/marketplace.html">Marketplace ▾</a>
+            <div class="mega-menu" role="menu" aria-label="Categorias principales">
+              <div class="mega-grid">
+                <div>
+                  <h4>Hardware</h4>
+                  <ul>
+                    <li><a href="/marketplace.html?cat=Robótica">Robótica</a></li>
+                    <li><a href="/marketplace.html?cat=Electrónica">Electrónica</a></li>
+                    <li><a href="/marketplace.html?cat=Impresión+3D">Impresión 3D</a></li>
+                    <li><a href="/marketplace.html?cat=Placas+de+Desarrollo">Placas de Desarrollo</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Soluciones</h4>
+                  <ul>
+                    <li><a href="/marketplace.html?cat=Biomecánica">Biomecánica</a></li>
+                    <li><a href="/marketplace.html?cat=Fabricación+Cyberface">Fabricación Cyberface</a></li>
+                    <li><a href="/marketplace.html?cat=IA+Edge">IA Edge</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Proveedores</h4>
+                  <ul>
+                    <li><a href="/providers.html">Ver todos los proveedores</a></li>
+                    <li><a href="/providers.html#join">Conviértase en proveedor</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Recursos</h4>
+                  <ul>
+                    <li><a href="/guides.html">Guías</a></li>
+                    <li><a href="/blog.html">Blog</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
           <li><a href="/quantum.html">Quantum Pass</a></li>
           <li><a href="/security.html">Seguridad IA</a></li>
           <li><a href="/providers.html">Proveedores</a></li>
           <li><a href="/console.html">Consola</a></li>
           <li><a href="/blog.html">Blog</a></li>
-            <link rel="stylesheet" href="/css/main.css" />
           <li><a href="/legal.html">Legal</a></li>
         </ul>
       </nav>
-      <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar"></div>
+      <div class="search-wrap" role="search">
+        <input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar en NeuralGPT.Store" autocomplete="off">
+        <div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias de búsqueda" hidden></div>
+      </div>
     </div>
   </header>
 
@@ -61,6 +109,31 @@
         <div class="card">Automatización de pipelines ML</div>
       </div>
       <p class="muted"><a href="/trends.html">Ver más</a></p>
+    </section>
+
+    <section class="sections slide-up">
+      <h2 class="section-title">Tecnología Destacada 2025</h2>
+      <div id="tech-2025" class="market-grid"></div>
+    </section>
+
+    <section class="sections slide-up">
+      <h2 class="section-title">Placas de desarrollo más vendidas</h2>
+      <div id="boards-top" class="market-grid"></div>
+    </section>
+
+    <section class="sections slide-up">
+      <h2 class="section-title">Robótica avanzada</h2>
+      <div id="robotics-advanced" class="market-grid"></div>
+    </section>
+
+    <section class="sections slide-up">
+      <h2 class="section-title">Impresión 3D</h2>
+      <div id="printing-3d" class="market-grid"></div>
+    </section>
+
+    <section class="sections slide-up">
+      <h2 class="section-title">Cyberfaces y biomecánica</h2>
+      <div id="cyberfaces" class="market-grid"></div>
     </section>
 
     <section class="sections slide-up">
@@ -111,13 +184,45 @@
 
   <script src="/assets/js/main.js"></script>
 
-  <footer class="site-footer">
-    <div class="wrap">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
-        <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
-        <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
+  <footer class="site-footer premium-footer" role="contentinfo">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="brand footer-brand" href="/">NeuralGPT.Store</a>
+        <p class="subtle">Marketplace premium para hardware, soluciones IA y proveedores especializados.</p>
       </div>
-      <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
+      <div>
+        <strong>Empresa</strong>
+        <nav class="foot-nav">
+          <a href="/about.html">Acerca</a>
+          <a href="/sponsors.html">Partners</a>
+          <a href="/guides.html">Guías</a>
+        </nav>
+      </div>
+      <div>
+        <strong>Proveedores</strong>
+        <nav class="foot-nav">
+          <a href="/providers.html">Listado</a>
+          <a href="/providers.html#join">Regístrate</a>
+          <a href="/provider-hub.html">Portal</a>
+        </nav>
+      </div>
+      <div>
+        <strong>Legal & API</strong>
+        <nav class="foot-nav">
+          <a href="/legal.html">Términos</a>
+          <a href="/privacy.html">Privacidad</a>
+          <a href="/api.html">API (próximamente)</a>
+        </nav>
+      </div>
+    </div>
+    <div class="wrap" style="margin-top:18px;display:flex;align-items:center;justify-content:space-between">
+      <form id="newsletter" action="#" onsubmit="event.preventDefault();document.getElementById('newsletter-msg').innerText='¡Gracias! Suscripción confirmada.'">
+        <label for="newsletter-email" class="muted">Newsletter</label>
+        <input id="newsletter-email" class="search-input" type="email" placeholder="Tu correo" aria-label="Correo para newsletter">
+        <button class="btn btn-primary" type="submit">Suscribirme</button>
+        <span id="newsletter-msg" class="muted" style="margin-left:12px"></span>
+      </form>
+      <div class="muted">© NeuralGPT.Store — 2025</div>
     </div>
   </footer>
 
