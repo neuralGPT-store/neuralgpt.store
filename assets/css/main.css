@@ -279,78 +279,97 @@ a:focus,button:focus,input:focus{outline:3px solid rgba(40,167,255,0.12);outline
   .irene-floating { width: 280px; height: 360px; right: 12px; bottom: 12px; }
 }
 
-/* ========== 2026 ANIMATED RGB + NEON UTILS ========== */
+/* ========== GLOBAL RGB SYSTEM: rgbFlow + utility classes ========== */
 
-/* Core animation (user-specified keyframes) */
-.rgb-animated {
-    border-radius: 14px;
-    animation: rgbGlow 6s infinite alternate ease-in-out;
-    /* lightweight outline so borders don't shift content layout */
+/* RGB flow keyframes: rotates color wheel smoothly */
+@keyframes rgbFlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-@keyframes rgbGlow {
-    0% { box-shadow: 0 0 8px #00eaff, 0 0 15px #0077ff; }
-    50% { box-shadow: 0 0 12px #ae00ff, 0 0 20px #6600ff; }
-    100% { box-shadow: 0 0 10px #ff009d, 0 0 25px #ff00ff; }
+/* Core RGB gradient used for borders/shadows */
+:root{
+    --rgb-gradient: conic-gradient(from 0deg, var(--primary), var(--secondary), var(--accent), var(--primary));
 }
 
-.neon-hover:hover {
-    transition: 0.25s ease-out;
-    box-shadow: 0 0 12px #00eaff, 0 0 22px #0077ff;
-    transform: translateY(-2px);
-}
-
-.smooth-glow {
-    transition: 0.3s ease-in-out;
-}
-
-/* Apply visual language to common site primitives without altering structure */
-.hero, .hero * {
-    border-radius: 14px;
-}
-
-/* Buttons and CTAs get neon hover + smooth transitions */
-.btn, .btn-primary, .btn-outline-gold, .btn-outline-accent {
-    border-radius: 12px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-}
-.btn:hover, .btn-primary:hover, .btn-outline-gold:hover, .btn-outline-accent:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 0 10px rgba(31,162,255,0.08);
-}
-
-/* Make primary CTAs more neon; non-invasive — only visual layering */
-.btn-primary {
-    background: linear-gradient(90deg, rgba(30,140,255,0.14), rgba(160,30,255,0.06));
-    color: var(--gold);
-    border: 1px solid rgba(255,255,255,0.04);
-}
-
-/* Cards, grids, provider tiles and panels get the rgb-animated treatment softly */
-.card, .grid, .provider-tile, .panel, .quantum-tiers, .tier-placeholder, .ng-content {
-    border-radius: 14px;
-    background-clip: padding-box;
-    /* subtle ambient glow using ::before so layout unaffected */
+/* Utility: animated RGB border (2-3px) using pseudo-element */
+.rgb-border, body, .site-header, .site-footer, section, .container, .card, .btn, nav, .nav-list {
     position: relative;
+    overflow: visible;
 }
-.card::before, .provider-tile::before, .panel::before, .quantum-tiers::before {
+
+.rgb-border::after,
+body::after,
+.site-header::after,
+.site-footer::after,
+section::after,
+.container::after,
+.card::after,
+.btn::after,
+nav::after,
+.nav-list::after {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -3px;
+    z-index: 0;
     pointer-events: none;
     border-radius: inherit;
-    z-index: 0;
+    background: var(--rgb-gradient);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 3px; /* creates visible border thickness */
+    filter: blur(6px) saturate(110%);
+    opacity: 0.55;
+    transform-origin: center center;
+    animation: rgbFlow 12s linear infinite;
 }
 
-/* Use a soft overlay to emulate animated RGB border while preserving borders */
-.rgb-animated::before {
-    box-shadow: 0 0 12px rgba(0,0,0,0.18);
+/* Keep content above the animated layer */
+.rgb-border > *, body > *, .site-header > *, .site-footer > *, section > *, .container > *, .card > *, .btn > *, nav > *, .nav-list > * {
+    position: relative;
+    z-index: 1;
 }
 
-.neon-hover, .smooth-glow { will-change: transform, box-shadow; }
+/* Utility: subtle RGB shadow for depth */
+.rgb-shadow { box-shadow: 0 10px 30px rgba(0,200,255,0.06), 0 6px 18px rgba(87,60,255,0.03); }
 
-/* Ensure overlays and internal content stay above ambient pseudo-elements */
-.card > *, .panel > *, .provider-tile > * { position: relative; z-index: 1; }
+/* Utility: hover that intensifies RGB glow without affecting text contrast */
+.rgb-hover:hover { box-shadow: 0 14px 40px rgba(0,200,255,0.09), 0 8px 26px rgba(87,60,255,0.05); transform: translateY(-3px); }
 
-/* Keep chat widget unobtrusive but compatible with neon theme */
-.irene-floating { z-index: 9999; }
-.irene-floating .controls .btn { margin: 0; }
+/* Utility: container overlay to give soft RGB ambience */
+.rgb-container { background-image: linear-gradient(180deg, rgba(0,200,255,0.02), rgba(87,60,255,0.01)); }
+
+/* Apply RGB utilities globally to required primitives (automatic) */
+body, .site-header, .site-footer, section, .hero, .card, .container, .btn, nav, .nav-list {
+    /* avoid overly saturating text color */
+    --rgb-overlay-opacity: 0.55;
+    /* ensure elements have a consistent border-radius */
+    border-radius: 12px;
+}
+
+/* Buttons: ensure pseudo-element doesn't interfere with click area */
+.btn::after { inset: -2px; opacity: 0.45; filter: blur(6px); }
+
+/* Provide specific border thickness option */
+.rgb-border.thick::after { inset: -5px; }
+.rgb-border.medium::after { inset: -3px; }
+.rgb-border.thin::after { inset: -2px; }
+
+/* Accessible focus: keep strong contrast for outlines while keeping RGB effect */
+a:focus, button:focus, input:focus { outline: 3px solid rgba(0,200,255,0.14); outline-offset: 3px; }
+
+/* Ensure images and content remain readable on top of RGB effects */
+.card img, .card svg { position: relative; z-index: 1; }
+
+/* Reduce RGB intensity on small screens to avoid visual noise */
+@media (max-width: 900px) {
+    .rgb-border::after, body::after, section::after, .container::after { opacity: 0.35; filter: blur(8px); }
+}
+
+/* Utility class to disable RGB on specific elements if needed */
+.no-rgb::after { display: none !important; }
+
+/* Ensure no text color is changed; RGB only decorates backgrounds/borders */
+body, .site-header, .site-footer, section, .card, .btn, .container { color: var(--text); }
+
