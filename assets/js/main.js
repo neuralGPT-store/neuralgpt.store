@@ -338,8 +338,8 @@
 
 		// Resolve category object
 		const catObj = (state.categoryObjects||[]).find(c=> (c.id||'').toLowerCase() === (cat||'').toLowerCase()) || { id: cat, name: cat || 'Categoría', icon:'', image: '/assets/img/category-default.svg' }
-		el('category-title')?.textContent = catObj.name || cat
-		el('category-description')?.textContent = catObj.description || `${state.products.filter(p=> (p.category||'').toLowerCase() === (cat||'').toLowerCase()).length} productos disponibles`
+		const _ct = el('category-title'); if(_ct) _ct.textContent = catObj.name || cat
+		const _cd = el('category-description'); if(_cd) _cd.textContent = catObj.description || `${state.products.filter(p=> (p.category||'').toLowerCase() === (cat||'').toLowerCase()).length} productos disponibles`
 		if(el('category-image')) el('category-image').src = catObj.image || `/assets/img/category-${catObj.id||'default'}.svg`
 
 		// Sidebar categories
@@ -514,11 +514,18 @@
 	input.setAttribute('aria-label','Buscar productos y proveedores')
 	input.setAttribute('aria-autocomplete','list')
 
-	const list = document.createElement('div');
-	list.className='search-suggestions card'
-	list.setAttribute('role','listbox')
-	list.style.position='absolute'; list.style.zIndex='180'; list.style.display='none'; list.style.maxHeight='320px'; list.style.overflow='auto'; list.id = 'search-suggestions'
-	input.parentElement.style.position='relative'; input.parentElement.appendChild(list)
+		let list = document.getElementById('search-suggestions')
+		if(!list){
+			list = document.createElement('div');
+			list.className='search-suggestions card'
+			list.setAttribute('role','listbox')
+			list.style.position='absolute'; list.style.zIndex='180'; list.style.display='none'; list.style.maxHeight='320px'; list.style.overflow='auto'; list.id = 'search-suggestions'
+			input.parentElement.style.position='relative'; input.parentElement.appendChild(list)
+		} else {
+			// ensure container is positioned correctly
+			input.parentElement.style.position = input.parentElement.style.position || 'relative'
+			list.style.display = 'none'
+		}
 
 	let timer, index = -1, items = []
 
@@ -549,7 +556,7 @@
 		  it.addEventListener('click', ()=>{ location.href = `/category.html?category=${encodeURIComponent(c.id)}` })
 		  list.appendChild(it)
 		})
-		list.style.display = candidates.length ? 'block' : 'none'
+		list.style.display = items.length ? 'block' : 'none'
 		index = -1
 	  },80)
 	})

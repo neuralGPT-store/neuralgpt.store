@@ -14,6 +14,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Preload critical font and hero/og image to improve FCP/LCP -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/core/assets/img/og-preview.png" as="image">
+  <link rel="icon" href="/favicon.ico">
+  <!-- Inline minimal critical CSS to reduce render-blocking -->
+  <style>
+    /* Critical styles: layout, hero, header */
+    :root{--bg:#00040D;--muted:#9aa3b2;--accent:#08f;}
+    html,body{height:100%;margin:0;background:var(--bg);color:#e6f0ff;font-family:Orbitron,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial sans-serif;}
+    .site-header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.4));backdrop-filter:blur(6px)}
+    .hero{padding:48px 0;display:flex;align-items:center}
+    .hero h1{font-size:2.2rem;margin:0 0 8px}
+    @media (min-width:900px){.hero h1{font-size:3.2rem}}
+  </style>
   <link rel="stylesheet" href="/css/main.css" />
 </head>
 <body class="site-root">
@@ -182,7 +196,7 @@
     });
   </script>
 
-  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/main.js" defer></script>
 
   <footer class="site-footer premium-footer" role="contentinfo">
     <div class="wrap footer-grid">

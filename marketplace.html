@@ -4,6 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Marketplace — NeuralGPT.Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/core/assets/img/og-preview.png" as="image">
+  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body class="site-root">
@@ -93,14 +98,7 @@
       </div>
     </section>
 
-    <section class="sections">
-      <h2 class="section-title">Productos destacados</h2>
-      <div id="featured-products" class="market-grid"></div>
-      <h2 class="section-title" style="margin-top:22px">Nuevos lanzamientos</h2>
-      <div id="new-products" class="market-grid"></div>
-      <h2 class="section-title" style="margin-top:22px">Top integraciones IA</h2>
-      <div id="integration-products" class="market-grid"></div>
-    </section>
+    <!-- products sections consolidated above to avoid duplicate IDs -->
 
     <section class="sections">
       <h2 class="section-title">Proveedores Destacados</h2>
@@ -145,4 +143,4 @@
       <div><a class="btn" href="/legal.html">Legal</a></div>
     </div>
   </footer>
-  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/main.js" defer></script>
