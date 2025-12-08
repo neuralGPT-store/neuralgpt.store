@@ -51,9 +51,9 @@
 	// small slug helper and keep richer category objects available for rendering
 	function slugify(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') }
     state.categoryObjects = Array.isArray(rawCats) ? rawCats.map(c=> {
-		if(typeof c === 'string') return { id: slugify(c), name: c, icon: '' }
-		return { id: c.id || slugify(c.name||''), name: c.name || String(c), icon: c.icon || '' }
-	}) : []
+    	if(typeof c === 'string') return { id: slugify(c), name: c, icon: '', description: '', image: '' }
+    	return { id: c.id || slugify(c.name||''), name: c.name || String(c), icon: c.icon || '', description: c.description || '', image: c.image || '' }
+    }) : []
 
 	state.filtered = state.products.slice()
 
@@ -85,6 +85,9 @@
 			short_description: String(p.short_description||p.description||''),
 			long_description: String(p.long_description||p.description||''),
 			images: Array.isArray(p.images) ? p.images : (p.images ? [p.images] : ['/assets/img/vision-pro.svg']),
+			// convenience single-image + alt text
+			image: (Array.isArray(p.images) && p.images.length) ? p.images[0] : (p.images ? (Array.isArray(p.images)?p.images[0]:p.images) : '/assets/img/vision-pro.svg'),
+			imageAlt: p.imageAlt || p.title || p.name || 'Producto',
 			vendorName: p.vendorName || p.vendor || '',
 			vendorLink: p.vendorLink || p.vendorLink || p.vendor || '',
 			tags: Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : []),
@@ -255,12 +258,20 @@
  		fl.innerHTML=''
  		const all=document.createElement('button'); all.className='chip active'; all.dataset.filter='all'; all.textContent='Todos'; fl.appendChild(all);
  		const cats = (state.categoryObjects && state.categoryObjects.length) ? state.categoryObjects : (state.categories || []).map(n=>({ id: (String(n||'').toLowerCase().replace(/\s+/g,'-')), name: String(n), icon: '' }))
- 		cats.forEach(c=>{ const name = c.name || String(c); const b=document.createElement('button'); b.className='chip'; b.dataset.filter=name; b.textContent = (c.icon ? (c.icon + ' ') : '') + name; fl.appendChild(b) })
+		cats.forEach(c=>{ const name = c.name || String(c); const b=document.createElement('button'); b.className='chip'; b.dataset.filter=name; b.setAttribute('role','button'); b.setAttribute('aria-pressed','false'); b.textContent = (c.icon ? (c.icon + ' ') : '') + name; fl.appendChild(b) })
  		fl.addEventListener('click', onFilterClick)
  	}
 
 	// extra controls
-	const fx = document.querySelector('.filters'); if(fx){ fx.innerHTML=''; const sel=document.createElement('select'); sel.id='type-filter'; sel.innerHTML='<option value="any">Tipo</option><option value="hardware">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option>'; fx.appendChild(sel); sel.addEventListener('change', applyFilters); const price=document.createElement('select'); price.id='price-filter'; price.innerHTML='<option value="any">Precio</option><option value="under500">≤ $500</option><option value="500-2k">$500–$2k</option><option value="2k+">$2k+</option>'; fx.appendChild(price); price.addEventListener('change', applyFilters) }
+	const fx = document.querySelector('.filters'); if(fx){ fx.innerHTML=''; const sel=document.createElement('select'); sel.id='type-filter'; sel.setAttribute('aria-label','Filtrar por tipo'); sel.innerHTML='<option value="any">Tipo</option><option value="hardware">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option>'; fx.appendChild(sel); sel.addEventListener('change', applyFilters); const price=document.createElement('select'); price.id='price-filter'; price.setAttribute('aria-label','Filtrar por precio'); price.innerHTML='<option value="any">Precio</option><option value="under500">≤ $500</option><option value="500-2k">$500–$2k</option><option value="2k+">$2k+</option>'; fx.appendChild(price); price.addEventListener('change', applyFilters)
+
+		// tags multi-select
+		const tagsWrap = document.createElement('div'); tagsWrap.id = 'tags-filter'; tagsWrap.setAttribute('role','group'); tagsWrap.setAttribute('aria-label','Filtrar por etiquetas');
+		const tags = Array.from(new Set(state.products.flatMap(p=> p.tags || []))).slice(0,40)
+		tags.forEach(t=>{ const c = document.createElement('button'); c.className='chip'; c.textContent = t; c.dataset.tag = t; c.setAttribute('aria-pressed','false'); c.addEventListener('click', ()=>{ c.classList.toggle('selected'); c.setAttribute('aria-pressed', String(c.classList.contains('selected'))); applyFilters() }); tagsWrap.appendChild(c) })
+		fx.appendChild(tagsWrap)
+
+	}
 
 		const grid = el('market-grid'); if(grid){ grid.innerHTML=''; appendInBatches(grid, state.filtered, makeCard, 12) }
 
@@ -376,13 +387,18 @@
 		const a = document.createElement('article')
 		a.className = 'product-card card fade-in'
 		a.setAttribute('role','article')
+		a.setAttribute('aria-label', `${p.name} — ${p.short_description || ''}`)
+		const imgSrc = p.image || (p.images && p.images[0]) || '/assets/img/vision-pro.svg'
+		const imgAlt = p.imageAlt || p.title || p.name || 'Producto'
 		a.innerHTML = `
-			<figure style="margin:0"><img class="card-img" loading="lazy" src="${p.image||'/assets/img/vision-pro.svg'}" alt="${escapeHtml(p.name)}"></figure>
+			<figure style="margin:0"><img class="card-img" loading="lazy" src="${imgSrc}" alt="${escapeHtml(imgAlt)}"></figure>
 			<h3>${escapeHtml(p.name)}</h3>
 			<div class="product-meta">${escapeHtml(p.category)} • ${fmtPrice(p.price)}</div>
 			<p class="subtle">${escapeHtml(p.short_description||'')}</p>
 			<div style="margin-top:12px"><a class="btn btn-primary" href="/product.html?id=${encodeURIComponent(p.id)}">Ver</a></div>
 		`
+		a.dataset.tags = (p.tags||[]).join(' ')
+		a.dataset.category = p.category || ''
 		// micro-interaction: subtle breathing animation class toggled on hover via CSS
 		return a
   }
@@ -442,13 +458,22 @@
 
   function applyFilters(){
 		const q = (el('mp-search') && el('mp-search').value.trim().toLowerCase()) || (el('global-search') && el('global-search').value.trim().toLowerCase()) || ''
-		const active = document.querySelector('.filter-list button.active'); const cat = active ? active.dataset.filter : 'all'
+		// categories: allow multi-select chips (selected class) or fallback to single active
+		const catChips = Array.from(document.querySelectorAll('.filter-list .chip.selected'))
+		const cats = catChips.length ? catChips.map(c=> c.dataset.filter) : (()=>{ const active = document.querySelector('.filter-list button.active'); return active ? [active.dataset.filter] : ['all'] })()
 	const type = (el('type-filter') && el('type-filter').value) || 'any'
 	const price = (el('price-filter') && el('price-filter').value) || 'any'
+	// tags multi-select
+	const selectedTags = Array.from(document.querySelectorAll('#tags-filter .chip.selected')).map(b=> b.dataset.tag)
 
 	let res = state.products.slice()
-		if(cat && cat !== 'all') res = res.filter(p=> p.category === cat)
+		// categories filtering (multi)
+		if(cats && !(cats.length===1 && cats[0]==='all')){
+			res = res.filter(p=> cats.includes(p.category) || cats.includes((p.category||'').toLowerCase()) || cats.includes((p.category||'').toString()) )
+		}
 	if(q) res = res.filter(p=> (p.name||'').toLowerCase().includes(q) || (p.short_description||'').toLowerCase().includes(q) || (p.tags||[]).join(' ').toLowerCase().includes(q))
+	// tags filter: all selected tags must be present
+	if(selectedTags && selectedTags.length){ res = res.filter(p=> selectedTags.every(t=> (p.tags||[]).includes(t))) }
 	if(type && type !== 'any') res = res.filter(p=> (p.type||'').toLowerCase() === type.toLowerCase())
 	if(price !== 'any'){
 	  if(price==='under500') res = res.filter(p=>p.price && p.price<=500)
@@ -482,13 +507,27 @@
 	  clearTimeout(timer); timer = setTimeout(()=>{
 		const q = input.value.trim().toLowerCase()
 		if(!q){ list.style.display='none'; index=-1; return }
-		const candidates = state.products.filter(p=> (p.name||'').toLowerCase().includes(q) || (p.tags||[]).join(' ').toLowerCase().includes(q)).slice(0,8)
-		items = candidates
+		const prodMatches = state.products.filter(p=> (p.name||'').toLowerCase().includes(q) || (p.tags||[]).join(' ').toLowerCase().includes(q)).slice(0,6)
+		const provMatches = (state.providers||[]).filter(p=> (p.name||'').toLowerCase().includes(q)).slice(0,4)
+		const catMatches = (state.categoryObjects||[]).filter(c=> (c.name||'').toLowerCase().includes(q)).slice(0,4)
+		items = prodMatches
 		list.innerHTML=''
-		candidates.forEach((p,i)=>{
+		prodMatches.forEach((p,i)=>{
 		  const it = document.createElement('div'); it.className='search-suggestion-item'; it.style.padding='10px'; it.style.cursor='pointer'; it.setAttribute('role','option'); it.setAttribute('aria-selected','false')
-		  it.innerHTML = `<strong>${escapeHtml(p.name)}</strong><div class="subtle" style="font-size:12px">${escapeHtml(p.category)} • ${fmtPrice(p.price)}</div>`
+		  it.innerHTML = `<strong>${escapeHtml(p.name)}</strong><div class="subtle" style="font-size:12px">Producto • ${escapeHtml(p.category)} • ${fmtPrice(p.price)}</div>`
 		  it.addEventListener('click', ()=>{ location.href = `/product.html?id=${encodeURIComponent(p.id)}` })
+		  list.appendChild(it)
+		})
+		provMatches.forEach(p=>{
+		  const it = document.createElement('div'); it.className='search-suggestion-item'; it.style.padding='8px'; it.style.cursor='pointer'; it.setAttribute('role','option'); it.setAttribute('aria-selected','false')
+		  it.innerHTML = `<strong>${escapeHtml(p.name)}</strong><div class="subtle" style="font-size:12px">Proveedor</div>`
+		  it.addEventListener('click', ()=>{ location.href = `/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}` })
+		  list.appendChild(it)
+		})
+		catMatches.forEach(c=>{
+		  const it = document.createElement('div'); it.className='search-suggestion-item'; it.style.padding='8px'; it.style.cursor='pointer'; it.setAttribute('role','option'); it.setAttribute('aria-selected','false')
+		  it.innerHTML = `<strong>${escapeHtml(c.name)}</strong><div class="subtle" style="font-size:12px">Categoría</div>`
+		  it.addEventListener('click', ()=>{ location.href = `/category.html?category=${encodeURIComponent(c.id)}` })
 		  list.appendChild(it)
 		})
 		list.style.display = candidates.length ? 'block' : 'none'

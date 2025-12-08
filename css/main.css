@@ -185,5 +185,6 @@ a:hover::after{ transform:scaleX(1) }
 .chip.active{ box-shadow:0 20px 60px rgba(0,200,255,0.22), 0 0 36px rgba(124,77,255,0.06); border-color: rgba(0,200,255,0.45); background: linear-gradient(90deg, rgba(0,160,255,0.08), rgba(124,77,255,0.06)) }
 .chip::after{ content:''; position:absolute; right:-6px; bottom:-6px; width:10px;height:10px;border-radius:50%; background:transparent; transition:background .18s ease }
 .chip:hover::after{ background: radial-gradient(circle at center, rgba(0,200,255,0.12), rgba(124,77,255,0.02)) }
+.chip.selected{ box-shadow:0 24px 80px rgba(0,200,255,0.12), 0 0 36px rgba(124,77,255,0.06); border-color: rgba(0,200,255,0.6); background: linear-gradient(90deg, rgba(0,200,255,0.06), rgba(124,77,255,0.07)); }
 
 
