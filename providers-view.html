@@ -1,6 +1,58 @@
 <!doctype html>
 <html lang="es">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Proveedor — NeuralGPT.Store</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="icon" href="/favicon.ico">
+    <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/provider-catalog.js"></script>
+  </head>
+  <body class="site-root providers-view">
+    <main class="wrap">
+      <header class="page-header">
+        <h1 id="prov-name">Proveedor</h1>
+        <p id="prov-desc" class="subtle">Descripción breve del proveedor</p>
+      </header>
+
+      <div class="card">
+        <div id="provider-stats" class="muted">Cargando estadísticas…</div>
+        <div id="provider-actions" style="margin-top:10px">
+          <a id="prov-visit" class="btn btn-primary" href="#" target="_blank">Visitar tienda oficial</a>
+          <a id="prov-products-link" class="btn" href="#">Ver catálogo</a>
+        </div>
+      </div>
+
+      <section id="providers-by-category" class="card">
+        <!-- providers in same category (rendered by JS) -->
+      </section>
+
+      <section class="card">
+        <h3>Productos del proveedor</h3>
+        <div id="provider-products" class="market-grid"></div>
+      </section>
+
+      <section class="card">
+        <h3>Contacto y solicitudes</h3>
+        <form id="prov-form">
+          <label>Nombre<input id="prov-contact-name" required></label>
+          <label>Correo<input id="prov-contact-email" type="email" required></label>
+          <label>Mensaje<textarea id="prov-contact-msg" rows="4"></textarea></label>
+          <button class="btn btn-primary" type="submit">Enviar</button>
+        </form>
+      </section>
+
+      <section class="card muted" style="margin-top:12px">
+        <strong>Nota legal:</strong> <span id="providers-legal">Esta plataforma lista solo proveedores autorizados mediante enlaces públicos y verificables. Redirigimos siempre al vendedor oficial.</span>
+      </section>
+
+    </main>
+  </body>
+</html>
+<!doctype html>
+<html lang="es">
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Proveedor — NeuralGPT.Store</title>

@@ -1,6 +1,55 @@
 <!doctype html>
 <html lang="es">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Proveedores — NeuralGPT.Store</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="icon" href="/favicon.ico">
+    <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/provider-catalog.js"></script>
+  </head>
+  <body class="site-root providers-page">
+    <main class="wrap">
+      <header class="page-header">
+        <h1>Proveedores & Sponsors</h1>
+        <p class="lead">Directorio verificado de fabricantes, tiendas y sponsors. Encuentra partners por categoría y tipo de producto.</p>
+      </header>
+
+      <section class="card">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <input id="global-search" class="search-input" placeholder="Buscar proveedores, productos o categorías…" aria-label="Buscar">
+          <div style="margin-left:auto"><a class="btn btn-primary" href="/provider-register.html">Registrar proveedor</a></div>
+        </div>
+      </section>
+
+      <section id="providers-controls" class="card">
+        <label>Categoria:
+          <select id="filter-category"><option value="all">Todos</option></select>
+        </label>
+        <label>Tipo:
+          <select id="filter-type"><option value="all">Todos</option></select>
+        </label>
+        <label>Precio:
+          <select id="filter-price"><option value="all">Todos</option><option value="0-50">$0-$50</option><option value="50-200">$50-$200</option><option value="200-">$200+</option></select>
+        </label>
+        <button id="clear-filters" class="btn">Limpiar</button>
+      </section>
+
+      <section id="providers-grid" class="providers-grid premium-grid grid market-grid">
+        <!-- provider cards injected by provider-catalog.js -->
+      </section>
+
+      <section class="card" style="margin-top:18px">
+        <h3>Destacados</h3>
+        <div id="providers-featured" class="grid grid-3"></div>
+      </section>
+    </main>
+  </body>
+</html>
+<!doctype html>
+<html lang="es">
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Proveedores — NeuralGPT.Store</title>

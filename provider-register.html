@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Registrar Proveedor — NeuralGPT.Store</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="icon" href="/favicon.ico">
+    <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/provider-catalog.js"></script>
+  </head>
+  <body class="site-root provider-register">
+    <main class="wrap">
+      <header class="page-header"><h1>Registrar proveedor</h1><p class="subtle">Envía tus datos para aparecer en NeuralGPT.Store (revisión manual requerida).</p></header>
+      <section class="card">
+        <form id="provider-form">
+          <label>Nombre de la empresa<input id="prov-name-input" required></label>
+          <label>Website oficial<input id="prov-website" type="url" required></label>
+          <label>Tienda externa (opcional)<input id="prov-store" type="url"></label>
+          <label>Categorías (coma separadas)<input id="prov-categories"></label>
+          <label>Descripción<textarea id="prov-description" rows="4"></textarea></label>
+          <div style="margin-top:12px"><button class="btn btn-primary" id="prov-submit" type="button">Enviar solicitud</button></div>
+          <div id="prov-msg" class="muted" style="margin-top:12px"></div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

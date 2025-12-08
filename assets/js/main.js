@@ -255,6 +255,10 @@
 		const robotics = el('robotics-advanced'); if(robotics){ robotics.innerHTML=''; const roboList = state.products.filter(p=> matchesKeywords(p,['robot','robotics','lidar','actuator','servo','slam']) || (p.category||'').toLowerCase().indexOf('robótica')!==-1).slice(0,8); appendInBatches(robotics, roboList, makeCard, 6) }
 		const printing = el('printing-3d'); if(printing){ printing.innerHTML=''; const printList = state.products.filter(p=> matchesKeywords(p,['3d','impresión','printer','filament','resina','fdm']) || (p.category||'').toLowerCase().indexOf('impresión')!==-1).slice(0,8); appendInBatches(printing, printList, makeCard, 6) }
 		const cyber = el('cyberfaces'); if(cyber){ cyber.innerHTML=''; const cyberList = state.products.filter(p=> matchesKeywords(p,['cyberface','biomec','biomech','prosthetic','cyber']) || (p.category||'').toLowerCase().indexOf('biomec')!==-1).slice(0,8); appendInBatches(cyber, cyberList, makeCard, 6) }
+
+		// Home: featured providers preview (integración global)
+		const homeProviders = el('home-providers')
+		if(homeProviders){ homeProviders.innerHTML = ''; const provs = (state.providers||[]).slice(0,6); provs.forEach(p=>{ const a = document.createElement('article'); a.className='card product-card'; a.innerHTML = `<h4>${escapeHtml(p.name)}</h4><div class="muted">${escapeHtml(p.category)}</div><p class="subtle">${escapeHtml((p.description||'').slice(0,120))}</p><div style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.externalStoreURL||p.officialWebsite||'#')}" target="_blank">Visitar</a></div>`; homeProviders.appendChild(a) }) }
   }
 
   function renderMarketplace(){
