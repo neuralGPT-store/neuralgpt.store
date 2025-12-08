@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marketplace · NeuralGPT.Store</title>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Marketplace — NeuralGPT.Store</title>
     <link rel="stylesheet" href="/assets/css/main.css">
-  <style>body{margin:0;padding:0;background:#000;color:#ddd}</style>
-</head>
-<body>
-  <header><div class="container"><h1 class="site-title">NeuralGPT.Store · Ecosistema Cuántico</h1></div></header>
+    <script defer src="/assets/js/main.js"></script>
+  </head>
+  <body class="ultratech">
+    <header class="site-header"><div class="header-inner"><a class="brand" href="/">NeuralGPT.Store</a></div></header>
+    <main class="container" role="main">
+      <h1 class="section-title">AI Marketplace 2.0</h1>
+      <div class="filters" role="region" aria-label="Marketplace filters">
+        <input id="mp-search" class="search" aria-label="Buscar marketplace" placeholder="Buscar modelos, agentes, proveedores..." />
+        <div class="filter-list" role="toolbar" aria-label="Filtros">
+          <button data-filter="all" class="chip active">Todos</button>
+          <button data-filter="model" class="chip">Modelos</button>
+          <button data-filter="agent" class="chip">Agentes</button>
+          <button data-filter="integration" class="chip">Integraciones</button>
+        </div>
+      </div>
+
+      <div id="market-cards" class="market-grid" aria-live="polite"></div>
+    </main>
+    <footer class="site-footer">© NeuralGPT.Store</footer>
+  </body>
+</html>
   <nav><div class="container"><a href="/">Inicio</a> <a href="/marketplace.html">Marketplace</a></div></nav>
   <main><div class="container">
     <section class="page page-marketplace">
