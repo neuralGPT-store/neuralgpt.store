@@ -55,6 +55,11 @@
     	return { id: c.id || slugify(c.name||''), name: c.name || String(c), icon: c.icon || '', description: c.description || '', image: c.image || '' }
     }) : []
 
+	// try to load image manifest for optimized assets (optional)
+	try{
+		state.imgManifest = await fetchWithCache('/assets/img/optimized/manifest.json', 'ngs:imgmanifest', {})
+	}catch(e){ state.imgManifest = {} }
+
 	state.filtered = state.products.slice()
 
 		bindGlobalSearch()
@@ -390,8 +395,22 @@
 		a.setAttribute('aria-label', `${p.name} — ${p.short_description || ''}`)
 		const imgSrc = p.image || (p.images && p.images[0]) || '/assets/img/vision-pro.svg'
 		const imgAlt = p.imageAlt || p.title || p.name || 'Producto'
+		// if optimized manifest exists for this image, prefer AVIF/WebP via <picture>
+		let pictureHtml = `<img class="card-img" loading="lazy" src="${imgSrc}" alt="${escapeHtml(imgAlt)}">`
+		try{
+			if(state && state.imgManifest){
+				const rel = String(imgSrc).replace(/^\/?assets\/img\//,'')
+				const entry = state.imgManifest[rel]
+				if(entry && (entry.avif || entry.webp)){
+					pictureHtml = `<picture>`
+					if(entry.avif) pictureHtml += `<source srcset="${entry.avif}" type="image/avif">`
+					if(entry.webp) pictureHtml += `<source srcset="${entry.webp}" type="image/webp">`
+					pictureHtml += `<img class="card-img" loading="lazy" src="${imgSrc}" alt="${escapeHtml(imgAlt)}">` + `</picture>`
+				}
+			}
+		}catch(e){ /* ignore manifest errors */ }
 		a.innerHTML = `
-			<figure style="margin:0"><img class="card-img" loading="lazy" src="${imgSrc}" alt="${escapeHtml(imgAlt)}"></figure>
+				<figure style="margin:0">${pictureHtml}</figure>
 			<h3>${escapeHtml(p.name)}</h3>
 			<div class="product-meta">${escapeHtml(p.category)} • ${fmtPrice(p.price)}</div>
 			<p class="subtle">${escapeHtml(p.short_description||'')}</p>

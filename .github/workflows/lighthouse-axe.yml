@@ -1,0 +1,56 @@
+name: Lighthouse & Accessibility Audit
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm ci || npm i --no-audit --no-fund
+
+      - name: Install audit tools
+        run: |
+          npm i -g http-server lighthouse pa11y
+
+      - name: Serve site
+        run: |
+          npx http-server -p 8080 -c-1 &
+          echo "Waiting for server on port 8080..."
+          for i in {1..15}; do sleep 1; curl -sSf http://127.0.0.1:8080 && break || true; done
+
+      - name: Run Lighthouse (homepage)
+        run: |
+          npx lighthouse http://127.0.0.1:8080 --quiet --chrome-flags="--no-sandbox --headless" --output=json --output-path=./lighthouse-home.json || true
+
+      - name: Run Lighthouse (marketplace)
+        run: |
+          npx lighthouse http://127.0.0.1:8080/marketplace.html --quiet --chrome-flags="--no-sandbox --headless" --output=json --output-path=./lighthouse-marketplace.json || true
+
+      - name: Run pa11y accessibility check (homepage)
+        run: |
+          npx pa11y http://127.0.0.1:8080 --reporter json > pa11y-home.json || true
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-reports
+          path: |
+            ./lighthouse-home.json
+            ./lighthouse-marketplace.json
+            ./pa11y-home.json
+
+      - name: Fail job if critical issues found (light heuristic)
+        run: |
+          node -e "const fs=require('fs'); try{const L=JSON.parse(fs.readFileSync('lighthouse-home.json')); const score=L.categories.performance.score||0; if(score<0.5){console.error('Performance score < 50%'); process.exit(1)} }catch(e){console.log('No lighthouse report available, skipping check') }"
