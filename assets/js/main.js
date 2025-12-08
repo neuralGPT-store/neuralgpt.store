@@ -27,8 +27,9 @@
 	const embeddedProducts = (window.__PRODUCTS__ && Array.isArray(window.__PRODUCTS__)) ? window.__PRODUCTS__ : null
 	const embeddedCats = (window.__CATEGORIES__ && Array.isArray(window.__CATEGORIES__)) ? window.__CATEGORIES__ : null
 
-	// load and normalize data
-	const rawProducts = embeddedProducts || await loadJSON('/data/product-data.json', embeddedProducts || [])
+	// load and normalize data (prefer full product-catalog.json, fallback to product-data.json)
+	const rawCatalog = await loadJSON('/data/product-catalog.json', null)
+	const rawProducts = embeddedProducts || rawCatalog || await loadJSON('/data/product-data.json', embeddedProducts || [])
 	state.products = normalizeProducts(rawProducts)
 
 	// load categories and providers (optional assets)
@@ -55,16 +56,21 @@
     if(!Array.isArray(list)) return []
     return list.map(p=>({
 			id: String(p.id||p.slug||'').trim(),
-			name: String(p.name||p.id||'Untitled Product'),
+			title: String(p.title||p.name||p.id||'Untitled Product'),
+			name: String(p.title||p.name||p.id||'Untitled Product'),
 			// products store category as id (e.g., 'robotics') - keep as-is
 			category: String(p.category||p.cat||'uncategorized'),
-      type: String(p.type||'service'),
-      price: (typeof p.price === 'number') ? p.price : (p.price && !isNaN(Number(p.price)) ? Number(p.price) : null),
-      short_description: String(p.short_description||p.description||''),
-      image: String(p.image||'/assets/img/vision-pro.svg'),
-      tags: Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : []),
-      rating: (typeof p.rating === 'number') ? p.rating : 0,
-      specs: Array.isArray(p.specs) ? p.specs : (p.specs ? [p.specs] : [])
+			type: String(p.type||'service'),
+			price: (typeof p.price === 'number') ? p.price : (p.price && !isNaN(Number(p.price)) ? Number(p.price) : null),
+			short_description: String(p.short_description||p.description||''),
+			long_description: String(p.long_description||p.description||''),
+			images: Array.isArray(p.images) ? p.images : (p.images ? [p.images] : ['/assets/img/vision-pro.svg']),
+			vendorName: p.vendorName || p.vendor || '',
+			vendorLink: p.vendorLink || p.vendorLink || p.vendor || '',
+			tags: Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : []),
+			rating: (typeof p.rating === 'number') ? p.rating : 0,
+			specs: Array.isArray(p.specs) ? p.specs : (p.specs ? [p.specs] : []),
+			stock: (typeof p.stock === 'number') ? p.stock : (p.stock ? Number(p.stock) : null)
     }))
   }
 
@@ -100,21 +106,24 @@
 	}
 
 	function renderProviders(){
-		const elp = document.getElementById('providers-list')
-		if(elp){ elp.innerHTML = ''
-			state.providers.forEach(p=>{
-				const c = document.createElement('article'); c.className='card'
-				c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><p><a class="btn" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></p>`
-				elp.appendChild(c)
-			})
-		}
+			const elp = document.getElementById('providers-list')
+			if(elp){ elp.innerHTML = ''
+				const providers = state.providers || []
+				providers.forEach(p=>{
+					const c = document.createElement('article'); c.className='card product-card'
+					// show provider name and count of products from catalog
+					const count = state.products.filter(x=> (x.vendorName||'').toLowerCase() === (p.name||'').toLowerCase()).length
+					c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><div class="subtle">Productos: ${count}</div><p style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></p>`
+					elp.appendChild(c)
+				})
+			}
 
-		// provider registration form (simulated)
-		const provSubmit = el('prov-submit')
-		if(provSubmit){ provSubmit.addEventListener('click', ()=>{
-			const msg = el('prov-msg'); if(msg) msg.textContent = 'Formulario simulado: su solicitud ha sido recibida. Nos pondremos en contacto pronto.'
-			const form = el('provider-form'); if(form) form.reset()
-		}) }
+			// provider registration form (simulated)
+			const provSubmit = el('prov-submit')
+			if(provSubmit){ provSubmit.addEventListener('click', ()=>{
+				const msg = el('prov-msg'); if(msg) msg.textContent = 'Formulario simulado: su solicitud ha sido recibida. Nos pondremos en contacto pronto.'
+				const form = el('provider-form'); if(form) form.reset()
+			}) }
 	}
 
 	function renderProvidersView(){
@@ -136,9 +145,21 @@
 				if(filtered.length === 0){ byCatEl.innerHTML = '<div class="muted">No hay proveedores en esta categoría.</div>' }
 				else filtered.forEach(p=>{
 					const c = document.createElement('article'); c.className='card product-card'
-					c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><p><a class="btn" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></p>`
+					const count = state.products.filter(x=> (x.vendorName||'').toLowerCase() === (p.name||'').toLowerCase()).length
+					c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><div class="subtle">Productos: ${count}</div><p style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></p>`
 					byCatEl.appendChild(c)
 				})
+			}
+
+			// list products by provider if requested
+			const provProductsEl = el('provider-products')
+			if(provProductsEl){
+				provProductsEl.innerHTML = ''
+				const providerParam = params.provider ? params.provider.replace(/[-_]/g,' ').toLowerCase() : null
+				const providerName = providerParam ? providerParam : null
+				const products = state.products.filter(p=> providerName ? (p.vendorName||'').toLowerCase().replace(/\s+/g,'-') === providerParam : [])
+				if(products.length === 0 && params.provider){ provProductsEl.innerHTML = '<div class="muted">No se encontraron productos de este proveedor.</div>' }
+				else products.forEach(prod=> provProductsEl.appendChild(makeCard(prod)))
 			}
 
 			// attach provider profile forms if present
@@ -213,16 +234,20 @@
   }
 
   function renderProduct(){
-	const params = qs(); const id = params.id
-	if(!id) return
-	const product = state.products.find(p=> p.id === id)
-	const title = el('p-title'); if(title) title.textContent = product ? product.name : id
-	const img = el('p-image'); if(img) img.src = product && product.image ? product.image : '/assets/img/vision-pro.svg'
-	const desc = el('p-desc'); if(desc) desc.textContent = product ? product.short_description : 'Sin descripción'
-	const price = el('p-price'); if(price) price.textContent = product ? fmtPrice(product.price) : ''
-	const specs = el('p-details'); if(specs){ specs.innerHTML = product ? `<ul>${(product.specs||[]).map(s=>`<li>${s}</li>`).join('')}</ul>` : '<div class="muted">Detalles no disponibles</div>' }
+		const params = qs(); const id = params.id
+		if(!id) return
+		const product = state.products.find(p=> p.id === id)
+		const title = el('p-title'); if(title) title.textContent = product ? product.title || product.name : id
+		// gallery
+		const gallery = el('p-gallery'); if(gallery){ gallery.innerHTML = ''; if(product && product.images && product.images.length){ product.images.forEach(src=>{ const f = document.createElement('figure'); f.innerHTML = `<img src="${src}" alt="${escapeHtml(product.title||product.name)}" class="card-img">`; gallery.appendChild(f) }) } else { gallery.innerHTML = '<img src="/assets/img/vision-pro.svg" class="card-img">' } }
+		const desc = el('p-desc'); if(desc) desc.textContent = product ? product.short_description : 'Sin descripción'
+		const longDesc = el('p-long-desc'); if(longDesc) longDesc.innerHTML = product ? escapeHtml(product.long_description) : ''
+		const price = el('p-price'); if(price) price.textContent = product ? fmtPrice(product.price) : ''
+		const vendor = el('p-vendor'); if(vendor && product){ vendor.innerHTML = product.vendorLink ? `<a href="${escapeHtml(product.vendorLink)}" target="_blank">${escapeHtml(product.vendorName||product.vendor)}</a>` : escapeHtml(product.vendorName||'') }
+		const stock = el('p-stock'); if(stock) stock.textContent = (product && (product.stock!==null && product.stock!==undefined)) ? (product.stock>0 ? `${product.stock} en stock` : 'Agotado') : ''
+		const specs = el('p-details'); if(specs){ specs.innerHTML = product ? `<ul>${(product.specs||[]).map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>` : '<div class="muted">Detalles no disponibles</div>' }
 
-	// recommended
+		// recommended
 		const rec = el('recommended-products'); if(rec){ rec.innerHTML=''; const list = state.products.filter(p=> p.category === (product && product.category) && p.id !== id).slice(0,4); appendInBatches(rec, list, makeCard, 4) }
   }
 

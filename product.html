@@ -8,19 +8,18 @@
   </head>
   <body class="site-root">
     <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
-      <nav class="main-nav" aria-label="Main navigation"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Marketplace</a></li><li><a href="/providers.html">Proveedores</a></li><li><a href="/security.html">Seguridad IA</a></li><li><a href="/quantum.html">Quantum Pass</a></li></ul></nav>
-      <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar"></div>
+      <div class="search-wrap" style="flex:1;margin-left:18px"><input id="mp-search" class="search-input" placeholder="Buscar productos, proveedores..." /></div>
     </div></header>
     <main class="wrap">
       <section>
-        <h1 class="section-title" id="p-title">Cargando producto...</h1>
+          <div id="p-details"></div>
         <p class="subtle" id="p-sub">Ficha de producto dinámica</p>
       </section>
       <section class="sections slide-up">
         <div class="grid grid-2">
           <div class="card">
             <img id="p-image" src="/assets/img/vision-pro.svg" alt="product image" class="card-img" style="max-width:100%;height:auto;margin-bottom:12px">
-            <h2 id="p-name">Producto</h2>
+            <h1 id="p-title">Producto</h1>
             <div class="product-meta" id="p-price"></div>
             <p class="subtle" id="p-desc">Descripción breve del producto.</p>
             <div style="margin-top:12px">
