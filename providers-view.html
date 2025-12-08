@@ -43,17 +43,6 @@
     </main>
     <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
     <script src="/assets/js/main.js"></script>
-    <script>
-      // populate provider name from query
-      const params = Object.fromEntries(new URLSearchParams(location.search));
-      if(params.provider){
-        const name = params.provider.replace(/[-_]/g,' ');
-        document.getElementById('prov-name').textContent = name;
-        document.getElementById('prov-desc').textContent = 'Perfil y servicios de '+name;
-      }
-      // simple form submissions (placeholder)
-      document.getElementById('prov-form').addEventListener('submit', e=>{e.preventDefault();alert('Solicitud enviada.');});
-      document.getElementById('demo-form').addEventListener('submit', e=>{e.preventDefault();alert('Demo solicitada. Un representante se pondrá en contacto.');});
-    </script>
+    <!-- provider view handlers moved to /assets/js/main.js -->
   </body>
 </html>

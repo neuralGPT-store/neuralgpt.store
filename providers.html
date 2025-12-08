@@ -56,22 +56,7 @@
       </section>
       <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
 
-      <script>
-        // render providers from static JSON
-        fetch('/data/providers-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(list=>{
-          const el = document.getElementById('providers-list')
-          list.forEach(p=>{
-            const c = document.createElement('article'); c.className='card'
-            c.innerHTML = `<h3>${p.name}</h3><p class="subtle">${p.description}</p><p><a class="btn" href="${p.url}" target="_blank">Visitar</a></p>`
-            el.appendChild(c)
-          })
-        }).catch(()=>{})
-
-        document.getElementById('prov-submit').addEventListener('click', ()=>{
-          document.getElementById('prov-msg').textContent = 'Formulario simulado: su solicitud ha sido recibida. Nos pondremos en contacto pronto.'
-          document.getElementById('provider-form').reset()
-        })
-      </script>
+      <!-- providers rendering moved to /assets/js/main.js -->
     </main>
     <script src="/assets/js/main.js"></script>
     <footer class="site-footer">

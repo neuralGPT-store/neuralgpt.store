@@ -109,16 +109,6 @@
     });
   </script>
 
-  <!-- product data loader and marketplace renderer -->
-  <script>
-    (function(){
-      // preload JSON assets into global variables for main.js to use as a fast fallback
-      window.__PRODUCTS__ = window.__PRODUCTS__ || [];
-      window.__CATEGORIES__ = window.__CATEGORIES__ || [];
-      fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d }).catch(()=>{ /* ignore */ })
-      fetch('/data/category-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(c=>{ window.__CATEGORIES__ = c }).catch(()=>{ /* ignore */ })
-    })();
-  </script>
   <script src="/assets/js/main.js"></script>
 
   <footer class="site-footer">
