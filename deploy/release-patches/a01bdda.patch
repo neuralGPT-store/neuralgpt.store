@@ -1,0 +1,40 @@
+commit a01bdda7c90b70d2a67bde6d236cb4535940f93f
+Author: pokerprofe <pokerprofe@gmail.com>
+Date:   Mon Dec 8 08:39:19 2025 +0100
+
+    chore: unify pages - include canonical /assets/js/main.js across site for unified UI
+
+diff --git a/blog.html b/blog.html
+index 1a59c33..a8b6047 100644
+--- a/blog.html
++++ b/blog.html
+@@ -52,5 +52,6 @@
+         <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
+       </div>
+     </footer>
++    <script src="/assets/js/main.js"></script>
+   </body>
+ </html>
+diff --git a/console.html b/console.html
+index aa24dc2..93acfbe 100644
+--- a/console.html
++++ b/console.html
+@@ -30,5 +30,6 @@
+         <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
+       </div>
+     </footer>
++    <script src="/assets/js/main.js"></script>
+   </body>
+ </html>
+diff --git a/legal.html b/legal.html
+index e5504e7..0885a7e 100644
+--- a/legal.html
++++ b/legal.html
+@@ -23,5 +23,6 @@
+       </section>
+     </main>
+     <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
++    <script src="/assets/js/main.js"></script>
+   </body>
+ </html>
+... (truncated for brevity) ...

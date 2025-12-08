@@ -7,9 +7,9 @@
   --primary:#00C8FF; /* azul eléctrico */
   --accent:#45F7FF;  /* cyan */
   --violet:#7C4DFF;  /* quantum violet */
-  --muted:rgba(217,236,255,0.14);
-  --text:rgba(217,236,255,0.96);
-  --subtext:rgba(217,236,255,0.64);
+  --muted:rgba(217,236,255,0.16);
+  --text:rgba(230,242,255,0.98);
+  --subtext:rgba(217,236,255,0.72);
   --radius:14px;
   --shadow:0 28px 60px rgba(0,200,255,0.06);
   --glow:0 18px 60px rgba(0,200,255,0.12);
@@ -50,7 +50,7 @@ body{overflow-x:hidden}
 
 /* Cards / Glass-blur / Neon border */
 .card{position:relative;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));border-radius:var(--radius);padding:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 20px 50px rgba(2,10,20,0.6);overflow:visible;transition:transform .22s cubic-bezier(.2,.9,.1,1),box-shadow .22s}
-.card:hover{transform:translateY(-8px);box-shadow:0 34px 80px rgba(0,200,255,0.12)}
+.card:hover{transform:translateY(-10px) rotateX(1.2deg) rotateY(-0.6deg);box-shadow:0 44px 100px rgba(0,200,255,0.14)}
 .rgb-border{position:relative}
 .rgb-border::after{content:"";position:absolute;inset:-6px;z-index:0;border-radius:inherit;background:linear-gradient(90deg,var(--primary),var(--accent),var(--violet));filter:blur(12px) saturate(120%);opacity:0.12;animation:rgbFlow 12s linear infinite}
 @keyframes rgbFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -69,9 +69,14 @@ body{overflow-x:hidden}
 .product-card h3{margin:0 0 6px}
 .product-meta{font-size:13px;color:var(--subtext);margin-top:8px}
 
+/* standard card sizing and focus */
+.product-card, .card{min-height:120px}
+.product-card:focus{outline:3px solid rgba(124,77,255,0.14);outline-offset:3px}
+
 /* Buttons */
 .btn{display:inline-block;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text);text-decoration:none;font-weight:700}
-.btn-primary{background:linear-gradient(90deg,var(--primary),var(--violet));color:#071521;border:0;padding:12px 18px;box-shadow:0 20px 50px rgba(0,200,255,0.08)}
+.btn-primary{background:linear-gradient(90deg,var(--primary),var(--violet));color:#071521;border:0;padding:12px 18px;box-shadow:0 20px 50px rgba(0,200,255,0.08);transition:transform .18s, box-shadow .18s}
+.btn-primary:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 34px 90px rgba(0,200,255,0.16)}
 .btn-ghost{border:1px solid rgba(255,255,255,0.04)}
 
 /* Animations */
@@ -106,3 +111,45 @@ html{scroll-behavior:smooth}
 a:focus,button:focus,input:focus{outline:3px solid rgba(0,200,255,0.12);outline-offset:3px}
 
 /* End of futuristic stylesheet */
+
+/* Micro-interactions */
+/* hover glow electrical */
+.product-card:hover, .card:hover{ box-shadow: 0 44px 100px rgba(0,200,255,0.14); transform: translateY(-10px) scale(1.006); }
+
+/* breathing buttons */
+.btn-primary{ position:relative; animation:btnPulse 4s ease-in-out infinite; }
+@keyframes btnPulse{ 0%{ box-shadow:0 20px 50px rgba(0,200,255,0.06) } 50%{ box-shadow:0 28px 80px rgba(0,200,255,0.12) } 100%{ box-shadow:0 20px 50px rgba(0,200,255,0.06) } }
+
+/* cards breathing light */
+.card{ transition: box-shadow .28s cubic-bezier(.2,.9,.1,1), transform .22s }
+.card.breathe{ animation:cardBreathe 6s ease-in-out infinite }
+@keyframes cardBreathe{ 0%{ box-shadow: 0 20px 50px rgba(0,200,255,0.06) } 50%{ box-shadow: 0 34px 90px rgba(0,200,255,0.10) } 100%{ box-shadow: 0 20px 50px rgba(0,200,255,0.06) } }
+
+/* link underline animation */
+a{ position:relative }
+a::after{ content:''; position:absolute; left:0; right:0; bottom:-2px; height:2px; background:linear-gradient(90deg,var(--primary),var(--violet)); transform:scaleX(0); transform-origin:left center; transition:transform .2s cubic-bezier(.2,.9,.1,1); opacity:0.95 }
+a:hover::after{ transform:scaleX(1) }
+
+/* search input stronger glow & centered placeholder */
+.search-input{ box-shadow: 0 28px 90px rgba(0,200,255,0.08); border:1px solid rgba(69,247,255,0.12); padding:16px 20px; font-size:1.02rem }
+
+/* stronger suggestion list styling */
+.search-suggestions{position:relative;padding:6px;border-radius:10px;box-shadow:0 18px 40px rgba(0,0,0,0.6);background:linear-gradient(180deg, rgba(6,10,16,0.9), rgba(6,10,16,0.82));}
+.search-suggestion-item{border-bottom:1px solid rgba(255,255,255,0.02)}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  * { animation: none !important; transition: none !important }
+}
+
+/* subtle responsive improvement for fluid grid loading */
+.market-grid, .grid{ will-change: transform, opacity }
+
+/* Category chips (stronger RGB glow + micro-interactions) */
+.chip{ display:inline-block;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.02));color:var(--text);cursor:pointer;margin:6px;transition:box-shadow .18s ease,transform .12s ease,background .18s ease;position:relative }
+.chip:hover{ transform:translateY(-3px); box-shadow:0 12px 36px rgba(0,200,255,0.08), 0 0 28px rgba(124,77,255,0.03) }
+.chip.active{ box-shadow:0 20px 60px rgba(0,200,255,0.22), 0 0 36px rgba(124,77,255,0.06); border-color: rgba(0,200,255,0.45); background: linear-gradient(90deg, rgba(0,160,255,0.08), rgba(124,77,255,0.06)) }
+.chip::after{ content:''; position:absolute; right:-6px; bottom:-6px; width:10px;height:10px;border-radius:50%; background:transparent; transition:background .18s ease }
+.chip:hover::after{ background: radial-gradient(circle at center, rgba(0,200,255,0.12), rgba(124,77,255,0.02)) }
+
+

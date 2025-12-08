@@ -1,0 +1,199 @@
+commit c02605c70beebe8301c6be15f8da34d580f6a2c5 (HEAD -> main, origin/main)
+Author: pokerprofe <pokerprofe@gmail.com>
+Date:   Mon Dec 8 08:50:06 2025 +0100
+
+    refactor: centralize rendering in assets/js/main.js; remove inline fetches; inject contact email
+
+diff --git a/assets/js/main.js b/assets/js/main.js
+index 37c1d41..ffa1daa 100644
+--- a/assets/js/main.js
++++ b/assets/js/main.js
+@@ -26,17 +26,73 @@
+   async function init(){
+        const embeddedProducts = (window.__PRODUCTS__ && Array.isArray(window.__PRODUCTS__)) ? window.__PRODUCTS__ : null
+        const embeddedCats = (window.__CATEGORIES__ && Array.isArray(window.__CATEGORIES__)) ? window.__CATEGORIES__ : null
+-
+-       state.products = embeddedProducts || await loadJSON('/data/product-data.json', embeddedProducts || [])
+-       const rawCats = embeddedCats || await loadJSON('/data/category-data.json', null)
++               state.products = embeddedProducts || await loadJSON('/data/product-data.json', embeddedProducts || [])
++               // load categories and providers (optional assets)
++               const rawCats = embeddedCats || await loadJSON('/data/category-data.json', null)
++               state.providers = await loadJSON('/data/providers-data.json', [])
+        state.categories = rawCats ? (Array.isArray(rawCats) ? (rawCats.map(c=> c.name || c)) : []) : Array.from(new Set(state.products.map(p=>p.category))).filter(Boolean)
+
+        state.filtered = state.products.slice()
+
+        bindGlobalSearch()
+        routeRender()
++       enhanceSite()
+   }
+
++       /* Site enhancements: contact injection, provider handlers, providers renderer */
++       const CONTACT_EMAIL = 'wilfre@neuralgpt.store'
++
++       function enhanceSite(){
++               // inject contact email into footers if not present
++               document.querySelectorAll('.site-footer .wrap').forEach(wrap=>{
++                       if(!wrap.querySelector('.contact-email')){
++                               const d = document.createElement('div')
++                               d.className = 'contact-email muted'
++                               d.style.marginTop = '8px'
++                               d.innerHTML = `Contacto: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>`
++                               wrap.appendChild(d)
++                       }
++               })
++
++               // replace anchors that point to #contact with mailto
++               document.querySelectorAll('a[href$="#contact"]').forEach(a=>{ if(!a.dataset.contactified){ a.href = `mailto:${CONTACT_EMAIL}`; a.dataset.contactified = '1' } })
++
++               // run providers render on pages that need it
++               if(location.pathname.endsWith('providers.html')) renderProviders()
++               // populate provider view and attach forms if page uses them
++               if(location.pathname.endsWith('providers-view.html')) renderProvidersView()
++       }
++
++       function renderProviders(){
++               const elp = document.getElementById('providers-list')
++               if(elp){ elp.innerHTML = '';
++                       state.providers.forEach(p=>{
++                               const c = document.createElement('article'); c.className='card'
++                               c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><p><a class="btn" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></
+p>`                                                                                                                                                                                                                +                               elp.appendChild(c)
++                       })
++               }
++
++               // provider registration form (simulated)
++               const provSubmit = el('prov-submit')
++               if(provSubmit){ provSubmit.addEventListener('click', ()=>{
++                       const msg = el('prov-msg'); if(msg) msg.textContent = 'Formulario simulado: su solicitud ha sido recibida. Nos pondremos en contacto pronto.'
++                       const form = el('provider-form'); if(form) form.reset()
++               }) }
++       }
++
++       function renderProvidersView(){
++               const params = qs()
++               if(params.provider){
++                       const name = params.provider.replace(/[-_]/g,' ')
++                       const pn = el('prov-name'); if(pn) pn.textContent = name
++                       const pd = el('prov-desc'); if(pd) pd.textContent = 'Perfil y servicios de '+name
++               }
++               // attach provider profile forms if present
++               const pvForm = el('prov-form'); if(pvForm){ pvForm.addEventListener('submit', e=>{ e.preventDefault(); alert('Solicitud enviada.'); }) }
++               const demoForm = el('demo-form'); if(demoForm){ demoForm.addEventListener('submit', e=>{ e.preventDefault(); alert('Demo solicitada. Un representante se pondrá en contacto.'); }) }
++       }
++
+   // Routing: decide which render to run based on pathname
+   function routeRender(){
+        const path = location.pathname.split('/').pop() || 'index.html'
+@@ -51,16 +107,29 @@
+   }
+
+   /* Renderers */
+-  function renderHome(){
++       function appendInBatches(container, items, makeFn, batchSize = 20){
++               let i = 0
++               function nextBatch(){
++                       const frag = document.createDocumentFragment()
++                       for(let k=0;k<batchSize && i<items.length;k++,i++){
++                               frag.appendChild(makeFn(items[i]))
++                       }
++                       container.appendChild(frag)
++                       if(i<items.length) requestAnimationFrame(nextBatch)
++               }
++               nextBatch()
++       }
++
++       function renderHome(){
+        // categories preview
+        const ctn = el('home-categories')
+        if(ctn){ ctn.innerHTML = ''; state.categories.slice(0,6).forEach(cat=>{ const a=document.createElement('a'); a.className='card product-card'; a.href=`/category.html?category=${encodeURIComponent(cat)}`; 
+a.innerHTML=`<h3>${cat}</h3><p class="product-meta">Ver productos · ${state.products.filter(p=>p.category===cat).length} disponibles</p>`; ctn.appendChild(a) }) }                                                 
+-       // featured
+-       const f = el('featured-products'); if(f){ f.innerHTML=''; state.products.filter(p=> (p.tags||[]).includes('featured')).slice(0,8).forEach(p=> f.appendChild(makeCard(p))) }
++               // featured
++               const f = el('featured-products'); if(f){ f.innerHTML=''; const featured = state.products.filter(p=> (p.tags||[]).includes('featured')).slice(0,8); appendInBatches(f, featured, makeCard, 6) }    
+
+-       // trends
+-       const t = el('trends-preview'); if(t){ t.innerHTML=''; state.products.slice().sort((a,b)=> (b.rating||0)-(a.rating||0)).slice(0,6).forEach(p=> t.appendChild(makeCard(p))) }
++               // trends
++               const t = el('trends-preview'); if(t){ t.innerHTML=''; const trends = state.products.slice().sort((a,b)=> (b.rating||0)-(a.rating||0)).slice(0,6); appendInBatches(t, trends, makeCard, 6) }       
+   }
+
+   function renderMarketplace(){
+@@ -70,9 +139,9 @@
+        // extra controls
+        const fx = document.querySelector('.filters'); if(fx){ fx.innerHTML=''; const sel=document.createElement('select'); sel.id='type-filter'; sel.innerHTML='<option value="any">Tipo</option><option value="hardwa
+re">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option>'; fx.appendChild(sel); sel.addEventListener('change', applyFilters); const price=document.createElement('select'); price.id='price-filter'; price.innerHTML='<option value="any">Precio</option><option value="under500">≤ $500</option><option value="500-2k">$500–$2k</option><option value="2k+">$2k+</option>'; fx.appendChild(price); price.addEventListener('change', applyFilters) }                                                                                                                                                             
+-       const grid = el('market-grid'); if(grid){ grid.innerHTML=''; state.filtered.forEach(p=> grid.appendChild(makeCard(p))) }
++               const grid = el('market-grid'); if(grid){ grid.innerHTML=''; appendInBatches(grid, state.filtered, makeCard, 12) }
+
+-       renderSpecialSections()
++               renderSpecialSections()
+   }
+
+   function renderProduct(){
+@@ -86,16 +155,16 @@
+        const specs = el('p-details'); if(specs){ specs.innerHTML = product ? `<ul>${(product.specs||[]).map(s=>`<li>${s}</li>`).join('')}</ul>` : '<div class="muted">Detalles no disponibles</div>' }
+
+        // recommended
+-       const rec = el('recommended-products'); if(rec){ rec.innerHTML=''; const list = state.products.filter(p=> p.category === (product && product.category) && p.id !== id).slice(0,4); list.forEach(p=> rec.app
+endChild(makeCard(p))) }                                                                                                                                                                                           +               const rec = el('recommended-products'); if(rec){ rec.innerHTML=''; const list = state.products.filter(p=> p.category === (product && product.category) && p.id !== id).slice(0,4); appendInBatches(
+rec, list, makeCard, 4) }                                                                                                                                                                                             }
+
+   function renderCategory(){
+        const params = new URLSearchParams(location.search); const cat = params.get('category') || params.get('cat') || ''
+        const grid = el('category-grid'); if(!grid) return
+        const list = state.products.filter(p=> (p.category||'').toLowerCase() === (cat||'').toLowerCase())
+-       grid.innerHTML=''
+-       if(list.length === 0){ grid.innerHTML = '<div class="muted">No hay productos en esta categoría.</div>'; return }
+-       list.forEach(p=> grid.appendChild(makeCard(p)))
++               grid.innerHTML=''
++               if(list.length === 0){ grid.innerHTML = '<div class="muted">No hay productos en esta categoría.</div>'; return }
++               appendInBatches(grid, list, makeCard, 12)
+   }
+
+   function renderSecurity(){ /* placeholder: static content exists in HTML; enhance if needed */ }
+@@ -105,9 +174,18 @@
+
+   /* UI helpers */
+   function makeCard(p){
+-       const a = document.createElement('article'); a.className = 'product-card card fade-in'
+-       a.innerHTML = `<img class="card-img" loading="lazy" src="${p.image||'/assets/img/vision-pro.svg'}" alt="${escapeHtml(p.name)}"><h3>${escapeHtml(p.name)}</h3><div class="product-meta">${escapeHtml(p.categ
+ory)} • ${fmtPrice(p.price)}</div><p class="subtle">${escapeHtml(p.short_description||'')}</p><div style="margin-top:12px"><a class="btn btn-primary" href="/product.html?id=${encodeURIComponent(p.id)}">Ver</a></div>`                                                                                                                                                                                                              -       return a
++               const a = document.createElement('article')
++               a.className = 'product-card card fade-in'
++               a.setAttribute('role','article')
++               a.innerHTML = `
++                       <figure style="margin:0"><img class="card-img" loading="lazy" src="${p.image||'/assets/img/vision-pro.svg'}" alt="${escapeHtml(p.name)}"></figure>
++                       <h3>${escapeHtml(p.name)}</h3>
++                       <div class="product-meta">${escapeHtml(p.category)} • ${fmtPrice(p.price)}</div>
++                       <p class="subtle">${escapeHtml(p.short_description||'')}</p>
++                       <div style="margin-top:12px"><a class="btn btn-primary" href="/product.html?id=${encodeURIComponent(p.id)}">Ver</a></div>
++               `
++               // micro-interaction: subtle breathing animation class toggled on hover via CSS
++               return a
+   }
+
+   function renderSpecialSections(){ const fp = el('featured-products'); if(fp){ fp.innerHTML=''; state.products.filter(p=> (p.tags||[]).includes('featured')).slice(0,8).forEach(p=> fp.appendChild(makeCard(p))) 
+} }
+diff --git a/index.html b/index.html
+index 56d8185..b9515ad 100644
+--- a/index.html
++++ b/index.html
+@@ -109,16 +109,6 @@
+     });
+   </script>
+
+-  <!-- product data loader and marketplace renderer -->
+-  <script>
+-    (function(){
+-      // preload JSON assets into global variables for main.js to use as a fast fallback
+-      window.__PRODUCTS__ = window.__PRODUCTS__ || [];
+-      window.__CATEGORIES__ = window.__CATEGORIES__ || [];
+-      fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d }).catch(()=>{ /* ignore */ })
+-      fetch('/data/category-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(c=>{ window.__CATEGORIES__ = c }).catch(()=>{ /* ignore */ })
+-    })();
+-  </script>
+   <script src="/assets/js/main.js"></script>
+
+   <footer class="site-footer">

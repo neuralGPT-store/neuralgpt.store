@@ -1,0 +1,32 @@
+commit 34f376961963caee819e57b02d333ccb2eac61bf
+Author: pokerprofe <pokerprofe@gmail.com>
+Date:   Mon Dec 8 08:31:09 2025 +0100
+
+    Fix: add expected IDs for static-check (market-grid + filter-list)
+
+diff --git a/index.html b/index.html
+index e1e7f8a..56d8185 100644
+--- a/index.html
++++ b/index.html
+@@ -65,7 +65,7 @@
+
+     <section class="sections slide-up">
+       <h2 class="section-title">Marketplace — Vista previa</h2>
+-      <div class="market-grid">
++      <div id="market-grid" class="market-grid">
+         <article class="card tooltip" data-tip="Inferencia en dispositivo" onclick="location.href='/product.html?id=edge-x1'">
+           <h3>Edge Accelerator X1</h3>
+           <p class="subtle">Inferencia de baja latencia para edge.</p>
+diff --git a/marketplace.html b/marketplace.html
+index c4e17af..785687d 100644
+--- a/marketplace.html
++++ b/marketplace.html
+@@ -34,7 +34,7 @@
+     <section class="sections">
+       <h2 class="section-title">Explorar</h2>
+       <div class="filters"><!-- dynamic controls injected --></div>
+-      <div class="filter-list" role="tablist" aria-label="Filtrar por categoría"></div>
++      <div id="filter-list" class="filter-list" role="tablist" aria-label="Filtrar por categoría"></div>
+       <div id="market-grid" class="market-grid" aria-live="polite"></div>
+     </section>
+
