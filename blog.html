@@ -7,29 +7,40 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body class="site-root">
-    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a></div></header>
+    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Main navigation"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Marketplace</a></li><li><a href="/providers.html">Proveedores</a></li><li><a href="/security.html">Seguridad IA</a></li><li><a href="/quantum.html">Quantum Pass</a></li></ul></nav>
+      <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar"></div>
+    </div></header>
     <main class="wrap">
       <h1 class="section-title">Blog</h1>
       <p class="subtle">Análisis, guías y novedades del ecosistema IA.</p>
 
       <section class="posts-grid grid-3">
-        <article class="card post-card">
+        <article class="card post-card fade-in">
           <h2>AGI: Where We Stand in 2025</h2>
           <p class="subtle">An overview of research trends and industry momentum.</p>
-          <a class="btn" href="#">Leer</a>
+          <a class="btn" href="/product.html?id=article-agi-2025">Leer</a>
         </article>
-        <article class="card post-card">
+        <article class="card post-card fade-in" style="animation-delay:.08s">
           <h2>Edge AI at Scale</h2>
           <p class="subtle">Design patterns for deploying models to the edge.</p>
-          <a class="btn" href="#">Leer</a>
+          <a class="btn" href="/product.html?id=article-edge-ai">Leer</a>
         </article>
-        <article class="card post-card">
+        <article class="card post-card fade-in" style="animation-delay:.14s">
           <h2>AI Agents: Trust &amp; Safety</h2>
           <p class="subtle">Best practices for agent governance.</p>
-          <a class="btn" href="#">Leer</a>
+          <a class="btn" href="/product.html?id=article-agents-safety">Leer</a>
         </article>
       </section>
     </main>
-    <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
+          <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
+          <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
+        </div>
+        <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
+      </div>
+    </footer>
   </body>
 </html>

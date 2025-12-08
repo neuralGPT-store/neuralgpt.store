@@ -7,30 +7,80 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body class="site-root">
-    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a></div></header>
+    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Main navigation"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Marketplace</a></li><li><a href="/providers.html" aria-current="page">Proveedores</a></li><li><a href="/security.html">Seguridad IA</a></li><li><a href="/quantum.html">Quantum Pass</a></li><li><a href="/legal.html">Legal</a></li></ul></nav>
+      <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar"></div>
+    </div></header>
     <main class="wrap">
-      <h1 class="section-title">Proveedores destacados</h1>
-      <p class="subtle">Encuentra proveedores verificados para compute, hardware y servicios IA.</p>
-      <div class="grid grid-3 providers-list">
-        <article class="card">
-          <h3>NeuralEdge</h3>
-          <p class="subtle">Hardware optimizado para inferencia en el borde.</p>
-        </article>
-        <article class="card">
-          <h3>QuantCloud</h3>
-          <p class="subtle">Acceso cuántico y servicios gestionados.</p>
-        </article>
-        <article class="card">
-          <h3>SecureAI</h3>
-          <p class="subtle">Seguridad y cumplimiento para despliegues AI.</p>
-        </article>
-      </div>
-      <section class="cta">
-        <h2>¿Eres proveedor?</h2>
-        <p class="subtle">Únete a nuestro marketplace y llega a clientes empresariales.</p>
-        <a class="btn btn-primary" href="/providers.html">Aplicar ahora</a>
+      <section class="slide-up">
+        <h1 class="section-title">Únete como proveedor</h1>
+        <p class="subtle">Expón tus productos y servicios a empresas, laboratorios y desarrolladores en busca de soluciones IA.</p>
       </section>
+
+      <section class="sections">
+        <h2 class="section-title">Por qué integrarte en NeuralGPT.Store</h2>
+        <div class="grid grid-3">
+          <div class="card"><h3>Exposición</h3><p class="subtle">Llega a equipos de investigación y empresas que compran hardware y servicios IA.</p></div>
+          <div class="card"><h3>Comisiones y leads</h3><p class="subtle">Modelos flexibles por venta o lead con reportes claros.</p></div>
+          <div class="card"><h3>Visibilidad</h3><p class="subtle">Destaca en listados y banners dedicados.</p></div>
+        </div>
+      </section>
+
+      <section class="sections">
+        <h2 class="section-title">Modelos de monetización</h2>
+        <ul>
+          <li>Comisión por venta</li>
+          <li>Pago por lead</li>
+          <li>Paquetes de visibilidad (banner, destacado)</li>
+        </ul>
+      </section>
+
+      <section class="sections">
+        <h2 class="section-title">Proveedores destacados</h2>
+        <div id="providers-list" class="grid grid-3"></div>
+      </section>
+
+      <section class="sections">
+        <h2 class="section-title">Formulario de registro (simulado)</h2>
+        <form id="provider-form" class="card">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <input id="prov-name" placeholder="Nombre de la empresa" />
+            <input id="prov-site" placeholder="Sitio web" />
+            <select id="prov-type"><option value="hardware">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option></select>
+            <input id="prov-country" placeholder="País" />
+            <input id="prov-email" placeholder="Email" />
+            <button type="button" id="prov-submit" class="btn btn-primary">Simular envío</button>
+          </div>
+        </form>
+        <div id="prov-msg" class="muted" style="margin-top:12px"></div>
+      </section>
+      <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
+
+      <script>
+        // render providers from static JSON
+        fetch('/data/providers-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(list=>{
+          const el = document.getElementById('providers-list')
+          list.forEach(p=>{
+            const c = document.createElement('article'); c.className='card'
+            c.innerHTML = `<h3>${p.name}</h3><p class="subtle">${p.description}</p><p><a class="btn" href="${p.url}" target="_blank">Visitar</a></p>`
+            el.appendChild(c)
+          })
+        }).catch(()=>{})
+
+        document.getElementById('prov-submit').addEventListener('click', ()=>{
+          document.getElementById('prov-msg').textContent = 'Formulario simulado: su solicitud ha sido recibida. Nos pondremos en contacto pronto.'
+          document.getElementById('provider-form').reset()
+        })
+      </script>
     </main>
-    <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
+          <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
+          <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
+        </div>
+        <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
+      </div>
+    </footer>
   </body>
 </html>

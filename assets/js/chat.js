@@ -20,24 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
         userNode.innerHTML = `<b>You:</b> ${text}`;
         messages.appendChild(userNode);
 
-        try {
-            const resp = await fetch('/irene/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
-            });
-            if (!resp.ok) throw new Error('Irene API error');
-            const data = await resp.json();
-            const botNode = document.createElement('div');
-            botNode.innerHTML = `<b>Irene:</b> ${data.reply || data.response || ''}`;
-            messages.appendChild(botNode);
-            field.value = '';
-            messages.scrollTop = messages.scrollHeight;
-        } catch (err) {
-            console.error('Irene chat error:', err);
-            const errNode = document.createElement('div');
-            errNode.innerHTML = `<b>Irene:</b> Error fetching reply.`;
-            messages.appendChild(errNode);
-        }
+        // Network calls removed for static build. Provide a local offline demo response.
+        const botNode = document.createElement('div');
+        botNode.innerHTML = `<b>Irene:</b> Este chat está en modo demostración (offline). Respuesta simulada: "Recibido: ${text.replace(/</g,'&lt;')}"`;
+        messages.appendChild(botNode);
+        field.value = '';
+        messages.scrollTop = messages.scrollHeight;
     });
 });

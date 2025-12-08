@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Tendencias 2025 — NeuralGPT.Store</title>
+    <title>Categoria — NeuralGPT.Store</title>
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body class="site-root">
@@ -12,25 +12,33 @@
       <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar"></div>
     </div></header>
     <main class="wrap">
-      <h1 class="section-title">Tech Trends 2025</h1>
-      <p class="subtle">Insights sobre AGI, edge AI, seguridad y computación cuántica.</p>
-
+      <h1 class="section-title">Categoría</h1>
+      <p class="subtle">Vista genérica de categoría — contenido placeholder profesional.</p>
       <section class="sections">
-        <div class="trends-grid grid-3">
-          <article class="card fade-in">
-            <h3>On-Device LLMs</h3>
-            <p class="subtle">Modelos optimizados para ejecución local.</p>
-          </article>
-          <article class="card fade-in" style="animation-delay:.06s">
-            <h3>Edge Acceleration</h3>
-            <p class="subtle">Aceleradores dedicados y eficiencia energética.</p>
-          </article>
-          <article class="card fade-in" style="animation-delay:.12s">
-            <h3>AI Security</h3>
-            <p class="subtle">Nuevas prácticas en protección y gobernanza.</p>
-          </article>
-        </div>
+        <div id="category-grid" class="grid market-grid"></div>
       </section>
+      <script>
+        // preload product/category JSON and then render the category page
+        (function(){
+          function render(){
+            const params = new URLSearchParams(location.search)
+            const cat = params.get('cat') || params.get('category') || ''
+            const list = (window.__PRODUCTS__||[]).filter(p=> (p.category||'').toLowerCase() === (cat||'').toLowerCase())
+            const grid = document.getElementById('category-grid')
+            if(list.length && grid){
+              list.forEach(p=>{
+                const a = document.createElement('article'); a.className='card tooltip'
+                a.innerHTML = `<h3>${p.name}</h3><p class="subtle">${p.short_description}</p><a class="btn" href="/product.html?id=${encodeURIComponent(p.id)}">Ver</a>`
+                grid.appendChild(a)
+              })
+            } else if(grid){ grid.innerHTML = '<div class="muted">No products in this category.</div>' }
+          }
+          // attempt to fetch JSON if no preloaded dataset
+          if(!window.__PRODUCTS__ || !window.__PRODUCTS__.length){
+            fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d; render() }).catch(()=>{ render() })
+          } else { render() }
+        })();
+      </script>
     </main>
     <footer class="site-footer">
       <div class="wrap">

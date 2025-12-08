@@ -29,61 +29,104 @@
   </header>
 
   <main class="wrap">
-    <section class="hero">
+    <section class="hero fade-in">
       <div class="hero-card">
         <h1>NeuralGPT.Store — Marketplace para IA</h1>
         <p class="subtle">Componentes, soluciones y planes empresariales con estética azul eléctrico y experiencia modular.</p>
-        <div class="hero-ctas">
+        <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
+          <div class="search-wrap" style="flex:1">
+            <input id="site-search" class="search-input" placeholder="Buscar productos, proveedores, categorías..." aria-label="Buscar">
+          </div>
           <a class="btn btn-primary" href="/marketplace.html">Explorar Marketplace</a>
-          <a class="btn" href="/providers.html">Ser proveedor</a>
         </div>
       </div>
     </section>
 
-    <section class="sections">
-      <h2 class="section-title">Destacados</h2>
-      <div class="grid grid-3">
-        <article class="card">
-          <h3>AI Components</h3>
-          <p class="subtle">Modelos optimizados y módulos integrables.</p>
-          <a class="btn" href="/marketplace.html">Ver</a>
-        </article>
-        <article class="card">
-          <h3>Quantum Pass</h3>
-          <p class="subtle">Acceso experimental y planes empresariales.</p>
-          <a class="btn" href="/quantum.html">Ver</a>
-        </article>
-        <article class="card">
-          <h3>Security Suite</h3>
-          <p class="subtle">Protección para modelos y datos en producción.</p>
-          <a class="btn" href="/security.html">Ver</a>
-        </article>
+    <section class="sections slide-up">
+      <h2 class="section-title">Categorías principales</h2>
+      <div class="grid grid-4">
+        <div id="cat-ai-components" class="card-list"></div>
+        <div id="cat-robotics" class="card-list"></div>
+        <div id="cat-smart-sensors" class="card-list"></div>
+        <div id="cat-services" class="card-list"></div>
       </div>
     </section>
 
-    <section class="sections">
-      <h2 class="section-title">Tendencias 2025</h2>
-      <div class="trends-preview grid-4"></div>
-      <p class="muted"><a href="/trends.html">Ver tendencias</a></p>
+    <section class="sections slide-up">
+      <h2 class="section-title">Tendencias IA 2025</h2>
+      <div id="trends-home" class="grid grid-3">
+        <div class="card">Modelos multimodales en producción</div>
+        <div class="card">Edge inferencing y privacidad</div>
+        <div class="card">Automatización de pipelines ML</div>
+      </div>
+      <p class="muted"><a href="/trends.html">Ver más</a></p>
     </section>
 
-    <section class="sections">
+    <section class="sections slide-up">
       <h2 class="section-title">Marketplace — Vista previa</h2>
-      <div class="market-grid"></div>
+      <div class="market-grid">
+        <article class="card tooltip" data-tip="Inferencia en dispositivo" onclick="location.href='/product.html?id=edge-x1'">
+          <h3>Edge Accelerator X1</h3>
+          <p class="subtle">Inferencia de baja latencia para edge.</p>
+          <a class="btn btn-primary" href="/product.html?id=edge-x1">Detalles</a>
+        </article>
+        <article class="card tooltip" data-tip="Sensor SLAM para mapping" onclick="location.href='/product.html?id=slam-mini'">
+          <h3>SLAM Lidar Mini</h3>
+          <p class="subtle">Sensor compacto para robótica.</p>
+          <a class="btn" href="/product.html?id=slam-mini">Detalles</a>
+        </article>
+        <article class="card tooltip" data-tip="Seguridad en runtime para modelos" onclick="location.href='/product.html?id=securegate'">
+          <h3>SecureGate AI</h3>
+          <p class="subtle">Protección para endpoints y modelos.</p>
+          <a class="btn" href="/product.html?id=securegate">Ver</a>
+        </article>
+      </div>
       <p class="muted"><a href="/marketplace.html">Ir al Marketplace</a></p>
     </section>
 
-    <section class="cta">
-      <h2>List your services</h2>
-      <a class="btn btn-primary" href="/providers.html">Join as Provider</a>
+    <section class="cta slide-up">
+      <h2>Proveedores Destacados</h2>
+      <div class="providers-spot">
+        <div style="flex:1">
+          <h3>NeuralEdge</h3>
+          <p class="subtle">Hardware y soporte optimizado.</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <a class="btn" href="/providers-view.html?provider=neuraledge">Ver perfil</a>
+          <a class="btn btn-primary" href="/providers.html">Regístrate como proveedor</a>
+        </div>
+      </div>
     </section>
   </main>
+  <script>
+    // root search to marketplace
+    document.getElementById('site-search')?.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){
+        const q = encodeURIComponent(this.value.trim());
+        location.href = '/marketplace.html'+(q?('?search='+q):'');
+      }
+    });
+  </script>
+
+  <!-- product data loader and marketplace renderer -->
+  <script>
+    (function(){
+      // preload JSON assets into global variables for main.js to use as a fast fallback
+      window.__PRODUCTS__ = window.__PRODUCTS__ || [];
+      window.__CATEGORIES__ = window.__CATEGORIES__ || [];
+      fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d }).catch(()=>{ /* ignore */ })
+      fetch('/data/category-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(c=>{ window.__CATEGORIES__ = c }).catch(()=>{ /* ignore */ })
+    })();
+  </script>
+  <script src="/assets/js/main.js"></script>
 
   <footer class="site-footer">
-    <div class="wrap footer-grid">
-      <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace, seguridad y servicios empresariales.</p></div>
-      <nav class="footer-nav"><a href="/legal.html">Legal</a><a href="/providers.html">Proveedores</a></nav>
-      <div class="muted">© NeuralGPT.Store</div>
+    <div class="wrap">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
+        <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
+        <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
+      </div>
+      <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
     </div>
   </footer>
 

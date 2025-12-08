@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Producto — NeuralGPT.Store</title>
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body class="site-root">
+    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Main navigation"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Marketplace</a></li><li><a href="/providers.html">Proveedores</a></li><li><a href="/security.html">Seguridad IA</a></li><li><a href="/quantum.html">Quantum Pass</a></li></ul></nav>
+      <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar"></div>
+    </div></header>
+    <main class="wrap">
+      <section>
+        <h1 class="section-title">Producto — Placeholder</h1>
+        <p class="subtle">Página de producto dinámica (placeholder). Los parámetros URL controlan el contenido.</p>
+      </section>
+      <section class="sections slide-up">
+        <div class="grid grid-2">
+          <div class="card">
+            <img id="p-image" src="/assets/img/vision-pro.svg" alt="product image" class="card-img" style="max-width:100%;height:auto;margin-bottom:12px">
+            <h2 id="p-title">Producto</h2>
+            <p class="subtle" id="p-desc">Descripción breve del producto.</p>
+            <div style="margin-top:12px">
+              <a class="btn btn-primary" id="buy-btn" href="#">Comprar</a>
+              <a class="btn" id="demo-btn" href="/providers-view.html#contact">Solicitar demo</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Detalles técnicos</h3>
+            <div id="p-details">Cargando detalles...</div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
+          <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
+          <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
+        </div>
+        <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
+      </div>
+    </footer>
+    <script>
+      // Populate product page; fetch JSON if dataset not preloaded
+      (function(){
+        function qs(){return Object.fromEntries(new URLSearchParams(location.search))}
+        const Q=qs();
+        const findProduct = id => (window.__PRODUCTS__||[]).find(p=>p.id===id)
+        function render(){
+          if(!Q.id) return
+          const prod = findProduct(Q.id)
+          if(prod){
+            document.getElementById('p-title').textContent = prod.name
+            document.getElementById('p-desc').textContent = prod.short_description
+            document.getElementById('p-image').src = prod.image || '/assets/img/vision-pro.svg'
+            document.getElementById('buy-btn').href = '/checkout.html?product='+encodeURIComponent(prod.id)
+            document.getElementById('p-details').innerHTML = `<ul><li>Categoria: ${prod.category}</li><li>Precio: $${prod.price}</li></ul>`
+          } else {
+            document.getElementById('p-title').textContent = Q.id
+            document.getElementById('p-desc').textContent = 'Producto no encontrado en el catálogo estático.'
+          }
+        }
+        if(!window.__PRODUCTS__ || !window.__PRODUCTS__.length){
+          fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d; render() }).catch(()=>{ render() })
+        } else { render() }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Proveedor — NeuralGPT.Store</title>
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body class="site-root">
+    <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a></div></header>
+    <main class="wrap">
+      <h1 class="section-title">Perfil de proveedor</h1>
+      <p class="subtle">Página de perfil y formulario de contacto / demo para proveedores.</p>
+      <section class="sections">
+        <div class="grid grid-2">
+          <div class="card">
+            <h2 id="prov-name">Proveedor</h2>
+            <p class="subtle" id="prov-desc">Descripción breve del proveedor.</p>
+            <p><a class="btn btn-primary" id="contact-cta" href="#contact">Contactar</a></p>
+          </div>
+          <div class="card">
+            <h3>Regístrate como proveedor</h3>
+            <form id="prov-form">
+              <label><div class="muted">Empresa</div><input name="company" required></label>
+              <label><div class="muted">Email</div><input name="email" type="email" required></label>
+              <div style="margin-top:12px"><button class="btn btn-primary" type="submit">Enviar solicitud</button></div>
+            </form>
+          </div>
+        </div>
+      </section>
+      <section id="contact" class="sections slide-up">
+        <h2 class="section-title">Solicitar demo empresarial</h2>
+        <p class="subtle">Rellena el formulario y un representante se pondrá en contacto.</p>
+        <div class="card">
+          <form id="demo-form">
+            <label><div class="muted">Nombre</div><input name="name" required></label>
+            <label><div class="muted">Empresa</div><input name="company" required></label>
+            <label><div class="muted">Email</div><input name="email" type="email" required></label>
+            <div style="margin-top:12px"><button class="btn btn-primary" type="submit">Solicitar demo</button></div>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="wrap">© NeuralGPT.Store</div></footer>
+    <script>
+      // populate provider name from query
+      const params = Object.fromEntries(new URLSearchParams(location.search));
+      if(params.provider){
+        const name = params.provider.replace(/[-_]/g,' ');
+        document.getElementById('prov-name').textContent = name;
+        document.getElementById('prov-desc').textContent = 'Perfil y servicios de '+name;
+      }
+      // simple form submissions (placeholder)
+      document.getElementById('prov-form').addEventListener('submit', e=>{e.preventDefault();alert('Solicitud enviada.');});
+      document.getElementById('demo-form').addEventListener('submit', e=>{e.preventDefault();alert('Demo solicitada. Un representante se pondrá en contacto.');});
+    </script>
+  </body>
+</html>

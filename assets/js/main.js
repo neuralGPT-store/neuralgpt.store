@@ -57,7 +57,7 @@
 		if(disc){ const b = document.createElement('span'); b.className='badge badge-disc'; b.textContent = disc; badges.appendChild(b) }
 
 		const actions = document.createElement('div'); actions.className='card-actions'
-		const btn = document.createElement('a'); btn.href = `/marketplace.html#p${p.id}`; btn.className='btn btn-primary'; btn.textContent='Ver'
+		const btn = document.createElement('a'); btn.href = `/product.html?id=${encodeURIComponent(p.id)}`; btn.className='btn btn-primary'; btn.textContent='Ver'
 		actions.appendChild(btn)
 
 		// rating
@@ -105,12 +105,16 @@
 		const q1 = (document.getElementById('mp-search') && document.getElementById('mp-search').value.trim().toLowerCase()) || (document.getElementById('global-search') && document.getElementById('global-search').value.trim().toLowerCase()) || ''
 		const activeChip = document.querySelector('.filter-list button.active')
 		const cat = activeChip && activeChip.dataset.filter
+		const typeSel = document.getElementById('type-filter') ? document.getElementById('type-filter').value : 'any'
 		const priceSel = document.getElementById('price-filter') ? document.getElementById('price-filter').value : 'any'
 		const ratingSel = document.getElementById('rating-filter') ? Number(document.getElementById('rating-filter').value) : 0
 
 		let res = state.products.slice()
 		if(cat && cat!=='all') res = res.filter(p=>p.category === cat)
 		if(q1) res = res.filter(p=> (p.name||'').toLowerCase().includes(q1) || (p.short_description||'').toLowerCase().includes(q1) || (p.tags||[]).join(' ').toLowerCase().includes(q1) )
+		if(typeSel && typeSel!=='any'){
+			res = res.filter(p=> (p.type||'').toLowerCase() === typeSel.toLowerCase())
+		}
 		if(priceSel!=='any'){
 			if(priceSel==='under500') res = res.filter(p=>p.price && p.price>0 && p.price<=500)
 			if(priceSel==='500-2k') res = res.filter(p=>p.price && p.price>500 && p.price<=2000)
@@ -121,13 +125,28 @@
 		state.filtered = res
 		const el = document.getElementById('market-cards') || document.getElementById('market-grid')
 		if(el) renderGrid(res, el)
+		// update any category overview containers (keep them in sync)
+		['AI Components','Robotics','Smart Sensors','Cybersecurity','Services'].forEach(catName=>{
+			const id = 'cat-'+catName.toLowerCase().replace(/\s+/g,'-')
+			const c = document.getElementById(id)
+			if(c){
+				const list = res.filter(p=> (p.category||'').toLowerCase() === catName.toLowerCase()).slice(0,6)
+				c.innerHTML = ''
+				const frag = document.createDocumentFragment(); list.forEach(p=>frag.appendChild(createCard(p))); c.appendChild(frag)
+			}
+		})
 	}
 
 	function setupExtraControls(){
 		const filters = document.querySelector('.filters')
 		if(!filters) return
 		// price select
-		if(!document.getElementById('price-filter')){
+			if(!document.getElementById('type-filter')){
+				const tsel = document.createElement('select'); tsel.id='type-filter'; tsel.className='chip'; tsel.innerHTML = `<option value="any">Tipo</option><option value="hardware">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option>`
+				filters.appendChild(tsel)
+				tsel.addEventListener('change', applyFilters)
+			}
+			if(!document.getElementById('price-filter')){
 			const sel = document.createElement('select'); sel.id='price-filter'; sel.className='chip'; sel.innerHTML = `<option value="any">Precio</option><option value="under500">≤ $500</option><option value="500-2k">$500–$2k</option><option value="2k+">$2k+</option>`
 			filters.appendChild(sel)
 			sel.addEventListener('change', applyFilters)
@@ -137,6 +156,20 @@
 			filters.appendChild(sel)
 			sel.addEventListener('change', applyFilters)
 		}
+	}
+
+	function renderSpecialSections(){
+		// featured, new releases, integrations
+		const featured = (state.products||[]).filter(p=> (p.tags||[]).includes('featured')).slice(0,8)
+		const news = (state.products||[]).filter(p=> (p.tags||[]).includes('new')).slice(0,8)
+		const integrations = (state.products||[]).filter(p=> (p.tags||[]).includes('integration')).slice(0,8)
+
+		const fEl = document.getElementById('featured-products')
+		const nEl = document.getElementById('new-products')
+		const iEl = document.getElementById('integration-products')
+		if(fEl){ fEl.innerHTML=''; const frag=document.createDocumentFragment(); featured.forEach(p=>frag.appendChild(createCard(p))); fEl.appendChild(frag) }
+		if(nEl){ nEl.innerHTML=''; const frag=document.createDocumentFragment(); news.forEach(p=>frag.appendChild(createCard(p))); nEl.appendChild(frag) }
+		if(iEl){ iEl.innerHTML=''; const frag=document.createDocumentFragment(); integrations.forEach(p=>frag.appendChild(createCard(p))); iEl.appendChild(frag) }
 	}
 
 	function renderCarousels(){
@@ -159,6 +192,34 @@
 		})
 	}
 
+	/* Render category sections into specific containers (index & marketplace) */
+	function renderCategoriesOverview(){
+		if(!state.products || !state.products.length) return
+		const groups = {}
+		state.products.forEach(p=>{
+			const c = p.category || 'Uncategorized'
+			if(!groups[c]) groups[c]=[]
+			groups[c].push(p)
+		})
+
+		// known categories to show as named sections
+		const preferred = ['AI Components','Robotics','Smart Sensors']
+		preferred.forEach(catName=>{
+			const container = document.getElementById('cat-'+catName.toLowerCase().replace(/\s+/g,'-'))
+			if(container){
+				const list = groups[catName] || []
+				container.innerHTML = ''
+				const frag = document.createDocumentFragment()
+				list.slice(0,6).forEach(p=> frag.appendChild(createCard(p)))
+				container.appendChild(frag)
+			}
+		})
+
+		// full marketplace grid if present
+		const marketGrid = document.getElementById('market-grid')
+		if(marketGrid){ renderGrid(state.products, marketGrid) }
+	}
+
 	function mapSlugToCategory(slug){
 		slug = (slug||'').toLowerCase()
 		if(!slug) return ''
@@ -169,35 +230,71 @@
 
 	// initialise
 	function init(){
-		fetch('/data/products.json').then(r=>r.json()).then(arr=>{
-			state.products = arr
-			state.categories = Array.from(new Set(arr.map(p=>p.category))).filter(Boolean)
-			// if marketplace page has filter-list, build filters
-			buildFilters(state.categories)
-			setupExtraControls()
-			// initial render
-			state.filtered = state.products.slice()
-			const el = document.getElementById('market-cards') || document.getElementById('market-grid')
-			if(el) renderGrid(state.filtered, el)
-			// trends
-			const trendsEl = document.getElementById('trends-preview')
-			if(trendsEl){ const top = state.products.slice().sort((a,b)=> (b.rating||0)-(a.rating||0)).slice(0,4); top.forEach(t=>{ const c=createCard(t); trendsEl.appendChild(c) }) }
-			// carousels on home
-			renderCarousels()
+		// Prefer JSON assets under /data; fall back to embedded `window.__PRODUCTS__` if JSON is unavailable.
+		const loadProducts = () => {
+			// if page already has an embedded dataset, prefer that (fast)
+			if(window.__PRODUCTS__ && Array.isArray(window.__PRODUCTS__)) return Promise.resolve(window.__PRODUCTS__)
+			// otherwise try fetching the JSON asset
+			return fetch('/data/product-data.json', {cache:'no-cache'}).then(r=>{
+				if(!r.ok) throw new Error('product-data.json not found')
+				return r.json()
+			}).catch(err=>{
+				console.warn('Could not load /data/product-data.json, falling back to embedded products or empty list', err)
+				return (window.__PRODUCTS__ && Array.isArray(window.__PRODUCTS__)) ? window.__PRODUCTS__ : []
+			})
+		}
 
-			// wire search inputs
-			const mpSearch = document.getElementById('mp-search'); if(mpSearch){ mpSearch.addEventListener('input', debounce(applyFilters,180)) }
-			const gSearch = document.getElementById('global-search'); if(gSearch){ gSearch.addEventListener('input', debounce(applyFilters,180)) }
+		const loadCategories = (products) => {
+			if(window.__CATEGORIES__ && Array.isArray(window.__CATEGORIES__)) return Promise.resolve(window.__CATEGORIES__.map(c=>c.name))
+			return fetch('/data/category-data.json', {cache:'no-cache'}).then(r=>{
+				if(!r.ok) throw new Error('category-data.json not found')
+				return r.json()
+			}).then(arr=> arr.map(c=>c.name)).catch(err=>{
+				// derive from products as a fallback
+				const derived = Array.from(new Set((products||[]).map(p=>p.category))).filter(Boolean)
+				return derived
+			})
+		}
 
-			// handle query params (category)
-			const params = new URLSearchParams(window.location.search)
-			const qcat = params.get('category')
-			if(qcat){ const btn = document.querySelector(`.filter-list button[data-filter="${qcat}"]`); if(btn){ btn.click() } else { // set filter manually
-					document.querySelectorAll('.filter-list button').forEach(x=>x.classList.remove('active'))
-					const gen = document.createElement('button'); gen.className='chip active'; gen.dataset.filter=qcat; gen.textContent=qcat; document.querySelector('.filter-list').prepend(gen); applyFilters()
-			}}
+		loadProducts().then(arr=>{
+			state.products = arr || []
+			// try to load categories separately (preferred), otherwise derive from products
+			loadCategories(state.products).then(catArr=>{
+				state.categories = catArr || Array.from(new Set(state.products.map(p=>p.category))).filter(Boolean)
+				// if marketplace page has filter-list, build filters
+				buildFilters(state.categories)
+				setupExtraControls()
 
-		}).catch(err=>{ console.error('Failed to load products.json', err); const el = document.getElementById('market-cards'); if(el) el.innerHTML = '<div class="muted">No products available</div>' })
+				// initial render
+				state.filtered = state.products.slice()
+				const el = document.getElementById('market-cards') || document.getElementById('market-grid')
+				if(el) renderGrid(state.filtered, el)
+				// trends
+				const trendsEl = document.getElementById('trends-preview')
+				if(trendsEl){ const top = state.products.slice().sort((a,b)=> (b.rating||0)-(a.rating||0)).slice(0,4); top.forEach(t=>{ const c=createCard(t); trendsEl.appendChild(c) }) }
+				// carousels on home
+				renderCarousels()
+				// populate category overviews and marketplace grid
+				renderCategoriesOverview()
+				// render special sections like featured/new/integrations
+				renderSpecialSections()
+
+				// wire search inputs
+				const mpSearch = document.getElementById('mp-search'); if(mpSearch){ mpSearch.addEventListener('input', debounce(applyFilters,180)) }
+				const gSearch = document.getElementById('global-search'); if(gSearch){ gSearch.addEventListener('input', debounce(applyFilters,180)) }
+
+				// handle query params (category)
+				const params = new URLSearchParams(window.location.search)
+				const qcat = params.get('category')
+				if(qcat){ const btn = document.querySelector(`.filter-list button[data-filter="${qcat}"]`); if(btn){ btn.click() } else { // set filter manually
+						const fl = document.querySelector('.filter-list')
+						if(fl){ document.querySelectorAll('.filter-list button').forEach(x=>x.classList.remove('active'))
+							const gen = document.createElement('button'); gen.className='chip active'; gen.dataset.filter=qcat; gen.textContent=qcat; fl.prepend(gen); applyFilters()
+						}
+				}}
+
+			})
+		}).catch(err=>{ console.error('Failed to initialize products', err); const el = document.getElementById('market-cards'); if(el) el.innerHTML = '<div class="muted">No products available</div>' })
 	}
 
 	// simple debounce

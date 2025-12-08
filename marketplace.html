@@ -37,65 +37,61 @@
 
     <section class="sections">
       <h2 class="section-title">Categorías</h2>
-      <div class="grid grid-4">
-        <article class="card rgb-border">
-          <h3>AI Components</h3>
-          <p>Modelos, aceleradores y módulos embebibles.</p>
-          <a class="btn" href="/marketplace.html">Ver</a>
-        </article>
-        <article class="card rgb-border">
-          <h3>Robotics</h3>
-          <p>Plataformas, brazos y kits modulares.</p>
-          <a class="btn" href="/marketplace.html">Ver</a>
-        </article>
-        <article class="card rgb-border">
-          <h3>Smart Sensors</h3>
-          <p>Cámaras, LIDAR y sensores especializados.</p>
-          <a class="btn" href="/marketplace.html">Ver</a>
-        </article>
-        <article class="card rgb-border">
-          <h3>Cybersecurity</h3>
-          <p>Soluciones para proteger modelos y datos.</p>
-          <a class="btn" href="/marketplace.html">Ver</a>
-        </article>
+      <div class="filter-list" role="tablist" aria-label="Filtrar por categoría"></div>
+      <div class="filters" style="margin-top:10px"></div>
+      <div class="grid grid-4" style="margin-top:14px">
+        <div id="cat-ai-components" class="card-list"></div>
+        <div id="cat-robotics" class="card-list"></div>
+        <div id="cat-smart-sensors" class="card-list"></div>
+        <div id="cat-security" class="card-list"></div>
       </div>
     </section>
 
     <section class="sections">
       <h2 class="section-title">Productos destacados</h2>
-      <div class="grid grid-3">
-        <article class="card">
-          <h3>Edge Accelerator X1</h3>
-          <p class="subtle">Inferencia en el borde con baja latencia.</p>
-          <a class="btn btn-primary" href="#">Comprar</a>
-        </article>
-        <article class="card">
-          <h3>SLAM Lidar Mini</h3>
-          <p class="subtle">Sensor para navegación indoor y mapping.</p>
-          <a class="btn" href="#">Detalles</a>
-        </article>
-        <article class="card">
-          <h3>SecureGate AI</h3>
-          <p class="subtle">Protección para endpoints y modelos en producción.</p>
-          <a class="btn" href="#">Ver</a>
-        </article>
+      <div id="featured-products" class="market-grid"></div>
+      <h2 class="section-title" style="margin-top:22px">Nuevos lanzamientos</h2>
+      <div id="new-products" class="market-grid"></div>
+      <h2 class="section-title" style="margin-top:22px">Top integraciones IA</h2>
+      <div id="integration-products" class="market-grid"></div>
+    </section>
+
+    <section class="sections">
+      <h2 class="section-title">Proveedores Destacados</h2>
+      <div class="providers-spot">
+        <div style="flex:1">
+          <h3>NeuralEdge</h3>
+          <p class="subtle">Hardware y soporte optimizado.</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <a class="btn" href="/providers-view.html?provider=neuraledge">Ver perfil</a>
+          <a class="btn btn-primary" href="/providers.html">Registrarse</a>
+        </div>
       </div>
     </section>
+
+    <div id="reco" class="muted" style="padding:14px">Cargando recomendaciones…</div>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">© NeuralGPT.Store</div>
+    <div class="wrap">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
+        <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
+        <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
+      </div>
+      <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
+    </div>
   </footer>
-
+  <!-- product data loader and marketplace renderer -->
   <script>
-    // Safe, local filtering for demo
-    document.getElementById('mp-search')?.addEventListener('input', function(e){
-      const q = e.target.value.toLowerCase();
-      document.querySelectorAll('.grid .card').forEach(card => {
-        const txt = (card.innerText||'').toLowerCase();
-        card.style.display = q && txt.indexOf(q)===-1 ? 'none' : '';
-      });
-    });
+    (function(){
+      window.__PRODUCTS__ = window.__PRODUCTS__ || [];
+      window.__CATEGORIES__ = window.__CATEGORIES__ || [];
+      fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d }).catch(()=>{})
+      fetch('/data/category-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(c=>{ window.__CATEGORIES__ = c }).catch(()=>{})
+    })();
   </script>
+  <script src="/assets/js/main.js"></script>
+
 </body>
 </html>

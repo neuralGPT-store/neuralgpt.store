@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then npm ci; fi
+
+      - name: Build static site (optional)
+        run: |
+          if npm run -s build > /dev/null 2>&1; then npm run build; else echo "No build step; publishing repository root"; fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
