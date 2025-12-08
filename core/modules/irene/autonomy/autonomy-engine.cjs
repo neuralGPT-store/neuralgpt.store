@@ -1,11 +1,19 @@
 const fs = require('fs');
+const path = require('path');
 const fetch = require('node-fetch');
 const { IreneScraper } = require('../skills/irene-scraper.js');
 
 const IreneAutonomy = {
 
   async scanForSuppliers(urls) {
-    let db = JSON.parse(fs.readFileSync('C:/neuralGPT.store/core/modules/irene/autonomy/provider-database.json'));
+    const dbPath = path.join(__dirname, 'provider-database.json');
+    let db = [];
+    try {
+      const raw = fs.readFileSync(dbPath, 'utf8');
+      db = JSON.parse(raw || '[]');
+    } catch (e) {
+      db = [];
+    }
 
     for (let url of urls) {
       const html = await IreneScraper.getPage(url);
@@ -14,7 +22,7 @@ const IreneAutonomy = {
       const emails = IreneScraper.extractEmails(html);
       const vendors = IreneScraper.extractVendors(html);
 
-      if (emails.length > 0 || vendors.length > 0) {
+      if ((emails && emails.length > 0) || (vendors && vendors.length > 0)) {
         db.push({
           source: url,
           emails: emails,
@@ -24,13 +32,17 @@ const IreneAutonomy = {
       }
     }
 
-    fs.writeFileSync(
-      'C:/neuralGPT.store/core/modules/irene/autonomy/provider-database.json',
-      JSON.stringify(db, null, 2)
-    );
+    try {
+      fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+    } catch (e) {
+      // best-effort write; log to console but do not throw
+      console.error('Failed to write provider database', e);
+    }
 
     return 'Autonomy scan completed.';
   }
 };
+
+module.exports = { IreneAutonomy };
 
 

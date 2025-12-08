@@ -1,5 +1,5 @@
 export const IreneUI = {
   init(){
-    console.log('Irene Chat Loaded');
+    // Irene UI initialized (debug log removed)
   }
 };

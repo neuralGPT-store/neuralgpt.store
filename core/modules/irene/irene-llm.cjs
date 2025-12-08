@@ -1,26 +1,9 @@
-require('dotenv').config();
-const fetch = require('node-fetch');
+// OpenAI integrations removed to comply with repository policy.
+// This module provides a local, deterministic response to keep the UI functioning
+// without performing any external paid API calls.
 
 async function askIrene(prompt) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) return 'Missing API key';
-
-  const body = {
-    model: 'gpt-4o-mini',
-    messages: [{ role: 'user', content: prompt }]
-  };
-
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer ' + apiKey,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
-
-  const data = await res.json();
-  return data?.choices?.[0]?.message?.content || 'Irene error.';
+  return 'Irene is running in offline mode. External LLM integrations are disabled.';
 }
 
 module.exports = { askIrene };

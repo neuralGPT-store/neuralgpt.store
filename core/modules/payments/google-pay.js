@@ -1,29 +1,28 @@
-const paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
-
-const paymentRequest = {
-  apiVersion: 2,
-  apiVersionMinor: 0,
-  allowedPaymentMethods: [{
-    type: 'CARD',
-    parameters: { allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'], allowedCardNetworks: ['VISA','MASTERCARD'] },
-    tokenizationSpecification: {
-      type: 'PAYMENT_GATEWAY',
-      parameters: { gateway: 'stripe', stripe: { publishableKey: 'pk_test_xxxxxxxxx', version: '2020-08-27' } }
+(function(){
+  try {
+    if (window.DISABLE_EXTERNAL_APIS === true || window.DISABLE_EXTERNAL_APIS === 'true' || typeof window.google === 'undefined' || !window.google.payments) {
+      // render a disabled placeholder button
+      const container = document.getElementById('google-pay-button');
+      if (container) {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-outline-accent';
+        btn.innerText = 'Google Pay (disabled)';
+        btn.disabled = true;
+        container.appendChild(btn);
+      }
+      return;
     }
-  }],
-  merchantInfo: { merchantName: 'NeuralGPT.store' },
-  transactionInfo: {
-    totalPriceStatus: 'FINAL',
-    totalPrice: '10.00',
-    currencyCode: 'EUR'
-  }
-};
 
-paymentsClient.isReadyToPay(paymentRequest).then(resp => {
-  if (resp.result) {
-    const button = paymentsClient.createButton({
-      onClick: () => paymentsClient.loadPaymentData(paymentRequest)
-    });
-    document.getElementById('google-pay-button').appendChild(button);
+    // Google Pay integration removed to comply with repository policy.
+    const container = document.getElementById('google-pay-button');
+    if (container) {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-outline-accent';
+      btn.innerText = 'Google Pay (disabled)';
+      btn.disabled = true;
+      container.appendChild(btn);
+    }
+  } catch (e) {
+    // noop
   }
-});
+})();

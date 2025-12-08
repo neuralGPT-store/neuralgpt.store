@@ -1,12 +1,17 @@
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
-export const IreneScraper = {
+const IreneScraper = {
 
   async getPage(url) {
     try {
-      const res = await fetch(url);
-      return await res.text();
-    } catch {
+      // External scraping disabled by repository policy.
+      // fetch(url) is commented out to avoid retrieving remote pages.
+      // To enable scraping, confirm explicit authorization and
+      // implement server-side safeguards.
+      // const res = await fetch(url);
+      // return await res.text();
+      return null;
+    } catch (err) {
       return null;
     }
   },
@@ -17,7 +22,7 @@ export const IreneScraper = {
   },
 
   extractVendors(text) {
-    const lines = text.split('\n');
+    const lines = (text || '').split('\n');
     return lines.filter(l =>
       l.toLowerCase().includes('arduino') ||
       l.toLowerCase().includes('raspberry') ||
@@ -26,3 +31,5 @@ export const IreneScraper = {
     );
   }
 };
+
+module.exports = { IreneScraper };

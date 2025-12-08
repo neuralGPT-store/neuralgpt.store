@@ -1,0 +1,294 @@
+ :root {
+    --bg: #060606;
+    --bg-soft: #0d0d0d;
+    --gold: #d2a95e;
+    --gold-soft: #c49b52;
+    --text: #e6e6e6;
+    --text-dim: #9b9b9b;
+    --accent: #1fa2ff; /* azul electrónico */
+    --radius: 22px;
+    --transition: 0.25s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* ========== GLOBAL ========== */
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* ========== HEADER ========== */
+.ng-header {
+    background: var(--bg-soft);
+    padding: 25px 40px;
+    border-bottom: 1px solid var(--gold-soft);
+}
+
+.ng-logo {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gold);
+}
+
+.ng-logo span {
+    color: var(--accent);
+}
+
+.ng-tag {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 4px;
+}
+
+/* ========== NAV ========== */
+.ng-nav {
+    background: var(--bg-soft);
+    padding: 12px 30px;
+    border-bottom: 1px solid var(--gold-soft);
+}
+
+.ng-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+}
+
+.ng-nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 400;
+    transition: var(--transition);
+    padding-bottom: 4px;
+}
+
+.ng-nav a:hover {
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold);
+}
+
+/* ========== CONTENIDO ========== */
+.ng-content {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 25px;
+    background: var(--bg-soft);
+    border-radius: var(--radius);
+    box-shadow: 0 0 22px rgba(0,0,0,0.35);
+}
+
+/* ========== FOOTER ========== */
+.ng-footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+/* ========== THEME HERO & BUTTONS ========== */
+.hero {
+    text-align: center;
+    padding: 40px;
+}
+.hero-title {
+    color: var(--gold);
+    font-weight: 800;
+    font-size: 32px;
+}
+.hero-desc {
+    max-width: 700px;
+    margin: 20px auto;
+    color: var(--text-dim);
+    font-size: 18px;
+    line-height: 1.6;
+}
+.hero-cta {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+.btn-outline-gold {
+    background: var(--bg-soft);
+    border: 1px solid var(--gold-soft);
+    color: var(--gold);
+}
+.btn-outline-accent {
+    background: var(--bg-soft);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ========== CHAT WIDGET ========== */
+.irene-floating {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    height: 420px;
+    background: #111;
+    border: 2px solid var(--gold-soft);
+    border-radius: 12px;
+    color: #fff;
+    padding: 12px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+}
+.irene-floating h3 {
+    margin: 4px 0 8px 0;
+}
+.irene-floating textarea {
+    width: 100%;
+    height: 60%;
+    background: #000;
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px;
+    resize: vertical;
+}
+.irene-floating .controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+.irene-floating #irene-res {
+    margin-top: 10px;
+    color: #ddd;
+    max-height: 110px;
+    overflow: auto;
+}
+
+/* ========== RESPONSIVE TWEAKS ========== */
+@media (max-width: 768px) {
+  .ng-header { padding: 16px; }
+  .ng-content { margin: 20px; padding: 16px; }
+  .hero-title { font-size: 22px; }
+  .hero-desc { font-size: 15px; }
+  .irene-floating { width: 280px; height: 360px; right: 12px; bottom: 12px; }
+}
+
+/* ========== 2026 ANIMATED RGB + NEON UTILS ========== */
+
+/* Core animation (user-specified keyframes) */
+.rgb-animated {
+    border-radius: 14px;
+    animation: rgbGlow 6s infinite alternate ease-in-out;
+    /* lightweight outline so borders don't shift content layout */
+}
+
+@keyframes rgbGlow {
+    0% { box-shadow: 0 0 8px #00eaff, 0 0 15px #0077ff; }
+    50% { box-shadow: 0 0 12px #ae00ff, 0 0 20px #6600ff; }
+    100% { box-shadow: 0 0 10px #ff009d, 0 0 25px #ff00ff; }
+}
+
+.neon-hover:hover {
+    transition: 0.25s ease-out;
+    box-shadow: 0 0 12px #00eaff, 0 0 22px #0077ff;
+    transform: translateY(-2px);
+}
+
+.smooth-glow {
+    transition: 0.3s ease-in-out;
+}
+
+/* Apply visual language to common site primitives without altering structure */
+.hero, .hero * {
+    border-radius: 14px;
+}
+
+/* Buttons and CTAs get neon hover + smooth transitions */
+.btn, .btn-primary, .btn-outline-gold, .btn-outline-accent {
+    border-radius: 12px;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.btn:hover, .btn-primary:hover, .btn-outline-gold:hover, .btn-outline-accent:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 0 10px rgba(31,162,255,0.08);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, rgba(30,140,255,0.14), rgba(160,30,255,0.06));
+    color: var(--gold);
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+.card, .grid, .provider-tile, .panel, .quantum-tiers, .tier-placeholder, .ng-content {
+    border-radius: 14px;
+    background-clip: padding-box;
+    /* subtle ambient glow using ::before so layout unaffected */
+    position: relative;
+}
+.card::before, .provider-tile::before, .panel::before, .quantum-tiers::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
+}
+
+.rgb-animated::before {
+    box-shadow: 0 0 12px rgba(0,0,0,0.18);
+}
+
+form, input[type="text"], input[type="email"], input[type="password"], textarea, select {
+    border-radius: 12px;
+    transition: box-shadow 0.22s ease, transform 0.18s ease;
+}
+form:focus-within, input:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 10px rgba(31,162,255,0.08);
+}
+
+.ng-nav a {
+    position: relative;
+}
+.ng-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -6px;
+    height: 2px;
+    background: linear-gradient(90deg,var(--accent),#ae00ff 70%);
+    opacity: 0;
+    transform: translateY(2px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+}
+.ng-nav a:hover::after { opacity: 1; transform: translateY(0); }
+
+.page-quantum, .page-quantum-pass, .quantum-tiers, .tier-placeholder {
+    border-radius: 14px;
+}
+.page-quantum.rgb-animated, .page-quantum-pass.rgb-animated, .quantum-tiers.rgb-animated {
+    animation-duration: 6s;
+}
+
+.neon-hover, .smooth-glow { will-change: transform, box-shadow; }
+
+.card > *, .panel > *, .provider-tile > * { position: relative; z-index: 1; }
+
+.irene-floating { z-index: 9999; }
+.irene-floating .controls .btn { margin: 0; }

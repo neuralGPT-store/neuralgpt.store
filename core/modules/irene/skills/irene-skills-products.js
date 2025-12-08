@@ -1,8 +1,8 @@
 export const IreneProducts = {
-  createProductDraft(name) {
+  createProductDraft(name = 'New Product') {
     return {
-      title: \\ — AI Enhanced Listing\,
-      description: \Automatically generated product description powered by Irene.\,
+      title: `${name} — AI Enhanced Listing`,
+      description: `Automatically generated product description powered by Irene for ${name}.`,
       benefits: [
         'Optimized for conversion',
         'AI-generated marketing text',
@@ -11,6 +11,7 @@ export const IreneProducts = {
     };
   },
   suggestPrice(cost) {
-    return (cost * 1.7).toFixed(2);  
+    const n = Number(cost) || 0;
+    return (n * 1.7).toFixed(2);
   }
 };

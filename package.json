@@ -8,6 +8,8 @@
     "test": "tests"
   },
   "scripts": {
+    "start": "node server/app.cjs",
+    "smoke": "node scripts/smoke-test.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +25,7 @@
   },
   "homepage": "https://github.com/pokerprofe/neuralgpt.store#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "node-fetch": "^2.6.7"
   }
 }

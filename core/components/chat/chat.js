@@ -1,25 +1,52 @@
-document.addEventListener('DOMContentLoaded', ()=>{
-
+document.addEventListener('DOMContentLoaded', () => {
   const box = document.createElement('div');
-  box.style.cssText = 'position:fixed;bottom:20px;right:20px;width:300px;height:400px;background:#000;border:2px solid #d4af37;border-radius:15px;color:#fff;padding:10px;';
-  
-  box.innerHTML = \
+  box.className = 'irene-floating';
+
+  box.innerHTML = `
     <h3>Irene AI Agent</h3>
-    <textarea id='msg' style='width:100%;height:65%;background:#111;color:#fff;border-radius:10px;'></textarea>
-    <button id='sendBtn'>Send</button>
-    <div id='res' style='margin-top:10px;'></div>
-  \;
+    <textarea id="irene-msg"></textarea>
+    <div class="controls">
+      <button id="irene-send" class="btn-primary" type="button">Send</button>
+      <button id="irene-close" class="btn-secondary" type="button">Close</button>
+    </div>
+    <div id="irene-res"></div>
+  `;
 
   document.body.appendChild(box);
 
-  document.getElementById('sendBtn').onclick = async ()=>{
-    const msg = document.getElementById('msg').value;
-    const res = await fetch('/irene/agent',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ message: msg })
+  const sendBtn = box.querySelector('#irene-send');
+  const closeBtn = box.querySelector('#irene-close');
+  const msgBox = box.querySelector('#irene-msg');
+  const resBox = box.querySelector('#irene-res');
+
+  if (closeBtn) closeBtn.addEventListener('click', () => box.remove());
+
+  if (sendBtn) {
+    sendBtn.addEventListener('click', async () => {
+      const message = (msgBox && msgBox.value) ? msgBox.value.trim() : '';
+      if (!message) return;
+      const userNode = document.createElement('div');
+      userNode.innerHTML = `<b>You:</b> ${message}`;
+      resBox.appendChild(userNode);
+      try {
+        const resp = await fetch('/irene/agent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+        if (!resp.ok) throw new Error('agent API error');
+        const data = await resp.json();
+        const botNode = document.createElement('div');
+        botNode.innerHTML = `<b>Irene:</b> ${data.response || data.reply || ''}`;
+        resBox.appendChild(botNode);
+        resBox.scrollTop = resBox.scrollHeight;
+      } catch (err) {
+        console.error('Irene agent error', err);
+        const errNode = document.createElement('div');
+        errNode.innerHTML = `<b>Irene:</b> Error getting response`;
+        resBox.appendChild(errNode);
+      }
+      if (msgBox) msgBox.value = '';
     });
-    const data = await res.json();
-    document.getElementById('res').innerHTML = data.response;
-  };
+  }
 });

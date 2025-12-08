@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payments · NeuralGPT.Store</title>
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <style>body{margin:0;padding:0;background:#000;color:#ddd}</style>
 </head>
 <body>
@@ -16,23 +16,10 @@
             <p>Select your preferred payment method:</p>
 
             <div class='card'>
-                <h2>Google Pay</h2>
-                <div id='google-pay-button'></div>
+                <h2>Payments Disabled</h2>
+                <p>All payment integrations (Stripe, PayPal, Google Pay) have been disabled in this static build to comply with repository policy.</p>
+                <p>Use the root <a href="/payments.html">/payments.html</a> page to provide safe, static donation options (PayPal Donate link or Payment Links).</p>
             </div>
-
-            <div class='card'>
-                <h2>Stripe</h2>
-                <button id='stripe-pay-button'>Pay with Stripe (Test)</button>
-            </div>
-
-            <div class='card'>
-                <h2>PayPal Sandbox</h2>
-                <div id='paypal-button'></div>
-            </div>
-
-            <script src='/core/modules/payments/google-pay.js'></script>
-            <script src='/core/modules/payments/stripe.js'></script>
-            <script src='/core/modules/payments/paypal.js'></script>
         </section>
     </div></main>
     <footer><div class="container">©2025 NeuralGPT.Store · PokerShadow.Ink · All Rights Reserved</div></footer>
