@@ -49,11 +49,15 @@
 
   async function enhance(){
     const providers = await loadProviders()
-    // populate filters
+    // populate filters (include sector and country)
     const catSel = document.getElementById('filter-category')
     const typeSel = document.getElementById('filter-type')
-    if(catSel){ const cats = Array.from(new Set((providers||[]).map(p=>p.category||'Otros'))); cats.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; catSel.appendChild(o) }) }
-    if(typeSel){ const types = Array.from(new Set((providers||[]).map(p=>p.type||'general'))); types.forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; typeSel.appendChild(o) }) }
+    const sectorSel = document.getElementById('filter-sector')
+    const countrySel = document.getElementById('filter-country')
+    if(catSel){ const cats = Array.from(new Set((providers||[]).map(p=>p.category||'Otros'))).sort(); cats.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; catSel.appendChild(o) }) }
+    if(typeSel){ const types = Array.from(new Set((providers||[]).map(p=>p.type||'general'))).sort(); types.forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; typeSel.appendChild(o) }) }
+    if(sectorSel){ const sectors = Array.from(new Set((providers||[]).map(p=>p.sector||''))).filter(Boolean).sort(); sectors.forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; sectorSel.appendChild(o) }) }
+    if(countrySel){ const countries = Array.from(new Set((providers||[]).map(p=>p.country||''))).filter(Boolean).sort(); countries.forEach(cn=>{ const o=document.createElement('option'); o.value=cn; o.textContent=cn; countrySel.appendChild(o) }) }
 
     const grid = document.getElementById('providers-grid') || document.getElementById('providers-list')
     if(grid){ grid.innerHTML=''; providers.forEach(p=> grid.appendChild(cardForProvider(p))) }
@@ -68,10 +72,18 @@
       if(b){ toggleFav(b.dataset.prov); renderFavStates(); }
     })
 
-    const clear = document.getElementById('clear-filters')
-    if(clear) clear.addEventListener('click', ()=>{ if(document.getElementById('filter-category')) document.getElementById('filter-category').value='all'; if(document.getElementById('filter-price')) document.getElementById('filter-price').value='all'; if(document.getElementById('filter-type')) document.getElementById('filter-type').value='all'; filterProviders() })
 
-    ['filter-category','filter-price','filter-type'].forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('change', filterProviders) })
+    const clear = document.getElementById('clear-filters')
+    if(clear) clear.addEventListener('click', ()=>{
+      if(document.getElementById('filter-category')) document.getElementById('filter-category').value='all';
+      if(document.getElementById('filter-price')) document.getElementById('filter-price').value='all';
+      if(document.getElementById('filter-type')) document.getElementById('filter-type').value='all';
+      if(document.getElementById('filter-sector')) document.getElementById('filter-sector').value='all';
+      if(document.getElementById('filter-country')) document.getElementById('filter-country').value='all';
+      filterProviders()
+    })
+
+    ['filter-category','filter-price','filter-type','filter-sector','filter-country'].forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('change', filterProviders) })
 
     // wire provider registration (if present)
     const provSubmit = document.getElementById('prov-submit')
@@ -99,11 +111,15 @@
   function filterProviders(){
     const cat = document.getElementById('filter-category')?.value || 'all'
     const type = document.getElementById('filter-type')?.value || 'all'
+    const sector = document.getElementById('filter-sector')?.value || 'all'
+    const country = document.getElementById('filter-country')?.value || 'all'
     const price = document.getElementById('filter-price')?.value || 'all'
     loadProviders().then(all=>{
       let out = all.slice()
       if(cat && cat !== 'all') out = out.filter(p=> (p.category||'') === cat)
       if(type && type !== 'all') out = out.filter(p=> (p.type||'') === type)
+      if(sector && sector !== 'all') out = out.filter(p=> (p.sector||'') === sector)
+      if(country && country !== 'all') out = out.filter(p=> (p.country||'') === country)
       if(price && price !== 'all'){
         if(price==='0-50') out = out.filter(p=> p.minPrice && p.minPrice <= 50)
         if(price==='50-200') out = out.filter(p=> p.minPrice && p.minPrice>50 && p.minPrice<=200)

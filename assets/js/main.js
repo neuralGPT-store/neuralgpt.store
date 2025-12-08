@@ -14,6 +14,28 @@
   const qs = () => Object.fromEntries(new URLSearchParams(location.search))
   const el = id => document.getElementById(id)
 
+	// Commission helpers
+	function commissionRateForTier(tier){
+		if(!tier) return 12
+		const t = String(tier).toUpperCase()
+		if(t === 'PREMIUM') return 20
+		if(t === 'PRO') return 15
+		return 12 // STANDARD
+	}
+
+	function calculateCommission(tier, price){
+		const rate = commissionRateForTier(tier)
+		const p = (typeof price === 'number' && !isNaN(price)) ? price : 0
+		return Math.round((rate/100) * p * 100) / 100 // round to cents
+	}
+
+	function isAdmin(){
+		// Simulated admin check (always true per requirements). Replace with real auth in backend.
+		return true
+	}
+
+	function maskIBAN(iban){ if(!iban) return '' ; const s = String(iban).replace(/\s+/g,''); if(s.length<=6) return 'IBAN hidden'; return s.slice(0,2) + ' ' + '••••••••••' + ' ' + s.slice(-4) }
+
 	// Fetch with simple localStorage cache and TTL
 	async function fetchWithCache(url, cacheKey, fallback){
 		try{
@@ -141,7 +163,11 @@
 					const c = document.createElement('article'); c.className='card product-card'
 					// show provider name and count of products from catalog
 					const count = state.products.filter(x=> (x.vendorName||'').toLowerCase() === (p.name||'').toLowerCase()).length
-					c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><div class="subtle">Productos: ${count}</div><p style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></p>`
+					const tier = p.commissionTier || 'STANDARD'
+					const prices = state.products.filter(x=> (x.vendorName||'').toLowerCase() === (p.name||'').toLowerCase()).map(x=> x.price).filter(v=> typeof v === 'number')
+					const samplePrice = prices.length ? Math.round((prices.reduce((a,b)=>a+b,0)/prices.length)*100)/100 : 100
+					const commissionAmount = calculateCommission(tier, samplePrice)
+					c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><div class="subtle">Productos: ${count}</div><div class="muted">Comisión: ${escapeHtml(tier)} — ${commissionRateForTier(tier)}% · Ej: ${fmtPrice(commissionAmount)} sobre ${fmtPrice(samplePrice)}</div><p style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></p>`
 					elp.appendChild(c)
 				})
 			}
@@ -161,6 +187,28 @@
 				const name = params.provider.replace(/[-_]/g,' ')
 				const pn = el('prov-name'); if(pn) pn.textContent = name
 				const pd = el('prov-desc'); if(pd) pd.textContent = 'Perfil y servicios de '+name
+
+				// show admin-only payout and commission details when available
+				try{
+					const providerKey = params.provider.toLowerCase()
+					const providerObj = (state.providers||[]).find(p=> (p.id && p.id.toLowerCase()===providerKey) || ((p.name||'').replace(/\s+/g,'-').toLowerCase()===providerKey) || ((p.name||'').toLowerCase()===providerKey) )
+					if(providerObj){
+						const statsEl = el('provider-stats')
+						if(statsEl){
+							const tier = providerObj.commissionTier || 'STANDARD'
+							const prices = state.products.filter(x=> (x.vendorName||'').toLowerCase() === (providerObj.name||'').toLowerCase()).map(x=> x.price).filter(v=> typeof v === 'number')
+							const samplePrice = prices.length ? Math.round((prices.reduce((a,b)=>a+b,0)/prices.length)*100)/100 : 100
+							const commissionAmount = calculateCommission(tier, samplePrice)
+							let out = `Comisión: ${escapeHtml(tier)} — ${commissionRateForTier(tier)}% · Ej: ${fmtPrice(commissionAmount)} sobre ${fmtPrice(samplePrice)}`
+							if(isAdmin()){
+								const p = providerObj.payoutInfo || {}
+								out += `<div style="margin-top:8px" class="muted"><strong>Payout:</strong> ${escapeHtml(p.bankName||'')} • ${escapeHtml(p.paymentMethod||'')} • ${escapeHtml(p.billingEmail||'')}</div>`
+								if(p.iban){ out += `<div class="muted">IBAN: ${escapeHtml(maskIBAN(p.iban))} <span class="subtle">(IBAN redacted)</span></div>` }
+							}
+							statsEl.innerHTML = out
+						}
+					}
+				} catch(e){/* ignore */}
 			}
 
 			// If category param present, list providers that declare this category (state.providers can contain categories[])
@@ -174,7 +222,11 @@
 				else filtered.forEach(p=>{
 					const c = document.createElement('article'); c.className='card product-card'
 					const count = state.products.filter(x=> (x.vendorName||'').toLowerCase() === (p.name||'').toLowerCase()).length
-					c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><div class="subtle">Productos: ${count}</div><p style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></p>`
+					const tier = p.commissionTier || 'STANDARD'
+					const prices = state.products.filter(x=> (x.vendorName||'').toLowerCase() === (p.name||'').toLowerCase()).map(x=> x.price).filter(v=> typeof v === 'number')
+					const samplePrice = prices.length ? Math.round((prices.reduce((a,b)=>a+b,0)/prices.length)*100)/100 : 100
+					const commissionAmount = calculateCommission(tier, samplePrice)
+					c.innerHTML = `<h3>${escapeHtml(p.name)}</h3><p class="subtle">${escapeHtml(p.description||'')}</p><div class="subtle">Productos: ${count}</div><div class="muted">Comisión: ${escapeHtml(tier)} — ${commissionRateForTier(tier)}% · Ej: ${fmtPrice(commissionAmount)} sobre ${fmtPrice(samplePrice)}</div><p style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.url||'#')}" target="_blank">Visitar</a></p>`
 					byCatEl.appendChild(c)
 				})
 			}
@@ -258,7 +310,7 @@
 
 		// Home: featured providers preview (integración global)
 		const homeProviders = el('home-providers')
-		if(homeProviders){ homeProviders.innerHTML = ''; const provs = (state.providers||[]).slice(0,6); provs.forEach(p=>{ const a = document.createElement('article'); a.className='card product-card'; a.innerHTML = `<h4>${escapeHtml(p.name)}</h4><div class="muted">${escapeHtml(p.category)}</div><p class="subtle">${escapeHtml((p.description||'').slice(0,120))}</p><div style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.externalStoreURL||p.officialWebsite||'#')}" target="_blank">Visitar</a></div>`; homeProviders.appendChild(a) }) }
+		if(homeProviders){ homeProviders.innerHTML = ''; const provs = (state.providers||[]).slice(0,6); provs.forEach(p=>{ const a = document.createElement('article'); a.className='card product-card'; const tier = p.commissionTier || 'STANDARD'; const prices = state.products.filter(x=> (x.vendorName||'').toLowerCase() === (p.name||'').toLowerCase()).map(x=> x.price).filter(v=> typeof v === 'number'); const samplePrice = prices.length ? Math.round((prices.reduce((A,B)=>A+B,0)/prices.length)*100)/100 : 100; const commissionAmount = calculateCommission(tier, samplePrice); a.innerHTML = `<h4>${escapeHtml(p.name)}</h4><div class="muted">${escapeHtml(p.category)}</div><p class="subtle">${escapeHtml((p.description||'').slice(0,120))}</p><div class="muted">Comisión: ${escapeHtml(tier)} · ${commissionRateForTier(tier)}% · Ej: ${fmtPrice(commissionAmount)}</div><div style="margin-top:8px"><a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ver</a> <a class="btn btn-primary" href="${escapeHtml(p.externalStoreURL||p.officialWebsite||'#')}" target="_blank">Visitar</a></div>`; homeProviders.appendChild(a) }) }
   }
 
   function renderMarketplace(){

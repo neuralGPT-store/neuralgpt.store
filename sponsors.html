@@ -3,20 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sponsors · NeuralGPT.Store</title>
+  <title>neuralgpt.store — Your Technological Marketplace</title>
+  <meta name="description" content="Our sponsors and partners supporting NeuralGPT.Store — premium partners and integrations." />
   <link rel="stylesheet" href="/css/main.css">
-  <style>body{margin:0;padding:0;background:#000;color:#ddd}</style>
+  <style>
+    body{background:#00040D;color:#e6f0ff;margin:0;font-family:Orbitron,system-ui,Arial}
+    .sponsors-hero{padding:48px 0;text-align:center}
+    .sponsors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;padding:24px}
+    .premium-sponsor{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(8,255,200,0.04),rgba(124,77,255,0.03));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 30px rgba(2,6,23,0.6);transform:translateZ(0);backdrop-filter:blur(6px);transition:transform 280ms ease, box-shadow 280ms ease}
+    .premium-sponsor img{max-height:72px;max-width:100%;object-fit:contain;filter:grayscale(0.02) saturate(1.05)}
+    .premium-sponsor:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 18px 60px rgba(8,150,255,0.12)}
+    .sponsors-grid .premium-sponsor{animation: floatIn 550ms ease both}
+    @keyframes floatIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+    .sponsors-legend{max-width:900px;margin:0 auto;color:var(--muted)}
+  </style>
 </head>
-<body>
-  <header><div class="container"><h1 class="site-title">NeuralGPT.Store · Ecosistema Cuántico</h1></div></header>
-  <nav><div class="container"><a href="/">Inicio</a> <a href="/marketplace.html">Marketplace</a></div></nav>
-  <main><div class="container">
-    <section>
-      <h1>Sponsors</h1>
-      <p>Partner and sponsor information.</p>
+<body class="site-root sponsors-premium">
+  <header class="site-header premium-header" role="banner">
+    <div class="wrap"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a></div>
+  </header>
+  <main>
+    <section class="sponsors-hero wrap">
+      <h1 class="section-title">Sponsors & Partners</h1>
+      <p class="sponsors-legend subtle">Trusted partners and sponsors powering hardware, AI infrastructure and security integrations.</p>
     </section>
-  </div></main>
-  <footer><div class="container">©2025 NeuralGPT.Store · PokerShadow.Ink · All Rights Reserved</div></footer>
-  <script src="/assets/js/main.js"></script>
+
+    <section class="wrap">
+      <div id="sponsors-grid" class="sponsors-grid"></div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="wrap muted">©2025 NeuralGPT.Store — All Rights Reserved</div></footer>
+  <script src="/assets/js/sponsors.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

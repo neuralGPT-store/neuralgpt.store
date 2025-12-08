@@ -4,13 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
-  <meta name="description" content="NeuralGPT.Store — Marketplace premium para hardware, IA y servicios. Robótica, impresión 3D, placas de desarrollo y soluciones Edge."
-        />
-  <meta name="keywords" content="IA, marketplace, robótica, impresión 3D, placas de desarrollo, hardware, proveedores, edge AI" />
-  <meta property="og:title" content="NeuralGPT.Store — Marketplace" />
-  <meta property="og:description" content="Marketplace premium para hardware y soluciones de IA." />
-  <meta property="og:image" content="/core/assets/img/og-preview.png" />
-  <title>NeuralGPT.Store — Inicio</title>
+    <meta name="description" content="neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components." />
+    <meta name="keywords" content="AI, marketplace, robotics, sensors, 3D printing, devboards, hardware, providers, edge AI" />
+    <meta property="og:title" content="neuralgpt.store — Your Technological Marketplace" />
+    <meta property="og:description" content="neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components." />
+    <meta property="og:site_name" content="neuralgpt.store" />
+    <meta property="og:url" content="https://neuralgpt.store/" />
+    <meta property="og:image" content="/core/assets/img/og-preview.png" />
+    <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
+    <meta name="twitter:description" content="neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components." />
+    <title>neuralgpt.store — Your Technological Marketplace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -29,6 +32,39 @@
     @media (min-width:900px){.hero h1{font-size:3.2rem}}
   </style>
   <link rel="stylesheet" href="/css/main.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "neuralgpt.store",
+        "url": "https://neuralgpt.store/",
+        "description": "neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://neuralgpt.store/search.html?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Organization",
+        "name": "NeuralGPT.Store",
+        "url": "https://neuralgpt.store/",
+        "logo": "https://neuralgpt.store/core/assets/img/logo.png"
+      },
+      {
+        "@type": "ItemList",
+        "name": "Featured Marketplace Items",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "url": "https://neuralgpt.store/marketplace.html" },
+          { "@type": "ListItem", "position": 2, "url": "https://neuralgpt.store/marketplace.html?cat=Rob%C3%B3tica" },
+          { "@type": "ListItem", "position": 3, "url": "https://neuralgpt.store/marketplace.html?cat=Electr%C3%B3nica" }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="site-root">
   <header class="site-header premium-header rgb-border" role="banner">
@@ -131,6 +167,11 @@
     </section>
 
     <section class="sections slide-up">
+      <h2 class="section-title">Sponsors</h2>
+      <div id="sponsors-grid" class="grid grid-4 sponsors-grid"></div>
+    </section>
+
+    <section class="sections slide-up">
       <h2 class="section-title">Placas de desarrollo más vendidas</h2>
       <div id="boards-top" class="market-grid"></div>
     </section>
@@ -172,6 +213,11 @@
       <p class="muted"><a href="/marketplace.html">Ir al Marketplace</a></p>
     </section>
 
+    <section class="sections slide-up">
+      <h2 class="section-title">Nuestros Sponsors</h2>
+      <div id="sponsors-grid" class="grid grid-3 sponsors-grid"></div>
+    </section>
+
     <section class="cta slide-up">
       <h2>Proveedores Destacados</h2>
       <div class="providers-spot">
@@ -196,6 +242,8 @@
     });
   </script>
 
+  <script src="/assets/js/quantum-security.js" defer></script>
+  <script src="/assets/js/sponsors.js" defer></script>
   <script src="/assets/js/main.js" defer></script>
 
   <footer class="site-footer premium-footer" role="contentinfo">

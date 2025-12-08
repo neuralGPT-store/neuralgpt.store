@@ -1,13 +1,20 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Registrar Proveedor — NeuralGPT.Store</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>neuralgpt.store — Your Technological Marketplace</title>
+    <meta name="description" content="neuralgpt.store — Register your provider profile to sell hardware, sensors and services on our marketplace." />
+    <meta property="og:title" content="neuralgpt.store — Your Technological Marketplace" />
+    <meta property="og:description" content="neuralgpt.store — Register your provider profile to sell hardware, sensors and services on our marketplace." />
+    <meta property="og:site_name" content="neuralgpt.store" />
+    <meta property="og:url" content="https://neuralgpt.store/provider-register.html" />
+    <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
+    <meta name="twitter:description" content="neuralgpt.store — Register your provider profile to sell hardware, sensors and services on our marketplace." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
-    <script defer src="/assets/js/main.js"></script>
-    <script defer src="/assets/js/provider-catalog.js"></script>
   </head>
   <body class="site-root provider-register">
     <main class="wrap">
@@ -19,10 +26,40 @@
           <label>Tienda externa (opcional)<input id="prov-store" type="url"></label>
           <label>Categorías (coma separadas)<input id="prov-categories"></label>
           <label>Descripción<textarea id="prov-description" rows="4"></textarea></label>
+          <fieldset style="margin-top:8px">
+            <legend>Payout / Pagos (solo visible al equipo administrativo)</legend>
+            <label>Banco<input id="prov-bankName" placeholder="Bank name"></label>
+            <label>IBAN (no será mostrado públicamente)<input id="prov-iban" placeholder="IBAN"></label>
+            <label>Método de pago<select id="prov-paymentMethod"><option value="bank">Bank transfer</option><option value="paypal">PayPal</option><option value="wire">Wire</option></select></label>
+            <label>Billing Email<input id="prov-billingEmail" type="email" placeholder="billing@company.com"></label>
+          </fieldset>
           <div style="margin-top:12px"><button class="btn btn-primary" id="prov-submit" type="button">Enviar solicitud</button></div>
           <div id="prov-msg" class="muted" style="margin-top:12px"></div>
         </form>
       </section>
+      <script>
+        // Client-side enhancement: collect payout info and show simulated submission message.
+        document.getElementById('prov-submit')?.addEventListener('click', function(){
+          const data = {
+            name: document.getElementById('prov-name-input')?.value||'',
+            website: document.getElementById('prov-website')?.value||'',
+            store: document.getElementById('prov-store')?.value||'',
+            categories: (document.getElementById('prov-categories')?.value||'').split(',').map(s=>s.trim()).filter(Boolean),
+            description: document.getElementById('prov-description')?.value||'',
+            payoutInfo: {
+              bankName: document.getElementById('prov-bankName')?.value||'',
+              iban: document.getElementById('prov-iban')?.value||'',
+              paymentMethod: document.getElementById('prov-paymentMethod')?.value||'',
+              billingEmail: document.getElementById('prov-billingEmail')?.value||''
+            }
+          }
+          const msg = document.getElementById('prov-msg')
+          if(msg) msg.textContent = 'Solicitud recibida (simulada). Los datos de payout se han registrado para revisión.'
+          // Note: this is a frontend-only simulation. Persisting requires a backend API.
+          console.info('Provider registration (simulated):', data)
+          const form = document.getElementById('provider-form'); if(form) form.reset()
+        })
+      </script>
     </main>
   </body>
 </html>

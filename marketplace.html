@@ -3,13 +3,48 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Marketplace — NeuralGPT.Store</title>
+  <title>neuralgpt.store — Your Technological Marketplace</title>
+  <meta name="description" content="neuralgpt.store — Marketplace for curated hardware, sensors, robotics, dev boards and industrial components." />
+  <meta property="og:title" content="neuralgpt.store — Your Technological Marketplace" />
+  <meta property="og:description" content="neuralgpt.store — Marketplace for curated hardware, sensors, robotics, dev boards and industrial components." />
+  <meta property="og:site_name" content="neuralgpt.store" />
+  <meta property="og:url" content="https://neuralgpt.store/marketplace.html" />
+  <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
+  <meta name="twitter:description" content="neuralgpt.store — Marketplace for curated hardware, sensors, robotics, dev boards and industrial components." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/core/assets/img/og-preview.png" as="image">
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Marketplace - NeuralGPT.Store",
+        "url": "https://neuralgpt.store/marketplace.html",
+        "description": "Browse curated hardware, sensors, robotics and industrial components on NeuralGPT.Store",
+        "mainEntity": {
+          "@type": "ItemList",
+          "name": "Marketplace Featured Categories",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "url": "https://neuralgpt.store/marketplace.html?cat=Rob%C3%B3tica" },
+            { "@type": "ListItem", "position": 2, "url": "https://neuralgpt.store/marketplace.html?cat=Electr%C3%B3nica" },
+            { "@type": "ListItem", "position": 3, "url": "https://neuralgpt.store/marketplace.html?cat=IA+Edge" }
+          ]
+        }
+      },
+      {
+        "@type": "Organization",
+        "name": "NeuralGPT.Store",
+        "url": "https://neuralgpt.store/",
+        "logo": "https://neuralgpt.store/core/assets/img/logo.png"
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="site-root">
   <header class="site-header premium-header rgb-border" role="banner">
@@ -84,6 +119,11 @@
       <div id="featured-products" class="market-grid"></div>
     </section>
 
+    <section class="sections slide-up">
+      <h2 class="section-title">Nuestros Sponsors</h2>
+      <div id="sponsors-grid" class="grid grid-4 sponsors-grid"></div>
+    </section>
+
     <section>
       <h2 class="section-title">Nuevos lanzamientos</h2>
       <div id="new-products" class="market-grid"></div>
@@ -143,4 +183,6 @@
       <div><a class="btn" href="/legal.html">Legal</a></div>
     </div>
   </footer>
+  <script src="/assets/js/quantum-security.js" defer></script>
+  <script src="/assets/js/sponsors.js" defer></script>
   <script src="/assets/js/main.js" defer></script>
