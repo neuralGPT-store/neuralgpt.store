@@ -285,14 +285,86 @@
 		const rec = el('recommended-products'); if(rec){ rec.innerHTML=''; const list = state.products.filter(p=> p.category === (product && product.category) && p.id !== id).slice(0,4); appendInBatches(rec, list, makeCard, 4) }
   }
 
-  function renderCategory(){
-	const params = new URLSearchParams(location.search); const cat = params.get('category') || params.get('cat') || ''
-	const grid = el('category-grid'); if(!grid) return
-	const list = state.products.filter(p=> (p.category||'').toLowerCase() === (cat||'').toLowerCase())
-		grid.innerHTML=''
-		if(list.length === 0){ grid.innerHTML = '<div class="muted">No hay productos en esta categoría.</div>'; return }
-		appendInBatches(grid, list, makeCard, 12)
-  }
+	function updateQueryParam(key, value){
+		const url = new URL(location.href)
+		if(value === null || value === '' || value === 'any') url.searchParams.delete(key)
+		else url.searchParams.set(key, String(value))
+		// when filters change, reset page
+		if(key !== 'page') url.searchParams.delete('page')
+		history.replaceState({}, '', url)
+	}
+
+	function buildPagination(container, totalItems, pageSize, currentPage){
+		if(!container) return
+		container.innerHTML = ''
+		const totalPages = Math.max(1, Math.ceil(totalItems / pageSize))
+		if(totalPages <= 1) return
+		const addBtn = (p, label)=>{
+			const b = document.createElement('button'); b.className='page-btn'+(p===currentPage? ' active':''); b.textContent = label || String(p)
+			b.addEventListener('click', ()=>{ updateQueryParam('page', p); renderCategory() })
+			container.appendChild(b)
+		}
+		const prev = document.createElement('button'); prev.className='page-btn'; prev.textContent='◀'; prev.disabled = currentPage<=1; prev.addEventListener('click', ()=>{ updateQueryParam('page', Math.max(1,currentPage-1)); renderCategory() }); container.appendChild(prev)
+		const start = Math.max(1, currentPage-2); const end = Math.min(totalPages, currentPage+2)
+		if(start>1){ addBtn(1,'1'); if(start>2){ const dots=document.createElement('span'); dots.className='muted'; dots.textContent='…'; container.appendChild(dots) } }
+		for(let p=start;p<=end;p++) addBtn(p)
+		if(end<totalPages){ if(end<totalPages-1){ const dots=document.createElement('span'); dots.className='muted'; dots.textContent='…'; container.appendChild(dots) } addBtn(totalPages,String(totalPages)) }
+		const next = document.createElement('button'); next.className='page-btn'; next.textContent='▶'; next.disabled = currentPage>=totalPages; next.addEventListener('click', ()=>{ updateQueryParam('page', Math.min(totalPages,currentPage+1)); renderCategory() }); container.appendChild(next)
+	}
+
+	function renderCategory(){
+		const params = new URLSearchParams(location.search)
+		const cat = params.get('category') || params.get('cat') || ''
+		const page = parseInt(params.get('page')||'1',10) || 1
+		const pageSize = 12
+
+		const grid = el('category-grid'); if(!grid) return
+
+		// Resolve category object
+		const catObj = (state.categoryObjects||[]).find(c=> (c.id||'').toLowerCase() === (cat||'').toLowerCase()) || { id: cat, name: cat || 'Categoría', icon:'', image: '/assets/img/category-default.svg' }
+		el('category-title')?.textContent = catObj.name || cat
+		el('category-description')?.textContent = catObj.description || `${state.products.filter(p=> (p.category||'').toLowerCase() === (cat||'').toLowerCase()).length} productos disponibles`
+		if(el('category-image')) el('category-image').src = catObj.image || `/assets/img/category-${catObj.id||'default'}.svg`
+
+		// Sidebar categories
+		const sidebar = el('sidebar-cats')
+		if(sidebar){ sidebar.innerHTML = ''
+			(state.categoryObjects||[]).forEach(c=>{
+				const a = document.createElement('a'); a.href = `/category.html?category=${encodeURIComponent(c.id)}`; a.textContent = c.name || c.id; if((c.id||'').toLowerCase() === (cat||'').toLowerCase()) a.classList.add('active'); sidebar.appendChild(a)
+			})
+		}
+
+		// wire filters (persist via query params)
+		const priceFilter = el('cat-price-filter'); if(priceFilter){ priceFilter.value = params.get('price')||'any'; priceFilter.onchange = ()=>{ updateQueryParam('price', priceFilter.value); renderCategory() } }
+		const typeFilter = el('cat-type-filter'); if(typeFilter){ typeFilter.value = params.get('type')||'any'; typeFilter.onchange = ()=>{ updateQueryParam('type', typeFilter.value); renderCategory() } }
+
+		// base list by category
+		let list = state.products.filter(p=> (p.category||'').toLowerCase() === (cat||'').toLowerCase())
+
+		// apply filters
+		const price = params.get('price') || 'any'
+		const type = params.get('type') || 'any'
+		if(type && type !== 'any') list = list.filter(p=> (p.type||'').toLowerCase() === type.toLowerCase())
+		if(price !== 'any'){
+			if(price === 'under500') list = list.filter(p=> p.price && p.price <= 500)
+			if(price === '500-2k') list = list.filter(p=> p.price && p.price > 500 && p.price <= 2000)
+			if(price === '2k+') list = list.filter(p=> p.price && p.price > 2000)
+		}
+
+		// pagination
+		const total = list.length
+		const totalPages = Math.max(1, Math.ceil(total / pageSize))
+		const currentPage = Math.min(Math.max(1, page), totalPages)
+		const start = (currentPage - 1) * pageSize
+		const pageItems = list.slice(start, start + pageSize)
+
+		grid.innerHTML = ''
+		if(pageItems.length === 0){ grid.innerHTML = '<div class="muted">No hay productos en esta categoría.</div>' }
+		else appendInBatches(grid, pageItems, makeCard, 12)
+
+		// pagination controls
+		buildPagination(el('category-pagination'), total, pageSize, currentPage)
+	}
 
   function renderSecurity(){ /* placeholder: static content exists in HTML; enhance if needed */ }
   function renderQuantum(){ /* static HTML page - kept visual */ }

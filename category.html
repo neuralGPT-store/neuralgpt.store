@@ -1,5 +1,84 @@
 <!doctype html>
 <html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Categoría — NeuralGPT.Store</title>
+  <meta name="description" content="Explora productos por categoría en NeuralGPT.Store — robótica, placas de desarrollo, impresión 3D y más." />
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-root">
+  <header class="site-header premium-header rgb-border" role="banner">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Principal">
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/marketplace.html">Marketplace</a></li>
+          <li><a href="/providers.html">Proveedores</a></li>
+        </ul>
+      </nav>
+      <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores..." aria-label="Buscar" autocomplete="off"><div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias de búsqueda" hidden></div></div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero-card card rgb-border" style="display:flex;gap:18px;align-items:center">
+      <div style="flex:1">
+        <h1 id="category-title">Categoría</h1>
+        <p id="category-description" class="subtle">Descripción de la categoría y enlace rápido a subcategorías.</p>
+        <div style="margin-top:12px"><a id="category-visit" class="btn btn-primary" href="#">Ver catálogo</a></div>
+      </div>
+      <div style="width:360px;max-width:40%"><img id="category-image" src="/assets/img/category-default.svg" alt="Imagen de categoría" style="width:100%;border-radius:12px"></div>
+    </section>
+
+    <section class="sections" style="display:grid;grid-template-columns:260px 1fr;gap:20px;margin-top:20px">
+      <aside id="category-sidebar" class="card">
+        <h3 class="section-title">Navegación</h3>
+        <div id="sidebar-cats"></div>
+        <h4 style="margin-top:12px">Filtros</h4>
+        <div id="sidebar-filters">
+          <label class="muted">Precio</label>
+          <select id="cat-price-filter"><option value="any">Cualquier precio</option><option value="under500">≤ $500</option><option value="500-2k">$500–$2k</option><option value="2k+">$2k+</option></select>
+          <label class="muted" style="margin-top:8px">Tipo</label>
+          <select id="cat-type-filter"><option value="any">Todos</option><option value="hardware">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option></select>
+        </div>
+      </aside>
+
+      <div>
+        <div id="category-grid" class="market-grid" aria-live="polite"></div>
+        <div id="category-pagination" style="margin-top:18px;display:flex;gap:8px;align-items:center;justify-content:center"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer premium-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="brand footer-brand" href="/">NeuralGPT.Store</a>
+        <p class="subtle">Explora por categoría y encuentra proveedores especializados.</p>
+      </div>
+      <div>
+        <strong>Empresa</strong>
+        <nav class="foot-nav"><a href="/about.html">Acerca</a><a href="/guides.html">Guías</a></nav>
+      </div>
+      <div>
+        <strong>Proveedores</strong>
+        <nav class="foot-nav"><a href="/providers.html">Listado</a></nav>
+      </div>
+    </div>
+    <div class="wrap" style="margin-top:18px;display:flex;align-items:center;justify-content:space-between">
+      <div class="muted">© NeuralGPT.Store — 2025</div>
+      <div><a class="btn" href="/legal.html">Legal</a></div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
+<!doctype html>
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />

@@ -76,6 +76,14 @@ body{overflow-x:hidden}
 .grid-2{grid-template-columns:repeat(2,1fr)}
 .market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
 
+/* Category sidebar and pagination */
+.site-root aside.card{padding:16px}
+.site-root #sidebar-cats a{display:block;padding:8px;border-radius:8px;color:var(--subtext);text-decoration:none;margin-bottom:6px}
+.site-root #sidebar-cats a.active{background:linear-gradient(90deg, rgba(0,160,255,0.06), rgba(124,77,255,0.04));color:var(--text);box-shadow:0 10px 30px rgba(0,200,255,0.04)}
+.site-root #category-pagination .page-btn{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text);cursor:pointer}
+.site-root #category-pagination .page-btn.active{background:linear-gradient(90deg,var(--primary),var(--violet));color:#071521}
+
+
 /* Product card */
 .product-card{border-radius:14px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.006));border:1px solid rgba(255,255,255,0.03)}
 .product-card h3{margin:0 0 6px}
