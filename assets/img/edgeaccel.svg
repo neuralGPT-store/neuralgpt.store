@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="100%" height="100%" rx="16" fill="#00121a"/>
+  <g transform="translate(36,30)">
+    <rect x="20" y="40" width="120" height="90" rx="10" fill="#07131a" stroke="#00C8FF" stroke-width="3"/>
+    <rect x="170" y="60" width="160" height="60" rx="8" fill="#08131a" stroke="#27F0FF" stroke-width="2"/>
+    <text x="200" y="210" font-family="Arial" font-size="18" fill="#CFEFFB" text-anchor="middle">EdgeAccel X</text>
+  </g>
+</svg>

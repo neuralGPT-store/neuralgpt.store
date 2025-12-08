@@ -1,98 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>AI Components — NeuralGPT.Store</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <script defer src="/assets/js/main.js"></script>
-  </head>
-  <body class="ultratech">
-    <header class="site-header corporate"><div class="header-inner centered"><a class="brand" href="/">NeuralGPT.Store</a>
-      <nav class="main-nav" aria-label="Primary"><ul class="nav-list centered"><li><a href="/">Inicio</a><li><a href="/marketplace.html">AI Components</a><li><a href="/quantum.html">Quantum Pass</a><li><a href="/security.html">Security Suite</a><li><a href="/providers.html" class="cta-link">Join as Provider</a></ul></nav>
-    </div></header>
-    <main class="container" role="main">
-      <h1 class="section-title">Marketplace — AI Components</h1>
-
-      <div class="filters" role="region" aria-label="Marketplace filters">
-        <input id="mp-search" class="search" aria-label="Buscar components" placeholder="Buscar componentes, categorías..." />
-        <div class="filter-list" role="toolbar" aria-label="Filtros">
-          <button data-filter="all" class="chip active">All</button>
-          <button data-filter="Robotics" class="chip">Robotics</button>
-          <button data-filter="Components" class="chip">IA Components</button>
-          <button data-filter="Automation" class="chip">Automation</button>
-          <button data-filter="Cloud" class="chip">Cloud AI</button>
-          <button data-filter="Security" class="chip">Security</button>
-        </div>
-      </div>
-
-      <div id="market-cards" class="market-grid" aria-live="polite"></div>
-    </main>
-    <footer class="site-footer corporate">© NeuralGPT.Store</footer>
-  </body>
-</html>
-  <nav><div class="container"><a href="/">Inicio</a> <a href="/marketplace.html">Marketplace</a></div></nav>
-  <main><div class="container">
-    <section class="page page-marketplace">
-      <header class="page-header">
-        <h1>Marketplace</h1>
-        <p>Explore intelligent agents, automation tools and AI modules.</p>
-      </header>
-
-      <section id="marketplace-products" class="products">
-        <div class="products-placeholder">Cargando productos…</div>
-      </section>
-
-      <aside class="marketplace-filters">
-        <button id="filter-all" class="filter-btn">All</button>
-        <button id="filter-agents" class="filter-btn">Agents</button>
-        <button id="filter-modules" class="filter-btn">Modules</button>
-      </aside>
-
-      <div class="marketplace-footer"><small>© 2025 NeuralGPT Store — Powered by PokerShadow Ink</small></div>
-
-      <script src="/core/modules/marketplace/list.js" defer></script>
-    </section>
-  </div></main>
-  <footer><div class="container">©2025 NeuralGPT.Store · PokerShadow.Ink · All Rights Reserved</div></footer>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marketplace · NeuralGPT.Store</title>
-  <link rel="stylesheet" href="css/main.css">
-  <style>body{margin:0;padding:0;background:#000;color:#ddd}</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Marketplace — NeuralGPT.Store</title>
+  <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
-  <header><div class="container"><h1 class="site-title">NeuralGPT.Store · Ecosistema Cuántico</h1></div></header>
-  <nav><div class="container"><a href="index.html">Inicio</a> <a href="marketplace.html">Marketplace</a></div></nav>
-  <main><div class="container">
-    <section class="page page-marketplace">
-      <header class="page-header">
-        <h1>Marketplace</h1>
-        <p>Explore intelligent agents, automation tools and AI modules.</p>
-      </header>
+<body class="site-root">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/marketplace.html" aria-current="page">Marketplace</a></li>
+          <li><a href="/quantum.html">Quantum Pass</a></li>
+          <li><a href="/security.html">Seguridad IA</a></li>
+          <li><a href="/providers.html">Proveedores</a></li>
+          <li><a href="/console.html">Consola</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/trends.html">Tendencias</a></li>
+          <li><a href="/legal.html">Legal</a></li>
+        </ul>
+      </nav>
+      <div class="search-wrap">
+        <input id="mp-search" class="search-input" type="search" placeholder="Buscar en Marketplace..." aria-label="Buscar en Marketplace">
+      </div>
+    </div>
+  </header>
 
-      <section id="marketplace-products" class="products">
-        <div class="products-placeholder">Cargando productos…</div>
-      </section>
-
-      <aside class="marketplace-filters">
-        <button id="filter-all" class="filter-btn">All</button>
-        <button id="filter-agents" class="filter-btn">Agents</button>
-        <button id="filter-modules" class="filter-btn">Modules</button>
-      </aside>
-
-      <div class="marketplace-footer"><small>© 2025 NeuralGPT Store — Powered by PokerShadow Ink</small></div>
-
-      <script src="/core/modules/marketplace/list.js" defer></script>
+  <main class="wrap">
+    <section>
+      <h1 class="section-title">Marketplace</h1>
+      <p class="subtle">Explora categorías, productos y proveedores verificados.</p>
     </section>
-  </div></main>
-  <footer><div class="container">©2025 NeuralGPT.Store · PokerShadow.Ink · All Rights Reserved</div></footer>
+
+    <section class="sections">
+      <h2 class="section-title">Categorías</h2>
+      <div class="grid grid-4">
+        <article class="card rgb-border">
+          <h3>AI Components</h3>
+          <p>Modelos, aceleradores y módulos embebibles.</p>
+          <a class="btn" href="/marketplace.html">Ver</a>
+        </article>
+        <article class="card rgb-border">
+          <h3>Robotics</h3>
+          <p>Plataformas, brazos y kits modulares.</p>
+          <a class="btn" href="/marketplace.html">Ver</a>
+        </article>
+        <article class="card rgb-border">
+          <h3>Smart Sensors</h3>
+          <p>Cámaras, LIDAR y sensores especializados.</p>
+          <a class="btn" href="/marketplace.html">Ver</a>
+        </article>
+        <article class="card rgb-border">
+          <h3>Cybersecurity</h3>
+          <p>Soluciones para proteger modelos y datos.</p>
+          <a class="btn" href="/marketplace.html">Ver</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="sections">
+      <h2 class="section-title">Productos destacados</h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Edge Accelerator X1</h3>
+          <p class="subtle">Inferencia en el borde con baja latencia.</p>
+          <a class="btn btn-primary" href="#">Comprar</a>
+        </article>
+        <article class="card">
+          <h3>SLAM Lidar Mini</h3>
+          <p class="subtle">Sensor para navegación indoor y mapping.</p>
+          <a class="btn" href="#">Detalles</a>
+        </article>
+        <article class="card">
+          <h3>SecureGate AI</h3>
+          <p class="subtle">Protección para endpoints y modelos en producción.</p>
+          <a class="btn" href="#">Ver</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">© NeuralGPT.Store</div>
+  </footer>
+
+  <script>
+    // Safe, local filtering for demo
+    document.getElementById('mp-search')?.addEventListener('input', function(e){
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.grid .card').forEach(card => {
+        const txt = (card.innerText||'').toLowerCase();
+        card.style.display = q && txt.indexOf(q)===-1 ? 'none' : '';
+      });
+    });
+  </script>
 </body>
 </html>

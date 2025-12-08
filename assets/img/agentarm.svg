@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="100%" height="100%" rx="16" fill="#00121a"/>
+  <g transform="translate(30,40)">
+    <path d="M40 160 L120 80 L180 140 L260 60" stroke="#27F0FF" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+    <rect x="220" y="30" width="100" height="60" rx="8" fill="#08131a" stroke="#573CFF" stroke-width="2"/>
+    <text x="200" y="220" font-family="Arial" font-size="18" fill="#CFEFFB" text-anchor="middle">AgentArm 2.1</text>
+  </g>
+</svg>

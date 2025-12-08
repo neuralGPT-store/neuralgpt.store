@@ -1,215 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="es">
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
-  <title>NeuralGPT.Store — AI Ecosystem</title>
-  <link rel="stylesheet" href="/assets/css/main.css" />
-  <script defer src="/assets/js/main.js"></script>
-  </head>
-  <body class="ultratech" data-theme="dark">
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header" role="banner">
-      <div class="header-inner">
-        <a class="brand" href="/" aria-label="NeuralGPT Store Home">NeuralGPT<span class="dot">.</span>Store</a>
-        <nav class="main-nav" role="navigation" aria-label="Primary">
-          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">Menu</button>
-          <ul id="nav-list" class="nav-list">
-            <li><a href="/" aria-current="page">Inicio</a></li>
-            <li><a href="/marketplace.html">Marketplace</a></li>
-            <li><a href="/quantum.html">Quantum Pass</a></li>
-            <li><a href="/security.html">Seguridad IA</a></li>
-            <li><a href="/providers.html">Proveedores</a></li>
-            <li><a href="/console.html">Consola</a></li>
-            <li><a href="/blog.html">Blog</a></li>
-            <li><a href="/trends.html">Tendencias</a></li>
-            <li><a href="/legal.html">Legal</a></li>
-          </ul>
-        </nav>
-      </div>
+  <title>NeuralGPT.Store — Inicio</title>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body class="site-root">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/marketplace.html">Marketplace</a></li>
+          <li><a href="/quantum.html">Quantum Pass</a></li>
+          <li><a href="/security.html">Seguridad IA</a></li>
+          <li><a href="/providers.html">Proveedores</a></li>
+          <li><a href="/console.html">Consola</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/trends.html">Tendencias</a></li>
+          <li><a href="/legal.html">Legal</a></li>
+        </ul>
+      </nav>
+      <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar"></div>
+    </div>
   </header>
 
-  <main id="main" class="page-main" role="main">
-      <section class="hero" aria-label="NeuralGPT hero">
-        <div class="hero-inner container">
-          <h1 class="hero-title">NeuralGPT.Store — The AI Ecosystem</h1>
-          <p class="hero-sub">Marketplace • Quantum Pass • Security Suite • Provider Network — Built for the future.</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="/marketplace.html">Explore Marketplace</a>
-            <a class="btn btn-ghost" href="/quantum.html">Get Quantum Pass</a>
-          </div>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>NeuralGPT.Store — Marketplace para IA</h1>
+        <p class="subtle">Componentes, soluciones y planes empresariales con estética azul eléctrico y experiencia modular.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="/marketplace.html">Explorar Marketplace</a>
+          <a class="btn" href="/providers.html">Ser proveedor</a>
         </div>
-        <div class="hero-bg" aria-hidden="true"></div>
-      </section>
-
-      <section class="features container" aria-label="Highlights">
-        <div class="grid-3">
-          <article class="card feature-card" tabindex="0">
-            <h3>AI Marketplace 2.0</h3>
-            <p>Discover certified models, agents and integrations with live demos.</p>
-            <a class="card-link" href="/marketplace.html">Ver marketplace</a>
-          </article>
-          <article class="card feature-card" tabindex="0">
-            <h3>Quantum Pass</h3>
-            <p>Subscription tiers for devs, teams and enterprises with premium support.</p>
-            <a class="card-link" href="/quantum.html">Ver planes</a>
-          </article>
-          <article class="card feature-card" tabindex="0">
-            <h3>AI Security Suite</h3>
-            <p>Advanced AI agents protecting data, models and deployments.</p>
-            <a class="card-link" href="/security.html">Ver soluciones</a>
-          </article>
-        </div>
-      </section>
-      <section class="showcase" aria-label="Tech Trends 2025">
-        <div class="container">
-          <h2 class="section-title">Tech Trends 2025</h2>
-          <div class="trends-preview grid-4" id="trends-preview" aria-live="polite"></div>
-          <p class="muted"><a href="/trends.html">Ver todas las tendencias</a></p>
-        </div>
-  </section>
-
-  <section class="market-preview container" aria-label="Marketplace preview">
-        <h2 class="section-title">Marketplace Destacados</h2>
-        <div class="market-grid" id="market-grid" aria-live="polite"></div>
-      </section>
-      <section class="cta container" aria-label="Call to action">
-        <div class="cta-inner">
-          <h2>Ready to integrate Neural AI?</h2>
-          <a class="btn btn-primary large" href="/providers.html">Join as Provider</a>
-          <a class="btn btn-ghost" href="/console.html">Open Console Demo</a>
-        </div>
-      </section>
-
-    <footer class="site-footer" role="contentinfo">
-      <div class="container footer-grid">
-        <div>
-          <a class="brand footer-brand" href="/">NeuralGPT.Store</a>
-          <p class="muted">AI marketplace, security & enterprise services.</p>
-        </div>
-        <nav aria-label="Footer" class="footer-nav">
-          <a href="/legal.html">Legal</a>
-          <a href="/providers.html">Providers</a>
-          <a href="/contact.html">Contacto</a>
-        </nav>
-        <div class="social muted">© NeuralGPT.Store</div>
       </div>
-    </footer>
+    </section>
 
-  </body>
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#00040D" />
-    <title>NeuralGPT.Store — The AI Component Marketplace</title>
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <script defer src="/assets/js/main.js"></script>
-  </head>
-  <body class="ultratech" data-theme="dark">
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header corporate" role="banner">
-      <div class="header-inner centered">
-        <a class="brand" href="/" aria-label="NeuralGPT Store Home">NeuralGPT<span class="dot">.</span>Store</a>
-        <nav class="main-nav" role="navigation" aria-label="Primary">
-          <ul id="nav-list" class="nav-list centered">
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/marketplace.html">AI Components</a></li>
-            <li><a href="/quantum.html">Quantum Pass</a></li>
-            <li><a href="/security.html">Security Suite</a></li>
-            <li><a href="/providers.html" class="cta-link">Join as Provider</a></li>
-            <li><a href="/blog.html">Blog</a></li>
-            <li><a href="/trends.html">Trends</a></li>
-            <li><a href="/legal.html">Legal</a></li>
-          </ul>
-        </nav>
+    <section class="sections">
+      <h2 class="section-title">Destacados</h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>AI Components</h3>
+          <p class="subtle">Modelos optimizados y módulos integrables.</p>
+          <a class="btn" href="/marketplace.html">Ver</a>
+        </article>
+        <article class="card">
+          <h3>Quantum Pass</h3>
+          <p class="subtle">Acceso experimental y planes empresariales.</p>
+          <a class="btn" href="/quantum.html">Ver</a>
+        </article>
+        <article class="card">
+          <h3>Security Suite</h3>
+          <p class="subtle">Protección para modelos y datos en producción.</p>
+          <a class="btn" href="/security.html">Ver</a>
+        </article>
       </div>
-    </header>
+    </section>
 
-    <main id="main" class="page-main" role="main">
-      <section class="hero enterprise" aria-label="NeuralGPT hero">
-        <div class="hero-inner container">
-          <h1 class="hero-title">NeuralGPT.Store — The AI Component Marketplace</h1>
-          <p class="hero-sub">Enterprise-grade AI components, hardware and security suites — certified, audited and enterprise-ready.</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="/marketplace.html">Explore Components</a>
-            <a class="btn btn-outline" href="/providers.html">Apply as Provider</a>
-          </div>
-        </div>
-        <div class="hero-bg" aria-hidden="true"></div>
-      </section>
+    <section class="sections">
+      <h2 class="section-title">Tendencias 2025</h2>
+      <div class="trends-preview grid-4"></div>
+      <p class="muted"><a href="/trends.html">Ver tendencias</a></p>
+    </section>
 
-      <section class="hardware container" aria-label="Top Hardware Providers">
-        <h2 class="section-title">Top Hardware Providers</h2>
-        <div class="grid-3 hardware-grid">
-          <article class="card hw-card" tabindex="0">
-            <h3>GPUs</h3>
-            <p class="muted">High-throughput accelerators for training and inference.</p>
-          </article>
-          <article class="card hw-card" tabindex="0">
-            <h3>Sensors</h3>
-            <p class="muted">Vision, IMU and multimodal sensors for robotics.</p>
-          </article>
-          <article class="card hw-card" tabindex="0">
-            <h3>Lidar</h3>
-            <p class="muted">Precision depth sensing and SLAM-ready hardware.</p>
-          </article>
-          <article class="card hw-card" tabindex="0">
-            <h3>Chips Neuromórficos</h3>
-            <p class="muted">Low-power, event-driven compute for edge AI.</p>
-          </article>
-          <article class="card hw-card" tabindex="0">
-            <h3>Robotics Arms</h3>
-            <p class="muted">Industrial and collaborative manipulators.</p>
-          </article>
-          <article class="card hw-card" tabindex="0">
-            <h3>AI Accelerators</h3>
-            <p class="muted">Custom ASICs and FPGAs for specialized workloads.</p>
-          </article>
-        </div>
-      </section>
+    <section class="sections">
+      <h2 class="section-title">Marketplace — Vista previa</h2>
+      <div class="market-grid"></div>
+      <p class="muted"><a href="/marketplace.html">Ir al Marketplace</a></p>
+    </section>
 
-      <section class="security-suite container" aria-label="AI Security Suite">
-        <h2 class="section-title">AI Security Suite</h2>
-        <div class="grid-4">
-          <article class="card security-card" tabindex="0"><h3>PC</h3><p class="muted">Personal protection agent for endpoint privacy.</p></article>
-          <article class="card security-card" tabindex="0"><h3>PYME</h3><p class="muted">SMB protection: monitoring, detection, compliance.</p></article>
-          <article class="card security-card" tabindex="0"><h3>Enterprise</h3><p class="muted">Governance, audits and model protection at scale.</p></article>
-          <article class="card security-card" tabindex="0"><h3>Insurers / Server</h3><p class="muted">Risk assessment and SLA protections for fleets.</p></article>
-        </div>
-      </section>
+    <section class="cta">
+      <h2>List your services</h2>
+      <a class="btn btn-primary" href="/providers.html">Join as Provider</a>
+    </section>
+  </main>
 
-      <section class="quantum-pass container" aria-label="Quantum Pass">
-        <h2 class="section-title">Quantum Pass</h2>
-        <div class="grid-3 tiers">
-          <article class="card tier-card"><h3>Starter</h3><p class="muted">For developers — limited credits.</p></article>
-          <article class="card tier-card popular"><h3>Pro</h3><p class="muted">For teams — increased quotas & support.</p></article>
-          <article class="card tier-card"><h3>Enterprise</h3><p class="muted">Custom SLA & dedicated support.</p></article>
-        </div>
-      </section>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace, seguridad y servicios empresariales.</p></div>
+      <nav class="footer-nav"><a href="/legal.html">Legal</a><a href="/providers.html">Proveedores</a></nav>
+      <div class="muted">© NeuralGPT.Store</div>
+    </div>
+  </footer>
 
-      <section class="tech-2025 container" aria-label="Tech in 2025">
-        <h2 class="section-title">Tech in 2025</h2>
-        <div id="trends-preview" class="trends-grid grid-4" aria-live="polite"></div>
-      </section>
-
-    </main>
-
-    <footer class="site-footer corporate" role="contentinfo">
-      <div class="container footer-grid">
-        <div>
-          <a class="brand footer-brand" href="/">NeuralGPT.Store</a>
-          <p class="muted">NeuralGPT.Store — Enterprise AI components & security.</p>
-        </div>
-        <nav aria-label="Footer" class="footer-nav">
-          <a href="/legal.html">Legal</a>
-          <a href="/providers.html">Providers</a>
-        </nav>
-        <div class="social muted">© NeuralGPT.Store</div>
-      </div>
-    </footer>
-
-  </body>
+  <script>
+    document.getElementById('global-search')?.addEventListener('input', function(e){
+      // client-side filtering for demo content
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.grid .card').forEach(card => {
+        const txt = (card.innerText||'').toLowerCase();
+        card.style.display = q && txt.indexOf(q)===-1 ? 'none' : '';
+      });
+    });
+  </script>
+</body>
 </html>
