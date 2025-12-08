@@ -1,0 +1,2915 @@
+[
+  {
+    "id": "pi-rasp-4b",
+    "title": "Raspberry Pi 4 Model B 8GB",
+    "description": "Placa Raspberry Pi 4 Model B con 8GB RAM, ideal para proyectos edge y servidores domésticos.",
+    "long_description": "Raspberry Pi 4 Model B es una SBC potente, compatible con Linux, adecuada para aprendizaje, servidores ligeros, y proyectos IoT.",
+    "price": 79,
+    "tags": [
+      "development-boards",
+      "raspberry"
+    ],
+    "specs": [
+      "BCM2711",
+      "4x USB",
+      "Gigabit Ethernet",
+      "HDMI 2.0"
+    ],
+    "vendorName": "RaspVendor",
+    "vendorLink": "https://example.com/vendors/raspvendor",
+    "stock": 42,
+    "images": [
+      "/assets/img/pi4-1.png",
+      "/assets/img/pi4-2.png"
+    ],
+    "category": "development-boards",
+    "image": "/assets/img/pi4-1.png",
+    "vendorId": "raspvendor",
+    "techSpecs": {}
+  },
+  {
+    "id": "arduino-uno",
+    "title": "Arduino Uno R3",
+    "description": "Placa de desarrollo Arduino Uno R3 compatible con una amplia biblioteca de shields.",
+    "long_description": "Arduino Uno R3 es ideal para educación y prototipado rápido con amplio ecosistema de shields y sensores.",
+    "price": 24.5,
+    "tags": [
+      "development-boards",
+      "arduino"
+    ],
+    "specs": [
+      "ATmega328P",
+      "14 digital I/O",
+      "6 analog inputs"
+    ],
+    "vendorName": "MakerStore",
+    "vendorLink": "https://example.com/vendors/maker",
+    "stock": 120,
+    "images": [
+      "/assets/img/arduino-uno.png"
+    ],
+    "imageAlt": "Arduino Uno R3 microcontroller development board",
+    "category": "development-boards",
+    "image": "/assets/img/arduino-uno.png",
+    "vendorId": "makerstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "jetson-nano",
+    "title": "NVIDIA Jetson Nano Dev Kit",
+    "description": "Módulo de IA para inferencia en el borde con GPU integrada.",
+    "long_description": "Jetson Nano ofrece aceleración GPU para modelos de visión y deep learning en dispositivos embebidos.",
+    "price": 129,
+    "tags": [
+      "development-boards",
+      "ai",
+      "edge"
+    ],
+    "specs": [
+      "128-core GPU",
+      "4GB RAM",
+      "M.2 slot"
+    ],
+    "vendorName": "AIHardware",
+    "vendorLink": "https://example.com/vendors/aihw",
+    "stock": 18,
+    "images": [
+      "/assets/img/jetson-nano.png"
+    ],
+    "imageAlt": "NVIDIA Jetson Nano developer kit for edge AI inference",
+    "category": "development-boards",
+    "image": "/assets/img/jetson-nano.png",
+    "vendorId": "aihardware",
+    "techSpecs": {}
+  },
+  {
+    "id": "esp32-devkit",
+    "title": "ESP32 DevKitC",
+    "description": "Placa de desarrollo ESP32 con WiFi y Bluetooth integrados.",
+    "long_description": "ESP32 DevKitC es perfecta para proyectos IoT, sensores y control remoto con bajo consumo.",
+    "price": 8.95,
+    "tags": [
+      "development-boards",
+      "esp32"
+    ],
+    "specs": [
+      "ESP32-WROOM",
+      "USB-UART",
+      "GPIO"
+    ],
+    "vendorName": "NodeMakers",
+    "vendorLink": "https://example.com/vendors/nodemakers",
+    "stock": 230,
+    "images": [
+      "/assets/img/esp32.svg"
+    ],
+    "imageAlt": "ESP32 DevKitC development board with WiFi and Bluetooth",
+    "category": "development-boards",
+    "image": "/assets/img/esp32.svg",
+    "vendorId": "nodemakers",
+    "techSpecs": {}
+  },
+  {
+    "id": "orange-pi-5",
+    "title": "Orange Pi 5",
+    "description": "Placa Orange Pi con buen rendimiento y soporte para Linux.",
+    "long_description": "Orange Pi 5 es una SBC alternativa con interfaces ricas y buena compatibilidad para proyectos multimedia.",
+    "price": 99,
+    "tags": [
+      "development-boards",
+      "orange-pi"
+    ],
+    "specs": [
+      "RK3588",
+      "LPDDR4",
+      "PCIe"
+    ],
+    "vendorName": "Orangeshop",
+    "vendorLink": "https://example.com/vendors/orange",
+    "stock": 30,
+    "images": [
+      "/assets/img/orangepi.png"
+    ],
+    "imageAlt": "Orange Pi 5 single-board computer",
+    "category": "development-boards",
+    "image": "/assets/img/orangepi.png",
+    "vendorId": "orangeshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "fpga-nexys",
+    "title": "FPGA Nexys A7 Board",
+    "description": "Placa FPGA para desarrollo digital y proyectos de hardware acelerado.",
+    "long_description": "Nexys A7 es una placa FPGA educativa y de prototipado con recursos lógicos y periféricos integrados.",
+    "price": 249,
+    "tags": [
+      "development-boards",
+      "fpga"
+    ],
+    "specs": [
+      "Xilinx Artix-7",
+      "USB-JTAG",
+      "PMOD"
+    ],
+    "vendorName": "FpgaLab",
+    "vendorLink": "https://example.com/vendors/fpgalab",
+    "stock": 7,
+    "images": [
+      "/assets/img/fpga.png"
+    ],
+    "imageAlt": "Nexys A7 FPGA development board with Xilinx Artix-7",
+    "category": "development-boards",
+    "image": "/assets/img/fpga.png",
+    "vendorId": "fpgalab",
+    "techSpecs": {}
+  },
+  {
+    "id": "servo-std-9g",
+    "title": "Servo estándar 9g",
+    "description": "Servo pequeño de 9g para prototipos y animatrónica básica.",
+    "long_description": "Servo micro 9g, bajo consumo y fácil de integrar en robots pequeños y proyectos de hobby.",
+    "price": 4.5,
+    "tags": [
+      "robotics",
+      "servos"
+    ],
+    "specs": [
+      "Torque 1.6kg·cm",
+      "Operating 4.8-6V"
+    ],
+    "vendorName": "RoboParts",
+    "vendorLink": "https://example.com/vendors/roboparts",
+    "stock": 400,
+    "images": [
+      "/assets/img/servo-9g.png"
+    ],
+    "imageAlt": "Micro servo 9g for hobby robotics",
+    "category": "robotics",
+    "image": "/assets/img/servo-9g.png",
+    "vendorId": "roboparts",
+    "techSpecs": {}
+  },
+  {
+    "id": "wheel-80mm",
+    "title": "Rueda 80mm para robot",
+    "description": "Rueda resistente compatible con chasis roboticos comunes.",
+    "long_description": "Rueda de 80mm con neumático de goma, adecuada para plataformas móviles y kits educativos.",
+    "price": 7.9,
+    "tags": [
+      "robotics",
+      "wheels"
+    ],
+    "specs": [
+      "Ø80mm",
+      "Orificio eje 5mm"
+    ],
+    "vendorName": "RoboParts",
+    "vendorLink": "https://example.com/vendors/roboparts",
+    "stock": 150,
+    "images": [
+      "/assets/img/wheel.png"
+    ],
+    "imageAlt": "80mm rubber wheel for mobile robots",
+    "category": "robotics",
+    "image": "/assets/img/wheel.png",
+    "vendorId": "roboparts",
+    "techSpecs": {}
+  },
+  {
+    "id": "gear-set-20",
+    "title": "Kit engranajes metálicos 20p",
+    "description": "Juego de engranajes y acoplamientos para sistemas de transmisión.",
+    "long_description": "Incluye engranajes metricos y adaptadores para motores y reductores en prototipos robóticos.",
+    "price": 19,
+    "tags": [
+      "robotics",
+      "mechanics"
+    ],
+    "specs": [
+      "20 piezas",
+      "Metal"
+    ],
+    "vendorName": "MechStore",
+    "vendorLink": "https://example.com/vendors/mechstore",
+    "stock": 65,
+    "images": [
+      "/assets/img/gears.png"
+    ],
+    "imageAlt": "Metal gear set 20 pieces for prototyping",
+    "category": "robotics",
+    "image": "/assets/img/gears.png",
+    "vendorId": "mechstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-brushless-220",
+    "title": "Motor Brushless 220KV",
+    "description": "Motor brushless outdoor para robots y drones.",
+    "long_description": "Motor brushless con alto rendimiento y eficiencia para aplicaciones móviles.",
+    "price": 42,
+    "tags": [
+      "robotics",
+      "motors"
+    ],
+    "specs": [
+      "KV 220",
+      "Shaft 6mm"
+    ],
+    "vendorName": "MotorLab",
+    "vendorLink": "https://example.com/vendors/motorlab",
+    "stock": 54,
+    "images": [
+      "/assets/img/motor.svg"
+    ],
+    "imageAlt": "Brushless motor 220KV for drones and robots",
+    "category": "motors",
+    "image": "/assets/img/motor.svg",
+    "vendorId": "motorlab",
+    "techSpecs": {}
+  },
+  {
+    "id": "res-1k-kit",
+    "title": "Kit resistores 1K-1M 200pcs",
+    "description": "Paquete de resistencias variadas para prototipado.",
+    "long_description": "Contiene varias resistencias por valor para prototipado y reparación electrónica.",
+    "price": 12,
+    "tags": [
+      "electronics",
+      "components"
+    ],
+    "specs": [
+      "200 piezas",
+      "SMD+Through-hole"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 240,
+    "images": [
+      "/assets/img/resistors.png"
+    ],
+    "imageAlt": "Resistor kit 200pcs 1Ω–1MΩ SMD and through-hole",
+    "category": "components",
+    "image": "/assets/img/resistors.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "cap-ceramic-100n",
+    "title": "Capacitor cerámico 100nF 50V (10pcs)",
+    "description": "Pack de capacitores cerámicos para filtrado y desacoplo.",
+    "long_description": "Capacitores de alta calidad para uso en PCBs y prototipos.",
+    "price": 3.5,
+    "tags": [
+      "electronics",
+      "components"
+    ],
+    "specs": [
+      "100nF",
+      "50V",
+      "10 piezas"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 980,
+    "images": [
+      "/assets/img/capacitor.png"
+    ],
+    "imageAlt": "100nF ceramic capacitor 50V pack of 10",
+    "category": "components",
+    "image": "/assets/img/capacitor.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "filament-pla-1kg",
+    "title": "Filamento PLA 1kg - Neutro",
+    "description": "Filamento PLA de alta calidad para impresión 3D.",
+    "long_description": "Filamento con baja deformación y buena adhesión entre capas. Ideal para prototipos rápidos.",
+    "price": 21.9,
+    "tags": [
+      "3d-printing",
+      "filament"
+    ],
+    "specs": [
+      "1kg",
+      "1.75mm"
+    ],
+    "vendorName": "3DStore",
+    "vendorLink": "https://example.com/vendors/3dstore",
+    "stock": 320,
+    "images": [
+      "/assets/img/filament.svg"
+    ],
+    "imageAlt": "PLA 1kg filament spool 1.75mm",
+    "category": "3d-printing",
+    "image": "/assets/img/filament.svg",
+    "vendorId": "3dstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "hotend-v6",
+    "title": "Hotend V6 completo",
+    "description": "Hotend V6 compatible con la mayoría de impresoras FDM.",
+    "long_description": "Kit hotend V6 con boquilla y termistor de repuesto para impresoras 3D comunes.",
+    "price": 34,
+    "tags": [
+      "3d-printing",
+      "hotend"
+    ],
+    "specs": [
+      "MK8 nozzle",
+      "Flexible compatible"
+    ],
+    "vendorName": "3DStore",
+    "vendorLink": "https://example.com/vendors/3dstore",
+    "stock": 85,
+    "images": [
+      "/assets/img/hotend.png"
+    ],
+    "imageAlt": "V6 hotend assembly with nozzle and thermistor",
+    "category": "3d-printing",
+    "image": "/assets/img/hotend.png",
+    "vendorId": "3dstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "bio-skin-foil",
+    "title": "Piel sintética para prototipos",
+    "description": "Material flexible para caras y animatrónica.",
+    "long_description": "Piel sintética de silicona para prototipos biomecánicos y cyberfaces, con acabado realista.",
+    "price": 79,
+    "tags": [
+      "biomech",
+      "materials"
+    ],
+    "specs": [
+      "Silicona 0.6mm",
+      "Flexible"
+    ],
+    "vendorName": "BioTech",
+    "vendorLink": "https://example.com/vendors/biotech",
+    "stock": 18,
+    "images": [
+      "/assets/img/skin.png"
+    ],
+    "imageAlt": "Synthetic silicone skin sheet for biomechanical prototyping",
+    "category": "biomech",
+    "image": "/assets/img/skin.png",
+    "vendorId": "biotech",
+    "techSpecs": {}
+  },
+  {
+    "id": "microservo-5g",
+    "title": "Microservo 5g de alta precisión",
+    "description": "Microservo para movimientos faciales en proyectos cyberface.",
+    "long_description": "Servo de alta precisión con bajo ruido para animatrónica facial.",
+    "price": 12.5,
+    "tags": [
+      "biomech",
+      "servos"
+    ],
+    "specs": [
+      "Torque 2.2kg·cm",
+      "Operating 4.8-6V"
+    ],
+    "vendorName": "BioTech",
+    "vendorLink": "https://example.com/vendors/biotech",
+    "stock": 96,
+    "images": [
+      "/assets/img/microservo.png"
+    ],
+    "imageAlt": "High-precision 5g microservo for facial animatronics",
+    "category": "biomech",
+    "image": "/assets/img/microservo.png",
+    "vendorId": "biotech",
+    "techSpecs": {}
+  },
+  {
+    "id": "npu-stick-v2",
+    "title": "AI NPU Accelerator Stick V2",
+    "description": "Acelerador NPU USB para inferencia en el borde.",
+    "long_description": "Stick NPU con soporte para modelos populares de visión y clasificación, plug-and-play.",
+    "price": 159,
+    "tags": [
+      "ai-modules",
+      "accelerator"
+    ],
+    "specs": [
+      "NPU 4 TOPS",
+      "USB 3.0"
+    ],
+    "vendorName": "AiEdge",
+    "vendorLink": "https://example.com/vendors/aiedge",
+    "stock": 44,
+    "images": [
+      "/assets/img/npu-stick.png"
+    ],
+    "imageAlt": "USB NPU accelerator stick providing 4 TOPS inference",
+    "category": "ai-modules",
+    "image": "/assets/img/npu-stick.png",
+    "vendorId": "aiedge",
+    "techSpecs": {}
+  },
+  {
+    "id": "camera-mlv1",
+    "title": "Cámara para visión AI 4K",
+    "description": "Cámara MIPI para aplicaciones de visión artificial y ML.",
+    "long_description": "Cámara con sensor 4K, ideal para detección de objetos y pipelines de visión en edge.",
+    "price": 199,
+    "tags": [
+      "vision",
+      "ai"
+    ],
+    "specs": [
+      "4K",
+      "MIPI CSI"
+    ],
+    "vendorName": "VisionCorp",
+    "vendorLink": "https://example.com/vendors/visioncorp",
+    "stock": 25,
+    "images": [
+      "/assets/img/camera.png"
+    ],
+    "imageAlt": "4K MIPI camera module for computer vision and ML",
+    "category": "vision",
+    "image": "/assets/img/camera.png",
+    "vendorId": "visioncorp",
+    "techSpecs": {}
+  },
+  {
+    "id": "power-12v-5a",
+    "title": "Fuente DC 12V 5A",
+    "description": "Fuente con salida estable para proyectos y robots.",
+    "long_description": "Fuente 12V 5A con protección contra sobrecarga para alimentar controladores y motores.",
+    "price": 29,
+    "tags": [
+      "power",
+      "electronics"
+    ],
+    "specs": [
+      "12V",
+      "5A",
+      "Protección OVP"
+    ],
+    "vendorName": "PowerHouse",
+    "vendorLink": "https://example.com/vendors/powerhouse",
+    "stock": 140,
+    "images": [
+      "/assets/img/power.png"
+    ],
+    "imageAlt": "12V 5A DC power supply with OVP",
+    "category": "power",
+    "image": "/assets/img/power.png",
+    "vendorId": "powerhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "connector-kit",
+    "title": "Kit conectores y cables",
+    "description": "Kit con conectores Dupont, JST, pines y cables para prototipado.",
+    "long_description": "Contiene conectores y cables de varias longitudes y formatos para ensamblaje rápido.",
+    "price": 14,
+    "tags": [
+      "electronics",
+      "cables"
+    ],
+    "specs": [
+      "50 piezas",
+      "Dupont/JST"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 430,
+    "images": [
+      "/assets/img/cable-kit.png"
+    ],
+    "imageAlt": "Connector and cable kit with Dupont and JST connectors",
+    "category": "cables",
+    "image": "/assets/img/cable-kit.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "rpi-4b-8gb",
+    "providerId": "seeed-shenzhen",
+    "categoryId": "devboards",
+    "title": "Raspberry Pi 4 Model B 8GB (OEM)",
+    "description": "Official Raspberry Pi 4 single-board computer 8GB RAM.",
+    "long_description": "Raspberry Pi 4 Model B is a powerful SBC for edge projects and learning.",
+    "price": 79,
+    "tags": [
+      "development-boards",
+      "raspberry"
+    ],
+    "specs": [
+      "BCM2711",
+      "4x USB",
+      "Gigabit Ethernet"
+    ],
+    "vendorName": "Seeed Studio Shenzhen",
+    "vendorLink": "https://www.seeedstudio.com/product/rpi-4b-8gb",
+    "stock": 120,
+    "images": [
+      "/core/assets/img/products/rpi-4b-8gb.png"
+    ],
+    "imageAlt": "Raspberry Pi 4 board",
+    "category": "devboards",
+    "image": "/core/assets/img/products/rpi-4b-8gb.png",
+    "vendorId": "seeed-studio-shenzhen",
+    "techSpecs": {}
+  },
+  {
+    "id": "jetson-nano-4gb",
+    "providerId": "sv-ai-chips",
+    "categoryId": "accelerators",
+    "title": "NVIDIA Jetson Nano 4GB Module",
+    "description": "Low-power AI inference module for edge deployments.",
+    "long_description": "Jetson Nano offers GPU acceleration for vision and deep learning models on embedded devices.",
+    "price": 129,
+    "tags": [
+      "edge",
+      "ai"
+    ],
+    "specs": [
+      "128-core GPU",
+      "4GB RAM"
+    ],
+    "vendorName": "Valley AI Chips",
+    "vendorLink": "https://valleyai.example/jetson-nano",
+    "stock": 45,
+    "images": [
+      "/core/assets/img/products/jetson-nano.png"
+    ],
+    "imageAlt": "Jetson Nano module",
+    "category": "accelerators",
+    "image": "/core/assets/img/products/jetson-nano.png",
+    "vendorId": "valley-ai-chips",
+    "techSpecs": {}
+  },
+  {
+    "id": "esp32-wroom",
+    "providerId": "huaqiang-electro",
+    "categoryId": "devboards",
+    "title": "ESP32 WROOM Module",
+    "description": "Wi-Fi + Bluetooth SoC module for IoT and edge devices.",
+    "long_description": "ESP32 WROOM module is popular for low-power IoT products.",
+    "price": 6,
+    "tags": [
+      "esp32",
+      "iot"
+    ],
+    "specs": [
+      "WiFi",
+      "Bluetooth"
+    ],
+    "vendorName": "Huaqiang Electronics Co.",
+    "vendorLink": "https://huaqiang.example/esp32",
+    "stock": 560,
+    "images": [
+      "/core/assets/img/products/esp32-wroom.png"
+    ],
+    "imageAlt": "ESP32 module",
+    "category": "devboards",
+    "image": "/core/assets/img/products/esp32-wroom.png",
+    "vendorId": "huaqiang-electronics-co",
+    "techSpecs": {}
+  },
+  {
+    "id": "orange-pi-5",
+    "providerId": "seeed-shenzhen",
+    "categoryId": "devboards",
+    "title": "Orange Pi 5",
+    "description": "High-performance single-board computer for AI tasks.",
+    "long_description": "Orange Pi 5 provides interfaces for multimedia and hardware acceleration.",
+    "price": 59,
+    "tags": [
+      "development-boards",
+      "orange-pi"
+    ],
+    "specs": [
+      "RK3588",
+      "LPDDR4"
+    ],
+    "vendorName": "Seeed Studio Shenzhen",
+    "vendorLink": "https://www.seeedstudio.com/orangepi-5",
+    "stock": 30,
+    "images": [
+      "/core/assets/img/products/orangepi-5.png"
+    ],
+    "imageAlt": "Orange Pi 5 board",
+    "category": "devboards",
+    "image": "/core/assets/img/products/orangepi-5.png",
+    "vendorId": "seeed-studio-shenzhen",
+    "techSpecs": {}
+  },
+  {
+    "id": "fpga-artix-kit",
+    "providerId": "huaqiang-electro",
+    "categoryId": "accelerators",
+    "title": "Xilinx Artix FPGA Starter Kit",
+    "description": "FPGA dev kit for prototyping hardware acceleration.",
+    "long_description": "Artix kit suitable for signal processing and custom accelerators.",
+    "price": 249,
+    "tags": [
+      "fpga",
+      "development-boards"
+    ],
+    "specs": [
+      "Artix-7",
+      "PMOD"
+    ],
+    "vendorName": "Huaqiang Electronics Co.",
+    "vendorLink": "https://huaqiang.example/artix",
+    "stock": 12,
+    "images": [
+      "/core/assets/img/products/artix-kit.png"
+    ],
+    "imageAlt": "Artix FPGA kit",
+    "category": "accelerators",
+    "image": "/core/assets/img/products/artix-kit.png",
+    "vendorId": "huaqiang-electronics-co",
+    "techSpecs": {}
+  },
+  {
+    "id": "servo-hs-805",
+    "providerId": "shenzhen-motors",
+    "categoryId": "actuators",
+    "title": "HS-805 High-Torque Servo",
+    "description": "Metal-gear high-torque servo for robotics and drones.",
+    "long_description": "High torque servo for heavy-duty grippers and joints.",
+    "price": 34,
+    "tags": [
+      "servos",
+      "actuators"
+    ],
+    "specs": [
+      "Metal gear",
+      "High torque"
+    ],
+    "vendorName": "Shenzhen Motion Tech",
+    "vendorLink": "https://motion-shenzhen.example/hs-805",
+    "stock": 210,
+    "images": [
+      "/core/assets/img/products/hs-805.png"
+    ],
+    "imageAlt": "High torque servo",
+    "category": "actuators",
+    "image": "/core/assets/img/products/hs-805.png",
+    "vendorId": "shenzhen-motion-tech",
+    "techSpecs": {}
+  },
+  {
+    "id": "robotic-arm-6dof",
+    "providerId": "sv-robotics-labs",
+    "categoryId": "robotics",
+    "title": "6-DOF Desktop Robotic Arm",
+    "description": "Compact 6-axis robotic arm for education and integration.",
+    "long_description": "Six degree-of-freedom desktop arm for prototyping and small automation tasks.",
+    "price": 899,
+    "tags": [
+      "robotics",
+      "arms"
+    ],
+    "specs": [
+      "6-DOF",
+      "Payload 2kg"
+    ],
+    "vendorName": "Summit Robotics Labs",
+    "vendorLink": "https://summit-robotics.example/6dof",
+    "stock": 18,
+    "images": [
+      "/core/assets/img/products/6dof-arm.png"
+    ],
+    "imageAlt": "6 DOF robotic arm",
+    "category": "robotics",
+    "image": "/core/assets/img/products/6dof-arm.png",
+    "vendorId": "summit-robotics-labs",
+    "techSpecs": {}
+  },
+  {
+    "id": "lidar-x200",
+    "providerId": "seoul-sensors",
+    "categoryId": "lidar",
+    "title": "LiDAR X200 Long-Range",
+    "description": "Long range LiDAR sensor for mapping and navigation.",
+    "long_description": "LiDAR X200 offers reliable distance sensing for SLAM and mapping.",
+    "price": 1599,
+    "tags": [
+      "lidar",
+      "sensors"
+    ],
+    "specs": [
+      "200m range",
+      "10Hz"
+    ],
+    "vendorName": "Seoul Sensor Works",
+    "vendorLink": "https://seoulsensor.example/lidar-x200",
+    "stock": 8,
+    "images": [
+      "/core/assets/img/products/lidar-x200.png"
+    ],
+    "imageAlt": "LiDAR X200",
+    "category": "lidar",
+    "image": "/core/assets/img/products/lidar-x200.png",
+    "vendorId": "seoul-sensor-works",
+    "techSpecs": {}
+  },
+  {
+    "id": "tof-mini",
+    "providerId": "seoul-sensors",
+    "categoryId": "sensors",
+    "title": "ToF Mini Distance Module",
+    "description": "Compact time-of-flight distance module for obstacle detection.",
+    "long_description": "Useful for close-range obstacle avoidance and presence detection.",
+    "price": 29,
+    "tags": [
+      "tof",
+      "sensors"
+    ],
+    "specs": [
+      "Up to 4m",
+      "I2C"
+    ],
+    "vendorName": "Seoul Sensor Works",
+    "vendorLink": "https://seoulsensor.example/tof-mini",
+    "stock": 320,
+    "images": [
+      "/core/assets/img/products/tof-mini.png"
+    ],
+    "imageAlt": "ToF mini module",
+    "category": "sensors",
+    "image": "/core/assets/img/products/tof-mini.png",
+    "vendorId": "seoul-sensor-works",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-tof-01",
+    "title": "ToF Mini S01",
+    "description": "Time-of-Flight distance sensor, compact.",
+    "long_description": "Compact ToF sensor for obstacle detection and proximity, I2C interface.",
+    "price": 24,
+    "tags": [
+      "tof",
+      "sensors"
+    ],
+    "specs": [
+      "Range 4m",
+      "I2C",
+      "3.3V"
+    ],
+    "vendorName": "Seoul Sensor Works",
+    "vendorLink": "https://seoulsensor.example/tof-mini",
+    "stock": 420,
+    "images": [
+      "/assets/img/sensors/tof-01.png"
+    ],
+    "imageAlt": "ToF mini S01",
+    "category": "sensors",
+    "image": "/assets/img/sensors/tof-01.png",
+    "vendorId": "seoul-sensor-works",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-tof-02",
+    "title": "ToF Mini S02",
+    "description": "Compact ToF sensor with extended range.",
+    "long_description": "Improved ToF module with better ambient light handling.",
+    "price": 34,
+    "tags": [
+      "tof",
+      "sensors"
+    ],
+    "specs": [
+      "Range 6m",
+      "I2C",
+      "3.3V"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/tof-s02",
+    "stock": 220,
+    "images": [
+      "/assets/img/sensors/tof-02.png"
+    ],
+    "imageAlt": "ToF mini S02",
+    "category": "sensors",
+    "image": "/assets/img/sensors/tof-02.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-imu-01",
+    "title": "IMU 6DOF Core",
+    "description": "6-axis IMU for orientation and motion sensing.",
+    "long_description": "Combined 3-axis accelerometer + 3-axis gyroscope module for robotics and stabilization.",
+    "price": 12.5,
+    "tags": [
+      "imu",
+      "sensors"
+    ],
+    "specs": [
+      "MPU-6050",
+      "I2C",
+      "3.3V"
+    ],
+    "vendorName": "VisionCorp",
+    "vendorLink": "https://visioncorp.example/imu-6050",
+    "stock": 540,
+    "images": [
+      "/assets/img/sensors/imu-01.png"
+    ],
+    "imageAlt": "IMU 6DOF module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/imu-01.png",
+    "vendorId": "visioncorp",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-imu-02",
+    "title": "IMU 9DOF Pro",
+    "description": "9-axis IMU with magnetometer for heading.",
+    "long_description": "9-axis IMU (accelerometer, gyro, magnetometer) with sensor fusion support.",
+    "price": 29,
+    "tags": [
+      "imu",
+      "sensors"
+    ],
+    "specs": [
+      "LSM9DS1",
+      "I2C/SPI",
+      "3.3V"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/imu-9dof",
+    "stock": 160,
+    "images": [
+      "/assets/img/sensors/imu-02.png"
+    ],
+    "imageAlt": "IMU 9DOF module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/imu-02.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-lidar-01",
+    "title": "LiDAR Lite Mini",
+    "description": "Short-range LiDAR module for SLAM and obstacle detection.",
+    "long_description": "Compact LiDAR offering centimeter accuracy for indoor mapping and SLAM.",
+    "price": 89,
+    "tags": [
+      "lidar",
+      "sensors"
+    ],
+    "specs": [
+      "Range 0.2-40m",
+      "I2C",
+      "PWM"
+    ],
+    "vendorName": "LiDARCo",
+    "vendorLink": "https://lidarco.example/lidar-lite-mini",
+    "stock": 78,
+    "images": [
+      "/assets/img/sensors/lidar-01.png"
+    ],
+    "imageAlt": "LiDAR Lite Mini",
+    "category": "sensors",
+    "image": "/assets/img/sensors/lidar-01.png",
+    "vendorId": "lidarco",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-lidar-02",
+    "title": "LiDAR SLAM 200",
+    "description": "Mid-range LiDAR module for mapping.",
+    "long_description": "Reliable LiDAR sensor suitable for small robotics and mapping tasks.",
+    "price": 349,
+    "tags": [
+      "lidar",
+      "sensors"
+    ],
+    "specs": [
+      "200m range",
+      "UART",
+      "10Hz"
+    ],
+    "vendorName": "Seoul Sensor Works",
+    "vendorLink": "https://seoulsensor.example/lidar-slam-200",
+    "stock": 22,
+    "images": [
+      "/assets/img/sensors/lidar-02.png"
+    ],
+    "imageAlt": "LiDAR SLAM 200",
+    "category": "sensors",
+    "image": "/assets/img/sensors/lidar-02.png",
+    "vendorId": "seoul-sensor-works",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-camera-01",
+    "title": "GlobalShutter 2MP",
+    "description": "2MP global shutter camera for robotics.",
+    "long_description": "Global shutter camera module for high-speed image capture without rolling artifacts.",
+    "price": 129,
+    "tags": [
+      "camera",
+      "vision",
+      "sensors"
+    ],
+    "specs": [
+      "2MP",
+      "MIPI CSI",
+      "Global shutter"
+    ],
+    "vendorName": "OpticLabs",
+    "vendorLink": "https://opticlabs.example/gss-2mp",
+    "stock": 46,
+    "images": [
+      "/assets/img/sensors/camera-01.png"
+    ],
+    "imageAlt": "2MP global shutter camera",
+    "category": "sensors",
+    "image": "/assets/img/sensors/camera-01.png",
+    "vendorId": "opticlabs",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-camera-02",
+    "title": "Stereo Vision Kit",
+    "description": "Stereo camera pair for depth perception.",
+    "long_description": "Two synchronized cameras with baseline mount for stereo depth and 3D reconstruction.",
+    "price": 349,
+    "tags": [
+      "camera",
+      "vision",
+      "sensors"
+    ],
+    "specs": [
+      "2 x 2MP",
+      "MIPI CSI",
+      "Sync"
+    ],
+    "vendorName": "VisionCorp",
+    "vendorLink": "https://visioncorp.example/stereo-kit",
+    "stock": 34,
+    "images": [
+      "/assets/img/sensors/camera-02.png"
+    ],
+    "imageAlt": "Stereo camera kit",
+    "category": "sensors",
+    "image": "/assets/img/sensors/camera-02.png",
+    "vendorId": "visioncorp",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-gps-01",
+    "title": "u-blox M8N GPS",
+    "description": "Advanced GPS module with GLONASS support.",
+    "long_description": "High-sensitivity GNSS module suitable for outdoor navigation and logging.",
+    "price": 59,
+    "tags": [
+      "gps",
+      "sensors"
+    ],
+    "specs": [
+      "GPS+GLONASS",
+      "UART/I2C",
+      "3.3V"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/ublox-m8n",
+    "stock": 74,
+    "images": [
+      "/assets/img/sensors/gps-01.png"
+    ],
+    "imageAlt": "u-blox M8N GPS module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/gps-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-gps-02",
+    "title": "RTK GNSS Module",
+    "description": "RTK-capable GNSS receiver for cm-level positioning.",
+    "long_description": "RTK GNSS board supporting multi-constellation for high-accuracy positioning in outdoor robotics.",
+    "price": 699,
+    "tags": [
+      "gps",
+      "sensors"
+    ],
+    "specs": [
+      "RTK",
+      "UART",
+      "Survey grade"
+    ],
+    "vendorName": "OpticLabs",
+    "vendorLink": "https://opticlabs.example/rtk-gnss",
+    "stock": 12,
+    "images": [
+      "/assets/img/sensors/gps-02.png"
+    ],
+    "imageAlt": "RTK GNSS module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/gps-02.png",
+    "vendorId": "opticlabs",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-imu-03",
+    "title": "IMU Tiny AHRS",
+    "description": "Tiny AHRS module with sensor fusion for orientation.",
+    "long_description": "AHRS module exposing fused orientation via UART and I2C for robotics stabilization.",
+    "price": 49,
+    "tags": [
+      "imu",
+      "sensors"
+    ],
+    "specs": [
+      "AHRS",
+      "UART/I2C",
+      "3.3V"
+    ],
+    "vendorName": "Seoul Sensor Works",
+    "vendorLink": "https://seoulsensor.example/ahrs-tiny",
+    "stock": 110,
+    "images": [
+      "/assets/img/sensors/ahrs-01.png"
+    ],
+    "imageAlt": "Tiny AHRS IMU",
+    "category": "sensors",
+    "image": "/assets/img/sensors/ahrs-01.png",
+    "vendorId": "seoul-sensor-works",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-microphone-01",
+    "title": "Array Microphone 4ch",
+    "description": "4-channel MEMS microphone array for beamforming.",
+    "long_description": "Microphone array for voice pickup and directional sensing in robotics and conference systems.",
+    "price": 59,
+    "tags": [
+      "audio",
+      "sensors"
+    ],
+    "specs": [
+      "4 MEMS mics",
+      "I2S",
+      "3.3V"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/mic-array",
+    "stock": 88,
+    "images": [
+      "/assets/img/sensors/mic-01.png"
+    ],
+    "imageAlt": "4-channel microphone array",
+    "category": "sensors",
+    "image": "/assets/img/sensors/mic-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-temp-01",
+    "title": "Precision Temp Sensor",
+    "description": "Digital temperature sensor, high accuracy.",
+    "long_description": "Precision temperature sensor for thermal monitoring in sensitive electronics.",
+    "price": 9.5,
+    "tags": [
+      "temperature",
+      "sensors"
+    ],
+    "specs": [
+      "±0.1°C",
+      "I2C",
+      "-40~125°C"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 420,
+    "images": [
+      "/assets/img/sensors/temp-01.png"
+    ],
+    "imageAlt": "Precision temperature sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/temp-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-humidity-01",
+    "title": "Humidity Sensor DHT22",
+    "description": "Humidity and temperature combined sensor.",
+    "long_description": "Robust humidity and temperature sensor module for environment monitoring.",
+    "price": 6.9,
+    "tags": [
+      "humidity",
+      "sensors"
+    ],
+    "specs": [
+      "DHT22",
+      "Digital",
+      "3.3V"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 520,
+    "images": [
+      "/assets/img/sensors/humidity-01.png"
+    ],
+    "imageAlt": "DHT22 humidity sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/humidity-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-pressure-01",
+    "title": "Barometric Sensor BMP388",
+    "description": "High-precision barometric pressure sensor.",
+    "long_description": "Suitable for altitude estimation and weather monitoring in drones and robotics.",
+    "price": 14,
+    "tags": [
+      "pressure",
+      "sensors"
+    ],
+    "specs": [
+      "BMP388",
+      "I2C/SPI",
+      "3.3V"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/bmp388",
+    "stock": 260,
+    "images": [
+      "/assets/img/sensors/pressure-01.png"
+    ],
+    "imageAlt": "BMP388 barometric sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/pressure-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-gas-01",
+    "title": "Gas Sensor MQ-135",
+    "description": "Air quality and gas detection sensor.",
+    "long_description": "Useful for environmental sensing and ventilation control; analog output.",
+    "price": 8.5,
+    "tags": [
+      "gas",
+      "sensors"
+    ],
+    "specs": [
+      "MQ-135",
+      "Analog",
+      "5V"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 360,
+    "images": [
+      "/assets/img/sensors/gas-01.png"
+    ],
+    "imageAlt": "MQ-135 gas sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/gas-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-flame-01",
+    "title": "IR Flame Sensor",
+    "description": "Infrared flame detection module.",
+    "long_description": "Detects flame and strong IR sources for safety and robotics applications.",
+    "price": 4.2,
+    "tags": [
+      "safety",
+      "sensors"
+    ],
+    "specs": [
+      "Analog/Digital",
+      "3.3-5V"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/flame-01",
+    "stock": 640,
+    "images": [
+      "/assets/img/sensors/flame-01.png"
+    ],
+    "imageAlt": "IR flame sensor module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/flame-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-uv-01",
+    "title": "UV Light Sensor VEML6075",
+    "description": "UV index measurement sensor.",
+    "long_description": "UV sensor for wearable and environmental monitoring projects.",
+    "price": 7.5,
+    "tags": [
+      "uv",
+      "sensors"
+    ],
+    "specs": [
+      "VEML6075",
+      "I2C",
+      "3.3V"
+    ],
+    "vendorName": "OpticLabs",
+    "vendorLink": "https://opticlabs.example/veml6075",
+    "stock": 210,
+    "images": [
+      "/assets/img/sensors/uv-01.png"
+    ],
+    "imageAlt": "VEML6075 UV sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/uv-01.png",
+    "vendorId": "opticlabs",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-light-01",
+    "title": "Ambient Light Sensor BH1750",
+    "description": "Digital ambient light sensor.",
+    "long_description": "BH1750 sensor for auto-exposure and light-level monitoring in cameras and devices.",
+    "price": 5.5,
+    "tags": [
+      "light",
+      "sensors"
+    ],
+    "specs": [
+      "BH1750",
+      "I2C",
+      "3.3V"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 480,
+    "images": [
+      "/assets/img/sensors/light-01.png"
+    ],
+    "imageAlt": "BH1750 ambient light sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/light-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-prox-01",
+    "title": "Capacitive Touch Proximity",
+    "description": "Capacitive proximity and touch module.",
+    "long_description": "Multi-touch/proximity capacitive sensor for interactive devices.",
+    "price": 9.9,
+    "tags": [
+      "proximity",
+      "touch",
+      "sensors"
+    ],
+    "specs": [
+      "I2C",
+      "5V tolerant"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/cap-touch",
+    "stock": 240,
+    "images": [
+      "/assets/img/sensors/prox-01.png"
+    ],
+    "imageAlt": "Capacitive touch proximity sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/prox-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-flow-01",
+    "title": "Digital Flow Sensor",
+    "description": "Liquid flow sensor for pumps and biomedical prototypes.",
+    "long_description": "Digital flow meter suitable for low-flow liquid measurement in closed circuits.",
+    "price": 19,
+    "tags": [
+      "flow",
+      "sensors"
+    ],
+    "specs": [
+      "Hall effect",
+      "Pulse output",
+      "G1/2"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 134,
+    "images": [
+      "/assets/img/sensors/flow-01.png"
+    ],
+    "imageAlt": "Digital flow sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/flow-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-ph-01",
+    "title": "pH Probe Kit",
+    "description": "pH measurement kit with BNC probe.",
+    "long_description": "pH probe and ADC board for water quality monitoring and environmental sensing.",
+    "price": 49,
+    "tags": [
+      "ph",
+      "sensors",
+      "biomech"
+    ],
+    "specs": [
+      "BNC probe",
+      "Analog ADC",
+      "Calibration solutions"
+    ],
+    "vendorName": "BioTech",
+    "vendorLink": "https://example.com/vendors/biotech",
+    "stock": 48,
+    "images": [
+      "/assets/img/sensors/ph-01.png"
+    ],
+    "imageAlt": "pH probe kit",
+    "category": "sensors",
+    "image": "/assets/img/sensors/ph-01.png",
+    "vendorId": "biotech",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-flex-01",
+    "title": "Flex Sensor 2.2in",
+    "description": "Bend flexible resistive sensor for robotics joints.",
+    "long_description": "Resistive flex sensor for measuring bending in prosthetics and animatronics.",
+    "price": 6.5,
+    "tags": [
+      "flex",
+      "sensors",
+      "biomech"
+    ],
+    "specs": [
+      "2.2in",
+      "Analog",
+      "Flexible"
+    ],
+    "vendorName": "BioTech",
+    "vendorLink": "https://example.com/vendors/biotech",
+    "stock": 210,
+    "images": [
+      "/assets/img/sensors/flex-01.png"
+    ],
+    "imageAlt": "Flex sensor 2.2in",
+    "category": "sensors",
+    "image": "/assets/img/sensors/flex-01.png",
+    "vendorId": "biotech",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-ecg-01",
+    "title": "ECG Electrode Kit",
+    "description": "Electrodes and front-end for ECG prototyping.",
+    "long_description": "ECG electrode kit for biomedical signal acquisition and prototyping (research use only).",
+    "price": 59,
+    "tags": [
+      "ecg",
+      "sensors",
+      "biomech"
+    ],
+    "specs": [
+      "Leads",
+      "Electrodes",
+      "Connector"
+    ],
+    "vendorName": "BioTech",
+    "vendorLink": "https://example.com/vendors/biotech",
+    "stock": 34,
+    "images": [
+      "/assets/img/sensors/ecg-01.png"
+    ],
+    "imageAlt": "ECG electrode kit",
+    "category": "sensors",
+    "image": "/assets/img/sensors/ecg-01.png",
+    "vendorId": "biotech",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-uv-02",
+    "title": "UV Index Logger",
+    "description": "UV index and light logging module with SD.",
+    "long_description": "UV sensor with onboard logging for environmental monitoring stations.",
+    "price": 79,
+    "tags": [
+      "uv",
+      "sensors"
+    ],
+    "specs": [
+      "VEML6075",
+      "SD logging",
+      "I2C"
+    ],
+    "vendorName": "OpticLabs",
+    "vendorLink": "https://opticlabs.example/uv-logger",
+    "stock": 26,
+    "images": [
+      "/assets/img/sensors/uv-02.png"
+    ],
+    "imageAlt": "UV index logger",
+    "category": "sensors",
+    "image": "/assets/img/sensors/uv-02.png",
+    "vendorId": "opticlabs",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-sound-01",
+    "title": "Sound Level Meter",
+    "description": "Digital sound level meter module for SPL measurement.",
+    "long_description": "Sound pressure level meter module for acoustic monitoring in labs and devices.",
+    "price": 119,
+    "tags": [
+      "audio",
+      "sensors"
+    ],
+    "specs": [
+      "Class 2",
+      "dB A-weighted",
+      "Analog out"
+    ],
+    "vendorName": "OpticLabs",
+    "vendorLink": "https://opticlabs.example/spl-meter",
+    "stock": 14,
+    "images": [
+      "/assets/img/sensors/sound-01.png"
+    ],
+    "imageAlt": "Sound level meter module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/sound-01.png",
+    "vendorId": "opticlabs",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-temp-02",
+    "title": "Thermocouple K-Type ADC",
+    "description": "Thermocouple amplifier board for high-temperature readings.",
+    "long_description": "TC amplifier with cold-junction compensation and high-accuracy ADC for industrial sensing.",
+    "price": 29,
+    "tags": [
+      "temperature",
+      "sensors"
+    ],
+    "specs": [
+      "K-type",
+      "Max 1200°C",
+      "SPI/I2C"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 98,
+    "images": [
+      "/assets/img/sensors/thermocouple-01.png"
+    ],
+    "imageAlt": "Thermocouple ADC board",
+    "category": "sensors",
+    "image": "/assets/img/sensors/thermocouple-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-co2-01",
+    "title": "CO2 NDIR Sensor",
+    "description": "NDIR CO2 sensor for indoor air quality.",
+    "long_description": "Non-dispersive infrared CO2 sensor suitable for ventilation control and IAQ monitoring.",
+    "price": 89,
+    "tags": [
+      "co2",
+      "sensors",
+      "environment"
+    ],
+    "specs": [
+      "NDIR",
+      "UART/I2C",
+      "400-5000ppm"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/co2-01",
+    "stock": 64,
+    "images": [
+      "/assets/img/sensors/co2-01.png"
+    ],
+    "imageAlt": "NDIR CO2 sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/co2-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-ech-01",
+    "title": "Ultrasonic Echo 1",
+    "description": "Ultrasonic distance sensor HC-SR04 style.",
+    "long_description": "Common ultrasonic distance sensor for hobby robotics and proximity detection.",
+    "price": 3.5,
+    "tags": [
+      "ultrasonic",
+      "sensors"
+    ],
+    "specs": [
+      "HC-SR04",
+      "Pulse",
+      "5V"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 1200,
+    "images": [
+      "/assets/img/sensors/ultrasonic-01.png"
+    ],
+    "imageAlt": "Ultrasonic distance sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/ultrasonic-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-hall-01",
+    "title": "Hall Effect Current Sensor",
+    "description": "Current sensing module based on hall effect.",
+    "long_description": "Non-invasive current sensor for monitoring motor currents and power systems.",
+    "price": 12,
+    "tags": [
+      "current",
+      "sensors"
+    ],
+    "specs": [
+      "ACS712",
+      "Analog",
+      "3.3-5V"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 210,
+    "images": [
+      "/assets/img/sensors/hall-01.png"
+    ],
+    "imageAlt": "Hall effect current sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/hall-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-color-01",
+    "title": "RGB Color Sensor TCS34725",
+    "description": "Color detection sensor module.",
+    "long_description": "TCS34725 color sensor with clear filter and IR blocking for accurate color readings.",
+    "price": 14.5,
+    "tags": [
+      "color",
+      "sensors"
+    ],
+    "specs": [
+      "TCS34725",
+      "I2C",
+      "3.3V"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 184,
+    "images": [
+      "/assets/img/sensors/color-01.png"
+    ],
+    "imageAlt": "RGB color sensor module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/color-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-ozone-01",
+    "title": "Ozone Gas Sensor",
+    "description": "Ozone detection sensor for environmental monitoring.",
+    "long_description": "Sensor module for ozone concentration monitoring in controlled environments.",
+    "price": 24,
+    "tags": [
+      "gas",
+      "sensors",
+      "environment"
+    ],
+    "specs": [
+      "Analog",
+      "0-20ppm"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/ozone-01",
+    "stock": 52,
+    "images": [
+      "/assets/img/sensors/ozone-01.png"
+    ],
+    "imageAlt": "Ozone gas sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/ozone-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-vibration-01",
+    "title": "Piezo Vibration Sensor",
+    "description": "Vibration detection piezo sensor module.",
+    "long_description": "Simple vibration/percussion sensor for machinery health and detection events.",
+    "price": 3.9,
+    "tags": [
+      "vibration",
+      "sensors"
+    ],
+    "specs": [
+      "Analog",
+      "High sensitivity"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 360,
+    "images": [
+      "/assets/img/sensors/vibration-01.png"
+    ],
+    "imageAlt": "Piezo vibration sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/vibration-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-orientation-01",
+    "title": "Compass HMC5883L",
+    "description": "Digital compass module for heading.",
+    "long_description": "Magnetometer module useful for heading and orientation in navigation systems.",
+    "price": 7.9,
+    "tags": [
+      "compass",
+      "sensors"
+    ],
+    "specs": [
+      "HMC5883L",
+      "I2C",
+      "3.3V"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/hmc5883l",
+    "stock": 300,
+    "images": [
+      "/assets/img/sensors/compass-01.png"
+    ],
+    "imageAlt": "Digital compass module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/compass-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-magnetic-01",
+    "title": "Hall Latch Sensor",
+    "description": "Magnetic latch sensor for position detection.",
+    "long_description": "Used for end-stop and door position sensing; robust and reliable.",
+    "price": 2.9,
+    "tags": [
+      "magnetic",
+      "sensors"
+    ],
+    "specs": [
+      "Digital",
+      "Reed/Hall"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 1020,
+    "images": [
+      "/assets/img/sensors/magnetic-01.png"
+    ],
+    "imageAlt": "Hall latch magnetic sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/magnetic-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-thermal-01",
+    "title": "Thermal Array 8x8",
+    "description": "Low-resolution thermal array sensor for presence detection.",
+    "long_description": "8x8 thermal array useful for gesture and presence detection in devices.",
+    "price": 49,
+    "tags": [
+      "thermal",
+      "sensors"
+    ],
+    "specs": [
+      "8x8",
+      "I2C",
+      "MLX90640-like"
+    ],
+    "vendorName": "OpticLabs",
+    "vendorLink": "https://opticlabs.example/thermal-8x8",
+    "stock": 38,
+    "images": [
+      "/assets/img/sensors/thermal-01.png"
+    ],
+    "imageAlt": "Thermal array 8x8 sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/thermal-01.png",
+    "vendorId": "opticlabs",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-radiation-01",
+    "title": "Geiger Tube Kit",
+    "description": "Geiger counter kit for radiation detection (research use).",
+    "long_description": "Kit includes Geiger-Müller tube and high-voltage board; for educational/research use only.",
+    "price": 129,
+    "tags": [
+      "radiation",
+      "sensors"
+    ],
+    "specs": [
+      "GM tube",
+      "HV board"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/geiger-01",
+    "stock": 16,
+    "images": [
+      "/assets/img/sensors/geiger-01.png"
+    ],
+    "imageAlt": "Geiger counter kit",
+    "category": "sensors",
+    "image": "/assets/img/sensors/geiger-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-ecg-02",
+    "title": "ECG Front-End",
+    "description": "ECG front-end amplifier board for biosignal acquisition.",
+    "long_description": "Bio-signal front-end with instrumentation amplifier and filters for ECG prototyping.",
+    "price": 89,
+    "tags": [
+      "ecg",
+      "sensors",
+      "biomech"
+    ],
+    "specs": [
+      "Instrumentation amp",
+      "3-lead"
+    ],
+    "vendorName": "BioTech",
+    "vendorLink": "https://example.com/vendors/biotech",
+    "stock": 22,
+    "images": [
+      "/assets/img/sensors/ecg-02.png"
+    ],
+    "imageAlt": "ECG front-end board",
+    "category": "sensors",
+    "image": "/assets/img/sensors/ecg-02.png",
+    "vendorId": "biotech",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-moisture-01",
+    "title": "Soil Moisture Capacitive",
+    "description": "Capacitive soil moisture sensor for agriculture and research.",
+    "long_description": "Non-corrosive capacitive moisture sensor for plant monitoring systems.",
+    "price": 7.9,
+    "tags": [
+      "moisture",
+      "sensors"
+    ],
+    "specs": [
+      "Capacitive",
+      "Analog"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro",
+    "stock": 320,
+    "images": [
+      "/assets/img/sensors/moisture-01.png"
+    ],
+    "imageAlt": "Capacitive soil moisture sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/moisture-01.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-waterproof-01",
+    "title": "Waterproof Pressure Sensor",
+    "description": "Pressure sensor for submersible applications.",
+    "long_description": "Sealed pressure sensor for underwater robotics and pumps monitoring.",
+    "price": 69,
+    "tags": [
+      "pressure",
+      "sensors"
+    ],
+    "specs": [
+      "IP68",
+      "0-10bar"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/water-01",
+    "stock": 44,
+    "images": [
+      "/assets/img/sensors/water-01.png"
+    ],
+    "imageAlt": "Waterproof pressure sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/water-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-spectrometer-01",
+    "title": "Mini Spectrometer",
+    "description": "Miniature spectrometer module for color and spectral analysis.",
+    "long_description": "Portable spectrometer module for research, colorimetry, and materials analysis.",
+    "price": 499,
+    "tags": [
+      "spectrometer",
+      "sensors"
+    ],
+    "specs": [
+      "400-700nm",
+      "USB"
+    ],
+    "vendorName": "OpticLabs",
+    "vendorLink": "https://opticlabs.example/spectrometer-mini",
+    "stock": 6,
+    "images": [
+      "/assets/img/sensors/spectrometer-01.png"
+    ],
+    "imageAlt": "Mini spectrometer",
+    "category": "sensors",
+    "image": "/assets/img/sensors/spectrometer-01.png",
+    "vendorId": "opticlabs",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-co-01",
+    "title": "CO Gas Sensor",
+    "description": "Carbon monoxide detection sensor module.",
+    "long_description": "Digital CO sensor for safety systems and monitoring.",
+    "price": 39,
+    "tags": [
+      "gas",
+      "sensors"
+    ],
+    "specs": [
+      "MQ-7",
+      "Analog"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/mq7",
+    "stock": 72,
+    "images": [
+      "/assets/img/sensors/co-01.png"
+    ],
+    "imageAlt": "CO gas sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/co-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-ble-01",
+    "title": "BLE Beacon Module",
+    "description": "Bluetooth LE beacon module for proximity and presence.",
+    "long_description": "Low-energy BLE beacon module with configurable advertising and low power modes.",
+    "price": 8.9,
+    "tags": [
+      "ble",
+      "sensors"
+    ],
+    "specs": [
+      "BLE 5.0",
+      "UART",
+      "3.3V"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/ble-beacon",
+    "stock": 420,
+    "images": [
+      "/assets/img/sensors/ble-01.png"
+    ],
+    "imageAlt": "BLE beacon module",
+    "category": "sensors",
+    "image": "/assets/img/sensors/ble-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-uv-03",
+    "title": "UV Index Wearable",
+    "description": "Tiny UV index sensor for wearable devices.",
+    "long_description": "Small UV sensor module optimized for battery-powered wearables.",
+    "price": 12,
+    "tags": [
+      "uv",
+      "sensors",
+      "wearable"
+    ],
+    "specs": [
+      "VEML6075",
+      "I2C",
+      "Low-power"
+    ],
+    "vendorName": "OpticLabs",
+    "vendorLink": "https://opticlabs.example/uv-wear",
+    "stock": 86,
+    "images": [
+      "/assets/img/sensors/uv-03.png"
+    ],
+    "imageAlt": "Wearable UV index sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/uv-03.png",
+    "vendorId": "opticlabs",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-ppm-01",
+    "title": "PPM Air Quality Sensor",
+    "description": "Part-per-million gas sensor for VOC detection.",
+    "long_description": "Air quality sensor for VOC and indoor pollution measurements.",
+    "price": 49,
+    "tags": [
+      "air-quality",
+      "sensors"
+    ],
+    "specs": [
+      "PPM",
+      "UART"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/ppm-01",
+    "stock": 58,
+    "images": [
+      "/assets/img/sensors/ppm-01.png"
+    ],
+    "imageAlt": "PPM air quality sensor",
+    "category": "sensors",
+    "image": "/assets/img/sensors/ppm-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "sensor-magnetic-02",
+    "title": "3-Axis Magnetometer",
+    "description": "High-resolution magnetometer for heading and anomaly detection.",
+    "long_description": "Accurate 3-axis magnetometer for navigation and geological sensing.",
+    "price": 29,
+    "tags": [
+      "magnetometer",
+      "sensors"
+    ],
+    "specs": [
+      "3-axis",
+      "I2C",
+      "High sensitivity"
+    ],
+    "vendorName": "SensorHouse",
+    "vendorLink": "https://sensorhouse.example/mag-3x",
+    "stock": 132,
+    "images": [
+      "/assets/img/sensors/mag-01.png"
+    ],
+    "imageAlt": "3-axis magnetometer",
+    "category": "sensors",
+    "image": "/assets/img/sensors/mag-01.png",
+    "vendorId": "sensorhouse",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-brushless-001",
+    "title": "Brushless Motor 220KV A",
+    "description": "High-efficiency brushless motor for drones and robots.",
+    "long_description": "220KV brushless outrunner motor with smooth bearings and high thrust-to-weight.",
+    "price": 39,
+    "tags": [
+      "motors",
+      "brushless"
+    ],
+    "specs": [
+      "220KV",
+      "6mm shaft",
+      "CW/CCW"
+    ],
+    "vendorName": "MotorLab",
+    "vendorLink": "https://example.com/vendors/motorlab",
+    "stock": 260,
+    "images": [
+      "/assets/img/motors/brushless-001.png"
+    ],
+    "imageAlt": "Brushless motor 220KV",
+    "category": "motors",
+    "image": "/assets/img/motors/brushless-001.png",
+    "vendorId": "motorlab",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-brushless-002",
+    "title": "Brushless Motor 420KV",
+    "description": "High-power brushless motor for heavy payloads.",
+    "long_description": "420KV brushless motor designed for larger drones and robotic platforms.",
+    "price": 69,
+    "tags": [
+      "motors",
+      "brushless"
+    ],
+    "specs": [
+      "420KV",
+      "8mm shaft"
+    ],
+    "vendorName": "Shenzhen Motion Tech",
+    "vendorLink": "https://motion-shenzhen.example/brushless-420",
+    "stock": 120,
+    "images": [
+      "/assets/img/motors/brushless-002.png"
+    ],
+    "imageAlt": "Brushless motor 420KV",
+    "category": "motors",
+    "image": "/assets/img/motors/brushless-002.png",
+    "vendorId": "shenzhen-motion-tech",
+    "techSpecs": {}
+  },
+  {
+    "id": "servo-standard-001",
+    "title": "Standard Servo 25kg",
+    "description": "Metal-gear high torque servo for robotics.",
+    "long_description": "High torque servo with metal gears and wide voltage range for grippers and joints.",
+    "price": 49,
+    "tags": [
+      "servos",
+      "actuators"
+    ],
+    "specs": [
+      "25kg·cm",
+      "6V"
+    ],
+    "vendorName": "MechStore",
+    "vendorLink": "https://example.com/vendors/mechstore",
+    "stock": 360,
+    "images": [
+      "/assets/img/motors/servo-25kg.png"
+    ],
+    "imageAlt": "25kg metal gear servo",
+    "category": "motors",
+    "image": "/assets/img/motors/servo-25kg.png",
+    "vendorId": "mechstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "servo-hv-002",
+    "title": "HV Servo 35kg",
+    "description": "High-voltage servo for heavy-duty robotics.",
+    "long_description": "HV servo compatible with 7.4–8.4V systems and high dynamic response.",
+    "price": 79,
+    "tags": [
+      "servos",
+      "actuators"
+    ],
+    "specs": [
+      "35kg·cm",
+      "HV"
+    ],
+    "vendorName": "Shenzhen Motion Tech",
+    "vendorLink": "https://motion-shenzhen.example/hv-servo-35",
+    "stock": 140,
+    "images": [
+      "/assets/img/motors/servo-35kg.png"
+    ],
+    "imageAlt": "35kg HV servo",
+    "category": "motors",
+    "image": "/assets/img/motors/servo-35kg.png",
+    "vendorId": "shenzhen-motion-tech",
+    "techSpecs": {}
+  },
+  {
+    "id": "stepper-nema17-001",
+    "title": "NEMA17 Stepper 1.8°",
+    "description": "Reliable NEMA17 stepper motor for CNC and 3D printers.",
+    "long_description": "Standard NEMA17 stepper with 1.8° step angle and 1.2A rating.",
+    "price": 14.5,
+    "tags": [
+      "steppers",
+      "motors"
+    ],
+    "specs": [
+      "1.8°",
+      "1.2A",
+      "1.8Ω"
+    ],
+    "vendorName": "MotorHub",
+    "vendorLink": "https://motorhub.example/nema17",
+    "stock": 720,
+    "images": [
+      "/assets/img/motors/stepper-nema17.png"
+    ],
+    "imageAlt": "NEMA17 stepper motor",
+    "category": "motors",
+    "image": "/assets/img/motors/stepper-nema17.png",
+    "vendorId": "motorhub",
+    "techSpecs": {}
+  },
+  {
+    "id": "stepper-nema23-001",
+    "title": "NEMA23 Stepper 3A",
+    "description": "NEMA23 stepper for CNC and larger actuators.",
+    "long_description": "Robust NEMA23 stepper with higher torque for small CNCs and automation.",
+    "price": 49,
+    "tags": [
+      "steppers",
+      "motors"
+    ],
+    "specs": [
+      "3A",
+      "High torque"
+    ],
+    "vendorName": "MechStore",
+    "vendorLink": "https://example.com/vendors/mechstore/nema23",
+    "stock": 86,
+    "images": [
+      "/assets/img/motors/stepper-nema23.png"
+    ],
+    "imageAlt": "NEMA23 stepper motor",
+    "category": "motors",
+    "image": "/assets/img/motors/stepper-nema23.png",
+    "vendorId": "mechstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "gearbox-planetary-001",
+    "title": "Planetary Gearbox 10:1",
+    "description": "Compact planetary gearbox for servos and motors.",
+    "long_description": "High-precision planetary gearbox to increase torque for small motors.",
+    "price": 59,
+    "tags": [
+      "gearbox",
+      "motors"
+    ],
+    "specs": [
+      "10:1",
+      "Hardened steel"
+    ],
+    "vendorName": "DriveCo",
+    "vendorLink": "https://driveco.example/gearbox-10x",
+    "stock": 140,
+    "images": [
+      "/assets/img/motors/gearbox-10x.png"
+    ],
+    "imageAlt": "Planetary gearbox 10:1",
+    "category": "motors",
+    "image": "/assets/img/motors/gearbox-10x.png",
+    "vendorId": "driveco",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-dc-001",
+    "title": "DC Motor 12V 3000RPM",
+    "description": "Generic DC motor for mobile platforms.",
+    "long_description": "12V brushed DC motor with moderate torque for small robots and wheels.",
+    "price": 9.9,
+    "tags": [
+      "dc-motor",
+      "motors"
+    ],
+    "specs": [
+      "12V",
+      "3000RPM"
+    ],
+    "vendorName": "MotorLab",
+    "vendorLink": "https://example.com/vendors/motorlab/dc-12v-3000",
+    "stock": 540,
+    "images": [
+      "/assets/img/motors/dc-12v.png"
+    ],
+    "imageAlt": "12V DC motor",
+    "category": "motors",
+    "image": "/assets/img/motors/dc-12v.png",
+    "vendorId": "motorlab",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-dc-002",
+    "title": "DC High Torque 24V",
+    "description": "24V DC motor suitable for medium-duty drives.",
+    "long_description": "High-torque DC motor intended for conveyor and small-vehicle applications.",
+    "price": 89,
+    "tags": [
+      "dc-motor",
+      "motors"
+    ],
+    "specs": [
+      "24V",
+      "High torque"
+    ],
+    "vendorName": "MotorHub",
+    "vendorLink": "https://motorhub.example/dc-24v",
+    "stock": 86,
+    "images": [
+      "/assets/img/motors/dc-24v.png"
+    ],
+    "imageAlt": "24V DC motor",
+    "category": "motors",
+    "image": "/assets/img/motors/dc-24v.png",
+    "vendorId": "motorhub",
+    "techSpecs": {}
+  },
+  {
+    "id": "servo-continuous-01",
+    "title": "Continuous Rotation Servo",
+    "description": "Continuous rotation servo for drive applications.",
+    "long_description": "Servo modified for continuous rotation; speed controllable like a motor.",
+    "price": 19.9,
+    "tags": [
+      "servos",
+      "motors"
+    ],
+    "specs": [
+      "Continuous",
+      "6V"
+    ],
+    "vendorName": "RoboParts",
+    "vendorLink": "https://example.com/vendors/roboparts/cont-servo",
+    "stock": 420,
+    "images": [
+      "/assets/img/motors/cont-servo.png"
+    ],
+    "imageAlt": "Continuous rotation servo",
+    "category": "motors",
+    "image": "/assets/img/motors/cont-servo.png",
+    "vendorId": "roboparts",
+    "techSpecs": {}
+  },
+  {
+    "id": "linear-actuator-01",
+    "title": "Mini Linear Actuator 100mm",
+    "description": "Compact linear actuator for small mechanisms.",
+    "long_description": "100mm stroke linear actuator with built-in motor and limit switches.",
+    "price": 69,
+    "tags": [
+      "actuators",
+      "motors"
+    ],
+    "specs": [
+      "100mm stroke",
+      "12V",
+      "Limit switches"
+    ],
+    "vendorName": "ActuatorsInc",
+    "vendorLink": "https://actuators.example/linear-100",
+    "stock": 98,
+    "images": [
+      "/assets/img/motors/linear-100.png"
+    ],
+    "imageAlt": "Mini linear actuator 100mm",
+    "category": "motors",
+    "image": "/assets/img/motors/linear-100.png",
+    "vendorId": "actuatorsinc",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-driver-esc-01",
+    "title": "ESC 30A BLHeli",
+    "description": "Electronic speed controller for brushless motors.",
+    "long_description": "30A ESC supporting BLHeli firmware for smooth motor control in drones.",
+    "price": 34,
+    "tags": [
+      "esc",
+      "motors"
+    ],
+    "specs": [
+      "30A",
+      "BLHeli",
+      "BEC"
+    ],
+    "vendorName": "MotorLab",
+    "vendorLink": "https://example.com/vendors/motorlab/esc-30a",
+    "stock": 210,
+    "images": [
+      "/assets/img/motors/esc-30a.png"
+    ],
+    "imageAlt": "30A ESC BLHeli",
+    "category": "motors",
+    "image": "/assets/img/motors/esc-30a.png",
+    "vendorId": "motorlab",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-driver-stepper-01",
+    "title": "Stepper Driver DRV8825",
+    "description": "Stepper motor driver module for microstepping.",
+    "long_description": "DRV8825 stepper driver carrier with microstep and current regulation.",
+    "price": 6.5,
+    "tags": [
+      "drivers",
+      "motors"
+    ],
+    "specs": [
+      "DRV8825",
+      "Microstep",
+      "1.2A"
+    ],
+    "vendorName": "ElectroShop",
+    "vendorLink": "https://example.com/vendors/electro/drv8825",
+    "stock": 980,
+    "images": [
+      "/assets/img/motors/driver-drv8825.png"
+    ],
+    "imageAlt": "DRV8825 stepper driver",
+    "category": "motors",
+    "image": "/assets/img/motors/driver-drv8825.png",
+    "vendorId": "electroshop",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-gearbox-002",
+    "title": "Right-angle Gearbox 5:1",
+    "description": "Right-angle gearbox for compact torque conversion.",
+    "long_description": "Right-angle gearbox suitable for steering and gear-driven mechanisms.",
+    "price": 49,
+    "tags": [
+      "gearbox",
+      "motors"
+    ],
+    "specs": [
+      "5:1",
+      "Right-angle"
+    ],
+    "vendorName": "DriveCo",
+    "vendorLink": "https://driveco.example/gearbox-5x",
+    "stock": 142,
+    "images": [
+      "/assets/img/motors/gearbox-5x.png"
+    ],
+    "imageAlt": "Right-angle gearbox 5:1",
+    "category": "motors",
+    "image": "/assets/img/motors/gearbox-5x.png",
+    "vendorId": "driveco",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-encoder-01",
+    "title": "Magnetic Encoder 1024ppr",
+    "description": "Rotary encoder for motor position feedback.",
+    "long_description": "Magnetic encoder with high pulse-per-revolution resolution for closed-loop control.",
+    "price": 39,
+    "tags": [
+      "encoders",
+      "motors"
+    ],
+    "specs": [
+      "1024 ppr",
+      "Magnetic"
+    ],
+    "vendorName": "MotorHub",
+    "vendorLink": "https://motorhub.example/encoder-1024",
+    "stock": 320,
+    "images": [
+      "/assets/img/motors/encoder-1024.png"
+    ],
+    "imageAlt": "Magnetic encoder 1024ppr",
+    "category": "motors",
+    "image": "/assets/img/motors/encoder-1024.png",
+    "vendorId": "motorhub",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-coupling-01",
+    "title": "Flexible Coupling 6mm",
+    "description": "Flexible shaft coupling for motor to gearbox attachment.",
+    "long_description": "Coupling with dampening to protect from misalignment and shock.",
+    "price": 9.9,
+    "tags": [
+      "coupling",
+      "motors"
+    ],
+    "specs": [
+      "6mm bore",
+      "Flexible"
+    ],
+    "vendorName": "MechStore",
+    "vendorLink": "https://example.com/vendors/mechstore/coupling-6mm",
+    "stock": 420,
+    "images": [
+      "/assets/img/motors/coupling-6mm.png"
+    ],
+    "imageAlt": "Flexible coupling 6mm",
+    "category": "motors",
+    "image": "/assets/img/motors/coupling-6mm.png",
+    "vendorId": "mechstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-brushless-003",
+    "title": "Outrunner 1100KV",
+    "description": "High-RPM outrunner motor for small multirotors.",
+    "long_description": "Lightweight outrunner optimized for racing and high-speed applications.",
+    "price": 49,
+    "tags": [
+      "brushless",
+      "motors"
+    ],
+    "specs": [
+      "1100KV",
+      "5mm shaft"
+    ],
+    "vendorName": "MotorLab",
+    "vendorLink": "https://example.com/vendors/motorlab/1100kv",
+    "stock": 220,
+    "images": [
+      "/assets/img/motors/brushless-003.png"
+    ],
+    "imageAlt": "Outrunner 1100KV",
+    "category": "motors",
+    "image": "/assets/img/motors/brushless-003.png",
+    "vendorId": "motorlab",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-brushless-004",
+    "title": "Inrunner 600KV",
+    "description": "Inrunner motor for high-efficiency drives.",
+    "long_description": "600KV inrunner suited for fixed-wing and direct drives.",
+    "price": 59,
+    "tags": [
+      "brushless",
+      "motors"
+    ],
+    "specs": [
+      "600KV",
+      "6mm shaft"
+    ],
+    "vendorName": "MotorHub",
+    "vendorLink": "https://motorhub.example/inrunner-600",
+    "stock": 94,
+    "images": [
+      "/assets/img/motors/brushless-004.png"
+    ],
+    "imageAlt": "Inrunner 600KV",
+    "category": "motors",
+    "image": "/assets/img/motors/brushless-004.png",
+    "vendorId": "motorhub",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-bearing-01",
+    "title": "High-speed Bearing Kit",
+    "description": "Bearing kit for motor shafts and gearboxes.",
+    "long_description": "Precision bearings to reduce friction in high-RPM motors.",
+    "price": 24,
+    "tags": [
+      "bearings",
+      "motors"
+    ],
+    "specs": [
+      "ABEC-7",
+      "Steel"
+    ],
+    "vendorName": "MechStore",
+    "vendorLink": "https://example.com/vendors/mechstore/bearings",
+    "stock": 260,
+    "images": [
+      "/assets/img/motors/bearings.png"
+    ],
+    "imageAlt": "High-speed bearing kit",
+    "category": "motors",
+    "image": "/assets/img/motors/bearings.png",
+    "vendorId": "mechstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-mount-01",
+    "title": "Motor Mount Aluminum",
+    "description": "Aluminum motor mount for CNC and robot chassis.",
+    "long_description": "Rigid motor mount with multiple mounting slots for custom frames.",
+    "price": 14.5,
+    "tags": [
+      "mounts",
+      "motors"
+    ],
+    "specs": [
+      "Aluminum",
+      "Multiple slots"
+    ],
+    "vendorName": "DriveCo",
+    "vendorLink": "https://driveco.example/motor-mount",
+    "stock": 430,
+    "images": [
+      "/assets/img/motors/mount-01.png"
+    ],
+    "imageAlt": "Aluminum motor mount",
+    "category": "motors",
+    "image": "/assets/img/motors/mount-01.png",
+    "vendorId": "driveco",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-brushless-005",
+    "title": "Direct Drive BL 350KV",
+    "description": "Low KV direct-drive brushless motor for efficient torque.",
+    "long_description": "350KV direct-drive motor with reinforced bearings and long life.",
+    "price": 129,
+    "tags": [
+      "brushless",
+      "motors"
+    ],
+    "specs": [
+      "350KV",
+      "8mm shaft"
+    ],
+    "vendorName": "MotorLab",
+    "vendorLink": "https://example.com/vendors/motorlab/350kv",
+    "stock": 56,
+    "images": [
+      "/assets/img/motors/brushless-005.png"
+    ],
+    "imageAlt": "Direct drive 350KV brushless motor",
+    "category": "motors",
+    "image": "/assets/img/motors/brushless-005.png",
+    "vendorId": "motorlab",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-planetary-01",
+    "title": "Planetary Drive 30:1",
+    "description": "High reduction planetary drive for robotics joints.",
+    "long_description": "Compact planetary drive for lightweight robotics requiring high torque.",
+    "price": 179,
+    "tags": [
+      "gearbox",
+      "motors"
+    ],
+    "specs": [
+      "30:1",
+      "Hardened gears"
+    ],
+    "vendorName": "DriveCo",
+    "vendorLink": "https://driveco.example/planetary-30x",
+    "stock": 26,
+    "images": [
+      "/assets/img/motors/planetary-30x.png"
+    ],
+    "imageAlt": "Planetary drive 30:1",
+    "category": "motors",
+    "image": "/assets/img/motors/planetary-30x.png",
+    "vendorId": "driveco",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-planetary-02",
+    "title": "Planetary Drive 50:1",
+    "description": "High-reduction planetary gearbox for heavy loads.",
+    "long_description": "50:1 planetary gearbox offering high torque for grippers and lifts.",
+    "price": 249,
+    "tags": [
+      "gearbox",
+      "motors"
+    ],
+    "specs": [
+      "50:1",
+      "Hardened gears"
+    ],
+    "vendorName": "DriveCo",
+    "vendorLink": "https://driveco.example/planetary-50x",
+    "stock": 12,
+    "images": [
+      "/assets/img/motors/planetary-50x.png"
+    ],
+    "imageAlt": "Planetary drive 50:1",
+    "category": "motors",
+    "image": "/assets/img/motors/planetary-50x.png",
+    "vendorId": "driveco",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-cable-01",
+    "title": "Motor Cable Assembly",
+    "description": "High-flex cable assembly for motor connections.",
+    "long_description": "Shielded cable assembly with connectors rated for motor currents.",
+    "price": 19.9,
+    "tags": [
+      "cables",
+      "motors"
+    ],
+    "specs": [
+      "3-core",
+      "High-flex"
+    ],
+    "vendorName": "MotorHub",
+    "vendorLink": "https://motorhub.example/cable-assembly",
+    "stock": 320,
+    "images": [
+      "/assets/img/motors/cable-assembly.png"
+    ],
+    "imageAlt": "Motor cable assembly",
+    "category": "motors",
+    "image": "/assets/img/motors/cable-assembly.png",
+    "vendorId": "motorhub",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-shaft-01",
+    "title": "Stainless Shaft 8mm",
+    "description": "8mm stainless motor shaft replacement.",
+    "long_description": "Hardened stainless shaft suitable for many motor types and gearboxes.",
+    "price": 12.9,
+    "tags": [
+      "shaft",
+      "motors"
+    ],
+    "specs": [
+      "8mm",
+      "Stainless"
+    ],
+    "vendorName": "MechStore",
+    "vendorLink": "https://example.com/vendors/mechstore/shaft-8mm",
+    "stock": 420,
+    "images": [
+      "/assets/img/motors/shaft-8mm.png"
+    ],
+    "imageAlt": "Stainless motor shaft 8mm",
+    "category": "motors",
+    "image": "/assets/img/motors/shaft-8mm.png",
+    "vendorId": "mechstore",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-brake-01",
+    "title": "Electromagnetic Brake Module",
+    "description": "Brake module for precision stopping of shafts.",
+    "long_description": "Compact electromagnetic brake for motorized joints and safety stops.",
+    "price": 89,
+    "tags": [
+      "brake",
+      "motors"
+    ],
+    "specs": [
+      "Electromagnetic",
+      "12V"
+    ],
+    "vendorName": "ActuatorsInc",
+    "vendorLink": "https://actuators.example/brake-01",
+    "stock": 54,
+    "images": [
+      "/assets/img/motors/brake-01.png"
+    ],
+    "imageAlt": "Electromagnetic brake module",
+    "category": "motors",
+    "image": "/assets/img/motors/brake-01.png",
+    "vendorId": "actuatorsinc",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-reducer-01",
+    "title": "Worm Gear Reducer 40:1",
+    "description": "Worm reducer for compact torque multiplication.",
+    "long_description": "Worm gear reducer with integrated mounting and sealed bearings.",
+    "price": 129,
+    "tags": [
+      "reducer",
+      "motors"
+    ],
+    "specs": [
+      "40:1",
+      "Sealed"
+    ],
+    "vendorName": "DriveCo",
+    "vendorLink": "https://driveco.example/worm-40x",
+    "stock": 34,
+    "images": [
+      "/assets/img/motors/worm-40x.png"
+    ],
+    "imageAlt": "Worm gear reducer 40:1",
+    "category": "motors",
+    "image": "/assets/img/motors/worm-40x.png",
+    "vendorId": "driveco",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-reducer-02",
+    "title": "Harmonic Drive Mini 100:1",
+    "description": "High-precision harmonic drive for robotics.",
+    "long_description": "Mini harmonic drive offering very high reduction and backlash-free motion for precision joints.",
+    "price": 499,
+    "tags": [
+      "harmonic",
+      "motors"
+    ],
+    "specs": [
+      "100:1",
+      "Zero-backlash"
+    ],
+    "vendorName": "DriveCo",
+    "vendorLink": "https://driveco.example/harmonic-100x",
+    "stock": 8,
+    "images": [
+      "/assets/img/motors/harmonic-100x.png"
+    ],
+    "imageAlt": "Harmonic drive 100:1",
+    "category": "motors",
+    "image": "/assets/img/motors/harmonic-100x.png",
+    "vendorId": "driveco",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-bldc-01",
+    "title": "BLDC Hub Motor 250W",
+    "description": "Compact hub motor for small vehicles and platforms.",
+    "long_description": "250W BLDC hub motor with integrated controller option.",
+    "price": 179,
+    "tags": [
+      "bldc",
+      "motors"
+    ],
+    "specs": [
+      "250W",
+      "Brushless"
+    ],
+    "vendorName": "MotorLab",
+    "vendorLink": "https://example.com/vendors/motorlab/hub-250w",
+    "stock": 26,
+    "images": [
+      "/assets/img/motors/hub-250w.png"
+    ],
+    "imageAlt": "BLDC hub motor 250W",
+    "category": "motors",
+    "image": "/assets/img/motors/hub-250w.png",
+    "vendorId": "motorlab",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-bldc-02",
+    "title": "BLDC Hub Motor 500W",
+    "description": "Higher-power BLDC hub motor for heavier vehicles.",
+    "long_description": "500W BLDC hub motor intended for scooters and small EV conversion projects.",
+    "price": 349,
+    "tags": [
+      "bldc",
+      "motors"
+    ],
+    "specs": [
+      "500W",
+      "Brushless"
+    ],
+    "vendorName": "MotorHub",
+    "vendorLink": "https://motorhub.example/hub-500w",
+    "stock": 14,
+    "images": [
+      "/assets/img/motors/hub-500w.png"
+    ],
+    "imageAlt": "BLDC hub motor 500W",
+    "category": "motors",
+    "image": "/assets/img/motors/hub-500w.png",
+    "vendorId": "motorhub",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-controller-01",
+    "title": "Brushless Controller 100A",
+    "description": "High-current BLDC controller for heavy motors.",
+    "long_description": "100A brushless motor controller with programmable profiles and telemetry.",
+    "price": 249,
+    "tags": [
+      "controller",
+      "motors"
+    ],
+    "specs": [
+      "100A",
+      "Telemetry"
+    ],
+    "vendorName": "MotorLab",
+    "vendorLink": "https://example.com/vendors/motorlab/controller-100a",
+    "stock": 18,
+    "images": [
+      "/assets/img/motors/controller-100a.png"
+    ],
+    "imageAlt": "100A BLDC controller",
+    "category": "motors",
+    "image": "/assets/img/motors/controller-100a.png",
+    "vendorId": "motorlab",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-encoder-02",
+    "title": "Optical Encoder Kit",
+    "description": "Optical encoder for high-resolution feedback.",
+    "long_description": "Kit with disk and sensor for high-resolution optical encoding of shafts.",
+    "price": 34,
+    "tags": [
+      "encoder",
+      "motors"
+    ],
+    "specs": [
+      "Optical",
+      "High resolution"
+    ],
+    "vendorName": "MotorHub",
+    "vendorLink": "https://motorhub.example/opt-encoder",
+    "stock": 86,
+    "images": [
+      "/assets/img/motors/opt-encoder.png"
+    ],
+    "imageAlt": "Optical encoder kit",
+    "category": "motors",
+    "image": "/assets/img/motors/opt-encoder.png",
+    "vendorId": "motorhub",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-hub-assembly-01",
+    "title": "Complete Wheel Hub Assembly",
+    "description": "Wheel assembly with integrated motor and bearing.",
+    "long_description": "Includes motor, hub, bearing and mounting flange for quick integration.",
+    "price": 129,
+    "tags": [
+      "hub",
+      "motors"
+    ],
+    "specs": [
+      "Integrated",
+      "Preassembled"
+    ],
+    "vendorName": "RoboParts",
+    "vendorLink": "https://example.com/vendors/roboparts/hub-assembly",
+    "stock": 48,
+    "images": [
+      "/assets/img/motors/hub-assembly.png"
+    ],
+    "imageAlt": "Wheel hub assembly with motor",
+    "category": "motors",
+    "image": "/assets/img/motors/hub-assembly.png",
+    "vendorId": "roboparts",
+    "techSpecs": {}
+  },
+  {
+    "id": "motor-kit-educational-01",
+    "title": "Educational Motor Kit",
+    "description": "Kit with motors, drivers and encoders for teaching.",
+    "long_description": "Educational kit for learning motor control with stepper and DC motors plus drivers.",
+    "price": 89,
+    "tags": [
+      "kit",
+      "motors"
+    ],
+    "specs": [
+      "Includes motors",
+      "Drivers",
+      "Encoders"
+    ],
+    "vendorName": "MotorHub",
+    "vendorLink": "https://motorhub.example/edu-kit",
+    "stock": 120,
+    "images": [
+      "/assets/img/motors/edu-kit.png"
+    ],
+    "imageAlt": "Educational motor kit",
+    "category": "motors",
+    "image": "/assets/img/motors/edu-kit.png",
+    "vendorId": "motorhub",
+    "techSpecs": {}
+  }
+]
