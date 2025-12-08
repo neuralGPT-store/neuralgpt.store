@@ -17,10 +17,6 @@
           <li><a href="/quantum.html">Quantum Pass</a></li>
           <li><a href="/security.html">Seguridad IA</a></li>
           <li><a href="/providers.html">Proveedores</a></li>
-          <li><a href="/console.html">Consola</a></li>
-          <li><a href="/blog.html">Blog</a></li>
-          <li><a href="/trends.html">Tendencias</a></li>
-          <li><a href="/legal.html">Legal</a></li>
         </ul>
       </nav>
       <div class="search-wrap">
@@ -36,8 +32,22 @@
     </section>
 
     <section class="sections">
-      <h2 class="section-title">Categorías</h2>
+      <h2 class="section-title">Explorar</h2>
+      <div class="filters"><!-- dynamic controls injected --></div>
       <div class="filter-list" role="tablist" aria-label="Filtrar por categoría"></div>
+      <div id="market-grid" class="market-grid" aria-live="polite"></div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Recomendados</h2>
+      <div id="featured-products" class="market-grid"></div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Nuevos lanzamientos</h2>
+      <div id="new-products" class="market-grid"></div>
+    </section>
+
       <div class="filters" style="margin-top:10px"></div>
       <div class="grid grid-4" style="margin-top:14px">
         <div id="cat-ai-components" class="card-list"></div>
@@ -90,8 +100,16 @@
       fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d }).catch(()=>{})
       fetch('/data/category-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(c=>{ window.__CATEGORIES__ = c }).catch(()=>{})
     })();
-  </script>
-  <script src="/assets/js/main.js"></script>
+    </section>
 
-</body>
-</html>
+    <section>
+      <h2 class="section-title">Recomendados</h2>
+      <div id="featured-products" class="market-grid"></div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Nuevos lanzamientos</h2>
+      <div id="new-products" class="market-grid"></div>
+    </section>
+
+    <script src="/assets/js/main.js"></script>

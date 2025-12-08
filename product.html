@@ -13,60 +13,55 @@
     </div></header>
     <main class="wrap">
       <section>
-        <h1 class="section-title">Producto — Placeholder</h1>
-        <p class="subtle">Página de producto dinámica (placeholder). Los parámetros URL controlan el contenido.</p>
+        <h1 class="section-title" id="p-title">Cargando producto...</h1>
+        <p class="subtle" id="p-sub">Ficha de producto dinámica</p>
       </section>
       <section class="sections slide-up">
         <div class="grid grid-2">
           <div class="card">
             <img id="p-image" src="/assets/img/vision-pro.svg" alt="product image" class="card-img" style="max-width:100%;height:auto;margin-bottom:12px">
-            <h2 id="p-title">Producto</h2>
+            <h2 id="p-name">Producto</h2>
+            <div class="product-meta" id="p-price"></div>
             <p class="subtle" id="p-desc">Descripción breve del producto.</p>
             <div style="margin-top:12px">
               <a class="btn btn-primary" id="buy-btn" href="#">Comprar</a>
-              <a class="btn" id="demo-btn" href="/providers-view.html#contact">Solicitar demo</a>
+              <a class="btn" id="demo-btn" href="/providers.html#contact">Solicitar demo</a>
             </div>
           </div>
           <div class="card">
-            <h3>Detalles técnicos</h3>
+            <h3>Detalles técnicos & Especificaciones</h3>
             <div id="p-details">Cargando detalles...</div>
+            <h4>Tags</h4>
+            <div id="p-tags" class="muted"></div>
           </div>
         </div>
       </section>
+
+      <section>
+        <h2 class="section-title">Recomendados</h2>
+        <div id="recommended-products" class="market-grid"></div>
+      </section>
+
     </main>
     <footer class="site-footer">
       <div class="wrap">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
-          <div><a class="brand footer-brand" href="/">NeuralGPT.Store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
-          <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
+        <div class="footer-grid">
+          <div>
+            <a class="brand footer-brand" href="/">NeuralGPT.Store</a>
+            <p class="subtle">Marketplace para IA, hardware y servicios.</p>
+          </div>
+          <div>
+            <h4>Enlaces</h4>
+            <nav class="foot-nav"><a href="/providers.html">Proveedores</a><a href="/security.html">Seguridad</a><a href="/quantum.html">Quantum Pass</a></nav>
+          </div>
+          <div>
+            <h4>Legal</h4>
+            <nav class="foot-nav"><a href="/legal.html">Políticas</a></nav>
+          </div>
         </div>
         <div style="margin-top:10px" class="muted">© NeuralGPT.Store</div>
       </div>
     </footer>
-    <script>
-      // Populate product page; fetch JSON if dataset not preloaded
-      (function(){
-        function qs(){return Object.fromEntries(new URLSearchParams(location.search))}
-        const Q=qs();
-        const findProduct = id => (window.__PRODUCTS__||[]).find(p=>p.id===id)
-        function render(){
-          if(!Q.id) return
-          const prod = findProduct(Q.id)
-          if(prod){
-            document.getElementById('p-title').textContent = prod.name
-            document.getElementById('p-desc').textContent = prod.short_description
-            document.getElementById('p-image').src = prod.image || '/assets/img/vision-pro.svg'
-            document.getElementById('buy-btn').href = '/checkout.html?product='+encodeURIComponent(prod.id)
-            document.getElementById('p-details').innerHTML = `<ul><li>Categoria: ${prod.category}</li><li>Precio: $${prod.price}</li></ul>`
-          } else {
-            document.getElementById('p-title').textContent = Q.id
-            document.getElementById('p-desc').textContent = 'Producto no encontrado en el catálogo estático.'
-          }
-        }
-        if(!window.__PRODUCTS__ || !window.__PRODUCTS__.length){
-          fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d; render() }).catch(()=>{ render() })
-        } else { render() }
-      })();
-    </script>
+    <script src="/assets/js/main.js"></script>
   </body>
 </html>

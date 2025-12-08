@@ -13,33 +13,12 @@
     </div></header>
     <main class="wrap">
       <h1 class="section-title">Categoría</h1>
-      <p class="subtle">Vista genérica de categoría — contenido placeholder profesional.</p>
+      <p class="subtle">Explora los productos dentro de la categoría seleccionada.</p>
       <section class="sections">
         <div id="category-grid" class="grid market-grid"></div>
       </section>
-      <script>
-        // preload product/category JSON and then render the category page
-        (function(){
-          function render(){
-            const params = new URLSearchParams(location.search)
-            const cat = params.get('cat') || params.get('category') || ''
-            const list = (window.__PRODUCTS__||[]).filter(p=> (p.category||'').toLowerCase() === (cat||'').toLowerCase())
-            const grid = document.getElementById('category-grid')
-            if(list.length && grid){
-              list.forEach(p=>{
-                const a = document.createElement('article'); a.className='card tooltip'
-                a.innerHTML = `<h3>${p.name}</h3><p class="subtle">${p.short_description}</p><a class="btn" href="/product.html?id=${encodeURIComponent(p.id)}">Ver</a>`
-                grid.appendChild(a)
-              })
-            } else if(grid){ grid.innerHTML = '<div class="muted">No products in this category.</div>' }
-          }
-          // attempt to fetch JSON if no preloaded dataset
-          if(!window.__PRODUCTS__ || !window.__PRODUCTS__.length){
-            fetch('/data/product-data.json').then(r=> r.ok ? r.json() : Promise.reject()).then(d=>{ window.__PRODUCTS__ = d; render() }).catch(()=>{ render() })
-          } else { render() }
-        })();
-      </script>
     </main>
+    <script src="/assets/js/main.js"></script>
     <footer class="site-footer">
       <div class="wrap">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
