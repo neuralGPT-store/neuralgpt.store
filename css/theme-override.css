@@ -42,3 +42,46 @@ html,body{background:linear-gradient(180deg,var(--bg-1),var(--bg-2));color:var(-
 /* Ensure images and assets untouched; purely cosmetic CSS overrides only */
 
 /* End of theme override */
+
+/* Layout alignment: spacing, grids, typography */
+html{font-size:16px;line-height:1.45}
+body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,Helvetica,sans-serif}
+/* Reset major margins for consistency */
+h1,h2,h3,h4,h5,h6{margin:0 0 0.5rem;font-weight:700}
+p{margin:0 0 0.85rem}
+
+/* Wrap container consistency */
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding:24px}
+
+/* Grid defaults */
+.grid{display:grid;gap:18px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.market-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+
+/* Card sizing and spacing */
+.card{padding:18px;border-radius:var(--radius);margin:8px 0}
+.card .card-img, img{max-width:100%;height:auto;display:block}
+
+/* Header/Footer alignment */
+.site-header .wrap, .site-footer .wrap{padding-left:20px;padding-right:20px}
+.site-header .brand{font-size:1.05rem}
+
+/* Typography scale adjustments */
+h1{font-size:1.8rem}
+h2{font-size:1.25rem}
+h3{font-size:1rem}
+
+/* Buttons and forms spacing */
+.btn, .search-input{font-weight:700}
+
+/* Navigation spacing */
+.main-nav ul{gap:12px}
+.main-nav a{padding:8px 10px}
+
+/* Accessibility: ensure focus outlines visible on theme overrides */
+a:focus,button:focus,input:focus{outline:3px solid rgba(212,175,55,0.16);outline-offset:3px}
+
+/* Ensure consistent base on small screens */
+@media(max-width:980px){.wrap{padding:16px}.grid-2{grid-template-columns:1fr 1fr}}
+
