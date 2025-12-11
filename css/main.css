@@ -162,6 +162,60 @@ a:focus,button:focus,input:focus{outline:3px solid rgba(0,200,255,0.12);outline-
 /* Import project theme overrides (black & gold) */
 @import url('theme-override.css');
 
+/* ==========================
+   Phase1B — Layout Normalization
+   - Enforce consistent card aspect ratios, spacing and grid behavior
+   - Overrides only; does not remove existing rules
+   - Temporary stable values for Phase 1
+   ========================== */
+
+:root{
+  --p1-card-aspect: 4/3;
+  --p1-card-min-height: 220px;
+  --p1-card-gap: 18px;
+  --p1-card-padding: 16px;
+}
+
+/* Unified card baseline */
+.card, .product-card, .provider-card{ 
+  display:flex; 
+  flex-direction:column; 
+  justify-content:space-between; 
+  gap:var(--p1-card-gap);
+  padding:var(--p1-card-padding);
+  min-height:var(--p1-card-min-height);
+  aspect-ratio: var(--p1-card-aspect);
+}
+
+/* Ensure article/card children align and media scale consistently */
+.card img, .card .card-img img, .product-card img{ width:100%; height:auto; object-fit:cover; border-radius:8px }
+.card .card-body{ flex:1; display:flex; flex-direction:column; justify-content:space-between }
+
+/* Market grid: consistent columns and item sizing */
+.market-grid, .grid{ gap:18px }
+.market-grid > * { align-self:stretch }
+.market-grid article.card, .market-grid .card{ aspect-ratio: var(--p1-card-aspect); }
+
+/* Providers and sponsors alignment */
+.providers-grid, .sponsors-grid{ display:grid; gap:18px }
+.providers-grid{ grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) }
+.sponsors-grid{ grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); align-items:center }
+.sponsors-grid img{ max-width:100%; height:64px; object-fit:contain; display:block; margin:0 auto }
+
+/* Navbar & header stable spacing */
+.wrap{ padding:24px; max-width:1240px }
+.header-inner{ gap:18px; align-items:center }
+
+/* Responsive base adjustments */
+@media(max-width:980px){
+  :root{ --p1-card-aspect: 1/1 }
+  .providers-grid, .market-grid{ grid-template-columns: repeat(1, 1fr) }
+  .hero{ padding:32px 0 }
+}
+
+/* Prevent overflow and ensure containers respect box sizing */
+html,body{ overflow-x:hidden }
+
 /* link underline animation */
 a{ position:relative }
 a::after{ content:''; position:absolute; left:0; right:0; bottom:-2px; height:2px; background:linear-gradient(90deg,var(--primary),var(--violet)); transform:scaleX(0); transform-origin:left center; transition:transform .2s cubic-bezier(.2,.9,.1,1); opacity:0.95 }

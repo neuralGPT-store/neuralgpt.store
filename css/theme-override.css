@@ -1,87 +1,55 @@
-/* Theme override: Black & Gold (negro-oro) */
+/* Theme override cleaned for CyberNeo preparation
+   - Removed black/gold tokens and replaced with temporary neutral variables
+   - Purpose: stabilize visuals for redesign (Phase 1)
+*/
 :root{
-  --bg-1: #000000;
-  --bg-2: #000000;
-  --panel: rgba(0,0,0,0.6);
-  --glass: rgba(255,236,179,0.03);
-  --primary: #D4AF37; /* gold */
-  --accent: #FFD700;  /* bright gold */
-  --violet: #B8860B;  /* darker gold accent */
-  --muted: rgba(212,175,55,0.12);
-  --text: #F8EFE0;
-  --subtext: rgba(248,239,224,0.72);
+  --temp-bg: #0d0f14;
+  --temp-fg: #e4e8ef;
+  --temp-accent: #7b2cff;
+  --temp-border: #1a1f2b;
+
+  /* map legacy variables to temporary palette to avoid gold/black traces */
+  --bg-1: var(--temp-bg);
+  --bg-2: #0f1116;
+  --panel: rgba(26,31,43,0.6);
+  --glass: rgba(228,232,239,0.03);
+  --primary: var(--temp-accent);
+  --accent: var(--temp-accent);
+  --violet: var(--temp-accent);
+  --muted: rgba(123,44,255,0.08);
+  --text: var(--temp-fg);
+  --subtext: rgba(228,232,239,0.72);
   --radius: 12px;
-  --shadow: 0 18px 60px rgba(0,0,0,0.6);
+  --shadow: 0 18px 60px rgba(26,31,43,0.6);
 }
 
-/* Base background and text */
+/* Minimal overrides: keep spacing/typography but no gold/black colors */
 html,body{background:linear-gradient(180deg,var(--bg-1),var(--bg-2));color:var(--text)}
-
-/* Header / Brand */
-.brand{color:var(--primary) !important}
-.brand .dot{color:var(--accent) !important}
-
-/* Accent adjustments for buttons and highlights */
-.btn-primary{background:linear-gradient(90deg,var(--primary),var(--accent)) !important;color:#071521 !important}
-.section-title{color:var(--primary) !important}
-
-/* Cards and panels tuned for dark gold */
-.card{background:linear-gradient(180deg, rgba(255,248,230,0.02), rgba(255,248,230,0.005)) !important;border:1px solid rgba(212,175,55,0.06) !important}
-
-/* Footer */
-.site-footer{border-top:1px solid rgba(212,175,55,0.04) !important}
-
-/* Reduce neon / cyan glows to gold glow */
-.rgb-border::after{background:linear-gradient(90deg,var(--primary),var(--accent)) !important;filter:blur(8px) saturate(120%) !important;opacity:0.12}
-.btn-primary, .brand::after{box-shadow:0 18px 60px rgba(212,175,55,0.10) !important}
-
-/* Grid and layout niceties */
 .wrap{padding:24px}
 .grid{gap:18px}
 
-/* Ensure images and assets untouched; purely cosmetic CSS overrides only */
-
-/* End of theme override */
-
-/* Layout alignment: spacing, grids, typography */
 html{font-size:16px;line-height:1.45}
 body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,Helvetica,sans-serif}
-/* Reset major margins for consistency */
 h1,h2,h3,h4,h5,h6{margin:0 0 0.5rem;font-weight:700}
 p{margin:0 0 0.85rem}
-
-/* Wrap container consistency */
 .wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding:24px}
-
-/* Grid defaults */
 .grid{display:grid;gap:18px}
 .grid-2{grid-template-columns:repeat(2,1fr)}
 .grid-3{grid-template-columns:repeat(3,1fr)}
 .market-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-
-/* Card sizing and spacing */
 .card{padding:18px;border-radius:var(--radius);margin:8px 0}
 .card .card-img, img{max-width:100%;height:auto;display:block}
-
-/* Header/Footer alignment */
 .site-header .wrap, .site-footer .wrap{padding-left:20px;padding-right:20px}
 .site-header .brand{font-size:1.05rem}
-
-/* Typography scale adjustments */
 h1{font-size:1.8rem}
 h2{font-size:1.25rem}
 h3{font-size:1rem}
-
-/* Buttons and forms spacing */
 .btn, .search-input{font-weight:700}
-
-/* Navigation spacing */
 .main-nav ul{gap:12px}
 .main-nav a{padding:8px 10px}
 
-/* Accessibility: ensure focus outlines visible on theme overrides */
-a:focus,button:focus,input:focus{outline:3px solid rgba(212,175,55,0.16);outline-offset:3px}
+/* Focus outlines use temp accents */
+a:focus,button:focus,input:focus{outline:3px solid rgba(123,44,255,0.12);outline-offset:3px}
 
-/* Ensure consistent base on small screens */
 @media(max-width:980px){.wrap{padding:16px}.grid-2{grid-template-columns:1fr 1fr}}
 
