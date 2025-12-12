@@ -1470,6 +1470,125 @@ h1, h2, h3, h4 { line-height: 1.06 !important; max-width: 100% !important; word-
 
 /* End COMPACTACIÓN ENTERPRISE overrides */
 
+/* ==================================================
+   RESTAURACIÓN VISUAL (FINAL, CONSERVADOR)
+   - Objetivo: restaurar coherencia visual y funcionalidad sin tocar HTML.
+   - Justificación técnica en comentarios antes de cada bloque.
+   - Bloque final: overrides mínimos y reversibles.
+ ================================================== */
+
+/* ===============  Palette & base fixes  =============== */
+/* Use electric blue and bone palette; avoid pure white and black */
+:root{
+  --electric: #00AEEF;
+  --electric-strong: rgba(0,174,239,0.98);
+  --bone: #F5EFE6; /* soft bone tone for body copy */
+  --rgb-strong: rgba(0,174,239,0.28);
+  --panel-alpha: 0.06;
+  --panel-alpha-strong: 0.12;
+  --global-radius: 12px;
+}
+
+/* Ensure no solid black backgrounds remain (technical: override variables and inline styles) */
+html, body, main, header, footer, section, .wrap { background: transparent !important; background-color: transparent !important; color: var(--bone) !important; }
+[style*="background-color"]{ background-color: transparent !important; }
+[style*="background:#000"], [style*="#000"]{ background: transparent !important; }
+
+/* ===============  Wallpapers enforcement  =============== */
+/* Map wallpapers for pages and ensure full-bleed cover (no black visible). */
+.bg-home{ background-image: url('/assets/wallpapers/home-hero.webp') !important }
+.bg-marketplace{ background-image: url('/assets/wallpapers/marketplace-bg.webp') !important }
+.bg-product{ background-image: url('/assets/wallpapers/product-bg.webp') !important }
+.bg-providers{ background-image: url('/assets/wallpapers/providers-bg.webp') !important }
+.bg-vendor-register, .bg-checkout, .bg-account{ background-image: url('/assets/wallpapers/vendor-register-bg.webp') !important }
+.bg-security{ background-image: url('/assets/wallpapers/security-bg.webp') !important }
+.bg-quantum{ background-image: url('/assets/wallpapers/quantum-bg.webp') !important }
+.bg-blog{ background-image: url('/assets/wallpapers/blog-bg.webp') !important }
+.bg-sponsors{ background-image: url('/assets/wallpapers/sponsors-bg.webp') !important }
+
+/* Ensure proper rendering and avoid fixed-attachment pitfalls */
+[class*="bg-"], .hero, .hero-section, .hero-visual, .page-hero {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+  width: 100% !important; /* prefer flow-based width to avoid horizontal scroll */
+}
+
+/* Cap hero height for readable desktop view and avoid cutting text */
+.hero { min-height: clamp(360px, 40vh, 70vh) !important; max-height: 75vh !important; padding-top: 28px !important; padding-bottom: 16px !important; }
+.hero .wrap, .hero-card{ max-width: 1200px !important; margin: 0 auto !important; z-index: 20 !important; }
+
+/* Ensure background content is below the UI layer */
+[class*="bg-"] > * { position: relative !important; z-index: 20 !important; }
+
+/* ===============  Panels, cards and corners  =============== */
+/* Restore border-radius and visible RGB borders on all primary blocks */
+.card, .product-card, .provider-card, .hero-card, .quick-view-card, .section, .pricing {
+  border-radius: var(--global-radius) !important;
+  overflow: visible !important;
+  background: linear-gradient(180deg, rgba(245,239,230,var(--panel-alpha)), rgba(245,239,230,calc(var(--panel-alpha)/2))) !important; /* gentle bone tint to panels */
+  -webkit-backdrop-filter: blur(6px) saturate(120%) !important;
+  backdrop-filter: blur(6px) saturate(120%) !important;
+  border: 2px solid var(--rgb-strong) !important; /* visible RGB border */
+  box-shadow: 0 18px 60px rgba(0,174,239,0.10) !important;
+  color: var(--bone) !important;
+}
+
+/* Ensure small corner children inherit radius */
+.card > *, .product-card > *, .provider-card > * { border-radius: inherit !important; }
+
+/* ===============  Typography (electric headings, bone body)  =============== */
+/* Headings electric blue with subtle glow for legibility */
+h1, h2, h3, h4, .section-title, .hero h1, .hero-card h1 { color: var(--electric) !important; text-shadow: 0 6px 28px rgba(0,174,239,0.12) !important; }
+/* Body copy in bone tone for softer contrast */
+body, p, li, a, .muted, .subtle, input, textarea, select { color: var(--bone) !important; }
+
+/* Remove remaining pure-white color declarations defensively */
+*[style*="color:#fff"], *[style*="color:#ffffff"] { color: var(--bone) !important; }
+
+/* Ensure links and interactive elements use electric accents */
+a, .btn, .main-nav a { color: var(--electric) !important; }
+
+/* ===============  Buttons & Forms — premium styling  =============== */
+/* Inputs and selects: premium, rounded, compact */
+input, select, textarea { background: rgba(245,239,230,0.02) !important; border: 1px solid rgba(0,174,239,0.10) !important; padding: 10px 12px !important; border-radius: 12px !important; color: var(--bone) !important; }
+input:focus, select:focus, textarea:focus { outline: 2px solid rgba(0,174,239,0.18) !important; }
+
+.btn-primary { background: linear-gradient(90deg,var(--electric),var(--electric)) !important; color: #071521 !important; border-radius: 12px !important; padding: 10px 16px !important; border: 2px solid rgba(0,174,239,0.28) !important; box-shadow: 0 30px 100px rgba(0,174,239,0.20) !important; }
+.btn-primary:hover{ transform: translateY(-4px) !important; box-shadow: 0 46px 140px rgba(0,174,239,0.28) !important; }
+
+/* ===============  Grid normalization  =============== */
+/* Force consistent compact grids across marketplace and providers */
+.grid, .market-grid, .providers-grid { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important; gap: 14px !important; align-items: start !important; }
+.grid-3, .grid-4 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important; }
+
+/* Ensure cards stretch uniformly */
+.grid > *, .market-grid > *, .providers-grid > * { width: 100% !important; align-self: start !important; }
+
+/* ===============  Hero text & overflow fixes  =============== */
+.hero h1, .hero-card h1 { line-height: 1.06 !important; overflow-wrap: break-word !important; word-break: break-word !important; margin: 0 0 8px !important; }
+.hero .wrap { padding-left: 20px !important; padding-right: 20px !important; }
+
+/* Avoid 100vw horizontal overflow issues */
+html, body, main, section { width: 100% !important; max-width: 100% !important; overflow-x: hidden !important; }
+
+/* ===============  Accessibility & final defensive guards  =============== */
+a:focus, button:focus, input:focus { outline: 3px solid rgba(0,174,239,0.20) !important; outline-offset: 3px !important; }
+[class*="bg-"]::before, .brand::before, .brand::after { display: none !important; }
+
+/* ===============  Justification comments (kept for audit)  =============== */
+/*
+  - Neutralized black to allow wallpapers to show and meet 'no-black' rule.
+  - Restored strong RGB borders and box-shadows to provide enterprise-level visual weight.
+  - Restored border-radius for all primary panels to maintain consistent geometry.
+  - Capped hero height and increased line-height to prevent text clipping.
+  - Normalized grids to a single, predictable responsive rule to fix column inconsistencies.
+  - Styled forms and CTAs to premium look without altering structure or JS.
+*/
+
+/* End of RESTAURACIÓN VISUAL */
+
 
 
 
