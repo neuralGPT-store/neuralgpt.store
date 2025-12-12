@@ -68,6 +68,93 @@ form input, form select, form textarea{ padding:10px 12px; height:40px; font-siz
   .hero, .hero-visual{ min-height:65vh }
   .site-footer .wrap{ flex-direction:column; gap:12px }
 }
+
+/* ==========================
+   REBUILD: Desktop-first, palette reset, fullscreen backgrounds
+   - Strong overrides appended to neutralize mobile-first artifacts
+   - Desktop >= 1440px is the primary layout
+   - Tablet and Mobile adapt afterwards
+   ========================== */
+
+:root{
+  /* Strict enterprise palette */
+  --bg-main: #000000 !important;
+  --accent: #00AEEF !important; /* electric blue */
+  --text-main: #FFFFFF !important;
+  --text-muted: #BFCBD6 !important;
+  --card-radius: 10px !important;
+}
+
+/* Force desktop-first baseline (>=1440px) */
+html,body,main,section{ width:100vw !important; max-width:none !important; overflow-x:hidden !important }
+body{ background:var(--bg-main) !important; color:var(--text-main) !important }
+
+/* Neutralize mobile-only narrow containers and heavy paddings */
+.wrap{ max-width:1400px !important; padding:20px 28px !important }
+main, section{ padding-top:18px !important; padding-bottom:18px !important }
+
+/* Fullscreen hero sections for key pages */
+.hero, .hero-section, .hero-visual, .bg-home, .bg-marketplace, .bg-providers, .bg-vendor-register, .bg-sponsors{ min-height:100vh !important; width:100vw !important; background-size:cover !important; background-position:center center !important; background-repeat:no-repeat !important; overflow:hidden !important }
+
+/* Assign distinct existing images from assets/img/ (enterprise-appropriate selection) */
+.bg-home{ background-image: url('/assets/img/vision-pro.svg') }
+.bg-marketplace{ background-image: url('/assets/img/category-robotics.png') }
+.bg-providers{ background-image: url('/assets/img/category-electronics.png') }
+.bg-vendor-register{ background-image: url('/assets/img/pi4-1.png') }
+.bg-sponsors{ background-image: url('/assets/img/sponsors/quantum.svg') }
+.bg-security{ background-image: url('/assets/img/category-ai.png') }
+.bg-quantum{ background-image: url('/assets/img/jetson-nano.png') }
+
+/* Compact vertical rhythm and tighter scanning */
+section.sections, .sections{ padding-top:10px !important; padding-bottom:10px !important; margin-bottom:10px !important }
+.hero-card, .card{ padding:12px !important; border-radius:var(--card-radius) !important }
+.section-title{ margin-bottom:8px !important }
+
+/* Forms - B2B compact */
+form, .card form, form.card{ max-width:980px !important; margin:0 auto !important }
+form input, form select, form textarea{ padding:10px 12px !important; height:38px !important; font-size:15px !important }
+.form-actions{ margin-top:10px !important }
+
+/* Remove nested card-on-card visuals */
+.card .card{ box-shadow:none !important; border:0 !important; background:transparent !important; padding:0 !important; margin:0 !important }
+.card{ box-shadow:0 18px 40px rgba(0,0,0,0.6) !important }
+
+/* Remove neon/motion that breaks enterprise coherency */
+.rgb-border::after, .btn-primary{ animation:none !important; filter:none !important }
+.card:hover, .product-card:hover{ transform:none !important; box-shadow:0 30px 80px rgba(0,0,0,0.65) !important }
+
+/* Buttons and focus */
+.btn-primary{ background:linear-gradient(90deg,var(--accent),var(--accent)) !important; color:#071521 !important; padding:10px 14px !important }
+a, .btn{ color:var(--text-main) !important }
+
+/* Grid & alignment - desktop baseline */
+.grid{ gap:14px !important }
+.grid-3{ grid-template-columns:repeat(3,1fr) !important }
+.market-grid{ grid-template-columns:repeat(auto-fill,minmax(240px,1fr)) !important }
+
+/* Footer: desktop alignment */
+.site-footer .wrap{ display:flex !important; gap:24px !important; align-items:flex-start !important; justify-content:space-between !important }
+.site-footer .wrap .muted{ margin:0 !important }
+
+/* Breakpoints: tablet then mobile (desktop-first) */
+@media (max-width:1199px){
+  .grid-3{ grid-template-columns:repeat(2,1fr) !important }
+  .wrap{ padding:18px !important }
+  .hero, .hero-visual{ min-height:85vh !important }
+}
+
+@media (max-width:767px){
+  .grid-3{ grid-template-columns:1fr !important }
+  .wrap{ padding:14px !important }
+  .hero, .hero-visual{ min-height:65vh !important }
+  .site-footer .wrap{ flex-direction:column !important; gap:12px !important }
+}
+
+/* Ensure text contrast and remove purple accents */
+.brand, .brand::after{ color:var(--accent) !important }
+.subtle, .muted{ color:var(--text-muted) !important }
+.accent, .violet, .rgb-border{ display:none !important }
+
 .card .card-img{width:100%;height:auto;border-radius:var(--radius)}
 
 /* Grid layouts */
