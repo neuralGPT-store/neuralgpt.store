@@ -280,7 +280,7 @@ a:hover::after{ transform:scaleX(1) }
 .card{ overflow:hidden !important; box-shadow: 0 24px 60px rgba(0,20,40,0.55); }
 
 /* Reduce default min-height for compact card layouts */
-.card, .product-card, .provider-card{ min-height: var(--compact-card-min-height) !important; aspect-ratio: auto !important; }
+.card, .product-card, .provider-card{ min-height: var(--compact-card-min-height) !important; aspect-ratio: auto !important; border-radius: var(--global-radius) !important; }
 
 /* Market grid: cap columns (max 4 on wide screens), ensure consistent gutters */
 .market-grid{ grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important; gap:12px !important; }
@@ -291,7 +291,8 @@ a:hover::after{ transform:scaleX(1) }
 @media (min-width:1200px){ .sponsors-grid{ grid-template-columns: repeat(4, 1fr) !important; } }
 
 /* Hero visual reduced height to avoid huge banners */
-.hero-visual{ height:280px !important; min-height:180px !important; }
+.hero{ padding:28px 0 12px !important; }
+.hero-visual{ height:260px !important; min-height:140px !important; background-size:cover !important; background-position:center center !important; background-repeat:no-repeat !important; }
 
 /* Navbar and header tweaks to avoid covering content */
 .site-header{ padding-top:8px; padding-bottom:8px; }
