@@ -904,6 +904,49 @@ img, video, canvas { max-width: 100%; height: auto; display: block; }
 /* Accessibility: ensure footer/header full width and above wallpapers */
 .site-header, .site-footer{ width:100%; position:relative; z-index:140 }
 
+/* SURGICAL DESKTOP >=1440 OVERRIDES
+   - Force true fullscreen hero/background behaviour on large screens
+   - Neutralize earlier rules that set small fixed heights (e.g. 260px)
+   - Ensure desktop grid columns and wide wrap width
+   - Remove decorative overlays that can hide backgrounds
+*/
+@media (min-width:1440px){
+  .hero, .hero-visual, .hero-section, [class*="bg-"], .page-hero, section.hero {
+    min-height: 100vh !important;
+    height: auto !important;
+    width: 100vw !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    overflow: hidden !important;
+  }
+
+  /* Neutralize small fixed heights applied earlier */
+  .hero-visual{ height: auto !important; min-height: 100vh !important; }
+
+  /* Use a wide, centered content column on desktop */
+  .wrap{ max-width: 1400px !important; padding-left:32px !important; padding-right:32px !important; margin-left:auto !important; margin-right:auto !important; }
+
+  /* Desktop column layouts */
+  .grid-3{ grid-template-columns: repeat(3, 1fr) !important; gap: 18px !important; }
+  .market-grid{ grid-template-columns: repeat(4, 1fr) !important; }
+
+  /* Footer row on desktop (avoid mobile column stacking) */
+  .site-footer .wrap{ display:flex !important; flex-direction:row !important; align-items:flex-start !important; justify-content:space-between !important; }
+
+  /* Hide ornament overlays that may occlude backgrounds */
+  .rgb-border::after, .brand::after, .brand::before { display: none !important; }
+
+  /* Ensure hero content sits above overlays */
+  [class*="bg-"] > *{ position: relative !important; z-index: 3 !important; }
+
+  /* Keep header/footer above wallpapers */
+  .site-header, .site-footer{ z-index: 140 !important; position: relative !important; }
+
+  /* Compact but not collapsed cards on desktop */
+  .card, .product-card{ min-height: 120px !important; aspect-ratio: auto !important; padding: 14px !important; }
+}
+
 
 
 
