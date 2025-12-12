@@ -638,4 +638,108 @@
   // Expose applyFilters to window for inline handlers if needed
   window.NGS = { applyFilters }
 
+	/*
+		Lightweight automatic language switcher
+		- Detects browser language via navigator.language / navigator.languages
+		- Supports 'es' (do nothing) and 'en' (apply English replacements)
+		- Operates only on visible text nodes in document.body
+		- Never modifies or touches the brand string 'neuralgpt.store'
+		- No external libraries; minimal, safe replacements
+	*/
+	(function autoLang(){
+		function escapeRegex(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') }
+		function shouldSkipNode(node){
+			if(!node || !node.parentElement) return true
+			const parent = node.parentElement
+			if(parent.closest('script,style,meta,head')) return true
+			const v = node.nodeValue || ''
+			if(!v.trim()) return true
+			if(v.indexOf('neuralgpt.store') !== -1) return true
+			// skip if inside element with class 'brand' to protect markup
+			if(node.parentElement.closest('.brand, .footer-brand')) return true
+			return false
+		}
+
+		function applyReplacements(map){
+			const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false)
+			const nodes = []
+			let n
+			while(n = walker.nextNode()) nodes.push(n)
+			nodes.forEach(tn => {
+				try{
+					if(shouldSkipNode(tn)) return
+					let txt = tn.nodeValue
+					Object.keys(map).forEach(k => {
+						const v = map[k]
+						const re = new RegExp(escapeRegex(k), 'g')
+						txt = txt.replace(re, v)
+					})
+					if(txt !== tn.nodeValue) tn.nodeValue = txt
+				}catch(e){ /* ignore individual node errors */ }
+			})
+		}
+
+		document.addEventListener('DOMContentLoaded', ()=>{
+			try{
+				const lang = (navigator.languages && navigator.languages[0]) || navigator.language || 'en'
+				const base = String(lang).split('-')[0].toLowerCase()
+				if(base === 'es') return // site default is Spanish; do nothing
+
+				// Only support English fallback for now
+				if(base !== 'en') return
+
+				// Minimal, conservative Spanish -> English map (visible UI only)
+				const REPLACEMENTS = {
+					'Inicio': 'Home',
+					'Proveedores': 'Providers',
+					'Proveedor': 'Provider',
+					'Precios': 'Pricing',
+					'Contacto': 'Contact',
+					'Onboarding de Proveedores': 'Vendor Onboarding',
+					'Onboarding': 'Onboarding',
+					'Solicitar incorporación como proveedor verificado': 'Apply as a verified vendor',
+					'Solicitar incorporación': 'Apply to join',
+					'Ver Precios y Planes': 'View Pricing & Plans',
+					'Términos de Servicio': 'Terms of Service',
+					'Privacidad': 'Privacy',
+					'Comisión': 'Commission',
+					'Productos': 'Products',
+					'Visitar': 'Visit',
+					'Ver': 'View',
+					'Formulario simulado: su solicitud ha sido recibida. Nos pondremos en contacto pronto.': 'Form simulated: your request has been received. We will contact you shortly.',
+					'Solicite incorporarse como proveedor verificado': 'Apply to join as a verified vendor',
+					'Qué es neuralgpt.store': 'What is neuralgpt.store',
+					'Marketplace operativo por IA': 'AI-powered marketplace',
+					'Registrar proveedor': 'Register provider',
+					'Hub de Proveedores': 'Provider Hub',
+					'Beneficios para Proveedores': 'Benefits for Providers'
+				}
+
+				applyReplacements(REPLACEMENTS)
+
+				// Also update placeholders and button values conservatively (avoid brand)
+				try{
+					const placeholders = {
+						'Nombre de la empresa': 'Company name',
+						'Sitio web': 'Website',
+						'Correo de contacto': 'Contact email',
+						'Categoría de producto': 'Product category',
+						'País': 'Country',
+						'Email': 'Email',
+						'Buscar productos, proveedores, tecnología...': 'Search products, providers, technology...'
+					}
+					Object.keys(placeholders).forEach(k=>{
+						const v = placeholders[k]
+						document.querySelectorAll('input,textarea,select').forEach(elm=>{
+							if(!elm) return
+							if(elm.placeholder && elm.placeholder.indexOf(k)!==-1 && elm.placeholder.indexOf('neuralgpt.store')===-1) elm.placeholder = elm.placeholder.replace(k, v)
+							if(elm.value && elm.value.indexOf(k)!==-1 && elm.value.indexOf('neuralgpt.store')===-1) elm.value = elm.value.replace(k, v)
+						})
+					})
+				}catch(e){/* ignore */}
+
+			}catch(e){ console.warn('lang switcher failed', e) }
+		})
+	})()
+
 })();
