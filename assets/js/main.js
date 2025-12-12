@@ -103,6 +103,105 @@
 		loadFavorites()
   }
 
+/* ==========================
+	 Continuous passive security watcher (client-side, no external reporting)
+	 - Detect suspicious URL params and reflect-like patterns
+	 - Monitor forms for flood/spam behavior (session-local)
+	 - Sanitize externals (ensure rel on anchors) and remove dangerous image onerror/onload attrs
+	 - MutationObserver to detect injected scripts or suspicious HTML insertions
+	 - All findings are kept in-memory at `window.__SECURITY_EVENTS` and logged only in dev
+	 ========================== */
+(function securityWatch(){
+	try{
+		window.__SECURITY_EVENTS = window.__SECURITY_EVENTS || []
+		const isDev = (function(){ try{ const h = location.hostname; if(h==='localhost' || h==='127.0.0.1') return true; if(location.search.indexOf('ngs_debug=1')!==-1) return true; return false }catch(e){return false} })()
+		function record(tag, data){ const ev = { ts: Date.now(), tag, data }; window.__SECURITY_EVENTS.push(ev); if(isDev){ try{ console.groupCollapsed('[SECURITY][EVENT] %s', tag); console.warn(ev); console.groupEnd(); }catch(e){} } }
+
+		// simple param scanner
+		function scanParams(){ try{
+			const params = new URLSearchParams(location.search);
+			for(const [k,v] of params.entries()){
+				if(!v) continue;
+				const low = v.toLowerCase();
+				if(low.length>200 || /<\/?script|javascript:|onerror=|onload=|eval\(|document\.cookie|window\.location/.test(low)){
+					record('suspicious_param', { key:k, value: (v.length>200? v.slice(0,200)+'...': v) })
+				}
+			}
+		}catch(e){}}
+
+		// enforce rel on external anchors and block javascript: hrefs
+		function hardenAnchors(){ try{
+			const anchors = document.querySelectorAll('a[href]');
+			anchors.forEach(a=>{
+				try{
+					const href = a.getAttribute('href')||'';
+					if(/^(javascript:|data:)/i.test(href.trim())){ a.setAttribute('href','#'); record('blocked_href_scheme',{href}) }
+					// if external origin, ensure rel noopener noreferrer
+					try{ const url = new URL(href, location.href); if(url.origin !== location.origin){ const rel = (a.getAttribute('rel')||''); if(!/noopener/i.test(rel) || !/noreferrer/i.test(rel)){ a.setAttribute('rel', (rel + ' noopener noreferrer').trim()); record('enforced_rel',{href}) } } }catch(e){}
+				}catch(e){}
+			})
+		}catch(e){}
+		// remove dangerous inline attributes for images and elements (keep onclick to avoid breaking nav)
+		function removeDangerAttrs(){ try{
+			const blacklist = ['onerror','onload','onmouseenter','onmouseleave','onmouseover','onfocus','onblur']
+			blacklist.forEach(attr=>{
+				document.querySelectorAll('['+attr+']').forEach(el=>{ el.removeAttribute(attr); record('removed_attr',{attr,tag:el.tagName}) })
+			})
+		}catch(e){}
+		// Mutation observer for injected script tags or suspicious HTML insertions
+		function watchMutations(){ try{
+			const mo = new MutationObserver(muts=>{
+				muts.forEach(m=>{
+					if(m.addedNodes && m.addedNodes.length){ m.addedNodes.forEach(n=>{
+						try{
+							if(n.nodeType===1){ // element
+								const html = n.innerHTML || '';
+								if(/<script\b|onerror=|javascript:/.test(html.toLowerCase())){ record('mutation_suspicious', { html: html.slice(0,200) }) }
+							}else if(n.nodeType===3){ const txt = n.nodeValue || ''; if(/<script\b/.test(txt.toLowerCase())) record('mutation_text_suspicious',{text:txt.slice(0,200)}) }
+						}catch(e){}
+					}) }
+				})
+			})
+			mo.observe(document.documentElement || document.body, { childList:true, subtree:true, characterData:true })
+			window.__SECURITY_MO = mo
+		}catch(e){}
+
+		// form flood/spam detector (session-local counters)
+		function monitorForms(){ try{
+			const THRESHOLD_COUNT = 6; const WINDOW_MS = 10*1000
+			function getKey(fid){ return 'ngs:form:'+fid+':s' }
+			document.querySelectorAll('form').forEach((f,i)=>{
+				const fid = f.id || f.name || ('form-'+i)
+				f.addEventListener('submit', (ev)=>{
+					try{
+						const key = getKey(fid); const raw = sessionStorage.getItem(key)||'[]'; const arr = JSON.parse(raw||'[]'); const now = Date.now(); arr.push(now); const windowed = arr.filter(t=> now - t < WINDOW_MS); sessionStorage.setItem(key, JSON.stringify(windowed)); if(windowed.length>=THRESHOLD_COUNT){ record('form_flood',{form:fid,count:windowed.length}); }
+						// detect repeated identical values for typical fields (email/message)
+						try{ const values = Array.from(new FormData(f)).map(([k,v])=>String(v).trim()).join('|'); const hashKey = key+':last'; const last = sessionStorage.getItem(hashKey)||''; if(last && last === values){ record('form_repeat',{form:fid}) } sessionStorage.setItem(hashKey, values) }catch(e){}
+					}catch(e){}
+				})
+			})
+		}catch(e){}
+
+		// scan for reflected params in DOM (simple heuristic)
+		function scanReflections(){ try{
+			const params = new URLSearchParams(location.search); for(const [k,v] of params.entries()){ if(!v) continue; if(/<|>|script|javascript:|onerror=/i.test(v)){
+				// if raw value appears in page text, flag potential reflection
+				try{ const body = document.body && document.body.innerText || ''; if(body.indexOf(v) !== -1) record('possible_reflection',{key:k, snippet: v.slice(0,200)}) }catch(e){}
+			}} }catch(e){}
+		}
+
+		// initial run
+		scanParams(); hardenAnchors(); removeDangerAttrs(); watchMutations(); monitorForms(); scanReflections();
+
+		// periodic lightweight checks
+		setInterval(()=>{ try{ hardenAnchors(); removeDangerAttrs(); scanParams() }catch(e){} }, 15*1000)
+
+		// robots.txt quick check (passive)
+		try{ fetch('/robots.txt',{cache:'no-cache'}).then(r=>r.text()).then(t=>{ if(t && /Disallow:\s*\/\s*/.test(t)){ record('robots_disallow_all',{snippet: t.split('\n').slice(0,6).join('\n')}) } }) }catch(e){}
+
+	}catch(e){/* fail silently */}
+})()
+
   /* Data normalization helpers - ensure safe defaults and schema shape */
   function normalizeProducts(list){
     if(!Array.isArray(list)) return []
