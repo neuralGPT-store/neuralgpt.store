@@ -947,6 +947,70 @@ img, video, canvas { max-width: 100%; height: auto; display: block; }
   .card, .product-card{ min-height: 120px !important; aspect-ratio: auto !important; padding: 14px !important; }
 }
 
+/* ==========================
+   FINAL SURGICAL DESKTOP-FIRST FIXES (APPEND)
+   - Neutraliza artefactos mobile-globales restantes
+   - Reemplaza 100vw problemático por 100% en contenedores raíz
+   - Asegura heroes full viewport en desktop y clamp responsivo
+   - Fuerza paleta azul eléctrico y elimina violetas/purples reintroducidos
+   - Único bloque final y conservador de !important
+   ========================== */
+
+:root{
+  --color-accent: #00AEEF !important;
+  --accent-default: #00AEEF !important;
+  --primary: #00AEEF !important;
+  --highlight: #00AEEF !important;
+  --rgb-glow: linear-gradient(90deg,#00AEEF,#00AEEF) !important;
+  --color-rgb-glow: linear-gradient(90deg,#00AEEF,#00AEEF) !important;
+  --violet: transparent !important;
+}
+
+/* Prefer 100% for layout flow; 100vw causes horizontal overflow when scrollbars are present */
+html, body, main, section {
+  width: 100% !important;
+  max-width: none !important;
+  overflow-x: hidden !important;
+}
+
+/* Force hero areas to use a responsive clamp and avoid any small fixed heights */
+.hero, .hero-visual, .hero-section, [class*="bg-"], .page-hero, section.hero {
+  height: auto !important;
+  min-height: clamp(420px, 80vh, 100svh) !important;
+  width: 100% !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  overflow: hidden !important;
+}
+
+/* Neutralize any explicit small hero heights applied earlier */
+.hero-visual[style], .hero-visual{ height: auto !important; min-height: clamp(420px,80vh,100svh) !important; }
+
+/* Hide purple accents that reappear in FASE2 */
+.accent, .violet, .brand::after, .rgb-border::after { display:none !important; }
+
+/* Use scroll attachment by default to avoid visual occlusion on some desktops */
+[class*="bg-"]{ background-attachment: scroll !important; }
+
+/* Ensure desktop navigation remains visible unless a media query reduces it */
+@media (min-width:901px){
+  .main-nav ul{ display:flex !important; gap:14px !important; }
+  .menu-toggle{ display:none !important; }
+}
+
+/* Compact enterprise baseline for desktop grids */
+@media (min-width:1024px){
+  .grid-3{ grid-template-columns: repeat(3, 1fr) !important; gap:18px !important; }
+  .market-grid{ grid-template-columns: repeat(4, 1fr) !important; }
+  .card, .product-card{ min-height:120px !important; padding:14px !important; }
+}
+
+/* Defensive: ensure color-scheme remains dark for consistent contrasts */
+:root{ color-scheme: dark; }
+
+/* End final surgical desktop-first fixes */
+
 
 
 
