@@ -309,7 +309,6 @@ a:hover::after{ transform:scaleX(1) }
 .site-header, .site-footer, .quick-view-modal{ z-index: 1200 !important }
 
 /* Accessibility: avoid trapping pointer events with decorative items */
-#unicorn-mascot{ pointer-events: none !important }
 
 /* Mobile: keep compact spacing */
 @media(max-width:640px){ .wrap{ padding:12px } .hero-visual{ height:220px } .market-grid{ gap:12px } }
@@ -494,15 +493,7 @@ html, body { overflow-x: hidden; }
 /* Make sure large card hover transforms don't cause overflow */
 .card, .product-card { -webkit-backface-visibility: hidden; backface-visibility: hidden; will-change: transform; }
 
-/* Additional mascot constraints: smaller, behind UI, no pointer events */
-#unicorn-mascot { --mascot-size: 72px; width: var(--mascot-size); height: var(--mascot-size); position: fixed; bottom: 22px; right: 22px; z-index: 1100 !important; opacity: 0.96 !important; pointer-events: none !important; }
-#unicorn-mascot .trail { opacity: 0.08 !important; filter: blur(6px) !important; }
-#unicorn-mascot img { max-width:100%; height:auto; display:block; }
-
-/* Reduce animation intensity globally for subtlety */
-@media (prefers-reduced-motion: reduce) {
-  #unicorn-mascot, #unicorn-mascot * { animation: none !important; transition: none !important; }
-}
+/* mascot removed */
 
 
 

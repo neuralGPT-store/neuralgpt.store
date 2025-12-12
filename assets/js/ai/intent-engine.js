@@ -1,6 +1,6 @@
 // intent-engine.js
 (function(){
-  window.UnicornAI = window.UnicornAI || {};
+  window.LocalAI = window.LocalAI || {};
   var keywords = {
     cliente: ['buy','comprar','price','precio','cost','order','purchase','cliente','cliente potencial','customer'],
     proveedor: ['vendor','proveedor','supply','supply chain','distributor','proveedor','fabricante','manufactur','listing','inventory'],
@@ -26,9 +26,9 @@
     results.sort(function(a,b){ return b.res.score - a.res.score });
     var top = results[0];
     var intent = {role: top.role, score: top.res.score, matches: top.res.matches, analyzedAt: new Date().toISOString(), sourceText: text, page: page};
-    try{ localStorage.setItem('unicorn_intent_v1', JSON.stringify(intent)); }catch(e){}
+    try{ localStorage.setItem('localai_intent_v1', JSON.stringify(intent)); }catch(e){}
     return intent;
   }
 
-  window.UnicornAI.intentEngine = { analyze: analyze, _keywords: keywords };
+  window.LocalAI.intentEngine = { analyze: analyze, _keywords: keywords };
 })();
