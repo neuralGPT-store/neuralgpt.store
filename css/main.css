@@ -1304,6 +1304,61 @@ body[style], header[style], section[style], main[style], .wrap[style] { backgrou
 
 /* End of AUDIT-LEVEL OVERRIDES */
 
+/* ==========================
+   COMPACTACIÓN ENTERPRISE (FINAL OVERRIDES)
+   - Remove oversized min-heights (except hero)
+   - Reduce paddings/margins by ~50% for dense scanability
+   - Force robust grid templates for marketplace/provider/product lists
+   - Fix hero overflow, ensure company name never clipped
+   - Single append; minimal !important to neutralize earlier rules
+   ========================== */
+
+/* 1) Make sections auto-height by default; hero remains prominent but capped */
+section, .sections, .page-hero, .hero-section, .hero-visual { min-height: auto !important; height: auto !important; }
+.hero { min-height: auto !important; max-height: 70vh !important; overflow: hidden !important; }
+
+/* 2) Compact vertical rhythm: reduce paddings and margins globally for sections and cards */
+section.sections, .sections { padding-top: 10px !important; padding-bottom: 10px !important; margin-bottom: 10px !important; }
+.card, .product-card, .provider-card { padding: 8px !important; margin: 6px !important; }
+.hero-card { padding: 18px !important; }
+
+/* 3) Enforce consistent grid system for dense marketplace layout */
+.grid, .market-grid, .providers-grid, .grid-3, .grid-4 { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; gap: 12px !important; }
+.grid-3, .grid-4 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; }
+
+/* 4) Prevent isolated floating elements — ensure articles/cards stretch */
+.grid > *, .market-grid > *, .providers-grid > * { align-self: start !important; width: 100% !important; }
+
+/* 5) Text overflow and line-height corrections to avoid clipping */
+h1, h2, h3, h4 { line-height: 1.06 !important; max-width: 100% !important; word-break: break-word !important; }
+.hero h1, .hero-card h1 { overflow-wrap: break-word !important; white-space: normal !important; }
+
+/* Ensure company name not clipped in header/hero */
+.brand, .footer-brand { white-space: nowrap !important; overflow: visible !important; }
+
+/* 6) Reduce hero visuals so content is visible without huge scrolling */
+@media (min-width: 1024px) {
+  .hero { max-height: 70vh !important; padding-top: 20px !important; padding-bottom: 12px !important; }
+  .hero-visual { min-height: 40vh !important; max-height: 70vh !important; }
+}
+
+/* 7) Tighten cards and remove oversized min-heights */
+.card, .product-card, .provider-card { min-height: 0 !important; aspect-ratio: auto !important; }
+
+/* 8) Compact footer spacing */
+.site-footer, .premium-footer { padding: 12px 0 !important; margin-top: 12px !important; }
+
+/* 9) Small screens keep responsive behavior but desktop-first enforced */
+@media (max-width: 767px) {
+  .grid, .market-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .hero { max-height: none !important; }
+}
+
+/* 10) Final defensive: ensure no section keeps 100vh except explicit .hero */
+[class*="bg-"]{ min-height: auto !important; }
+
+/* End COMPACTACIÓN ENTERPRISE overrides */
+
 
 
 
