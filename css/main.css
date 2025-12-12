@@ -1117,6 +1117,96 @@ body[style], header[style], section[style], main[style] { background: transparen
 
 /* End final visual polish */
 
+/* ==========================
+   ENTERPRISE FINAL OVERRIDES (SINGLE BLOCK)
+   - Last-resort, conservative overrides to ensure Desktop-first, wallpapers everywhere,
+     translucent panels, unified RGB borders and compact enterprise spacing.
+   - Single append; minimal !important usage only to neutralize conflicting earlier rules.
+   ========================== */
+
+:root{
+  --enterprise-accent: #00AEEF !important;
+  --enterprise-text: #EAF3FF !important;
+  --enterprise-subtext: #BFCBD6 !important;
+  --enterprise-rgb: rgba(0,174,239,0.08) !important;
+}
+
+/* Remove any solid background colors site-wide */
+html, body, main, header, section, .wrap { background: transparent !important; background-color: transparent !important; }
+
+/* Ensure all primary sections use their wallpaper assets and cover the viewport */
+.bg-home { background-image: url('/assets/wallpapers/home-hero.webp') !important; }
+.bg-marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') !important; }
+.bg-product { background-image: url('/assets/wallpapers/product-bg.webp') !important; }
+.bg-providers { background-image: url('/assets/wallpapers/providers-bg.webp') !important; }
+.bg-vendor-register, .bg-checkout, .bg-account { background-image: url('/assets/wallpapers/vendor-register-bg.webp') !important; }
+.bg-security { background-image: url('/assets/wallpapers/security-bg.webp') !important; }
+.bg-quantum { background-image: url('/assets/wallpapers/quantum-bg.webp') !important; }
+.bg-blog { background-image: url('/assets/wallpapers/blog-bg.webp') !important; }
+.bg-sponsors { background-image: url('/assets/wallpapers/sponsors-bg.webp') !important; }
+
+/* Guarantee wallpaper rendering rules */
+[class*="bg-"], .hero, .hero-section, .hero-visual, .page-hero {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+  min-height: 100svh !important;
+  height: auto !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Translucent panels: floating cards and panels over wallpapers */
+.card, .product-card, .provider-card, .hero-card, .quick-view-card {
+  background: linear-gradient(180deg, rgba(8,12,16,0.40), rgba(8,12,16,0.28)) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(120%) !important;
+  backdrop-filter: blur(8px) saturate(120%) !important;
+  border: 1px solid var(--enterprise-rgb) !important;
+  box-shadow: 0 18px 56px rgba(2,8,20,0.48) !important;
+  border-radius: 12px !important;
+  color: var(--enterprise-text) !important;
+}
+
+/* CTAs and primary buttons with unified RGB emphasis */
+.btn-primary {
+  background: linear-gradient(90deg, var(--enterprise-accent), var(--enterprise-accent)) !important;
+  color: #071521 !important;
+  border: 1px solid rgba(0,174,239,0.10) !important;
+  box-shadow: 0 26px 80px rgba(0,174,239,0.08) !important;
+  border-radius: 10px !important;
+}
+.btn { color: var(--enterprise-text) !important; }
+
+/* Compact enterprise spacing */
+section.sections, .sections { padding-top: 12px !important; padding-bottom: 12px !important; margin-bottom: 12px !important; }
+.hero { padding-top: 28px !important; padding-bottom: 12px !important; }
+.hero-card { padding: 24px !important; max-width: 980px !important; margin: 0 auto !important; }
+
+/* Grid density for desktop-first */
+@media (min-width:1024px){
+  .grid-3 { grid-template-columns: repeat(3, 1fr) !important; gap: 18px !important; }
+  .market-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .providers-grid { grid-template-columns: repeat(auto-fit, minmax(280px,1fr)) !important; }
+}
+
+/* Ensure navigation is desktop-first visible */
+@media (min-width:901px){
+  .main-nav ul { display:flex !important; gap:16px !important; }
+  .menu-toggle { display:none !important; }
+}
+
+/* Prevent any residual ::before overlays from hiding wallpapers */
+[class*="bg-"]::before { display: none !important; }
+
+/* Ensure text contrast on images */
+.hero h1, .hero-card h1, .section-title { color: var(--enterprise-text) !important; text-shadow: 0 2px 8px rgba(0,0,0,0.45) !important; }
+
+/* Final defensive: remove inline black fills and enforce transparent backgrounds */
+body[style], header[style], section[style], main[style], .wrap[style] { background: transparent !important; }
+
+/* End of enterprise final overrides */
+
 
 
 
