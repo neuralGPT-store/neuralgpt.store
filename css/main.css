@@ -1011,6 +1011,77 @@ html, body, main, section {
 
 /* End final surgical desktop-first fixes */
 
+/* ==========================
+   ZERO-BLACK GLOBAL WALLPAPER ENFORCEMENT
+   - Remove black/solid dark backgrounds across site
+   - Use images from /assets/wallpapers as global fullscreen backgrounds
+   - Remove dark overlays (::before) and gradients that cover images
+   - Apply subtle RGB borders and consistent radii
+   - Desktop-first rules; mobile adapts via existing media queries
+   ========================== */
+
+:root{
+  --bg-main: transparent !important;
+  --bg-global: transparent !important;
+  --text-default: #E4E8EF !important;
+  --primary: #00AEEF !important; /* electric blue */
+  --rgb-border-color: rgba(0,174,239,0.08) !important;
+}
+
+/* Ensure no global solid dark fills remain */
+body, header, main, section, .wrap { background: transparent !important; background-color: transparent !important; }
+
+/* Disable overlay pseudo-elements that dim the backgrounds */
+[class*="bg-"]::before { display: none !important; background: transparent !important; }
+
+/* Force wallpapers fullscreen and visible */
+[class*="bg-"], .hero, .hero-section, .hero-visual, .page-hero, section.hero {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-color: transparent !important;
+  min-height: 100svh !important;
+  height: auto !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Map existing wallpapers (use exact files provided) */
+.bg-home { background-image: url('/assets/wallpapers/home-hero.webp') !important; }
+.bg-marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') !important; }
+.bg-product { background-image: url('/assets/wallpapers/product-bg.webp') !important; }
+.bg-providers { background-image: url('/assets/wallpapers/providers-bg.webp') !important; }
+.bg-security { background-image: url('/assets/wallpapers/security-bg.webp') !important; }
+.bg-quantum { background-image: url('/assets/wallpapers/quantum-bg.webp') !important; }
+.bg-blog { background-image: url('/assets/wallpapers/blog-bg.webp') !important; }
+.bg-sponsors { background-image: url('/assets/wallpapers/sponsors-bg.webp') !important; }
+.bg-vendor-register, .bg-checkout, .bg-account { background-image: url('/assets/wallpapers/vendor-register-bg.webp') !important; }
+
+/* Ensure background content sits below page content */
+[class*="bg-"] > * { position: relative !important; z-index: 2 !important; }
+
+/* Subtle RGB border and shadow for enterprise look */
+.card, .product-card, .provider-card, .section, .btn, .btn-primary {
+  border: 1px solid var(--rgb-border-color) !important;
+  box-shadow: 0 8px 28px rgba(0,174,239,0.04) !important;
+  border-radius: 12px !important;
+}
+
+/* Buttons: electric-blue dominant */
+.btn-primary { background: linear-gradient(90deg,var(--primary),var(--primary)) !important; color: #071521 !important; border: 1px solid rgba(0,174,239,0.06) !important; }
+.btn { color: var(--text-default) !important; }
+
+/* Ensure nav visible on desktop (desktop-first) */
+@media (min-width:901px) {
+  .main-nav ul { display: flex !important; }
+  .menu-toggle { display: none !important; }
+}
+
+/* Defensive: remove inline style backgrounds if any */
+body[style], section[style], header[style] { background: transparent !important; }
+
+/* End ZERO-BLACK GLOBAL WALLPAPER ENFORCEMENT */
+
 
 
 
