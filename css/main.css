@@ -25,13 +25,10 @@
 /* Fullscreen hero baseline (applies to any hero-like section) */
 .hero, .hero-section, .hero-visual{ min-height:100vh; width:100vw; background-size:cover !important; background-position:center center !important; background-repeat:no-repeat !important; overflow:hidden }
 
-/* Assign distinct backgrounds for primary pages using existing assets */
-.bg-home .hero, .bg-home .hero-section, .bg-home .hero-visual, .hero.bg-home{ background-image: url('/assets/img/vision-pro.svg'); }
-.bg-marketplace .hero, .bg-marketplace .hero-section, .bg-marketplace .hero-visual, .hero.bg-marketplace{ background-image: url('/assets/img/category-robotics.png'); }
-.bg-providers .hero, .bg-providers .hero-section, .bg-providers .hero-visual, .hero.bg-providers{ background-image: url('/assets/img/category-electronics.png'); }
-.bg-vendor-register .hero, .bg-vendor-register .hero-section, .bg-vendor-register .hero-visual, .hero.bg-vendor-register{ background-image: url('/assets/img/pi4-1.png'); }
-/* Generic hero fallback for pages without body-level bg- classes (onboarding, contact) */
-.hero:not(.bg-home):not(.bg-marketplace):not(.bg-providers):not(.bg-vendor-register){ background-image: url('/assets/img/jetson-nano.png'); }
+/* Wallpaper assignments removed here (deduplicated).
+  Canonical wallpaper mappings are applied in the desktop overrides near EOF
+  to avoid duplicate/conflicting declarations and to enforce AVIF/WebP fallbacks.
+*/
 
 /* Compact vertical rhythm globally */
 section.sections, .sections{ padding-top:12px; padding-bottom:12px; margin-bottom:12px }
@@ -745,20 +742,10 @@ nav, .btn {
   background-attachment:fixed;
 }
 
-/* Per-section images */
-.bg-home{ background-image: url('/assets/wallpapers/home-hero.webp'); }
-.bg-marketplace{ background-image: url('/assets/wallpapers/marketplace-bg.webp'); }
-.bg-quantum{ background-image: url('/assets/wallpapers/quantum-bg.webp'); }
-.bg-providers{ background-image: url('/assets/wallpapers/providers-bg.webp'); }
-.bg-sponsors{ background-image: url('/assets/wallpapers/sponsors-bg.webp'); }
-.bg-security{ background-image: url('/assets/wallpapers/security-bg.webp'); }
-.bg-blog{ background-image: url('/assets/wallpapers/blog-bg.webp'); }
-.bg-product{ background-image: url('/assets/wallpapers/product-bg.webp'); }
-.bg-checkout{ background-image: url('/assets/wallpapers/checkout-bg.webp'); }
-.bg-vendor-register{ background-image: url('/assets/wallpapers/vendor-register-bg.webp'); }
-.bg-account{ background-image: url('/assets/wallpapers/account-bg.webp'); }
-.bg-ai-lab{ background-image: url('/assets/wallpapers/ai-lab-bg.webp'); }
-.bg-global-banner{ background-image: url('/assets/wallpapers/global-banner-bg.webp'); }
+/* Per-section wallpaper mappings removed here in favor of a single
+   canonical mapping appended at EOF. This avoids duplicate declarations
+   and ensures AVIF/WebP fallbacks are used consistently.
+*/
 
 /* Overlay for legibility */
 [class*="bg-"]::before{
