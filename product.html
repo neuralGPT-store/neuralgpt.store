@@ -21,6 +21,18 @@
     <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
     <meta name="twitter:description" content="neuralgpt.store — Product details for hardware, sensors and industrial components." />
     <link rel="preload" href="/assets/img/vision-pro.svg" as="image">
+    <script type="application/ld+json" id="org-schema">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "neuralgpt.store",
+      "url": "https://neuralgpt.store",
+      "logo": "https://neuralgpt.store/favicon.ico"
+    }
+    </script>
+    <script type="application/ld+json" id="product-schema">
+    {}
+    </script>
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/theme-override.css">
@@ -50,7 +62,7 @@
       <section class="sections slide-up">
         <div class="grid grid-2">
           <div class="card" id="p-gallery">
-            <figure><img id="p-image" src="/assets/img/vision-pro.svg" alt="imagen del producto" class="card-img"></figure>
+            <figure><img id="p-image" src="/assets/img/vision-pro.svg" alt="imagen del producto" class="card-img" loading="lazy" decoding="async"></figure>
             <h1 id="p-title">Producto</h1>
             <div class="product-meta" id="p-price"></div>
             <p class="subtle" id="p-desc">Descripción breve del producto.</p>
@@ -62,9 +74,9 @@
             <div class="muted" style="margin-top:10px">
               <strong>Nota:</strong> Pago seguro disponible tras aprobación.
               <div style="display:flex;gap:10px;align-items:center;margin-top:6px">
-                <img src="/assets/payments/stripe-logo.svg" alt="Stripe" width="120" height="32">
-                <img src="/assets/payments/google-pay-logo.svg" alt="Google Pay" width="120" height="32">
-                <img src="/assets/payments/paypal-logo.svg" alt="PayPal" width="120" height="32">
+                <img src="/assets/payments/stripe-logo.svg" alt="Stripe" width="120" height="32" loading="lazy" decoding="async">
+                <img src="/assets/payments/google-pay-logo.svg" alt="Google Pay" width="120" height="32" loading="lazy" decoding="async">
+                <img src="/assets/payments/paypal-logo.svg" alt="PayPal" width="120" height="32" loading="lazy" decoding="async">
               </div>
             </div>
           </div>
@@ -75,7 +87,7 @@
             <div id="p-long-desc" class="muted"></div>
             <h4>Proveedor</h4>
             <div id="p-vendor" class="muted">
-              <img id="p-vendor-logo" class="provider-logo" src="/assets/img/providers/logo-placeholder.webp" alt="Proveedor logo" style="max-height:40px;display:inline-block;margin-right:8px;vertical-align:middle">
+              <img id="p-vendor-logo" class="provider-logo" src="/assets/img/providers/logo-placeholder.webp" alt="Proveedor logo" style="max-height:40px;display:inline-block;margin-right:8px;vertical-align:middle" loading="lazy" decoding="async">
               <span id="p-vendor-name"></span>
             </div>
             <div style="margin-top:8px"><strong id="p-stock"></strong></div>

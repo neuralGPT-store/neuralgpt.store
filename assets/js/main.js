@@ -19,6 +19,71 @@
 	function safeHref(u){ try{ if(!u) return '#'; const s=String(u).trim(); if(/^(javascript:|data:)/i.test(s)) return '#'; return _escape(s); }catch(e){return '#'} }
 	function safeImgSrc(u){ try{ if(!u) return '/assets/img/vision-pro.svg'; const s=String(u).trim(); if(/^(javascript:)/i.test(s)) return '/assets/img/vision-pro.svg'; return _escape(s); }catch(e){ return '/assets/img/vision-pro.svg' } }
 
+	/* Lightweight client-side observability (local-only)
+	   - Records events: page_view, click_cta, submit_vendor_form
+	   - Stores in localStorage under `ngs:metrics` with rotation and age trimming
+	   - No external reporting. Provides a disabled hook for future export.
+	*/
+	(function metricsCollector(){
+		const METRICS_KEY = 'ngs:metrics'
+		const MAX_ENTRIES = 500
+		const MAX_AGE_MS = 1000 * 60 * 60 * 24 * 30 // 30 days
+
+		function load(){ try{ const raw = localStorage.getItem(METRICS_KEY); if(!raw) return []; const parsed = JSON.parse(raw); return Array.isArray(parsed) ? parsed : []; }catch(e){ return [] } }
+		function save(arr){ try{ localStorage.setItem(METRICS_KEY, JSON.stringify(arr)); }catch(e){} }
+		function prune(arr){ const now = Date.now(); let out = arr.filter(e=> !e.ts || (now - e.ts) < MAX_AGE_MS); if(out.length > MAX_ENTRIES) out = out.slice(out.length - MAX_ENTRIES); return out }
+
+		function record(type, payload){ try{
+			const entry = { ts: Date.now(), type: String(type), payload: payload || {} }
+			const arr = load(); arr.push(entry)
+			const pruned = prune(arr)
+			save(pruned)
+			// keep a small in-memory pointer for quick dev inspection
+			window.__NGS_METRICS = window.__NGS_METRICS || []
+			window.__NGS_METRICS.push(entry)
+			if(window.__NGS_METRICS.length > 200) window.__NGS_METRICS.shift()
+		}catch(e){}
+		}
+
+		// Expose safe API; export disabled by default
+		window.NGS_METRICS = {
+			record,
+			get: ()=> load(),
+			clear: ()=>{ try{ localStorage.removeItem(METRICS_KEY); window.__NGS_METRICS = []; }catch(e){} },
+			exportIfEnabled: ()=>{ // placeholder hook for server-side export (disabled by default)
+				if(window.__NGS_EXPORT_ENABLED) return load(); return { enabled:false }
+			}
+		}
+
+		// Automatic listeners
+		// - page_view (recorded on DOMContentLoaded/init)
+		// - click_cta (on anchors/buttons with class btn-primary or data-track)
+		// - submit_vendor_form (on provider form submit or prov-submit click)
+		document.addEventListener('click', function(e){ try{
+			const t = e.target.closest && e.target.closest('a,button') ? e.target.closest('a,button') : e.target
+			if(!t) return
+			const isCTA = (t.matches && (t.matches('.btn-primary') || t.hasAttribute('data-track') || t.getAttribute('role')==='button'))
+			if(isCTA){
+				record('click_cta', { tag: t.tagName, text: (t.innerText||t.textContent||'').trim().slice(0,200), href: (t.getAttribute && t.getAttribute('href')) || null, id: t.id || null, classes: t.className || '' })
+			}
+			// provider submit button quick hook
+			if(t.id === 'prov-submit' || t.id === 'prov-submit-btn' || t.getAttribute('data-prov-submit') === '1'){
+				record('submit_vendor_form', { source: 'providers_page', id: t.id })
+			}
+		}catch(e){} }, true)
+
+		// record submit events for vendor onboarding forms (heuristic)
+		document.addEventListener('submit', function(e){ try{
+			const f = e.target
+			if(!(f && f.querySelector)) return
+			const hasCompany = !!f.querySelector('input[name="company"], input#prov-name, form#provider-form')
+			if(hasCompany){ record('submit_vendor_form', { action: f.getAttribute('action') || null, id: f.id || null }) }
+		}catch(err){} }, true)
+
+		// record page view when script loads (init also calls record on DOM ready)
+		try{ record('page_view', { path: location.pathname, search: location.search, title: document.title }) }catch(e){}
+	})()
+
 	// Commission helpers
 	function commissionRateForTier(tier){
 		if(!tier) return 12
@@ -459,6 +524,24 @@
 
 		// recommended
 		const rec = el('recommended-products'); if(rec){ rec.innerHTML=''; const list = state.products.filter(p=> p.category === (product && product.category) && p.id !== id).slice(0,4); appendInBatches(rec, list, makeCard, 4) }
+
+		// Emit product JSON-LD for SEO (surgical, local-only)
+		try{
+			if(product){
+				const schema = {
+					"@context": "https://schema.org",
+					"@type": "Product",
+					"name": product.title || product.name,
+					"description": product.short_description || product.long_description || '',
+					"sku": product.id || undefined,
+					"image": product.image ? (location.origin + product.image) : (location.origin + '/assets/img/vision-pro.svg'),
+					"brand": { "@type": "Organization", "name": "neuralgpt.store" },
+					"offers": { "@type": "Offer", "price": product.price || null, "priceCurrency": "USD", "availability": (product.stock>0? "https://schema.org/InStock":"https://schema.org/OutOfStock") }
+				}
+				const elSchema = document.getElementById('product-schema')
+				if(elSchema) elSchema.textContent = JSON.stringify(schema)
+			}
+		}catch(e){}
   }
 
 	function updateQueryParam(key, value){
