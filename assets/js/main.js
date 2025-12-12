@@ -293,7 +293,63 @@
     }))
   }
 
-  function normalizeCategories(raw, products){
+/* Performance helpers: lazy-load non-critical images, preload hero images and fonts,
+	 and apply image-set backgrounds dynamically for known wallpaper classes.
+	 - Runs on DOMContentLoaded and is conservative (no destructive rewrites).
+*/
+(function perfEnhance(){
+	try{
+		document.addEventListener('DOMContentLoaded', function(){
+			try{
+				// Lazy-load non-hero images
+				document.querySelectorAll('img').forEach(function(img){
+					if(img.closest && img.closest('.hero')){
+						// preload hero image to improve LCP
+						const src = img.currentSrc || img.getAttribute('src')
+						if(src){
+							try{ if(!document.querySelector('link[rel="preload"][href="'+src+'"]')){
+								const l = document.createElement('link'); l.rel='preload'; l.as='image'; l.href = src; document.head.appendChild(l)
+							}}catch(e){}
+						}
+						return
+					}
+					if(!img.hasAttribute('loading')) img.setAttribute('loading','lazy')
+				})
+
+				// Ensure primary font preload exists (conservative; idempotent)
+				try{
+					const orbit = 'https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2'
+					if(!document.querySelector('link[rel="preload"][href="'+orbit+'"]')){
+						const lf = document.createElement('link'); lf.rel='preload'; lf.as='font'; lf.href = orbit; lf.type='font/woff2'; lf.crossOrigin='anonymous'; document.head.appendChild(lf)
+					}
+				}catch(e){}
+
+				// Attempt to set CSS image-set for known .bg-* wallpaper classes.
+				// This favors AVIF/WebP variants if present while leaving existing
+				// fallback rules intact.
+				try{
+					const map = { home: 'home-hero', marketplace: 'marketplace-bg', product: 'product-bg', providers: 'providers-bg', 'vendor-register': 'vendor-register-bg', security: 'security-bg', quantum: 'quantum-bg', blog: 'blog-bg', sponsors: 'sponsors-bg' }
+					Object.keys(map).forEach(function(k){
+						const sel = '.bg-'+k
+						document.querySelectorAll(sel).forEach(function(el){
+							try{
+								const base = '/assets/wallpapers/' + map[k]
+								const avif = base + '.avif'
+								const webp = base + '.webp'
+								const jpg = base + '.jpg'
+								el.style.backgroundImage = "image-set(url('"+avif+"') type('image/avif') 1x, url('"+webp+"') type('image/webp') 1x, url('"+jpg+"') type('image/jpeg') 1x)"
+								el.style.backgroundSize = el.style.backgroundSize || 'cover'
+								el.style.backgroundPosition = el.style.backgroundPosition || 'center'
+							}catch(e){}
+						})
+					})
+				}catch(e){}
+
+			}catch(e){/* perf enhancement quietly fails */}
+		})
+	}catch(e){}
+})()
+
     if(Array.isArray(raw)) return raw.map(c=>({ name: String(c.name||c), slug: String(c.slug || (c.name||'').toLowerCase().replace(/\s+/g,'-')) }))
     // fallback: derive from products
     const set = Array.from(new Set((products||[]).map(p=>p.category).filter(Boolean)))

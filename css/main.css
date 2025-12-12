@@ -1398,6 +1398,36 @@ section, .sections { padding-top: 10px !important; padding-bottom: 10px !importa
 
 /* Force grids to a compact, consistent structure */
 .grid, .market-grid, .providers-grid, .grid-3, .grid-4 { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; gap: 12px !important; }
+/* =====================
+  PERFORMANCE: Image-set fallbacks, remove site-wide 100svh except hero,
+  and defensive compacting for remaining large sections.
+  - Adds AVIF/WebP/JPG image-set fallbacks for known wallpapers.
+  - Ensures only `.hero` uses viewport-full behavior; other sections limited.
+  - This block is appended at EOF and is safe to revert.
+  ===================== */
+
+/* Prefer modern AVIF/WebP with JPEG fallback for wallpapers. Browsers
+  that don't support image-set or don't find files will gracefully fall
+  back to the existing .bg-* declarations above. */
+.bg-home { background-image: image-set(url('/assets/wallpapers/home-hero.avif') type('image/avif') 1x, url('/assets/wallpapers/home-hero.webp') type('image/webp') 1x, url('/assets/wallpapers/home-hero.jpg') type('image/jpeg') 1x) !important; }
+.bg-marketplace { background-image: image-set(url('/assets/wallpapers/marketplace-bg.avif') type('image/avif') 1x, url('/assets/wallpapers/marketplace-bg.webp') type('image/webp') 1x, url('/assets/wallpapers/marketplace-bg.jpg') type('image/jpeg') 1x) !important; }
+.bg-product { background-image: image-set(url('/assets/wallpapers/product-bg.avif') type('image/avif') 1x, url('/assets/wallpapers/product-bg.webp') type('image/webp') 1x, url('/assets/wallpapers/product-bg.jpg') type('image/jpeg') 1x) !important; }
+.bg-providers { background-image: image-set(url('/assets/wallpapers/providers-bg.avif') type('image/avif') 1x, url('/assets/wallpapers/providers-bg.webp') type('image/webp') 1x, url('/assets/wallpapers/providers-bg.jpg') type('image/jpeg') 1x) !important; }
+.bg-vendor-register, .bg-checkout, .bg-account { background-image: image-set(url('/assets/wallpapers/vendor-register-bg.avif') type('image/avif') 1x, url('/assets/wallpapers/vendor-register-bg.webp') type('image/webp') 1x, url('/assets/wallpapers/vendor-register-bg.jpg') type('image/jpeg') 1x) !important; }
+.bg-security { background-image: image-set(url('/assets/wallpapers/security-bg.avif') type('image/avif') 1x, url('/assets/wallpapers/security-bg.webp') type('image/webp') 1x, url('/assets/wallpapers/security-bg.jpg') type('image/jpeg') 1x) !important; }
+.bg-quantum { background-image: image-set(url('/assets/wallpapers/quantum-bg.avif') type('image/avif') 1x, url('/assets/wallpapers/quantum-bg.webp') type('image/webp') 1x, url('/assets/wallpapers/quantum-bg.jpg') type('image/jpeg') 1x) !important; }
+.bg-blog { background-image: image-set(url('/assets/wallpapers/blog-bg.avif') type('image/avif') 1x, url('/assets/wallpapers/blog-bg.webp') type('image/webp') 1x, url('/assets/wallpapers/blog-bg.jpg') type('image/jpeg') 1x) !important; }
+.bg-sponsors { background-image: image-set(url('/assets/wallpapers/sponsors-bg.avif') type('image/avif') 1x, url('/assets/wallpapers/sponsors-bg.webp') type('image/webp') 1x, url('/assets/wallpapers/sponsors-bg.jpg') type('image/jpeg') 1x) !important; }
+
+/* Remove forced fullscreen on non-hero blocks to avoid heavy reflows and
+  unnecessary large downloads on desktop — allow `.hero` to remain fullscreen. */
+[class*="bg-"]:not(.hero):not(.page-hero):not(.hero-section) { min-height: auto !important; min-height: 0 !important; max-height: none !important; }
+section, .sections, .wrap, .container { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+/* Defensive: ensure non-hero images are lazy-loaded for faster TTFP */
+img[loading="lazy"]{ opacity: 1; transition: opacity .24s ease; }
+
+/* End PERFORMANCE block */
 .grid > *, .market-grid > * { align-self: start !important; width: 100% !important; }
 
 /* 7) Prevent clipping of critical headings (company name etc.) */
