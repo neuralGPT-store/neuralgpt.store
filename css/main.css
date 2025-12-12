@@ -1207,6 +1207,103 @@ body[style], header[style], section[style], main[style], .wrap[style] { backgrou
 
 /* End of enterprise final overrides */
 
+/* ==========================
+   AUDIT-LEVEL OVERRIDES: ELECTRIC STORM THEME (FINAL)
+   - Aggressive visual override to meet enterprise 'electric storm' brief
+   - Single append: neutralize blacks, enforce wallpapers, make text electric blue,
+     amplify RGB on cards/CTAs/sections, fix hero overflow and spacing.
+   - No HTML changes. Conservative use of !important where necessary.
+   ========================== */
+
+:root{
+  --electric-blue: #00AEEF !important;
+  --electric-strong: rgba(0,174,239,0.98) !important;
+  --electric-glow: rgba(0,174,239,0.22) !important;
+}
+
+/* REMOVE ALL SOLID BLACK/GRAY BACKGROUNDS */
+html, body, main, header, footer, section, .wrap { background: transparent !important; background-color: transparent !important; }
+[style*="background"]{ background: transparent !important; }
+*[style*="background-color"]{ background-color: transparent !important; }
+
+/* ENFORCE WALLPAPERS (ensure every main page uses its wallpaper) */
+.bg-home { background-image: url('/assets/wallpapers/home-hero.webp') !important; }
+.bg-marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') !important; }
+.bg-product { background-image: url('/assets/wallpapers/product-bg.webp') !important; }
+.bg-providers { background-image: url('/assets/wallpapers/providers-bg.webp') !important; }
+.bg-vendor-register, .bg-checkout, .bg-account { background-image: url('/assets/wallpapers/vendor-register-bg.webp') !important; }
+.bg-security { background-image: url('/assets/wallpapers/security-bg.webp') !important; }
+.bg-quantum { background-image: url('/assets/wallpapers/quantum-bg.webp') !important; }
+.bg-blog { background-image: url('/assets/wallpapers/blog-bg.webp') !important; }
+.bg-sponsors { background-image: url('/assets/wallpapers/sponsors-bg.webp') !important; }
+
+/* Wallpaper rules for full-bleed / full-viewport visuals */
+[class*="bg-"], .hero, .hero-section, .hero-visual, .page-hero {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+  min-height: 100svh !important;
+  height: auto !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* TEXT: force electric blue (no white) with strong glow for headings */
+body, p, li, a, .muted, .subtle { color: var(--electric-strong) !important; }
+.section-title, h1, h2, h3, h4, .hero h1, .hero-card h1 {
+  color: var(--electric-strong) !important;
+  text-shadow: 0 6px 28px var(--electric-glow), 0 1px 0 rgba(0,0,0,0.6) !important;
+}
+
+/* CARDS AND PANELS: blue-tinted translucent panels (no black solids) */
+.card, .product-card, .provider-card, .hero-card, .quick-view-card {
+  background: linear-gradient(180deg, rgba(0,174,239,0.06), rgba(0,174,239,0.04)) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(120%) !important;
+  backdrop-filter: blur(8px) saturate(120%) !important;
+  border: 2px solid rgba(0,174,239,0.26) !important;
+  box-shadow: 0 30px 100px rgba(0,174,239,0.18) !important;
+  border-radius: 14px !important;
+  color: var(--electric-strong) !important;
+}
+
+/* CTAs: heavy electric presence */
+.btn-primary {
+  background: var(--electric-blue) !important;
+  color: #071521 !important;
+  border: 2px solid rgba(0,174,239,0.28) !important;
+  box-shadow: 0 34px 120px rgba(0,174,239,0.22) !important;
+  transform: translateZ(0);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn-primary:hover{ transform: translateY(-6px) scale(1.02) !important; box-shadow: 0 46px 160px rgba(0,174,239,0.30) !important; }
+
+/* RGB VERTICAL ANIMATION: make borders pulse (visible, not subtle) */
+@keyframes rgbPulse { 0%{ box-shadow: 0 8px 28px rgba(0,174,239,0.08) } 50%{ box-shadow: 0 30px 120px rgba(0,174,239,0.30) } 100%{ box-shadow: 0 8px 28px rgba(0,174,239,0.08) } }
+.card, .btn-primary, .hero-card { animation: rgbPulse 4s ease-in-out infinite; }
+
+/* HERO corrections: prevent clipping of heading text and ensure visibility */
+.hero h1, .hero-card h1 { white-space: normal !important; overflow-wrap: break-word !important; line-height: 1.02 !important; font-size: clamp(1.6rem, 3.8vw, 3.6rem) !important; z-index: 60 !important; }
+.hero .wrap, .hero-card { max-width: 1320px !important; margin: 0 auto !important; padding: 36px !important; }
+[class*="bg-"] > * { position: relative !important; z-index: 60 !important; }
+
+/* Compact enterprise spacing everywhere */
+section.sections, .sections { padding-top: 10px !important; padding-bottom: 10px !important; margin-bottom: 10px !important; }
+.hero { padding-top: 22px !important; padding-bottom: 10px !important; }
+
+/* Ensure desktop-first nav and grid behavior */
+@media (min-width:1024px){
+  .grid-3 { grid-template-columns: repeat(3, 1fr) !important; gap: 18px !important; }
+  .market-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .main-nav ul { display:flex !important; gap:18px !important; }
+}
+
+/* Final defensive overrides: remove any lingering black overlays */
+[class*="bg-"]::before, .rgb-border::after, .brand::before, .brand::after { display:none !important; }
+body[style], header[style], section[style], main[style], .wrap[style] { background: transparent !important; }
+
+/* End of AUDIT-LEVEL OVERRIDES */
+
 
 
 
