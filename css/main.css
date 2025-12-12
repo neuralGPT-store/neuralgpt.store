@@ -1304,6 +1304,117 @@ body[style], header[style], section[style], main[style], .wrap[style] { backgrou
 
 /* End of AUDIT-LEVEL OVERRIDES */
 
+/* ==================================================
+  FINAL FORENSIC OVERRIDES AND JUSTIFICATIONS
+  - Purpose: last-resort fixes to meet audit constraints.
+  - All rules below are conservative overrides appended at EOF
+    so they don't require HTML changes and are easily reversible.
+  - Each block includes a short technical justification comment.
+ =================================================== */
+
+/* =====================
+  1) Remove any remaining solid dark backgrounds
+  Justification: Solid black backgrounds violate "no-black" rule and
+  hide wallpapers. Force transparent backgrounds so wallpapers show.
+*/
+html, body, main, header, footer, section, .wrap, .site-header, .site-footer {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Neutralize inline/background-color attributes remaining in markup */
+[style*="background-color"], [style*="background"]{ background: transparent !important; }
+
+/* =====================
+  2) Enforce wallpapers for any .bg-* that may be missing
+  Justification: Ensure each key page uses its dedicated wallpaper
+  from /assets/wallpapers to provide a coherent visual layer.
+*/
+.bg-home{ background-image: url('/assets/wallpapers/home-hero.webp') !important; }
+.bg-marketplace{ background-image: url('/assets/wallpapers/marketplace-bg.webp') !important; }
+.bg-product{ background-image: url('/assets/wallpapers/product-bg.webp') !important; }
+.bg-providers{ background-image: url('/assets/wallpapers/providers-bg.webp') !important; }
+.bg-vendor-register, .bg-checkout, .bg-account{ background-image: url('/assets/wallpapers/vendor-register-bg.webp') !important; }
+.bg-security{ background-image: url('/assets/wallpapers/security-bg.webp') !important; }
+.bg-quantum{ background-image: url('/assets/wallpapers/quantum-bg.webp') !important; }
+.bg-blog{ background-image: url('/assets/wallpapers/blog-bg.webp') !important; }
+.bg-sponsors{ background-image: url('/assets/wallpapers/sponsors-bg.webp') !important; }
+
+/* Ensure wallpapers display correctly and do not repeat or tile */
+[class*="bg-"], .hero, .hero-section, .hero-visual, .page-hero {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+  min-height: 100svh !important; /* ensures real fullscreen on modern browsers */
+  width: 100% !important;
+}
+
+/* =====================
+  3) Replace any dark translucent panels with blue-tinted translucency
+  Justification: Panels must allow underlying wallpaper to be visible
+  while avoiding solid black; use electric-blue tints for brand coherence.
+*/
+.card, .product-card, .provider-card, .hero-card, .quick-view-card {
+  /* blue-tinted translucent panel instead of black */
+  background: linear-gradient(180deg, rgba(0,174,239,0.06), rgba(0,174,239,0.04)) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(120%) !important;
+  backdrop-filter: blur(6px) saturate(120%) !important;
+  border: 2px solid rgba(0,174,239,0.26) !important; /* visible RGB border */
+  box-shadow: 0 20px 60px rgba(0,174,239,0.16) !important; /* blue shadow for depth */
+  border-radius: 12px !important;
+  color: #00AEEF !important; /* enforce electric-blue text */
+}
+
+/* =====================
+  4) Enforce electric-blue typography and avoid pure white
+  Justification: User requested no pure white text; use electric blue
+  for primary and slightly muted blue for secondary text.
+*/
+:root{ --audit-electric: #00AEEF; --audit-electric-muted: rgba(0,174,239,0.78); }
+body, p, li, a, .muted, .subtle { color: var(--audit-electric-muted) !important; }
+.section-title, h1, h2, h3, h4, .hero h1, .hero-card h1 { color: var(--audit-electric) !important; text-shadow: 0 6px 28px rgba(0,174,239,0.14) !important; }
+
+/* Remove any rules that set color to pure white */
+*[style*="color:#fff"], *[style*="color:#ffffff"]{ color: var(--audit-electric) !important; }
+
+/* =====================
+  5) Amplify RGB borders and animations (enterprise emphasis)
+  Justification: Make RGB visible and consistent across interactive blocks.
+*/
+.card, .btn-primary, .hero-card, .section { border-image: linear-gradient(90deg,#00AEEF,#00AEEF) 1 !important; }
+.btn-primary { border: 2px solid rgba(0,174,239,0.28) !important; box-shadow: 0 36px 120px rgba(0,174,239,0.24) !important; }
+@keyframes auditRGB { 0%{ box-shadow: 0 8px 28px rgba(0,174,239,0.08) } 50%{ box-shadow: 0 34px 120px rgba(0,174,239,0.30) } 100%{ box-shadow: 0 8px 28px rgba(0,174,239,0.08) } }
+.card, .btn-primary, .hero-card { animation: auditRGB 5s ease-in-out infinite !important; }
+
+/* =====================
+  6) Compact layout rules to reduce giant sections and excessive scroll
+  Justification: Marketplace must be dense; reduce vertical padding/margins
+  and cap hero to avoid forcing full-screen for all sections.
+*/
+section, .sections { padding-top: 10px !important; padding-bottom: 10px !important; margin-bottom: 10px !important; }
+.hero { max-height: 70vh !important; padding-top: 20px !important; padding-bottom: 12px !important; }
+.hero-card { padding: 20px !important; max-width: 1100px !important; }
+
+/* Force grids to a compact, consistent structure */
+.grid, .market-grid, .providers-grid, .grid-3, .grid-4 { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; gap: 12px !important; }
+.grid > *, .market-grid > * { align-self: start !important; width: 100% !important; }
+
+/* 7) Prevent clipping of critical headings (company name etc.) */
+.brand, .footer-brand { white-space: nowrap !important; overflow: visible !important; }
+.hero h1, .hero-card h1 { overflow-wrap: break-word !important; line-height: 1.02 !important; font-size: clamp(1.6rem, 3.2vw, 3.2rem) !important; }
+
+/* 8) Defensive: ensure no residual pseudo-element overlays hide wallpapers */
+[class*="bg-"]::before, .rgb-border::after, .brand::before, .brand::after { display: none !important; }
+
+/* 9) Remove pure white backgrounds on buttons or panels (defensive) */
+button, .btn, .btn-primary, input, select, textarea { background: transparent !important; }
+
+/* 10) Accessibility: ensure focus outlines remain visible but blue */
+a:focus, button:focus, input:focus { outline: 3px solid rgba(0,174,239,0.28) !important; outline-offset: 3px !important; }
+
+/* End of FINAL FORENSIC OVERRIDES */
+
 /* ==========================
    COMPACTACIÓN ENTERPRISE (FINAL OVERRIDES)
    - Remove oversized min-heights (except hero)
