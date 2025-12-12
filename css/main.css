@@ -273,6 +273,66 @@ form, .card form, form.card{ max-width:var(--enterprise-form-max); margin-left:a
   form, .card form{ width:100%; padding:8px }
 }
 
+/* ==========================
+   Desktop-first normalization (unified responsive system)
+   - Restore desktop >=1024 layout, enforce fullscreen backgrounds
+   - Reduce vertical spacing and harmonize header/footer
+   - Keep mobile friendly but ensure desktop is primary
+   ========================== */
+
+/* Base: tighter vertical rhythm for all sizes */
+.sections{ padding-top:10px; padding-bottom:10px }
+.section-title{ margin-bottom:8px }
+.hero-card p, .card p, .muted, .subtle{ line-height:1.35 }
+
+/* Fullscreen backgrounds for hero and major sections */
+.hero, .hero-section, .sections.hero-section{ width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; box-sizing:border-box }
+.hero-visual{ min-height:100vh; height:auto; background-size:cover !important; background-position:center center !important; background-repeat:no-repeat !important }
+.hero{ min-height:100vh; align-items:center }
+
+/* Ensure content stays visible on full-bleed backgrounds */
+.hero .wrap, .hero-card{ max-width:var(--enterprise-max-width); margin:0 auto; padding:20px }
+
+/* Desktop layout rules (>=1024) */
+@media(min-width:1024px){
+  /* Restore desktop navigation and hide mobile toggle */
+  .main-nav ul{ display:flex !important; gap:14px }
+  .menu-toggle{ display:none }
+  .search-wrap{ display:block }
+
+  /* Hero: use two-column layout with balanced width */
+  .hero{ grid-template-columns:1fr 420px; gap:28px; padding:36px 0 }
+  .hero-visual{ height:calc(100vh - 160px); border-radius:var(--enterprise-card-radius) }
+
+  /* Cards: compact and aligned grid */
+  .grid-3{ grid-template-columns:repeat(3,1fr) }
+  .grid, .market-grid{ gap:14px }
+
+  /* Product cards: remove oversized transforms and align baseline */
+  .product-card, .card{ min-height:120px }
+
+  /* Footer: align columns in a row for desktop */
+  .site-footer .wrap{ display:flex; align-items:flex-start; justify-content:space-between; gap:24px }
+  .site-footer .wrap .muted{ margin:0 }
+  .foot-nav{ display:flex; gap:24px; align-items:flex-start }
+  .foot-nav a{ margin:0 }
+}
+
+/* Tablet intermediate adjustments */
+@media(min-width:768px) and (max-width:1023px){
+  .hero{ grid-template-columns:1fr 360px; gap:20px }
+  .hero-visual{ min-height:70vh }
+  .wrap{ padding:18px }
+}
+
+/* Fix overlays and z-index for futuristic images: keep visuals visible */
+.hero-visual, .hero-card, .card{ position:relative; z-index:2 }
+.hero-visual::after{ content:''; position:absolute; inset:0; pointer-events:none }
+.hero-card, .hero-visual img, .card img{ z-index:3 }
+
+/* Prevent global body overflow from full-bleed sections */
+body{ overflow-x:hidden }
+
 
 /* Responsive base adjustments */
 @media(max-width:980px){
