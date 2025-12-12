@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta http-equiv="refresh" content="0;url=/maintenance.html">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2" as="font" type="font/woff2" crossorigin>
@@ -14,6 +12,7 @@
     <meta property="og:description" content="neuralgpt.store — Product details for hardware, sensors and industrial components." />
     <meta property="og:site_name" content="neuralgpt.store" />
     <meta property="og:url" content="https://neuralgpt.store/product.html" />
+    <meta property="og:image" content="/assets/img/vision-pro.svg" />
     <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
     <meta name="twitter:description" content="neuralgpt.store — Product details for hardware, sensors and industrial components." />
     <link rel="preload" href="/assets/img/vision-pro.svg" as="image">
@@ -38,7 +37,7 @@
         </div>
       </div>
     </header>
-    <main class="wrap">
+    <main class="wrap bg-product">
       <section>
           <div id="p-details"></div>
         <p class="subtle" id="p-sub">Ficha de producto dinámica</p>
@@ -55,6 +54,14 @@
               <a class="btn" id="demo-btn" href="/providers.html#contact">Solicitar demo</a>
               <button id="p-fav" class="btn">♡ Favorito</button>
             </div>
+            <div class="muted" style="margin-top:10px">
+              <strong>Nota:</strong> Pago seguro disponible tras aprobación.
+              <div style="display:flex;gap:10px;align-items:center;margin-top:6px">
+                <img src="/assets/payments/stripe-logo.svg" alt="Stripe" width="120" height="32">
+                <img src="/assets/payments/google-pay-logo.svg" alt="Google Pay" width="120" height="32">
+                <img src="/assets/payments/paypal-logo.svg" alt="PayPal" width="120" height="32">
+              </div>
+            </div>
           </div>
           <div class="card">
             <h3>Detalles técnicos & Especificaciones</h3>
@@ -62,7 +69,10 @@
             <h4>Descripción extendida</h4>
             <div id="p-long-desc" class="muted"></div>
             <h4>Proveedor</h4>
-            <div id="p-vendor" class="muted"></div>
+            <div id="p-vendor" class="muted">
+              <img id="p-vendor-logo" class="provider-logo" src="/assets/img/providers/logo-placeholder.webp" alt="Proveedor logo" style="max-height:40px;display:inline-block;margin-right:8px;vertical-align:middle">
+              <span id="p-vendor-name"></span>
+            </div>
             <div style="margin-top:8px"><strong id="p-stock"></strong></div>
             <h4>Tags</h4>
             <div id="p-tags" class="muted"></div>

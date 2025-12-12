@@ -263,4 +263,164 @@ a:hover::after{ transform:scaleX(1) }
 @media(max-width:720px){ .providers-grid{ grid-template-columns:repeat(1,1fr) } }
 
 
+/* ===============================
+   FASE 2 — CyberNeo System Palette
+   - Global variables and RGB border/glow effects
+   - Only CSS edits; no HTML text/content changes
+   =============================== */
+
+:root{
+  --color-bg: #0C0E14;
+  --color-fg: #E4E8EF;
+  --color-accent: #7B2CFF;
+  --color-highlight: #0AE2FF;
+  --color-rgb-glow: linear-gradient(90deg,#0AE2FF,#7B2CFF,#11FFE2);
+
+  /* Derived tokens used across the stylesheet */
+  --bg-global: var(--color-bg);
+  --text-default: var(--color-fg);
+  --accent-default: var(--color-accent);
+  --highlight: var(--color-highlight);
+  --rgb-glow: var(--color-rgb-glow);
+  --transition-global: .25s ease;
+}
+
+/* 2) Backgrounds / text color enforcement */
+body, header, section {
+  background-color: var(--bg-global) !important;
+  color: var(--text-default) !important;
+}
+
+/* 3) RGB GLOBAL in contornos and bordes for key layout containers */
+.container, .grid, .card, .section {
+  border: 2px solid transparent;
+  border-image: var(--rgb-glow) 1;
+  box-shadow: 0 0 12px var(--accent-default), 0 0 4px var(--text-default);
+  transition: var(--transition-global);
+}
+
+/* 4) Hover & transitions */
+.card:hover, .btn:hover, .link:hover {
+  border-image: var(--rgb-glow) 1.5;
+  transform: scale(1.02);
+  box-shadow: 0 0 20px var(--highlight);
+}
+
+/* 5) Navbar & buttons */
+nav, .btn {
+  border: 2px solid transparent;
+  border-image: var(--rgb-glow) 1;
+  text-shadow: 0 0 4px var(--highlight);
+  transition: var(--transition-global);
+}
+
+/* 6) Hero section (apply to both common hero class names) */
+.hero-section, .hero {
+  border: 2px solid transparent;
+  border-image: var(--rgb-glow) 2;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  padding: 2rem;
+}
+
+/* 7) Responsive: reduce border/shadow intensity on small screens */
+@media (max-width: 768px) {
+  .container, .grid, .card, .section {
+    border-width: 1px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.45);
+  }
+  .card:hover, .btn:hover, .link:hover {
+    transform: none;
+    box-shadow: 0 0 10px var(--highlight);
+    border-image: var(--rgb-glow) 1;
+  }
+  .hero-section, .hero { padding: 1rem; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px) }
+}
+
+/* 8) Ensure anchors with .link exist safely: target both .link and common interactive anchors */
+.link, a[class*="link"]{ transition: var(--transition-global) }
+
+/* 9) Accessibility and contrast helpers */
+/* Ensure readable text on accent backgrounds where used */
+.btn, .brand, .provider-badge { color: var(--text-default) }
+
+/* End FASE 2 */
+
+
+/* ===============================
+   FASE 3 — Background wallpapers per section
+   Images (provided):
+     /assets/wallpapers/home-hero.webp
+     /assets/wallpapers/marketplace-bg.webp
+     /assets/wallpapers/quantum-bg.webp
+     /assets/wallpapers/providers-bg.webp
+     /assets/wallpapers/sponsors-bg.webp
+     /assets/wallpapers/security-bg.webp
+     /assets/wallpapers/blog-bg.webp
+     /assets/wallpapers/product-bg.webp
+     /assets/wallpapers/checkout-bg.webp
+     /assets/wallpapers/vendor-register-bg.webp
+     /assets/wallpapers/account-bg.webp
+     /assets/wallpapers/ai-lab-bg.webp
+     /assets/wallpapers/global-banner-bg.webp
+
+   Implementation notes:
+   - All `.bg-*` classes use a fixed attachment on desktop and scroll on small screens.
+   - A subtle dark overlay (::before) improves legibility.
+   - Child content is raised above the overlay for normal stacking.
+   =============================== */
+
+/* Base background behavior for any element using a bg-* class */
+[class*="bg-"]{
+  position:relative;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+
+/* Per-section images */
+.bg-home{ background-image: url('/assets/wallpapers/home-hero.webp'); }
+.bg-marketplace{ background-image: url('/assets/wallpapers/marketplace-bg.webp'); }
+.bg-quantum{ background-image: url('/assets/wallpapers/quantum-bg.webp'); }
+.bg-providers{ background-image: url('/assets/wallpapers/providers-bg.webp'); }
+.bg-sponsors{ background-image: url('/assets/wallpapers/sponsors-bg.webp'); }
+.bg-security{ background-image: url('/assets/wallpapers/security-bg.webp'); }
+.bg-blog{ background-image: url('/assets/wallpapers/blog-bg.webp'); }
+.bg-product{ background-image: url('/assets/wallpapers/product-bg.webp'); }
+.bg-checkout{ background-image: url('/assets/wallpapers/checkout-bg.webp'); }
+.bg-vendor-register{ background-image: url('/assets/wallpapers/vendor-register-bg.webp'); }
+.bg-account{ background-image: url('/assets/wallpapers/account-bg.webp'); }
+.bg-ai-lab{ background-image: url('/assets/wallpapers/ai-lab-bg.webp'); }
+.bg-global-banner{ background-image: url('/assets/wallpapers/global-banner-bg.webp'); }
+
+/* Overlay for legibility */
+[class*="bg-"]::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,8,12,0.28), rgba(6,8,12,0.56));
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content sits above overlay */
+[class*="bg-"] > *{ position: relative; z-index: 1; }
+
+/* Mobile fallback: do not use fixed attachments on small screens */
+@media (max-width: 768px){
+  [class*="bg-"]{ background-attachment: scroll; }
+}
+
+/* Accessibility & stacking: ensure overlays are dark enough and header/footer stay above backgrounds */
+[class*="bg-"]::before{
+  /* slightly stronger overlay for improved contrast on top of bright wallpapers */
+  background: linear-gradient(180deg, rgba(6,8,12,0.36), rgba(6,8,12,0.64));
+}
+
+.site-header, .site-footer{ position:relative; z-index:140 }
+
+
+
+
 

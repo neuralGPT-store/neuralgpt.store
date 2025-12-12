@@ -23,7 +23,7 @@
       "/assets/img/pi4-2.png"
     ],
     "category": "development-boards",
-    "image": "/assets/img/pi4-1.png",
+    "image": "assets/img/products/pi-rasp-4b.webp",
     "vendorId": "raspvendor",
     "techSpecs": {}
   },
@@ -50,7 +50,7 @@
     ],
     "imageAlt": "Arduino Uno R3 microcontroller development board",
     "category": "development-boards",
-    "image": "/assets/img/arduino-uno.png",
+    "image": "assets/img/products/arduino-uno.webp",
     "vendorId": "makerstore",
     "techSpecs": {}
   },
@@ -78,7 +78,7 @@
     ],
     "imageAlt": "NVIDIA Jetson Nano developer kit for edge AI inference",
     "category": "development-boards",
-    "image": "/assets/img/jetson-nano.png",
+    "image": "assets/img/products/jetson-nano.webp",
     "vendorId": "aihardware",
     "techSpecs": {}
   },
@@ -105,7 +105,7 @@
     ],
     "imageAlt": "ESP32 DevKitC development board with WiFi and Bluetooth",
     "category": "development-boards",
-    "image": "/assets/img/esp32.svg",
+    "image": "assets/img/products/esp32-devkit.webp",
     "vendorId": "nodemakers",
     "techSpecs": {}
   },
@@ -132,7 +132,7 @@
     ],
     "imageAlt": "Orange Pi 5 single-board computer",
     "category": "development-boards",
-    "image": "/assets/img/orangepi.png",
+    "image": "assets/img/products/orange-pi-5.webp",
     "vendorId": "orangeshop",
     "techSpecs": {}
   },
@@ -159,7 +159,7 @@
     ],
     "imageAlt": "Nexys A7 FPGA development board with Xilinx Artix-7",
     "category": "development-boards",
-    "image": "/assets/img/fpga.png",
+    "image": "assets/img/products/fpga-nexys.webp",
     "vendorId": "fpgalab",
     "techSpecs": {}
   },
@@ -185,7 +185,7 @@
     ],
     "imageAlt": "Micro servo 9g for hobby robotics",
     "category": "robotics",
-    "image": "/assets/img/servo-9g.png",
+    "image": "assets/img/products/servo-std-9g.webp",
     "vendorId": "roboparts",
     "techSpecs": {}
   },
@@ -211,7 +211,7 @@
     ],
     "imageAlt": "80mm rubber wheel for mobile robots",
     "category": "robotics",
-    "image": "/assets/img/wheel.png",
+    "image": "assets/img/products/wheel-80mm.webp",
     "vendorId": "roboparts",
     "techSpecs": {}
   },
@@ -237,7 +237,7 @@
     ],
     "imageAlt": "Metal gear set 20 pieces for prototyping",
     "category": "robotics",
-    "image": "/assets/img/gears.png",
+    "image": "assets/img/products/gear-set-20.webp",
     "vendorId": "mechstore",
     "techSpecs": {}
   },
@@ -263,7 +263,7 @@
     ],
     "imageAlt": "Brushless motor 220KV for drones and robots",
     "category": "motors",
-    "image": "/assets/img/motor.svg",
+    "image": "assets/img/products/motor-brushless-220.webp",
     "vendorId": "motorlab",
     "techSpecs": {}
   },
@@ -289,7 +289,7 @@
     ],
     "imageAlt": "Resistor kit 200pcs 1Ω–1MΩ SMD and through-hole",
     "category": "components",
-    "image": "/assets/img/resistors.png",
+    "image": "assets/img/products/res-1k-kit.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -316,7 +316,7 @@
     ],
     "imageAlt": "100nF ceramic capacitor 50V pack of 10",
     "category": "components",
-    "image": "/assets/img/capacitor.png",
+    "image": "assets/img/products/cap-ceramic-100n.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -342,7 +342,7 @@
     ],
     "imageAlt": "PLA 1kg filament spool 1.75mm",
     "category": "3d-printing",
-    "image": "/assets/img/filament.svg",
+    "image": "assets/img/products/filament-pla-1kg.webp",
     "vendorId": "3dstore",
     "techSpecs": {}
   },
@@ -368,7 +368,7 @@
     ],
     "imageAlt": "V6 hotend assembly with nozzle and thermistor",
     "category": "3d-printing",
-    "image": "/assets/img/hotend.png",
+    "image": "assets/img/products/hotend-v6.webp",
     "vendorId": "3dstore",
     "techSpecs": {}
   },
@@ -394,7 +394,7 @@
     ],
     "imageAlt": "Synthetic silicone skin sheet for biomechanical prototyping",
     "category": "biomech",
-    "image": "/assets/img/skin.png",
+    "image": "assets/img/products/bio-skin-foil.webp",
     "vendorId": "biotech",
     "techSpecs": {}
   },
@@ -419,8 +419,8 @@
       "/assets/img/microservo.png"
     ],
     "imageAlt": "High-precision 5g microservo for facial animatronics",
-    "category": "biomech",
-    "image": "/assets/img/microservo.png",
+    "category": "cybernetics",
+    "image": "assets/img/products/microservo-5g.webp",
     "vendorId": "biotech",
     "techSpecs": {}
   },
@@ -446,7 +446,7 @@
     ],
     "imageAlt": "USB NPU accelerator stick providing 4 TOPS inference",
     "category": "ai-modules",
-    "image": "/assets/img/npu-stick.png",
+    "image": "assets/img/products/npu-stick-v2.webp",
     "vendorId": "aiedge",
     "techSpecs": {}
   },
@@ -471,8 +471,8 @@
       "/assets/img/camera.png"
     ],
     "imageAlt": "4K MIPI camera module for computer vision and ML",
-    "category": "vision",
-    "image": "/assets/img/camera.png",
+    "category": "sensors",
+    "image": "assets/img/products/camera-mlv1.webp",
     "vendorId": "visioncorp",
     "techSpecs": {}
   },
@@ -498,8 +498,8 @@
       "/assets/img/power.png"
     ],
     "imageAlt": "12V 5A DC power supply with OVP",
-    "category": "power",
-    "image": "/assets/img/power.png",
+    "category": "electronics",
+    "image": "assets/img/products/power-12v-5a.webp",
     "vendorId": "powerhouse",
     "techSpecs": {}
   },
@@ -524,8 +524,8 @@
       "/assets/img/cable-kit.png"
     ],
     "imageAlt": "Connector and cable kit with Dupont and JST connectors",
-    "category": "cables",
-    "image": "/assets/img/cable-kit.png",
+    "category": "electronics",
+    "image": "assets/img/products/connector-kit.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -550,11 +550,11 @@
     "vendorLink": "https://www.seeedstudio.com/product/rpi-4b-8gb",
     "stock": 120,
     "images": [
-      "/core/assets/img/products/rpi-4b-8gb.png"
+      "assets/img/products/rpi-4b-8gb.webp"
     ],
     "imageAlt": "Raspberry Pi 4 board",
     "category": "devboards",
-    "image": "/core/assets/img/products/rpi-4b-8gb.png",
+    "image": "assets/img/products/rpi-4b-8gb.webp",
     "vendorId": "seeed-studio-shenzhen",
     "techSpecs": {}
   },
@@ -578,11 +578,11 @@
     "vendorLink": "https://valleyai.example/jetson-nano",
     "stock": 45,
     "images": [
-      "/core/assets/img/products/jetson-nano.png"
+      "assets/img/products/jetson-nano-4gb.webp"
     ],
     "imageAlt": "Jetson Nano module",
     "category": "accelerators",
-    "image": "/core/assets/img/products/jetson-nano.png",
+    "image": "assets/img/products/jetson-nano-4gb.webp",
     "vendorId": "valley-ai-chips",
     "techSpecs": {}
   },
@@ -606,11 +606,11 @@
     "vendorLink": "https://huaqiang.example/esp32",
     "stock": 560,
     "images": [
-      "/core/assets/img/products/esp32-wroom.png"
+      "assets/img/products/esp32-wroom.webp"
     ],
     "imageAlt": "ESP32 module",
     "category": "devboards",
-    "image": "/core/assets/img/products/esp32-wroom.png",
+    "image": "assets/img/products/esp32-wroom.webp",
     "vendorId": "huaqiang-electronics-co",
     "techSpecs": {}
   },
@@ -634,11 +634,11 @@
     "vendorLink": "https://www.seeedstudio.com/orangepi-5",
     "stock": 30,
     "images": [
-      "/core/assets/img/products/orangepi-5.png"
+      "assets/img/products/orange-pi-5.webp"
     ],
     "imageAlt": "Orange Pi 5 board",
     "category": "devboards",
-    "image": "/core/assets/img/products/orangepi-5.png",
+    "image": "assets/img/products/orange-pi-5.webp",
     "vendorId": "seeed-studio-shenzhen",
     "techSpecs": {}
   },
@@ -662,11 +662,11 @@
     "vendorLink": "https://huaqiang.example/artix",
     "stock": 12,
     "images": [
-      "/core/assets/img/products/artix-kit.png"
+      "assets/img/products/fpga-artix-kit.webp"
     ],
     "imageAlt": "Artix FPGA kit",
     "category": "accelerators",
-    "image": "/core/assets/img/products/artix-kit.png",
+    "image": "assets/img/products/fpga-artix-kit.webp",
     "vendorId": "huaqiang-electronics-co",
     "techSpecs": {}
   },
@@ -690,11 +690,11 @@
     "vendorLink": "https://motion-shenzhen.example/hs-805",
     "stock": 210,
     "images": [
-      "/core/assets/img/products/hs-805.png"
+      "assets/img/products/servo-hs-805.webp"
     ],
     "imageAlt": "High torque servo",
     "category": "actuators",
-    "image": "/core/assets/img/products/hs-805.png",
+    "image": "assets/img/products/servo-hs-805.webp",
     "vendorId": "shenzhen-motion-tech",
     "techSpecs": {}
   },
@@ -718,11 +718,11 @@
     "vendorLink": "https://summit-robotics.example/6dof",
     "stock": 18,
     "images": [
-      "/core/assets/img/products/6dof-arm.png"
+      "assets/img/products/robotic-arm-6dof.webp"
     ],
     "imageAlt": "6 DOF robotic arm",
     "category": "robotics",
-    "image": "/core/assets/img/products/6dof-arm.png",
+    "image": "assets/img/products/robotic-arm-6dof.webp",
     "vendorId": "summit-robotics-labs",
     "techSpecs": {}
   },
@@ -746,11 +746,11 @@
     "vendorLink": "https://seoulsensor.example/lidar-x200",
     "stock": 8,
     "images": [
-      "/core/assets/img/products/lidar-x200.png"
+      "assets/img/products/lidar-x200.webp"
     ],
     "imageAlt": "LiDAR X200",
     "category": "lidar",
-    "image": "/core/assets/img/products/lidar-x200.png",
+    "image": "assets/img/products/lidar-x200.webp",
     "vendorId": "seoul-sensor-works",
     "techSpecs": {}
   },
@@ -774,11 +774,11 @@
     "vendorLink": "https://seoulsensor.example/tof-mini",
     "stock": 320,
     "images": [
-      "/core/assets/img/products/tof-mini.png"
+      "assets/img/products/tof-mini.webp"
     ],
     "imageAlt": "ToF mini module",
     "category": "sensors",
-    "image": "/core/assets/img/products/tof-mini.png",
+    "image": "assets/img/products/tof-mini.webp",
     "vendorId": "seoul-sensor-works",
     "techSpecs": {}
   },
@@ -801,11 +801,11 @@
     "vendorLink": "https://seoulsensor.example/tof-mini",
     "stock": 420,
     "images": [
-      "/assets/img/sensors/tof-01.png"
+      "assets/img/products/sensor-tof-01.webp"
     ],
     "imageAlt": "ToF mini S01",
     "category": "sensors",
-    "image": "/assets/img/sensors/tof-01.png",
+    "image": "assets/img/products/sensor-tof-01.webp",
     "vendorId": "seoul-sensor-works",
     "techSpecs": {}
   },
@@ -828,11 +828,11 @@
     "vendorLink": "https://sensorhouse.example/tof-s02",
     "stock": 220,
     "images": [
-      "/assets/img/sensors/tof-02.png"
+      "assets/img/products/sensor-tof-02.webp"
     ],
     "imageAlt": "ToF mini S02",
     "category": "sensors",
-    "image": "/assets/img/sensors/tof-02.png",
+    "image": "assets/img/products/sensor-tof-02.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -855,11 +855,11 @@
     "vendorLink": "https://visioncorp.example/imu-6050",
     "stock": 540,
     "images": [
-      "/assets/img/sensors/imu-01.png"
+      "assets/img/products/sensor-imu-01.webp"
     ],
     "imageAlt": "IMU 6DOF module",
     "category": "sensors",
-    "image": "/assets/img/sensors/imu-01.png",
+    "image": "assets/img/products/sensor-imu-01.webp",
     "vendorId": "visioncorp",
     "techSpecs": {}
   },
@@ -882,11 +882,11 @@
     "vendorLink": "https://sensorhouse.example/imu-9dof",
     "stock": 160,
     "images": [
-      "/assets/img/sensors/imu-02.png"
+      "assets/img/products/sensor-imu-02.webp"
     ],
     "imageAlt": "IMU 9DOF module",
     "category": "sensors",
-    "image": "/assets/img/sensors/imu-02.png",
+    "image": "assets/img/products/sensor-imu-02.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -909,11 +909,11 @@
     "vendorLink": "https://lidarco.example/lidar-lite-mini",
     "stock": 78,
     "images": [
-      "/assets/img/sensors/lidar-01.png"
+      "assets/img/products/sensor-lidar-01.webp"
     ],
     "imageAlt": "LiDAR Lite Mini",
     "category": "sensors",
-    "image": "/assets/img/sensors/lidar-01.png",
+    "image": "assets/img/products/sensor-lidar-01.webp",
     "vendorId": "lidarco",
     "techSpecs": {}
   },
@@ -936,11 +936,11 @@
     "vendorLink": "https://seoulsensor.example/lidar-slam-200",
     "stock": 22,
     "images": [
-      "/assets/img/sensors/lidar-02.png"
+      "assets/img/products/sensor-lidar-02.webp"
     ],
     "imageAlt": "LiDAR SLAM 200",
     "category": "sensors",
-    "image": "/assets/img/sensors/lidar-02.png",
+    "image": "assets/img/products/sensor-lidar-02.webp",
     "vendorId": "seoul-sensor-works",
     "techSpecs": {}
   },
@@ -964,11 +964,11 @@
     "vendorLink": "https://opticlabs.example/gss-2mp",
     "stock": 46,
     "images": [
-      "/assets/img/sensors/camera-01.png"
+      "assets/img/products/sensor-camera-01.webp"
     ],
     "imageAlt": "2MP global shutter camera",
     "category": "sensors",
-    "image": "/assets/img/sensors/camera-01.png",
+    "image": "assets/img/products/sensor-camera-01.webp",
     "vendorId": "opticlabs",
     "techSpecs": {}
   },
@@ -992,11 +992,11 @@
     "vendorLink": "https://visioncorp.example/stereo-kit",
     "stock": 34,
     "images": [
-      "/assets/img/sensors/camera-02.png"
+      "assets/img/products/sensor-camera-02.webp"
     ],
     "imageAlt": "Stereo camera kit",
     "category": "sensors",
-    "image": "/assets/img/sensors/camera-02.png",
+    "image": "assets/img/products/sensor-camera-02.webp",
     "vendorId": "visioncorp",
     "techSpecs": {}
   },
@@ -1019,11 +1019,11 @@
     "vendorLink": "https://sensorhouse.example/ublox-m8n",
     "stock": 74,
     "images": [
-      "/assets/img/sensors/gps-01.png"
+      "assets/img/products/sensor-gps-01.webp"
     ],
     "imageAlt": "u-blox M8N GPS module",
     "category": "sensors",
-    "image": "/assets/img/sensors/gps-01.png",
+    "image": "assets/img/products/sensor-gps-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1046,11 +1046,11 @@
     "vendorLink": "https://opticlabs.example/rtk-gnss",
     "stock": 12,
     "images": [
-      "/assets/img/sensors/gps-02.png"
+      "assets/img/products/sensor-gps-02.webp"
     ],
     "imageAlt": "RTK GNSS module",
     "category": "sensors",
-    "image": "/assets/img/sensors/gps-02.png",
+    "image": "assets/img/products/sensor-gps-02.webp",
     "vendorId": "opticlabs",
     "techSpecs": {}
   },
@@ -1073,11 +1073,11 @@
     "vendorLink": "https://seoulsensor.example/ahrs-tiny",
     "stock": 110,
     "images": [
-      "/assets/img/sensors/ahrs-01.png"
+      "assets/img/products/sensor-ahrs-01.webp"
     ],
     "imageAlt": "Tiny AHRS IMU",
     "category": "sensors",
-    "image": "/assets/img/sensors/ahrs-01.png",
+    "image": "assets/img/products/sensor-ahrs-01.webp",
     "vendorId": "seoul-sensor-works",
     "techSpecs": {}
   },
@@ -1100,11 +1100,11 @@
     "vendorLink": "https://sensorhouse.example/mic-array",
     "stock": 88,
     "images": [
-      "/assets/img/sensors/mic-01.png"
+      "assets/img/products/sensor-mic-01.webp"
     ],
     "imageAlt": "4-channel microphone array",
     "category": "sensors",
-    "image": "/assets/img/sensors/mic-01.png",
+    "image": "assets/img/products/sensor-mic-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1127,11 +1127,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 420,
     "images": [
-      "/assets/img/sensors/temp-01.png"
+      "assets/img/products/sensor-temp-01.webp"
     ],
     "imageAlt": "Precision temperature sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/temp-01.png",
+    "image": "assets/img/products/sensor-temp-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1154,11 +1154,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 520,
     "images": [
-      "/assets/img/sensors/humidity-01.png"
+      "assets/img/products/sensor-humidity-01.webp"
     ],
     "imageAlt": "DHT22 humidity sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/humidity-01.png",
+    "image": "assets/img/products/sensor-humidity-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1181,11 +1181,11 @@
     "vendorLink": "https://sensorhouse.example/bmp388",
     "stock": 260,
     "images": [
-      "/assets/img/sensors/pressure-01.png"
+      "assets/img/products/sensor-pressure-01.webp"
     ],
     "imageAlt": "BMP388 barometric sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/pressure-01.png",
+    "image": "assets/img/products/sensor-pressure-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1208,11 +1208,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 360,
     "images": [
-      "/assets/img/sensors/gas-01.png"
+      "assets/img/products/sensor-gas-01.webp"
     ],
     "imageAlt": "MQ-135 gas sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/gas-01.png",
+    "image": "assets/img/products/sensor-gas-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1234,11 +1234,11 @@
     "vendorLink": "https://sensorhouse.example/flame-01",
     "stock": 640,
     "images": [
-      "/assets/img/sensors/flame-01.png"
+      "assets/img/products/sensor-flame-01.webp"
     ],
     "imageAlt": "IR flame sensor module",
     "category": "sensors",
-    "image": "/assets/img/sensors/flame-01.png",
+    "image": "assets/img/products/sensor-flame-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1261,11 +1261,11 @@
     "vendorLink": "https://opticlabs.example/veml6075",
     "stock": 210,
     "images": [
-      "/assets/img/sensors/uv-01.png"
+      "assets/img/products/sensor-uv-01.webp"
     ],
     "imageAlt": "VEML6075 UV sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/uv-01.png",
+    "image": "assets/img/products/sensor-uv-01.webp",
     "vendorId": "opticlabs",
     "techSpecs": {}
   },
@@ -1288,11 +1288,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 480,
     "images": [
-      "/assets/img/sensors/light-01.png"
+      "assets/img/products/sensor-light-01.webp"
     ],
     "imageAlt": "BH1750 ambient light sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/light-01.png",
+    "image": "assets/img/products/sensor-light-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1315,11 +1315,11 @@
     "vendorLink": "https://sensorhouse.example/cap-touch",
     "stock": 240,
     "images": [
-      "/assets/img/sensors/prox-01.png"
+      "assets/img/products/sensor-prox-01.webp"
     ],
     "imageAlt": "Capacitive touch proximity sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/prox-01.png",
+    "image": "assets/img/products/sensor-prox-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1342,11 +1342,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 134,
     "images": [
-      "/assets/img/sensors/flow-01.png"
+      "assets/img/products/sensor-flow-01.webp"
     ],
     "imageAlt": "Digital flow sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/flow-01.png",
+    "image": "assets/img/products/sensor-flow-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1370,11 +1370,11 @@
     "vendorLink": "https://example.com/vendors/biotech",
     "stock": 48,
     "images": [
-      "/assets/img/sensors/ph-01.png"
+      "assets/img/products/sensor-ph-01.webp"
     ],
     "imageAlt": "pH probe kit",
     "category": "sensors",
-    "image": "/assets/img/sensors/ph-01.png",
+    "image": "assets/img/products/sensor-ph-01.webp",
     "vendorId": "biotech",
     "techSpecs": {}
   },
@@ -1398,11 +1398,11 @@
     "vendorLink": "https://example.com/vendors/biotech",
     "stock": 210,
     "images": [
-      "/assets/img/sensors/flex-01.png"
+      "assets/img/products/sensor-flex-01.webp"
     ],
     "imageAlt": "Flex sensor 2.2in",
     "category": "sensors",
-    "image": "/assets/img/sensors/flex-01.png",
+    "image": "assets/img/products/sensor-flex-01.webp",
     "vendorId": "biotech",
     "techSpecs": {}
   },
@@ -1426,11 +1426,11 @@
     "vendorLink": "https://example.com/vendors/biotech",
     "stock": 34,
     "images": [
-      "/assets/img/sensors/ecg-01.png"
+      "assets/img/products/sensor-ecg-01.webp"
     ],
     "imageAlt": "ECG electrode kit",
     "category": "sensors",
-    "image": "/assets/img/sensors/ecg-01.png",
+    "image": "assets/img/products/sensor-ecg-01.webp",
     "vendorId": "biotech",
     "techSpecs": {}
   },
@@ -1453,11 +1453,11 @@
     "vendorLink": "https://opticlabs.example/uv-logger",
     "stock": 26,
     "images": [
-      "/assets/img/sensors/uv-02.png"
+      "assets/img/products/sensor-uv-02.webp"
     ],
     "imageAlt": "UV index logger",
     "category": "sensors",
-    "image": "/assets/img/sensors/uv-02.png",
+    "image": "assets/img/products/sensor-uv-02.webp",
     "vendorId": "opticlabs",
     "techSpecs": {}
   },
@@ -1480,11 +1480,11 @@
     "vendorLink": "https://opticlabs.example/spl-meter",
     "stock": 14,
     "images": [
-      "/assets/img/sensors/sound-01.png"
+      "assets/img/products/sensor-sound-01.webp"
     ],
     "imageAlt": "Sound level meter module",
     "category": "sensors",
-    "image": "/assets/img/sensors/sound-01.png",
+    "image": "assets/img/products/sensor-sound-01.webp",
     "vendorId": "opticlabs",
     "techSpecs": {}
   },
@@ -1507,11 +1507,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 98,
     "images": [
-      "/assets/img/sensors/thermocouple-01.png"
+      "assets/img/products/sensor-thermocouple-01.webp"
     ],
     "imageAlt": "Thermocouple ADC board",
     "category": "sensors",
-    "image": "/assets/img/sensors/thermocouple-01.png",
+    "image": "assets/img/products/sensor-thermocouple-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1535,11 +1535,11 @@
     "vendorLink": "https://sensorhouse.example/co2-01",
     "stock": 64,
     "images": [
-      "/assets/img/sensors/co2-01.png"
+      "assets/img/products/sensor-co2-01.webp"
     ],
     "imageAlt": "NDIR CO2 sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/co2-01.png",
+    "image": "assets/img/products/sensor-co2-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1562,11 +1562,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 1200,
     "images": [
-      "/assets/img/sensors/ultrasonic-01.png"
+      "assets/img/products/sensor-ultrasonic-01.webp"
     ],
     "imageAlt": "Ultrasonic distance sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/ultrasonic-01.png",
+    "image": "assets/img/products/sensor-ultrasonic-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1589,11 +1589,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 210,
     "images": [
-      "/assets/img/sensors/hall-01.png"
+      "assets/img/products/sensor-hall-01.webp"
     ],
     "imageAlt": "Hall effect current sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/hall-01.png",
+    "image": "assets/img/products/sensor-hall-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1616,11 +1616,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 184,
     "images": [
-      "/assets/img/sensors/color-01.png"
+      "assets/img/products/sensor-color-01.webp"
     ],
     "imageAlt": "RGB color sensor module",
     "category": "sensors",
-    "image": "/assets/img/sensors/color-01.png",
+    "image": "assets/img/products/sensor-color-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1643,11 +1643,11 @@
     "vendorLink": "https://sensorhouse.example/ozone-01",
     "stock": 52,
     "images": [
-      "/assets/img/sensors/ozone-01.png"
+      "assets/img/products/sensor-ozone-01.webp"
     ],
     "imageAlt": "Ozone gas sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/ozone-01.png",
+    "image": "assets/img/products/sensor-ozone-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1669,11 +1669,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 360,
     "images": [
-      "/assets/img/sensors/vibration-01.png"
+      "assets/img/products/sensor-vibration-01.webp"
     ],
     "imageAlt": "Piezo vibration sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/vibration-01.png",
+    "image": "assets/img/products/sensor-vibration-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1696,11 +1696,11 @@
     "vendorLink": "https://sensorhouse.example/hmc5883l",
     "stock": 300,
     "images": [
-      "/assets/img/sensors/compass-01.png"
+      "assets/img/products/sensor-compass-01.webp"
     ],
     "imageAlt": "Digital compass module",
     "category": "sensors",
-    "image": "/assets/img/sensors/compass-01.png",
+    "image": "assets/img/products/sensor-compass-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1722,11 +1722,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 1020,
     "images": [
-      "/assets/img/sensors/magnetic-01.png"
+      "assets/img/products/sensor-magnetic-01.webp"
     ],
     "imageAlt": "Hall latch magnetic sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/magnetic-01.png",
+    "image": "assets/img/products/sensor-magnetic-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1749,11 +1749,11 @@
     "vendorLink": "https://opticlabs.example/thermal-8x8",
     "stock": 38,
     "images": [
-      "/assets/img/sensors/thermal-01.png"
+      "assets/img/products/sensor-thermal-01.webp"
     ],
     "imageAlt": "Thermal array 8x8 sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/thermal-01.png",
+    "image": "assets/img/products/sensor-thermal-01.webp",
     "vendorId": "opticlabs",
     "techSpecs": {}
   },
@@ -1775,11 +1775,11 @@
     "vendorLink": "https://sensorhouse.example/geiger-01",
     "stock": 16,
     "images": [
-      "/assets/img/sensors/geiger-01.png"
+      "assets/img/products/sensor-geiger-01.webp"
     ],
     "imageAlt": "Geiger counter kit",
     "category": "sensors",
-    "image": "/assets/img/sensors/geiger-01.png",
+    "image": "assets/img/products/sensor-geiger-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1802,11 +1802,11 @@
     "vendorLink": "https://example.com/vendors/biotech",
     "stock": 22,
     "images": [
-      "/assets/img/sensors/ecg-02.png"
+      "assets/img/products/sensor-ecg-02.webp"
     ],
     "imageAlt": "ECG front-end board",
     "category": "sensors",
-    "image": "/assets/img/sensors/ecg-02.png",
+    "image": "assets/img/products/sensor-ecg-02.webp",
     "vendorId": "biotech",
     "techSpecs": {}
   },
@@ -1828,11 +1828,11 @@
     "vendorLink": "https://example.com/vendors/electro",
     "stock": 320,
     "images": [
-      "/assets/img/sensors/moisture-01.png"
+      "assets/img/products/sensor-moisture-01.webp"
     ],
     "imageAlt": "Capacitive soil moisture sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/moisture-01.png",
+    "image": "assets/img/products/sensor-moisture-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -1854,11 +1854,11 @@
     "vendorLink": "https://sensorhouse.example/water-01",
     "stock": 44,
     "images": [
-      "/assets/img/sensors/water-01.png"
+      "assets/img/products/sensor-waterproof-01.webp"
     ],
     "imageAlt": "Waterproof pressure sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/water-01.png",
+    "image": "assets/img/products/sensor-waterproof-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1880,11 +1880,11 @@
     "vendorLink": "https://opticlabs.example/spectrometer-mini",
     "stock": 6,
     "images": [
-      "/assets/img/sensors/spectrometer-01.png"
+      "assets/img/products/sensor-spectrometer-01.webp"
     ],
     "imageAlt": "Mini spectrometer",
     "category": "sensors",
-    "image": "/assets/img/sensors/spectrometer-01.png",
+    "image": "assets/img/products/sensor-spectrometer-01.webp",
     "vendorId": "opticlabs",
     "techSpecs": {}
   },
@@ -1906,11 +1906,11 @@
     "vendorLink": "https://sensorhouse.example/mq7",
     "stock": 72,
     "images": [
-      "/assets/img/sensors/co-01.png"
+      "assets/img/products/sensor-co-01.webp"
     ],
     "imageAlt": "CO gas sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/co-01.png",
+    "image": "assets/img/products/sensor-co-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1933,11 +1933,11 @@
     "vendorLink": "https://sensorhouse.example/ble-beacon",
     "stock": 420,
     "images": [
-      "/assets/img/sensors/ble-01.png"
+      "assets/img/products/sensor-ble-01.webp"
     ],
     "imageAlt": "BLE beacon module",
     "category": "sensors",
-    "image": "/assets/img/sensors/ble-01.png",
+    "image": "assets/img/products/sensor-ble-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -1961,11 +1961,11 @@
     "vendorLink": "https://opticlabs.example/uv-wear",
     "stock": 86,
     "images": [
-      "/assets/img/sensors/uv-03.png"
+      "assets/img/products/sensor-uv-03.webp"
     ],
     "imageAlt": "Wearable UV index sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/uv-03.png",
+    "image": "assets/img/products/sensor-uv-03.webp",
     "vendorId": "opticlabs",
     "techSpecs": {}
   },
@@ -1987,11 +1987,11 @@
     "vendorLink": "https://sensorhouse.example/ppm-01",
     "stock": 58,
     "images": [
-      "/assets/img/sensors/ppm-01.png"
+      "assets/img/products/sensor-ppm-01.webp"
     ],
     "imageAlt": "PPM air quality sensor",
     "category": "sensors",
-    "image": "/assets/img/sensors/ppm-01.png",
+    "image": "assets/img/products/sensor-ppm-01.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -2014,11 +2014,11 @@
     "vendorLink": "https://sensorhouse.example/mag-3x",
     "stock": 132,
     "images": [
-      "/assets/img/sensors/mag-01.png"
+      "assets/img/products/sensor-magnetic-02.webp"
     ],
     "imageAlt": "3-axis magnetometer",
     "category": "sensors",
-    "image": "/assets/img/sensors/mag-01.png",
+    "image": "assets/img/products/sensor-magnetic-02.webp",
     "vendorId": "sensorhouse",
     "techSpecs": {}
   },
@@ -2041,11 +2041,11 @@
     "vendorLink": "https://example.com/vendors/motorlab",
     "stock": 260,
     "images": [
-      "/assets/img/motors/brushless-001.png"
+      "assets/img/products/motor-brushless-001.webp"
     ],
     "imageAlt": "Brushless motor 220KV",
     "category": "motors",
-    "image": "/assets/img/motors/brushless-001.png",
+    "image": "assets/img/products/motor-brushless-001.webp",
     "vendorId": "motorlab",
     "techSpecs": {}
   },
@@ -2067,11 +2067,11 @@
     "vendorLink": "https://motion-shenzhen.example/brushless-420",
     "stock": 120,
     "images": [
-      "/assets/img/motors/brushless-002.png"
+      "assets/img/products/motor-brushless-002.webp"
     ],
     "imageAlt": "Brushless motor 420KV",
     "category": "motors",
-    "image": "/assets/img/motors/brushless-002.png",
+    "image": "assets/img/products/motor-brushless-002.webp",
     "vendorId": "shenzhen-motion-tech",
     "techSpecs": {}
   },
@@ -2093,11 +2093,11 @@
     "vendorLink": "https://example.com/vendors/mechstore",
     "stock": 360,
     "images": [
-      "/assets/img/motors/servo-25kg.png"
+      "assets/img/products/servo-standard-001.webp"
     ],
     "imageAlt": "25kg metal gear servo",
     "category": "motors",
-    "image": "/assets/img/motors/servo-25kg.png",
+    "image": "assets/img/products/servo-standard-001.webp",
     "vendorId": "mechstore",
     "techSpecs": {}
   },
@@ -2119,11 +2119,11 @@
     "vendorLink": "https://motion-shenzhen.example/hv-servo-35",
     "stock": 140,
     "images": [
-      "/assets/img/motors/servo-35kg.png"
+      "assets/img/products/servo-hv-002.webp"
     ],
     "imageAlt": "35kg HV servo",
     "category": "motors",
-    "image": "/assets/img/motors/servo-35kg.png",
+    "image": "assets/img/products/servo-hv-002.webp",
     "vendorId": "shenzhen-motion-tech",
     "techSpecs": {}
   },
@@ -2146,11 +2146,11 @@
     "vendorLink": "https://motorhub.example/nema17",
     "stock": 720,
     "images": [
-      "/assets/img/motors/stepper-nema17.png"
+      "assets/img/products/stepper-nema17-001.webp"
     ],
     "imageAlt": "NEMA17 stepper motor",
     "category": "motors",
-    "image": "/assets/img/motors/stepper-nema17.png",
+    "image": "assets/img/products/stepper-nema17-001.webp",
     "vendorId": "motorhub",
     "techSpecs": {}
   },
@@ -2172,11 +2172,11 @@
     "vendorLink": "https://example.com/vendors/mechstore/nema23",
     "stock": 86,
     "images": [
-      "/assets/img/motors/stepper-nema23.png"
+      "assets/img/products/stepper-nema23-001.webp"
     ],
     "imageAlt": "NEMA23 stepper motor",
     "category": "motors",
-    "image": "/assets/img/motors/stepper-nema23.png",
+    "image": "assets/img/products/stepper-nema23-001.webp",
     "vendorId": "mechstore",
     "techSpecs": {}
   },
@@ -2198,11 +2198,11 @@
     "vendorLink": "https://driveco.example/gearbox-10x",
     "stock": 140,
     "images": [
-      "/assets/img/motors/gearbox-10x.png"
+      "assets/img/products/gearbox-planetary-001.webp"
     ],
     "imageAlt": "Planetary gearbox 10:1",
     "category": "motors",
-    "image": "/assets/img/motors/gearbox-10x.png",
+    "image": "assets/img/products/gearbox-planetary-001.webp",
     "vendorId": "driveco",
     "techSpecs": {}
   },
@@ -2224,11 +2224,11 @@
     "vendorLink": "https://example.com/vendors/motorlab/dc-12v-3000",
     "stock": 540,
     "images": [
-      "/assets/img/motors/dc-12v.png"
+      "assets/img/products/motor-dc-001.webp"
     ],
     "imageAlt": "12V DC motor",
     "category": "motors",
-    "image": "/assets/img/motors/dc-12v.png",
+    "image": "assets/img/products/motor-dc-001.webp",
     "vendorId": "motorlab",
     "techSpecs": {}
   },
@@ -2250,11 +2250,11 @@
     "vendorLink": "https://motorhub.example/dc-24v",
     "stock": 86,
     "images": [
-      "/assets/img/motors/dc-24v.png"
+      "assets/img/products/motor-dc-002.webp"
     ],
     "imageAlt": "24V DC motor",
     "category": "motors",
-    "image": "/assets/img/motors/dc-24v.png",
+    "image": "assets/img/products/motor-dc-002.webp",
     "vendorId": "motorhub",
     "techSpecs": {}
   },
@@ -2276,11 +2276,11 @@
     "vendorLink": "https://example.com/vendors/roboparts/cont-servo",
     "stock": 420,
     "images": [
-      "/assets/img/motors/cont-servo.png"
+      "assets/img/products/servo-continuous-01.webp"
     ],
     "imageAlt": "Continuous rotation servo",
     "category": "motors",
-    "image": "/assets/img/motors/cont-servo.png",
+    "image": "assets/img/products/servo-continuous-01.webp",
     "vendorId": "roboparts",
     "techSpecs": {}
   },
@@ -2303,11 +2303,11 @@
     "vendorLink": "https://actuators.example/linear-100",
     "stock": 98,
     "images": [
-      "/assets/img/motors/linear-100.png"
+      "assets/img/products/linear-actuator-01.webp"
     ],
     "imageAlt": "Mini linear actuator 100mm",
     "category": "motors",
-    "image": "/assets/img/motors/linear-100.png",
+    "image": "assets/img/products/linear-actuator-01.webp",
     "vendorId": "actuatorsinc",
     "techSpecs": {}
   },
@@ -2330,11 +2330,11 @@
     "vendorLink": "https://example.com/vendors/motorlab/esc-30a",
     "stock": 210,
     "images": [
-      "/assets/img/motors/esc-30a.png"
+      "assets/img/products/motor-driver-esc-01.webp"
     ],
     "imageAlt": "30A ESC BLHeli",
     "category": "motors",
-    "image": "/assets/img/motors/esc-30a.png",
+    "image": "assets/img/products/motor-driver-esc-01.webp",
     "vendorId": "motorlab",
     "techSpecs": {}
   },
@@ -2357,11 +2357,11 @@
     "vendorLink": "https://example.com/vendors/electro/drv8825",
     "stock": 980,
     "images": [
-      "/assets/img/motors/driver-drv8825.png"
+      "assets/img/products/motor-driver-stepper-01.webp"
     ],
     "imageAlt": "DRV8825 stepper driver",
     "category": "motors",
-    "image": "/assets/img/motors/driver-drv8825.png",
+    "image": "assets/img/products/motor-driver-stepper-01.webp",
     "vendorId": "electroshop",
     "techSpecs": {}
   },
@@ -2383,11 +2383,11 @@
     "vendorLink": "https://driveco.example/gearbox-5x",
     "stock": 142,
     "images": [
-      "/assets/img/motors/gearbox-5x.png"
+      "assets/img/products/motor-gearbox-002.webp"
     ],
     "imageAlt": "Right-angle gearbox 5:1",
     "category": "motors",
-    "image": "/assets/img/motors/gearbox-5x.png",
+    "image": "assets/img/products/motor-gearbox-002.webp",
     "vendorId": "driveco",
     "techSpecs": {}
   },
@@ -2409,11 +2409,11 @@
     "vendorLink": "https://motorhub.example/encoder-1024",
     "stock": 320,
     "images": [
-      "/assets/img/motors/encoder-1024.png"
+      "assets/img/products/motor-encoder-01.webp"
     ],
     "imageAlt": "Magnetic encoder 1024ppr",
     "category": "motors",
-    "image": "/assets/img/motors/encoder-1024.png",
+    "image": "assets/img/products/motor-encoder-01.webp",
     "vendorId": "motorhub",
     "techSpecs": {}
   },
@@ -2435,11 +2435,11 @@
     "vendorLink": "https://example.com/vendors/mechstore/coupling-6mm",
     "stock": 420,
     "images": [
-      "/assets/img/motors/coupling-6mm.png"
+      "assets/img/products/motor-coupling-01.webp"
     ],
     "imageAlt": "Flexible coupling 6mm",
     "category": "motors",
-    "image": "/assets/img/motors/coupling-6mm.png",
+    "image": "assets/img/products/motor-coupling-01.webp",
     "vendorId": "mechstore",
     "techSpecs": {}
   },
@@ -2461,11 +2461,11 @@
     "vendorLink": "https://example.com/vendors/motorlab/1100kv",
     "stock": 220,
     "images": [
-      "/assets/img/motors/brushless-003.png"
+      "assets/img/products/motor-brushless-003.webp"
     ],
     "imageAlt": "Outrunner 1100KV",
     "category": "motors",
-    "image": "/assets/img/motors/brushless-003.png",
+    "image": "assets/img/products/motor-brushless-003.webp",
     "vendorId": "motorlab",
     "techSpecs": {}
   },
@@ -2487,11 +2487,11 @@
     "vendorLink": "https://motorhub.example/inrunner-600",
     "stock": 94,
     "images": [
-      "/assets/img/motors/brushless-004.png"
+      "assets/img/products/motor-brushless-004.webp"
     ],
     "imageAlt": "Inrunner 600KV",
     "category": "motors",
-    "image": "/assets/img/motors/brushless-004.png",
+    "image": "assets/img/products/motor-brushless-004.webp",
     "vendorId": "motorhub",
     "techSpecs": {}
   },
@@ -2513,11 +2513,11 @@
     "vendorLink": "https://example.com/vendors/mechstore/bearings",
     "stock": 260,
     "images": [
-      "/assets/img/motors/bearings.png"
+      "assets/img/products/motor-bearing-01.webp"
     ],
     "imageAlt": "High-speed bearing kit",
     "category": "motors",
-    "image": "/assets/img/motors/bearings.png",
+    "image": "assets/img/products/motor-bearing-01.webp",
     "vendorId": "mechstore",
     "techSpecs": {}
   },
@@ -2539,11 +2539,11 @@
     "vendorLink": "https://driveco.example/motor-mount",
     "stock": 430,
     "images": [
-      "/assets/img/motors/mount-01.png"
+      "assets/img/products/motor-mount-01.webp"
     ],
     "imageAlt": "Aluminum motor mount",
     "category": "motors",
-    "image": "/assets/img/motors/mount-01.png",
+    "image": "assets/img/products/motor-mount-01.webp",
     "vendorId": "driveco",
     "techSpecs": {}
   },
@@ -2565,11 +2565,11 @@
     "vendorLink": "https://example.com/vendors/motorlab/350kv",
     "stock": 56,
     "images": [
-      "/assets/img/motors/brushless-005.png"
+      "assets/img/products/motor-brushless-005.webp"
     ],
     "imageAlt": "Direct drive 350KV brushless motor",
     "category": "motors",
-    "image": "/assets/img/motors/brushless-005.png",
+    "image": "assets/img/products/motor-brushless-005.webp",
     "vendorId": "motorlab",
     "techSpecs": {}
   },
@@ -2591,11 +2591,11 @@
     "vendorLink": "https://driveco.example/planetary-30x",
     "stock": 26,
     "images": [
-      "/assets/img/motors/planetary-30x.png"
+      "assets/img/products/motor-planetary-01.webp"
     ],
     "imageAlt": "Planetary drive 30:1",
     "category": "motors",
-    "image": "/assets/img/motors/planetary-30x.png",
+    "image": "assets/img/products/motor-planetary-01.webp",
     "vendorId": "driveco",
     "techSpecs": {}
   },
@@ -2617,11 +2617,11 @@
     "vendorLink": "https://driveco.example/planetary-50x",
     "stock": 12,
     "images": [
-      "/assets/img/motors/planetary-50x.png"
+      "assets/img/products/motor-planetary-02.webp"
     ],
     "imageAlt": "Planetary drive 50:1",
     "category": "motors",
-    "image": "/assets/img/motors/planetary-50x.png",
+    "image": "assets/img/products/motor-planetary-02.webp",
     "vendorId": "driveco",
     "techSpecs": {}
   },
@@ -2643,11 +2643,11 @@
     "vendorLink": "https://motorhub.example/cable-assembly",
     "stock": 320,
     "images": [
-      "/assets/img/motors/cable-assembly.png"
+      "assets/img/products/motor-cable-01.webp"
     ],
     "imageAlt": "Motor cable assembly",
     "category": "motors",
-    "image": "/assets/img/motors/cable-assembly.png",
+    "image": "assets/img/products/motor-cable-01.webp",
     "vendorId": "motorhub",
     "techSpecs": {}
   },
@@ -2669,11 +2669,11 @@
     "vendorLink": "https://example.com/vendors/mechstore/shaft-8mm",
     "stock": 420,
     "images": [
-      "/assets/img/motors/shaft-8mm.png"
+      "assets/img/products/motor-shaft-01.webp"
     ],
     "imageAlt": "Stainless motor shaft 8mm",
     "category": "motors",
-    "image": "/assets/img/motors/shaft-8mm.png",
+    "image": "assets/img/products/motor-shaft-01.webp",
     "vendorId": "mechstore",
     "techSpecs": {}
   },
@@ -2695,11 +2695,11 @@
     "vendorLink": "https://actuators.example/brake-01",
     "stock": 54,
     "images": [
-      "/assets/img/motors/brake-01.png"
+      "assets/img/products/motor-brake-01.webp"
     ],
     "imageAlt": "Electromagnetic brake module",
     "category": "motors",
-    "image": "/assets/img/motors/brake-01.png",
+    "image": "assets/img/products/motor-brake-01.webp",
     "vendorId": "actuatorsinc",
     "techSpecs": {}
   },
@@ -2721,11 +2721,11 @@
     "vendorLink": "https://driveco.example/worm-40x",
     "stock": 34,
     "images": [
-      "/assets/img/motors/worm-40x.png"
+      "assets/img/products/motor-reducer-01.webp"
     ],
     "imageAlt": "Worm gear reducer 40:1",
     "category": "motors",
-    "image": "/assets/img/motors/worm-40x.png",
+    "image": "assets/img/products/motor-reducer-01.webp",
     "vendorId": "driveco",
     "techSpecs": {}
   },
@@ -2747,11 +2747,11 @@
     "vendorLink": "https://driveco.example/harmonic-100x",
     "stock": 8,
     "images": [
-      "/assets/img/motors/harmonic-100x.png"
+      "assets/img/products/motor-reducer-02.webp"
     ],
     "imageAlt": "Harmonic drive 100:1",
     "category": "motors",
-    "image": "/assets/img/motors/harmonic-100x.png",
+    "image": "assets/img/products/motor-reducer-02.webp",
     "vendorId": "driveco",
     "techSpecs": {}
   },
@@ -2773,11 +2773,11 @@
     "vendorLink": "https://example.com/vendors/motorlab/hub-250w",
     "stock": 26,
     "images": [
-      "/assets/img/motors/hub-250w.png"
+      "assets/img/products/motor-bldc-01.webp"
     ],
     "imageAlt": "BLDC hub motor 250W",
     "category": "motors",
-    "image": "/assets/img/motors/hub-250w.png",
+    "image": "assets/img/products/motor-bldc-01.webp",
     "vendorId": "motorlab",
     "techSpecs": {}
   },
@@ -2799,11 +2799,11 @@
     "vendorLink": "https://motorhub.example/hub-500w",
     "stock": 14,
     "images": [
-      "/assets/img/motors/hub-500w.png"
+      "assets/img/products/motor-bldc-02.webp"
     ],
     "imageAlt": "BLDC hub motor 500W",
     "category": "motors",
-    "image": "/assets/img/motors/hub-500w.png",
+    "image": "assets/img/products/motor-bldc-02.webp",
     "vendorId": "motorhub",
     "techSpecs": {}
   },
@@ -2825,11 +2825,11 @@
     "vendorLink": "https://example.com/vendors/motorlab/controller-100a",
     "stock": 18,
     "images": [
-      "/assets/img/motors/controller-100a.png"
+      "assets/img/products/motor-controller-01.webp"
     ],
     "imageAlt": "100A BLDC controller",
     "category": "motors",
-    "image": "/assets/img/motors/controller-100a.png",
+    "image": "assets/img/products/motor-controller-01.webp",
     "vendorId": "motorlab",
     "techSpecs": {}
   },
@@ -2851,11 +2851,11 @@
     "vendorLink": "https://motorhub.example/opt-encoder",
     "stock": 86,
     "images": [
-      "/assets/img/motors/opt-encoder.png"
+      "assets/img/products/motor-encoder-02.webp"
     ],
     "imageAlt": "Optical encoder kit",
     "category": "motors",
-    "image": "/assets/img/motors/opt-encoder.png",
+    "image": "assets/img/products/motor-encoder-02.webp",
     "vendorId": "motorhub",
     "techSpecs": {}
   },
@@ -2877,11 +2877,11 @@
     "vendorLink": "https://example.com/vendors/roboparts/hub-assembly",
     "stock": 48,
     "images": [
-      "/assets/img/motors/hub-assembly.png"
+      "assets/img/products/motor-hub-assembly-01.webp"
     ],
     "imageAlt": "Wheel hub assembly with motor",
     "category": "motors",
-    "image": "/assets/img/motors/hub-assembly.png",
+    "image": "assets/img/products/motor-hub-assembly-01.webp",
     "vendorId": "roboparts",
     "techSpecs": {}
   },
@@ -2904,11 +2904,11 @@
     "vendorLink": "https://motorhub.example/edu-kit",
     "stock": 120,
     "images": [
-      "/assets/img/motors/edu-kit.png"
+      "assets/img/products/motor-kit-educational-01.webp"
     ],
     "imageAlt": "Educational motor kit",
     "category": "motors",
-    "image": "/assets/img/motors/edu-kit.png",
+    "image": "assets/img/products/motor-kit-educational-01.webp",
     "vendorId": "motorhub",
     "techSpecs": {}
   }

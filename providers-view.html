@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta http-equiv="refresh" content="0;url=/maintenance.html">
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>neuralgpt.store — Your Technological Marketplace</title>
@@ -16,11 +16,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/theme-override.css">
   </head>
   <body class="site-root providers-view">
     <main class="wrap">
-    <meta name="robots" content="noindex, nofollow" />
+    
       <header class="page-header">
+        <img id="prov-logo" class="provider-logo" src="/assets/img/providers/logo-placeholder.webp" alt="Proveedor logo" style="max-height:48px;display:block;margin-bottom:8px">
         <h1 id="prov-name">Proveedor</h1>
         <p id="prov-desc" class="subtle">Descripción breve del proveedor</p>
       </header>
@@ -57,71 +60,5 @@
       </section>
 
     </main>
-  </body>
-</html>
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>neuralgpt.store — Your Technological Marketplace</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/theme-override.css">
-  </head>
-  <body class="site-root">
-    <header class="site-header premium-header rgb-border" role="banner">
-      <div class="wrap header-inner">
-        <a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
-        <nav class="main-nav" aria-label="Principal"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Marketplace</a></li><li><a href="/providers.html">Proveedores</a></li></ul></nav>
-        <div class="search-wrap"><input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar" autocomplete="off"><div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias de búsqueda" hidden></div></div>
-      </div>
-    </header>
-    <main class="wrap">
-      <h1 class="section-title">Perfil de proveedor</h1>
-      <p class="subtle">Página de perfil y formulario de contacto / demo para proveedores.</p>
-      <section class="sections">
-        <div class="grid grid-2">
-          <div class="card">
-            <h2 id="prov-name">Proveedor</h2>
-            <p class="subtle" id="prov-desc">Descripción breve del proveedor.</p>
-            <p><a class="btn btn-primary" id="contact-cta" href="#contact">Contactar</a></p>
-          </div>
-          <div class="card">
-            <h3>Regístrate como proveedor</h3>
-            <form id="prov-form">
-              <label><div class="muted">Empresa</div><input name="company" required></label>
-              <label><div class="muted">Email</div><input name="email" type="email" required></label>
-              <div style="margin-top:12px"><button class="btn btn-primary" type="submit">Enviar solicitud</button></div>
-            </form>
-          </div>
-        </div>
-      </section>
-      <section id="contact" class="sections slide-up">
-        <h2 class="section-title">Solicitar demo empresarial</h2>
-        <p class="subtle">Rellena el formulario y un representante se pondrá en contacto.</p>
-        <div class="card">
-          <form id="demo-form">
-            <label><div class="muted">Nombre</div><input name="name" required></label>
-            <label><div class="muted">Empresa</div><input name="company" required></label>
-            <label><div class="muted">Email</div><input name="email" type="email" required></label>
-            <div style="margin-top:12px"><button class="btn btn-primary" type="submit">Solicitar demo</button></div>
-          </form>
-        </div>
-      </section>
-    </main>
-    <section class="sections">
-      <h2 class="section-title">Proveedor / Productos</h2>
-      <div id="provider-profile">
-        <h3 id="prov-name">Proveedor</h3>
-        <div id="prov-desc" class="subtle"></div>
-      </div>
-      <h3 style="margin-top:18px">Productos del proveedor</h3>
-      <div id="provider-products" class="market-grid"></div>
-      <h3 style="margin-top:18px">Proveedores en la categoría</h3>
-      <div id="providers-by-category" class="market-grid"></div>
-    </section>
-    <footer class="site-footer premium-footer"><div class="wrap">© NeuralGPT.Store — 2025</div></footer>
-    <script src="/assets/js/main.js"></script>
-    <!-- provider view handlers moved to /assets/js/main.js -->
   </body>
 </html>

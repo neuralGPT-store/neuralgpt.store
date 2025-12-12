@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" width="240" height="64" preserveAspectRatio="xMidYMid meet">
+  <rect width="240" height="64" rx="8" fill="transparent"/>
+  <g transform="translate(8,8)">
+    <circle cx="22" cy="24" r="12" fill="#4285F4" />
+    <path d="M14 20 L30 28 L14 36 Z" fill="#34A853" opacity="0.85"/>
+  </g>
+  <text x="120" y="40" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#202124" font-weight="600" text-anchor="middle">Google Pay</text>
+</svg>

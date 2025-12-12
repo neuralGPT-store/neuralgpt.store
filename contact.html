@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact & Deal Flow — NeuralGPT.Store</title>
+  <meta name="description" content="Contact NeuralGPT.Store for vendor, sponsor or enterprise partnership enquiries. Manual deal flow and pre-approval process for commercial agreements." />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
+</head>
+<body class="site-root">
+  <header class="site-header">
+    <div class="wrap header-inner"><a class="brand" href="/">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Principal">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/pricing.html">Pricing</a></li>
+          <li><a href="/vendor-onboarding.html">Vendor Onboarding</a></li>
+          <li><a href="/sponsors.html">Sponsors</a></li>
+          <li><a class="btn" href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero hero-section">
+      <div class="hero-card">
+        <h1>Contact & Deal Flow</h1>
+        <p class="subtle">IA que filtra, prioriza y conecta oportunidades reales. Inicie una discusión comercial con nuestro equipo y aproveche condiciones de lanzamiento.</p>
+        <p><a class="btn btn-primary" href="#deal-form">Request Commercial Deal</a> <a class="btn" href="#contact-team">Contact Business Team</a></p>
+      </div>
+    </section>
+
+    <section class="sections">
+      <h2 class="section-title">Who to contact</h2>
+      <p class="muted">Whether you are a supplier, a sponsor or an enterprise looking for strategic partnership, start here. All commercial agreements are handled manually prior to any payment integration.</p>
+    </section>
+
+    <section class="sections">
+      <h2 class="section-title">Deal Flow (pre-paid integration)</h2>
+      <ol>
+        <li><strong>Contact</strong>: Submit the enquiry using the form below.</li>
+        <li><strong>Manual deal review</strong>: Our commercial team reviews scope and eligibility.</li>
+        <li><strong>Pre-approval</strong>: We issue terms and outline next steps.</li>
+        <li><strong>Payment integration (later)</strong>: Final payment setup and integration will follow once terms are agreed.</li>
+      </ol>
+    </section>
+
+    <section id="deal-form" class="sections">
+      <h2 class="section-title">Request Commercial Deal</h2>
+      <div class="card">
+          <form id="deal-form" method="get" action="#">
+          <label>Company name<input name="company" required></label>
+          <label>Country<input name="country" required></label>
+          <label>Corporate email<input name="email" type="email" required></label>
+            <label>Type of interest:
+              <select name="interest" required>
+                <option value="vendor">Vendor</option>
+                <option value="sponsor">Sponsor</option>
+                <option value="partner">Partner</option>
+                <option value="enterprise">Enterprise deal</option>
+              </select>
+            </label>
+          <label>Message<textarea name="message" rows="5"></textarea></label>
+          <p class="muted"><strong>Note:</strong> Commercial agreements are closed manually before payment integration.</p>
+          <div style="margin-top:12px"><button class="btn btn-primary" type="submit">Request Commercial Deal</button></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="contact-team" class="sections">
+      <h2 class="section-title">Contact Business Team</h2>
+      <p class="muted">Si prefiere una conversación directa, incluya sus datos de contacto y un breve resumen en el formulario. Nuestro equipo prioriza leads según su relevancia comercial.</p>
+      <p>Or email: partners@neuralgpt.store</p>
+      <p class="muted">Legal & commercial resources: <a href="/terms.html">Terms</a> • <a href="/privacy.html">Privacy</a> • <a href="/commercial-terms.html">Commercial terms</a></p>
+      <div class="card" style="margin-top:12px">
+        <strong>Pago</strong>
+        <p class="muted">El cierre comercial se realiza primero. El enlace de pago se envía posteriormente por Stripe, Google Pay o PayPal.</p>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
+          <img src="/assets/payments/stripe-logo.svg" alt="Stripe" width="120" height="32">
+          <img src="/assets/payments/google-pay-logo.svg" alt="Google Pay" width="120" height="32">
+          <img src="/assets/payments/paypal-logo.svg" alt="PayPal" width="120" height="32">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="wrap muted">© NeuralGPT.Store</div></footer>
+    <script src="/assets/js/unicorn-autopilot.js" defer></script>
+    <script src="/assets/js/launch-signals.js" defer></script>
+    <script src="/assets/js/unicorn-mascot.js" defer></script>
+</body>
+</html>

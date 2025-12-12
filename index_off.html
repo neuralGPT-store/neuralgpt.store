@@ -1,243 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta http-equiv="refresh" content="0;url=/maintenance.html">
+  <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NeuralGPT.Store — Copia de seguridad</title>
-  <meta name="robots" content="noindex, nofollow" />
-  <style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#0b0f17;color:#e6f0ff}main{max-width:900px;padding:24px}</style>
+ 
+  <meta name="theme-color" content="#00040D" />
+  <title>neuralgpt.store — Your Technological Marketplace (backup)</title>
+  <meta name="description" content="neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/img/vision-pro.svg" as="image">
+  <link rel="icon" href="/favicon.ico">
+  <style>
+    /* Critical styles preserved for backup view */
+    :root{--bg:#00040D;--muted:#9aa3b2;--accent:#08f}
+    html,body{height:100%;margin:0;background:var(--bg);color:#e6f0ff;font-family:Orbitron,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial sans-serif}
+  </style>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
 </head>
-<body>
-  <main>
-    <!-- Archivo original de `index.html` renombrado a `index_off.html` como copia de seguridad -->
+<body class="site-root">
+  <header class="site-header premium-header rgb-border" role="banner">
+    <div class="wrap header-inner" style="align-items:center">
+      <a class="brand" href="/" aria-label="NeuralGPT Store">NeuralGPT<span class="dot">.Store</span></a>
+      <nav class="main-nav" aria-label="Principal">
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/marketplace.html">Marketplace</a></li>
+          <li><a href="/providers.html">Proveedores</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Contenido copiado desde el original `index.html` para preservación. -->
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <meta name="robots" content="noindex, nofollow" />
-      <meta name="theme-color" content="#00040D" />
-        <meta name="description" content="neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components." />
-        <meta name="keywords" content="AI, marketplace, robotics, sensors, 3D printing, devboards, hardware, providers, edge AI" />
-        <meta property="og:title" content="neuralgpt.store — Your Technological Marketplace" />
-        <meta property="og:description" content="neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components." />
-        <meta property="og:site_name" content="neuralgpt.store" />
-        <meta property="og:url" content="https://neuralgpt.store/" />
-          <meta property="og:image" content="/assets/img/vision-pro.svg" />
-        <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
-        <meta name="twitter:description" content="neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components." />
-        <title>neuralgpt.store — Your Technological Marketplace</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
-      <!-- Preload critical font and hero/og image to improve FCP/LCP -->
-      <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2" as="font" type="font/woff2" crossorigin>
-      <link rel="preload" href="/assets/img/vision-pro.svg" as="image">
-      <link rel="icon" href="/favicon.ico">
-      <!-- Inline minimal critical CSS to reduce render-blocking -->
-      <style>
-        /* Critical styles: layout, hero, header */
-        :root{--bg:#00040D;--muted:#9aa3b2;--accent:#08f}
-        html,body{height:100%;margin:0;background:var(--bg);color:#e6f0ff;font-family:Orbitron,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial sans-serif}
-        .site-header{position:sticky;top:0;z-index:120;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.4));backdrop-filter:blur(6px)}
-        .hero{padding:48px 0;display:flex;align-items:center}
-        .hero h1{font-size:2.2rem;margin:0 0 8px}
-        @media (min-width:900px){.hero h1{font-size:3.2rem}}
-      </style>
-      <link rel="stylesheet" href="/css/main.css" />
-      <link rel="stylesheet" href="/css/theme-override.css" />
-      <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebSite",
-            "name": "neuralgpt.store",
-            "url": "https://neuralgpt.store/",
-            "description": "neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components.",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://neuralgpt.store/search.html?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          },
-          {
-            "@type": "Organization",
-            "name": "NeuralGPT.Store",
-            "url": "https://neuralgpt.store/",
-            "logo": "https://neuralgpt.store/core/assets/img/logo.png"
-          },
-          {
-            "@type": "ItemList",
-            "name": "Featured Marketplace Items",
-            "itemListElement": [
-              { "@type": "ListItem", "position": 1, "url": "https://neuralgpt.store/marketplace.html" },
-              { "@type": "ListItem", "position": 2, "url": "https://neuralgpt.store/marketplace.html?cat=Rob%C3%B3tica" },
-              { "@type": "ListItem", "position": 3, "url": "https://neuralgpt.store/marketplace.html?cat=Electr%C3%B3nica" }
-            ]
-          }
-        ]
-      }
-      </script>
-    </head>
-    <body class="site-root">
-      <header class="site-header premium-header rgb-border" role="banner">
-        <div class="wrap header-inner" style="align-items:center">
-          <a class="brand" href="/" aria-label="NeuralGPT Store">NeuralGPT<span class="dot">.Store</span></a>
-          <nav class="main-nav" aria-label="Principal">
-            <ul>
-              <li><a href="/">Inicio</a></li>
-              <li class="has-mega" aria-haspopup="true">
-                <a href="/marketplace.html">Marketplace ▾</a>
-                <div class="mega-menu" role="menu" aria-label="Categorias principales">
-                  <div class="mega-grid">
-                    <div>
-                      <h4>Hardware</h4>
-                      <ul>
-                        <li><a href="/marketplace.html?cat=Robótica">Robótica</a></li>
-                        <li><a href="/marketplace.html?cat=Electrónica">Electrónica</a></li>
-                        <li><a href="/marketplace.html?cat=Impresión+3D">Impresión 3D</a></li>
-                        <li><a href="/marketplace.html?cat=Placas+de+Desarrollo">Placas de Desarrollo</a></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4>Soluciones</h4>
-                      <ul>
-                        <li><a href="/marketplace.html?cat=Biomecánica">Biomecánica</a></li>
-                        <li><a href="/marketplace.html?cat=Fabricación+Cyberface">Fabricación Cyberface</a></li>
-                        <li><a href="/marketplace.html?cat=IA+Edge">IA Edge</a></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4>Proveedores</h4>
-                      <ul>
-                        <li><a href="/providers.html">Ver todos los proveedores</a></li>
-                        <li><a href="/providers.html#join">Conviértase en proveedor</a></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4>Recursos</h4>
-                      <ul>
-                        <li><a href="/guides.html">Guías</a></li>
-                        <li><a href="/blog.html">Blog</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li><a href="/quantum.html">Quantum Pass</a></li>
-              <li><a href="/security.html">Seguridad IA</a></li>
-              <li><a href="/providers.html">Proveedores</a></li>
-              <li><a href="/console.html">Consola</a></li>
-              <li><a href="/blog.html">Blog</a></li>
-              <li><a href="/legal.html">Legal</a></li>
-            </ul>
-          </nav>
-          <div class="search-wrap" role="search">
-            <input id="global-search" class="search-input" type="search" placeholder="Buscar productos, proveedores, tecnología..." aria-label="Buscar en NeuralGPT.Store" autocomplete="off">
-            <div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias de búsqueda" hidden></div>
-          </div>
-        </div>
-      </header>
+  <main class="wrap">
+    <section class="hero-card">
+      <h1>Backup — NeuralGPT.Store</h1>
+      <p class="subtle">Copia preservada del sitio.</p>
+    </section>
+  </main>
 
-      <main class="wrap">
-        <section class="hero fade-in">
-          <div class="hero-card">
-            <h1>NeuralGPT.Store — Marketplace para IA</h1>
-            <p class="subtle">Componentes, soluciones y planes empresariales con estética azul eléctrico y experiencia modular.</p>
-                      </ul>
-                    </nav>
-                    <div class="search-wrap">
-                      <input id="mp-search" class="search-input" type="search" placeholder="Buscar en Marketplace..." aria-label="Buscar en Marketplace">
-                    </div>
-              <a class="btn btn-primary" href="/marketplace.html">Explorar Marketplace</a>
-            </div>
-          </div>
-        </section>
+  <footer class="site-footer">
+    <div class="wrap">© NeuralGPT.Store — backup</div>
+  </footer>
 
-        <section class="sections slide-up">
-          <h2 class="section-title">Categorías principales</h2>
-          <div class="grid grid-4">
-            <div id="cat-ai-components" class="card-list"></div>
-            <div id="cat-robotics" class="card-list"></div>
-            <div id="cat-smart-sensors" class="card-list"></div>
-            <div id="cat-services" class="card-list"></div>
-          </div>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Tendencias IA 2025</h2>
-          <div id="trends-home" class="grid grid-3">
-            <div class="card">Modelos multimodales en producción</div>
-            <div class="card">Edge inferencing y privacidad</div>
-            <div class="card">Automatización de pipelines ML</div>
-          </div>
-          <p class="muted"><a href="/trends.html">Ver más</a></p>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Tecnología Destacada 2025</h2>
-          <div id="tech-2025" class="market-grid"></div>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Sponsors</h2>
-          <div id="sponsors-grid" class="grid grid-4 sponsors-grid"></div>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Placas de desarrollo más vendidas</h2>
-          <div id="boards-top" class="market-grid"></div>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Robótica avanzada</h2>
-          <div id="robotics-advanced" class="market-grid"></div>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Impresión 3D</h2>
-          <div id="printing-3d" class="market-grid"></div>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Cyberfaces y biomecánica</h2>
-          <div id="cyberfaces" class="market-grid"></div>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Marketplace — Vista previa</h2>
-          <div id="market-grid" class="market-grid">
-            <article class="card tooltip" data-tip="Inferencia en dispositivo" onclick="location.href='/product.html?id=edge-x1'">
-              <h3>Edge Accelerator X1</h3>
-              <p class="subtle">Inferencia de baja latencia para edge.</p>
-              <a class="btn btn-primary" href="/product.html?id=edge-x1">Detalles</a>
-            </article>
-            <article class="card tooltip" data-tip="Sensor SLAM para mapping" onclick="location.href='/product.html?id=slam-mini'">
-              <h3>SLAM Lidar Mini</h3>
-              <p class="subtle">Sensor compacto para robótica.</p>
-              <a class="btn" href="/product.html?id=slam-mini">Detalles</a>
-            </article>
-            <article class="card tooltip" data-tip="Seguridad en runtime para modelos" onclick="location.href='/product.html?id=securegate'">
-              <h3>SecureGate AI</h3>
-              <p class="subtle">Protección para endpoints y modelos.</p>
-              <a class="btn" href="/product.html?id=securegate">Ver</a>
-            </article>
-          </div>
-          <p class="muted"><a href="/marketplace.html">Ir al Marketplace</a></p>
-        </section>
-
-        <section class="sections slide-up">
-          <h2 class="section-title">Nuestros Sponsors</h2>
-          <div id="sponsors-grid" class="grid grid-3 sponsors-grid"></div>
-        </section>
-
-        <section class="cta slide-up">
-          <h2>Proveedores Destacados</h2>
-          <div class="providers-spot">
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
             <div style="flex:1">
               <h3>NeuralEdge</h3>
               <p class="subtle">Hardware y soporte optimizado.</p>
