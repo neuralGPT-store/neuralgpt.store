@@ -329,14 +329,15 @@ a:hover::after{ transform:scaleX(1) }
   background-repeat: no-repeat !important;
 }
 
-/* Sections with visuals should occupy full viewport height (100vh) */
+/* Sections with visuals should be prominent but not overwhelmingly tall on content pages.
+   Use a responsive clamp to keep hero areas enterprise-friendly across viewports. */
 .hero-visual, .page-hero, section.hero, .hero-section {
-  min-height: 100vh !important;
+  min-height: clamp(420px, 80vh, 100vh) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding-top: 28px !important;
-  padding-bottom: 28px !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
 }
 
 /* Global consistent radius for main blocks and containers */
@@ -361,6 +362,29 @@ p, .muted, .subtle{ font-size: clamp(0.95rem, 1vw, 1rem) !important; line-height
 /* CTA: stronger depth/contrast while keeping original palette */
 .btn-primary{ box-shadow: 0 30px 90px rgba(0,200,255,0.16), inset 0 -2px 0 rgba(0,0,0,0.06) !important; border:0 !important; padding:12px 20px !important }
 .btn-primary:hover{ box-shadow: 0 46px 130px rgba(0,200,255,0.20) !important; transform: translateY(-4px) !important }
+
+/* Form controls — consistent, accessible and enterprise-grade */
+input[type="text"], input[type="email"], input[type="url"], input[type="search"], select, textarea {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.002));
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.4;
+  width: 100%;
+  box-shadow: none;
+}
+
+select{ -webkit-appearance: none; appearance: none }
+textarea{ min-height:120px; resize:vertical }
+label{ display:block; font-weight:700; color:var(--subtext); margin-bottom:6px; font-size:0.95rem }
+
+/* Improve button focus and visibility for keyboard users */
+.btn-primary:focus{ outline: 3px solid rgba(124,77,255,0.14); outline-offset:3px }
+
+/* Forms: reduce friction — compact vertical spacing inside cards */
+.card form > label, .card form > * { margin-bottom:10px }
 
 /* Avoid excessive transform shifts that cause layout jumps */
 .card:hover, .product-card:hover{ transform: translateY(-6px) !important; }

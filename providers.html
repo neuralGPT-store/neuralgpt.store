@@ -52,12 +52,12 @@
         <h2 class="section-title">Registro de proveedor (simulado)</h2>
         <form id="provider-form" class="card">
           <div style="display:flex;flex-direction:column;gap:8px">
-            <input id="prov-name" placeholder="Nombre de la empresa" />
-            <input id="prov-site" placeholder="Sitio web" />
-            <select id="prov-type"><option value="hardware">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option></select>
-            <input id="prov-country" placeholder="País" />
-            <input id="prov-email" placeholder="Correo corporativo" />
-            <button type="button" id="prov-submit" class="btn btn-primary">Enviar solicitud (simulado)</button>
+            <input id="prov-name" placeholder="Nombre de la empresa" aria-label="Nombre de la empresa" />
+            <input id="prov-site" placeholder="Sitio web" aria-label="Sitio web" />
+            <select id="prov-type" aria-label="Tipo de proveedor"><option value="hardware">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option></select>
+            <input id="prov-country" placeholder="País" aria-label="País" />
+            <input id="prov-email" placeholder="Correo corporativo" aria-label="Correo corporativo" />
+            <button type="button" id="prov-submit" class="btn btn-primary" aria-label="Enviar solicitud simulada">Enviar solicitud (simulado)</button>
           </div>
         </form>
         <div id="prov-msg" class="muted" style="margin-top:12px"></div>
