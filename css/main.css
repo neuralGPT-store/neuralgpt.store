@@ -1082,6 +1082,41 @@ body[style], section[style], header[style] { background: transparent !important;
 
 /* End ZERO-BLACK GLOBAL WALLPAPER ENFORCEMENT */
 
+/* ==========================
+   FINAL VISUAL POLISH: TRANSLUCENT CARDS + BACKDROP
+   - Cards float over wallpapers using translucent panels and subtle blur
+   - CTAs and sections keep RGB borders and consistent 12px radius
+   - Ensure text contrast via light color tokens
+   ========================== */
+
+.card, .product-card, .provider-card, .hero-card, .quick-view-card {
+  background: rgba(6,10,16,0.36) !important; /* translucent panel over image */
+  backdrop-filter: blur(6px) saturate(115%) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(115%) !important;
+  border: 1px solid rgba(0,174,239,0.08) !important;
+  box-shadow: 0 14px 48px rgba(0,20,40,0.45) !important;
+  border-radius: 12px !important;
+  color: var(--text-default) !important;
+}
+
+.hero-card{ padding: 24px !important; max-width: 980px !important; margin: 0 auto !important; }
+
+/* Ensure CTAs show subtle RGB outline and remain legible */
+.btn-primary{ border: 1px solid rgba(0,174,239,0.12) !important; box-shadow: 0 20px 60px rgba(0,174,239,0.08) !important; }
+.btn{ border-radius: 10px !important; }
+
+/* Reduce excessive vertical spacing site-wide for enterprise density */
+section.sections, .sections{ padding-top: 12px !important; padding-bottom: 12px !important; margin-bottom: 12px !important; }
+.hero{ padding-top: 24px !important; padding-bottom: 12px !important; }
+
+/* Minor: ensure hero images don't cut at sides by forcing background-position */
+[class*="bg-"]{ background-position: center center !important; background-size: cover !important; }
+
+/* Final defensive: ensure no remaining global black fills (override inline styles) */
+body[style], header[style], section[style], main[style] { background: transparent !important; }
+
+/* End final visual polish */
+
 
 
 
