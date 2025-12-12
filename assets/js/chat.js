@@ -16,8 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     send.addEventListener('click', async () => {
         const text = field.value.trim();
         if (!text) return;
+        // Escape user content to avoid XSS in chat rendering
+        const safe = String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         const userNode = document.createElement('div');
-        userNode.innerHTML = `<b>You:</b> ${text}`;
+        userNode.innerHTML = `<b>You:</b> ${safe}`;
         messages.appendChild(userNode);
 
         // Network calls removed for static build. Provide a local offline demo response.

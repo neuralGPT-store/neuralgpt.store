@@ -20,16 +20,17 @@
 
   function cardForProvider(p){
     const a = document.createElement('article'); a.className='card product-card rgb-border fade-in';
+    const safeLogo = (/^(javascript:)/i.test(String(p.logo||'').trim())) ? '/assets/img/provider-default.png' : (p.logo||'/assets/img/provider-default.png')
     a.innerHTML = `
       <div style="display:flex;gap:12px;align-items:center">
-        <img src="${escapeHtml(p.logo||'/assets/img/provider-default.png')}" alt="${escapeHtml(p.name)}" style="width:84px;height:84px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,0.03)">
+        <img src="${escapeHtml(safeLogo)}" alt="${escapeHtml(p.name)}" style="width:84px;height:84px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,0.03)">
         <div style="flex:1">
           <h3>${escapeHtml(p.name)}</h3>
           <div class="subtle">${escapeHtml(p.category)}</div>
           <div class="muted" style="font-size:13px;margin-top:6px">${escapeHtml((p.description||'').slice(0,160))}${(p.description||'').length>160? '…':''}</div>
           <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
             <a class="btn" href="/providers-view.html?provider=${encodeURIComponent((p.name||'').replace(/\s+/g,'-'))}">Ficha</a>
-            <a class="btn btn-primary" href="${escapeHtml(p.externalStoreURL||p.officialWebsite||'#')}" target="_blank">Visitar tienda oficial</a>
+            <a class="btn btn-primary" href="${( (/^(javascript:|data:)/i.test(String(p.externalStoreURL||p.officialWebsite||'#').trim())) ? '#' : escapeHtml(p.externalStoreURL||p.officialWebsite||'#') )}" target="_blank" rel="noopener noreferrer">Visitar tienda oficial</a>
             <button class="btn prov-fav" data-prov="${escapeHtml(p.id)}">${isFav(p.id)?'💖':'♡'}</button>
           </div>
         </div>
@@ -98,7 +99,7 @@
         if(p){
           const pn = document.getElementById('prov-name'); if(pn) pn.textContent = p.name
           const pd = document.getElementById('prov-desc'); if(pd) pd.textContent = p.description
-          const pv = document.getElementById('prov-visit'); if(pv){ pv.href = p.externalStoreURL || p.officialWebsite || '#'; pv.target = '_blank' }
+          const pv = document.getElementById('prov-visit'); if(pv){ const href = p.externalStoreURL || p.officialWebsite || '#'; pv.href = (/^(javascript:|data:)/i.test(String(href||'').trim())) ? '#' : href; pv.target = '_blank'; pv.rel = 'noopener noreferrer' }
           const stats = document.getElementById('provider-stats'); if(stats){ const s=fakeStatsFor(p); stats.innerHTML = `Productos: ${s.products} • Rating: ${s.rating} • Opiniones: ${s.reviews}` }
           // provider products list (by vendorName matching)
           const prodList = document.getElementById('provider-products')

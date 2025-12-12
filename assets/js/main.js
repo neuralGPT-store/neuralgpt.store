@@ -14,6 +14,11 @@
   const qs = () => Object.fromEntries(new URLSearchParams(location.search))
   const el = id => document.getElementById(id)
 
+	/* Minimal escape + URL/img sanitizers (used to harden dynamic HTML insertion) */
+	function _escape(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+	function safeHref(u){ try{ if(!u) return '#'; const s=String(u).trim(); if(/^(javascript:|data:)/i.test(s)) return '#'; return _escape(s); }catch(e){return '#'} }
+	function safeImgSrc(u){ try{ if(!u) return '/assets/img/vision-pro.svg'; const s=String(u).trim(); if(/^(javascript:)/i.test(s)) return '/assets/img/vision-pro.svg'; return _escape(s); }catch(e){ return '/assets/img/vision-pro.svg' } }
+
 	// Commission helpers
 	function commissionRateForTier(tier){
 		if(!tier) return 12
@@ -345,11 +350,11 @@
 		const product = state.products.find(p=> p.id === id)
 		const title = el('p-title'); if(title) title.textContent = product ? product.title || product.name : id
 		// gallery
-		const gallery = el('p-gallery'); if(gallery){ gallery.innerHTML = ''; if(product && product.images && product.images.length){ product.images.forEach(src=>{ const f = document.createElement('figure'); f.innerHTML = `<img src="${src}" alt="${escapeHtml(product.title||product.name)}" class="card-img">`; gallery.appendChild(f) }) } else { gallery.innerHTML = '<img src="/assets/img/vision-pro.svg" class="card-img">' } }
+	 	const gallery = el('p-gallery'); if(gallery){ gallery.innerHTML = ''; if(product && product.images && product.images.length){ product.images.forEach(src=>{ const f = document.createElement('figure'); f.innerHTML = `<img src="${safeImgSrc(src)}" alt="${escapeHtml(product.title||product.name)}" class="card-img">`; gallery.appendChild(f) }) } else { gallery.innerHTML = '<img src="/assets/img/vision-pro.svg" class="card-img">' } }
 		const desc = el('p-desc'); if(desc) desc.textContent = product ? product.short_description : 'Sin descripción'
 		const longDesc = el('p-long-desc'); if(longDesc) longDesc.innerHTML = product ? escapeHtml(product.long_description) : ''
 		const price = el('p-price'); if(price) price.textContent = product ? fmtPrice(product.price) : ''
-		const vendor = el('p-vendor'); if(vendor && product){ vendor.innerHTML = product.vendorLink ? `<a href="${escapeHtml(product.vendorLink)}" target="_blank">${escapeHtml(product.vendorName||product.vendor)}</a>` : escapeHtml(product.vendorName||'') }
+		const vendor = el('p-vendor'); if(vendor && product){ vendor.innerHTML = product.vendorLink ? `<a href="${safeHref(product.vendorLink)}" target="_blank" rel="noopener noreferrer">${escapeHtml(product.vendorName||product.vendor)}</a>` : escapeHtml(product.vendorName||'') }
 		const stock = el('p-stock'); if(stock) stock.textContent = (product && (product.stock!==null && product.stock!==undefined)) ? (product.stock>0 ? `${product.stock} en stock` : 'Agotado') : ''
 		const specs = el('p-details'); if(specs){ specs.innerHTML = product ? `<ul>${(product.specs||[]).map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>` : '<div class="muted">Detalles no disponibles</div>' }
 
@@ -452,16 +457,17 @@
 		const imgSrc = p.image || (p.images && p.images[0]) || '/assets/img/vision-pro.svg'
 		const imgAlt = p.imageAlt || p.title || p.name || 'Producto'
 		// if optimized manifest exists for this image, prefer AVIF/WebP via <picture>
-		let pictureHtml = `<img class="card-img" loading="lazy" src="${imgSrc}" alt="${escapeHtml(imgAlt)}">`
+		let pictureHtml = `<img class="card-img" loading="lazy" src="${safeImgSrc(imgSrc)}" alt="${escapeHtml(imgAlt)}">`
 		try{
 			if(state && state.imgManifest){
 				const rel = String(imgSrc).replace(/^\/?assets\/img\//,'')
 				const entry = state.imgManifest[rel]
 				if(entry && (entry.avif || entry.webp)){
 					pictureHtml = `<picture>`
-					if(entry.avif) pictureHtml += `<source srcset="${entry.avif}" type="image/avif">`
-					if(entry.webp) pictureHtml += `<source srcset="${entry.webp}" type="image/webp">`
-					pictureHtml += `<img class="card-img" loading="lazy" src="${imgSrc}" alt="${escapeHtml(imgAlt)}">` + `</picture>`
+
+					if(entry.avif) pictureHtml += `<source srcset="${safeImgSrc(entry.avif)}" type="image/avif">`
+					if(entry.webp) pictureHtml += `<source srcset="${safeImgSrc(entry.webp)}" type="image/webp">`
+					pictureHtml += `<img class="card-img" loading="lazy" src="${safeImgSrc(imgSrc)}" alt="${escapeHtml(imgAlt)}">` + `</picture>`
 				}
 			}
 		}catch(e){ /* ignore manifest errors */ }
@@ -495,13 +501,13 @@
 		const c = document.createElement('div'); c.className='quick-view-card'
 		c.innerHTML = `
 			<div style="display:flex;gap:18px;align-items:flex-start">
-				<div style="flex:1;max-width:420px"><img src="${escapeHtml((product.images && product.images[0])||'/assets/img/vision-pro.svg')}" style="width:100%;border-radius:8px" alt="${escapeHtml(product.name)}"></div>
+				<div style="flex:1;max-width:420px"><img src="${safeImgSrc((product.images && product.images[0])||'/assets/img/vision-pro.svg')}" style="width:100%;border-radius:8px" alt="${escapeHtml(product.name)}"></div>
 				<div style="flex:1.6">
 					<h2>${escapeHtml(product.name)}</h2>
 					<div class="muted">${escapeHtml(product.category)} • ${fmtPrice(product.price)}</div>
 					<p class="subtle">${escapeHtml(product.short_description||'')}</p>
 					<div style="margin-top:12px">${product.specs && product.specs.length ? '<strong>Specs</strong><ul>'+product.specs.map(s=>`<li>${escapeHtml(s)}</li>`).join('')+'</ul>':''}</div>
-					<div style="margin-top:12px;display:flex;gap:8px"><a class="btn btn-primary" href="/product.html?id=${encodeURIComponent(product.id)}">Ficha completa</a><a class="btn" href="${escapeHtml(product.vendorLink||'#')}" target="_blank">Visitar proveedor</a><button class="btn" id="ngs-quick-fav">${isFavorite(product.id)?'💖 Favorito':'♡ Favorito'}</button></div>
+					<div style="margin-top:12px;display:flex;gap:8px"><a class="btn btn-primary" href="/product.html?id=${encodeURIComponent(product.id)}">Ficha completa</a><a class="btn" href="${safeHref(product.vendorLink||'#')}" target="_blank" rel="noopener noreferrer">Visitar proveedor</a><button class="btn" id="ngs-quick-fav">${isFavorite(product.id)?'💖 Favorito':'♡ Favorito'}</button></div>
 				</div>
 			</div>
 		`

@@ -14,13 +14,18 @@
 		const grid = document.getElementById('sponsors-grid')
 		if(!grid) return
 		grid.innerHTML = ''
-		sponsors.forEach((s, i)=>{
-			const a = document.createElement('a')
-			a.className = 'sponsor-card premium-sponsor'
-			a.href = s.website || '#'
-			a.target = '_blank'
-			const logo = makeLogoPath(s)
-			a.innerHTML = `<div class="sponsor-inner"><img src="${logo}" alt="${escapeHtml(s.name||'Sponsor')}" loading="lazy"></div>`
+		    sponsors.forEach((s, i)=>{
+			    const a = document.createElement('a')
+			    a.className = 'sponsor-card premium-sponsor'
+			    // sanitize external href and avoid javascript: or data: schemes
+			    const href = s.website || '#'
+			    a.href = (/^(javascript:|data:)/i.test(String(href||'').trim())) ? '#' : href
+			    a.target = '_blank'
+			    a.rel = 'noopener noreferrer'
+			    const logo = makeLogoPath(s)
+			    // use escaped src to avoid script: payloads in src attribute
+			    const safeLogo = (/^(javascript:)/i.test(String(logo||'').trim())) ? '/assets/img/vision-pro.svg' : logo
+			    a.innerHTML = `<div class="sponsor-inner"><img src="${escapeHtml(safeLogo)}" alt="${escapeHtml(s.name||'Sponsor')}" loading="lazy"></div>`
 			// staggered animation delay
 			a.style.animationDelay = `${(i%8)*60}ms`
 			grid.appendChild(a)
