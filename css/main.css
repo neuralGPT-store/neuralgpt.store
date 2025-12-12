@@ -131,7 +131,22 @@ body{overflow-x:hidden}
 
 /* Small screens */
 @media(max-width:980px){.grid-3{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.site-header .search-wrap{display:none}.main-nav ul{display:none}.menu-toggle{display:block}}
+@media(max-width:980px){
+  /* Make main nav usable on mobile: vertical stack, full width touch targets */
+  .main-nav ul{ display:block !important; padding:8px 0; }
+  .main-nav ul li{ display:block; }
+  .main-nav a{ display:block; padding:12px 16px; border-radius:8px; }
+  .main-nav a:hover{ background: rgba(0,200,255,0.03) }
+}
 @media(max-width:640px){.grid-3{grid-template-columns:1fr}.wrap{padding:16px}.hero-visual{height:220px}}
+
+/* Ensure media do not overflow on small screens */
+img, picture, svg, video { max-width:100%; height:auto; display:block }
+
+/* Forms full width on small screens for comfortable inputs */
+@media(max-width:720px){
+  .card form input, .card form select, .card form textarea { width:100%; }
+}
 
 /* Utility classes */
 .muted{color:var(--subtext)}
@@ -203,6 +218,61 @@ a:focus,button:focus,input:focus{outline:3px solid rgba(0,200,255,0.12);outline-
 /* Navbar & header stable spacing */
 .wrap{ padding:16px; max-width:1240px }
 .header-inner{ gap:18px; align-items:center }
+
+/* ==========================
+   Enterprise Compact Overrides
+   - Minimal, targeted overrides for B2B visual polish
+   - Do not change structural HTML or JS
+   ========================== */
+
+:root{ --enterprise-max-width:1100px; --enterprise-card-radius:12px; --enterprise-form-max:720px }
+
+/* Centered, slightly narrower content for a refined reading column */
+.wrap{ max-width:var(--enterprise-max-width) }
+
+/* Clean card visuals: ensure no child overflows overlap rounded corners */
+.card, .product-card, .provider-card{ overflow:hidden; border-radius:var(--enterprise-card-radius); }
+.card > *{ border-radius:inherit }
+.card img, .card .card-img, .product-card img, .provider-card img{ border-radius:inherit; display:block; }
+
+/* Reduce heavy min-heights and remove forced aspect-ratio for a compact grid */
+.card, .product-card{ min-height:0; aspect-ratio:auto; padding:12px }
+.product-card, .card{ gap:10px }
+
+/* Form compacting: max width, centered, tighter padding */
+form, .card form, form.card{ max-width:var(--enterprise-form-max); margin-left:auto; margin-right:auto }
+.card form{ padding:10px 8px }
+.card input, .card select, .card textarea, .card .search-input{ padding:10px 12px; font-size:15px; line-height:1.25; border-radius:10px }
+
+/* Tighten hero and section vertical rhythm */
+.hero{ padding:28px 0 12px; gap:16px }
+.hero-card{ padding:12px }
+.sections{ padding:12px 0 }
+
+/* Compact footer spacing */
+.site-footer, .premium-footer{ padding:18px 0; margin-top:28px }
+
+/* Align grids to a consistent rhythm */
+.grid, .market-grid{ gap:12px }
+.grid-3{ gap:12px }
+
+/* Buttons: slightly smaller for dense layouts */
+.btn, .btn-primary{ padding:10px 14px; min-height:40px }
+
+/* Tone down exaggerated card hover for enterprise clarity */
+.card:hover{ transform:none; box-shadow:0 22px 60px rgba(0,0,0,0.45) }
+
+/* Visual brand override: present as neuralGPT.Store (visual only) */
+.brand{ color:transparent !important; position:relative }
+.brand::after{ content:"neuralGPT.Store"; position:relative; display:inline-block; color:var(--primary); font-weight:800; letter-spacing:0.4px }
+
+/* Small screens: keep compact spacing but ensure touch targets remain comfortable */
+@media(max-width:720px){
+  .card, .product-card{ padding:10px }
+  .hero{ padding:18px 0 }
+  form, .card form{ width:100%; padding:8px }
+}
+
 
 /* Responsive base adjustments */
 @media(max-width:980px){
