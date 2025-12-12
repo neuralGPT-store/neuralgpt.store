@@ -780,6 +780,58 @@ nav, .btn {
 
 /* Accessibility & stacking: ensure overlays are dark enough and header/footer stay above backgrounds */
 [class*="bg-"]::before{
+
+/* Strong desktop-first overrides for visual repair (>=1440px) */
+@media (min-width:1440px){
+  /* Force full-bleed layout and disable mobile constraints */
+  html,body,main,section{ width:100vw !important; max-width:none !important; overflow-x:hidden !important }
+  body{ background:#000000 !important; color:#FFFFFF !important }
+
+  /* Layout containers */
+  .wrap{ max-width:1400px !important; margin:0 auto !important; padding:28px 32px !important }
+  .main-nav ul{ display:flex !important; flex-direction:row !important; gap:14px !important }
+
+  /* Hero: two-column desktop-first layout, full-screen visuals */
+  .hero{ display:grid !important; grid-template-columns:1fr 420px !important; gap:32px !important; align-items:center !important; min-height:100vh !important; padding:36px 0 !important }
+  .hero-card{ padding:20px !important; background:transparent !important }
+  .hero-visual{ min-height:calc(100vh - 160px) !important; height:auto !important; border-radius:12px !important; overflow:hidden !important; background-size:cover !important; background-position:center !important }
+
+  /* Ensure hero backgrounds reference existing assets and are visible */
+  .bg-home .hero, .bg-home{ background-image: url('/assets/img/vision-pro.svg') !important; background-color:transparent !important }
+  .bg-marketplace .hero, .bg-marketplace{ background-image: url('/assets/img/category-robotics.png') !important; background-color:transparent !important }
+  .bg-providers .hero, .bg-providers{ background-image: url('/assets/img/category-electronics.png') !important; background-color:transparent !important }
+  .bg-vendor-register .hero, .bg-vendor-register{ background-image: url('/assets/img/pi4-1.png') !important; background-color:transparent !important }
+  .bg-sponsors .hero, .bg-sponsors{ background-image: url('/assets/img/sponsors/quantum.svg') !important; background-color:transparent !important }
+
+  /* Grid / cards */
+  .grid-3{ grid-template-columns:repeat(3,1fr) !important; gap:18px !important }
+  .market-grid{ grid-template-columns:repeat(auto-fill,minmax(240px,1fr)) !important }
+  .card{ min-height:0 !important; padding:12px !important; border-radius:12px !important; overflow:hidden !important }
+  .product-card{ min-height:140px !important }
+
+  /* Remove nested card stacking visuals */
+  .card .card{ display:block !important; box-shadow:none !important; background:transparent !important; padding:0 !important; margin:0 !important }
+
+  /* Remove decorative neon overlays that may hide backgrounds */
+  .rgb-border::after, .brand::after{ display:none !important }
+
+  /* Tighter vertical rhythm */
+  section.sections, .sections{ padding-top:10px !important; padding-bottom:10px !important; margin-bottom:10px !important }
+  .section-title{ margin-bottom:8px !important }
+
+  /* Forms compact */
+  form, .card form, form.card{ max-width:980px !important; margin:0 auto !important }
+  form input, form select, form textarea{ padding:10px 12px !important; height:38px !important; font-size:15px !important }
+
+  /* Footer alignment */
+  .site-footer .wrap{ display:flex !important; gap:24px !important; align-items:flex-start !important; justify-content:space-between !important }
+
+  /* Palette enforcement: remove purple tones */
+  :root{ --violet: transparent !important }
+  .subtle, .muted{ color:#BFCBD6 !important }
+  a, .btn{ color:#FFFFFF !important }
+}
+
   /* slightly stronger overlay for improved contrast on top of bright wallpapers */
   background: linear-gradient(180deg, rgba(6,8,12,0.36), rgba(6,8,12,0.64));
 }
