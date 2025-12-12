@@ -314,6 +314,64 @@ a:hover::after{ transform:scaleX(1) }
 /* Mobile: keep compact spacing */
 @media(max-width:640px){ .wrap{ padding:12px } .hero-visual{ height:220px } .market-grid{ gap:12px } }
 
+/* ==========================
+   SURGICAL VISUAL POLISH
+   - Enforce true fullscreen backgrounds for image sections
+   - Consistent global radius for main containers
+   - Compact vertical rhythm and refined typography
+   - CTA contrast refinement (no color changes)
+   ========================== */
+
+/* Ensure elements intended as visual backgrounds cover viewport */
+[class*="bg-"], .hero, .hero-section, .hero-visual, section.hero, .page-hero {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Sections with visuals should occupy full viewport height (100vh) */
+.hero-visual, .page-hero, section.hero, .hero-section {
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding-top: 28px !important;
+  padding-bottom: 28px !important;
+}
+
+/* Global consistent radius for main blocks and containers */
+.section, section, .container, .card, .product-card, .quick-view-card, .hero-visual, .pricing {
+  border-radius: var(--global-radius) !important;
+}
+
+/* Slightly tighter vertical rhythm across site */
+.sections{ padding:10px 0 !important; margin:8px 0 !important }
+.site-footer{ padding:18px 0 !important; margin-top:28px !important }
+.hero{ padding:18px 0 8px !important }
+
+/* Reduce giant paddings on cards and sections to compact layout */
+.card, .product-card, .provider-card{ padding:12px !important; min-height: var(--compact-card-min-height) !important }
+
+/* Micro-typography for clarity and hierarchy (no font-family changes) */
+h1{ font-size: clamp(1.6rem, 2.4vw, 2.4rem) !important; line-height:1.06 !important; letter-spacing:0.2px !important; margin-bottom:8px }
+h2{ font-size: clamp(1.15rem, 1.8vw, 1.6rem) !important; line-height:1.12 !important; margin-bottom:8px }
+h3{ font-size: clamp(1rem, 1.2vw, 1.15rem) !important; line-height:1.18 !important }
+p, .muted, .subtle{ font-size: clamp(0.95rem, 1vw, 1rem) !important; line-height:1.55 !important; letter-spacing:0.1px }
+
+/* CTA: stronger depth/contrast while keeping original palette */
+.btn-primary{ box-shadow: 0 30px 90px rgba(0,200,255,0.16), inset 0 -2px 0 rgba(0,0,0,0.06) !important; border:0 !important; padding:12px 20px !important }
+.btn-primary:hover{ box-shadow: 0 46px 130px rgba(0,200,255,0.20) !important; transform: translateY(-4px) !important }
+
+/* Avoid excessive transform shifts that cause layout jumps */
+.card:hover, .product-card:hover{ transform: translateY(-6px) !important; }
+
+/* Defensive: prevent horizontal overflow on edge cases */
+html, body { overflow-x: hidden !important }
+
+/* Keep the brand literal unchanged (visual safeguard) */
+.brand, .footer-brand { white-space:nowrap }
+
+/* End surgical overrides */
 
 
 /* ===============================
