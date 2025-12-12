@@ -36,8 +36,8 @@
     setInterval(function(){ if(c && c.classList) c.classList.toggle('float'); }, 6000 + Math.floor(Math.random()*4000));
     // ensure trail resets occasionally
     setInterval(function(){ var t = c.querySelector('.unicorn-trail'); if(t){ t.classList.remove('animate'); void t.offsetWidth; t.classList.add('animate'); } }, 4200 + Math.floor(Math.random()*3000));
-    // pointer-events: do not block important page interactions; mascot handles its own pointer events
-    c.style.pointerEvents = 'auto';
+    // ensure mascot does not block important page interactions
+    c.style.pointerEvents = 'none';
     trail.style.pointerEvents = 'none';
 
     // emotion pulse on pricing and vendor-onboarding pages

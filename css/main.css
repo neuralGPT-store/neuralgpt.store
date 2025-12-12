@@ -262,6 +262,62 @@ a:hover::after{ transform:scaleX(1) }
 
 @media(max-width:720px){ .providers-grid{ grid-template-columns:repeat(1,1fr) } }
 
+/* ==============================
+  FINAL UI NORMALIZATION OVERRIDES
+  - Compact spacing, consistent radii, prevent overlaps
+  - Soft overrides only; uses minimal !important where inline styles conflict
+  ============================== */
+
+:root{ --global-radius:16px; --compact-padding-vertical:14px; --compact-card-min-height:160px }
+
+/* Compact site padding to reduce vertical whitespace */
+.wrap{ padding-top:var(--compact-padding-vertical); padding-bottom:var(--compact-padding-vertical); }
+
+/* Sections compacted */
+.sections{ padding:12px 0; margin:10px 0; }
+
+/* Enforce consistent rounded corners across blocks */
+.card, .product-card, .quick-view-card, .hero-visual, .pricing, .providers-page .card, .premium-grid .card { border-radius: var(--global-radius) !important; }
+
+/* Prevent cards from overlapping their containers and clip overflow */
+.card{ overflow:hidden !important; box-shadow: 0 24px 60px rgba(0,20,40,0.55); }
+
+/* Reduce default min-height for compact card layouts */
+.card, .product-card, .provider-card{ min-height: var(--compact-card-min-height) !important; aspect-ratio: auto !important; }
+
+/* Market grid: cap columns (max 4 on wide screens), ensure consistent gutters */
+.market-grid{ grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important; gap:16px !important; }
+@media (min-width:1200px){ .market-grid{ grid-template-columns: repeat(4, 1fr) !important; } }
+
+/* Sponsors grid: keep logos tidy and max 4 per row on desktop */
+.sponsors-grid{ grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important; align-items:center; gap:14px }
+@media (min-width:1200px){ .sponsors-grid{ grid-template-columns: repeat(4, 1fr) !important; } }
+
+/* Hero visual reduced height to avoid huge banners */
+.hero-visual{ height:280px !important; min-height:180px !important; }
+
+/* Navbar and header tweaks to avoid covering content */
+.site-header{ padding-top:8px; padding-bottom:8px; }
+
+/* Ensure buttons and CTAs stay visible and not overlapped */
+.btn, .btn-primary{ z-index: 5; position: relative }
+
+/* Reduce aggressive hover transforms to avoid layout shifts */
+.card:hover, .product-card:hover{ transform: translateY(-6px) !important; box-shadow: 0 36px 90px rgba(0,150,200,0.12) !important }
+
+/* Limit neon/glow intensity to avoid hiding text */
+.rgb-border::after{ opacity:0.08 !important; filter: blur(10px) !important }
+
+/* Ensure footer and header remain above decorative elements */
+.site-header, .site-footer, .quick-view-modal{ z-index: 1200 !important }
+
+/* Accessibility: avoid trapping pointer events with decorative items */
+#unicorn-mascot{ pointer-events: none !important }
+
+/* Mobile: keep compact spacing */
+@media(max-width:640px){ .wrap{ padding:12px } .hero-visual{ height:220px } .market-grid{ gap:12px } }
+
+
 
 /* ===============================
    FASE 2 — CyberNeo System Palette
