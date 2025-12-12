@@ -1,73 +1,73 @@
 /* NeuralGPT.Store — Futuristic premium theme (Blue Electric / Quantum Violet / RGB) */
 :root{
   --bg-1:#00040D;
-  --bg-2:#020316;
-  --panel:rgba(12,16,26,0.6);
-  --glass:rgba(255,255,255,0.04);
-  --primary:#00C8FF; /* azul eléctrico */
-  --accent:#45F7FF;  /* cyan */
-  --violet:#7C4DFF;  /* quantum violet */
-  --muted:rgba(217,236,255,0.16);
-  --text:rgba(230,242,255,0.98);
-  --subtext:rgba(217,236,255,0.72);
-  --radius:14px;
-  --shadow:0 28px 60px rgba(0,200,255,0.06);
-  --glow:0 18px 60px rgba(0,200,255,0.12);
-  --glass-blur:10px;
-  --max-width:1240px;
-  font-family:'Orbitron',Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial;
+/* ==========================
+   Desktop-first enforcement and fullscreen hero backgrounds
+   - Desktop (default) applies unless media queries reduce it
+   - Tablet: max-width:1199px
+   - Mobile: max-width:767px
+   - Assign distinct fullscreen backgrounds to key sections
+   ========================== */
+
+/* Desktop-first root values (desktop is default) */
+:root{
+  --bp-desktop: 1200px;
+  --bp-tablet: 1199px;
+  --bp-mobile: 767px;
+  --content-max: 1280px;
+  --card-radius:12px;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(0,200,255,0.03), transparent), linear-gradient(180deg,var(--bg-1),var(--bg-2));color:var(--text);-webkit-font-smoothing:antialiased}
-body{overflow-x:hidden}
-.wrap{max-width:var(--max-width);margin:0 auto;padding:16px}
+/* Ensure desktop layout by default: wider containers, denser grids */
+.wrap{ max-width:var(--content-max); padding:20px }
+.grid-3{ grid-template-columns:repeat(3,1fr) }
 
-/* Header */
-.site-header{position:sticky;top:0;z-index:80;padding:8px 0;background:linear-gradient(180deg, rgba(2,6,12,0.55), rgba(2,6,12,0.18));backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.02);transition:all .28s ease}
-.site-header.scrolled{backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
-.header-inner{display:flex;align-items:center;gap:18px;padding:6px 20px}
-.brand{font-weight:800;color:var(--primary);text-decoration:none;font-size:1.05rem;letter-spacing:0.6px}
-.brand .dot{color:var(--violet)}
-.main-nav ul{display:flex;gap:10px;list-style:none;margin:0;padding:0;align-items:center}
-.main-nav a{color:var(--subtext);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600;position:relative}
-.main-nav a:hover{color:var(--text);background:linear-gradient(90deg, rgba(0,200,255,0.04), rgba(124,77,255,0.03));box-shadow:0 8px 40px rgba(0,200,255,0.04)}
+/* Fullscreen hero baseline (applies to any hero-like section) */
+.hero, .hero-section, .hero-visual{ min-height:100vh; width:100vw; background-size:cover !important; background-position:center center !important; background-repeat:no-repeat !important; overflow:hidden }
 
-/* Mega menu */
-.has-mega{position:relative}
-.mega-menu{position:absolute;left:0;top:48px;min-width:680px;background:linear-gradient(180deg, rgba(6,10,16,0.96), rgba(6,10,16,0.88));border-radius:var(--radius);padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 80px rgba(0,0,0,0.6);display:none}
-.has-mega:hover .mega-menu, .has-mega:focus-within .mega-menu{display:block}
-.mega-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.mega-grid h4{color:var(--accent);margin:0 0 6px;font-size:13px}
-.mega-menu ul{list-style:none;margin:0;padding:0}
-.mega-menu a{display:block;padding:6px 4px;border-radius:var(--radius);color:var(--subtext);text-decoration:none}
-.mega-menu a:hover{color:var(--text);background:rgba(0,200,255,0.03)}
-.menu-toggle{display:none}
+/* Assign distinct backgrounds for primary pages using existing assets */
+.bg-home .hero, .bg-home .hero-section, .bg-home .hero-visual, .hero.bg-home{ background-image: url('/assets/img/vision-pro.svg'); }
+.bg-marketplace .hero, .bg-marketplace .hero-section, .bg-marketplace .hero-visual, .hero.bg-marketplace{ background-image: url('/assets/img/category-robotics.png'); }
+.bg-providers .hero, .bg-providers .hero-section, .bg-providers .hero-visual, .hero.bg-providers{ background-image: url('/assets/img/category-electronics.png'); }
+.bg-vendor-register .hero, .bg-vendor-register .hero-section, .bg-vendor-register .hero-visual, .hero.bg-vendor-register{ background-image: url('/assets/img/pi4-1.png'); }
+/* Generic hero fallback for pages without body-level bg- classes (onboarding, contact) */
+.hero:not(.bg-home):not(.bg-marketplace):not(.bg-providers):not(.bg-vendor-register){ background-image: url('/assets/img/jetson-nano.png'); }
 
-/* Prominent global search */
-.search-wrap{flex:1;display:flex;justify-content:center;position:relative}
-.search-input{width:100%;max-width:980px;padding:14px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));color:var(--text);font-size:1rem;box-shadow:0 10px 30px rgba(0,200,255,0.03)}
-.search-input:focus{outline:3px solid rgba(0,200,255,0.12);box-shadow:var(--glow)}
-.search-suggestions{position:absolute;top:64px;left:50%;transform:translateX(-50%);width:min(980px,92%);z-index:120}
+/* Compact vertical rhythm globally */
+section.sections, .sections{ padding-top:12px; padding-bottom:12px; margin-bottom:12px }
+.hero-card, .card{ padding:12px; border-radius:var(--card-radius); }
 
-/* Hero */
-.hero{padding:40px 0 24px;display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:center}
-.hero-visual{position:relative;height:280px;border-radius:var(--radius);overflow:hidden;background:linear-gradient(135deg, rgba(0,200,255,0.02), rgba(124,77,255,0.02));box-shadow:var(--shadow);backdrop-filter:blur(var(--glass-blur));border:1px solid rgba(255,255,255,0.02)}
-.hero-visual .neon-grid{position:absolute;inset:0;background-image:linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px),linear-gradient(0deg, rgba(124,77,255,0.03) 1px, transparent 1px);background-size:40px 40px;mix-blend-mode:screen;animation:neonShift 12s linear infinite}
-.hero-card h1{font-size:2.4rem;margin:0 0 10px;color:var(--text)}
-.hero-card p{color:var(--subtext);margin:0}
-.hero-ctas{display:flex;gap:12px;margin-top:18px}
+/* Forms: compact B2B style */
+form, .card form, form.card{ max-width:920px; margin-left:auto; margin-right:auto }
+form input, form select, form textarea{ padding:10px 12px; height:40px; font-size:15px }
+.card form .form-actions{ margin-top:10px }
 
-@keyframes neonShift{0%{background-position:0 0,0 0}50%{background-position:200px 0,-200px 0}100%{background-position:0 0,0 0}}
+/* Remove nested card visual stacking: ensure single visual container */
+.card .card{ box-shadow:none; border:0; background:transparent; padding:0; margin:0 }
+.card{ box-shadow:0 18px 60px rgba(0,0,0,0.5) }
 
-/* Cards / Glass-blur / Neon border */
-.card{position:relative;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));border-radius:var(--radius);padding:14px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 20px 50px rgba(2,10,20,0.6);overflow:visible;transition:transform .22s cubic-bezier(.2,.9,.1,1),box-shadow .22s}
-.card:hover{transform:translateY(-10px) rotateX(1.2deg) rotateY(-0.6deg);box-shadow:0 44px 100px rgba(0,200,255,0.14)}
-.rgb-border{position:relative}
-.rgb-border::after{content:"";position:absolute;inset:-6px;z-index:0;border-radius:inherit;background:linear-gradient(90deg,var(--primary),var(--accent),var(--violet));filter:blur(12px) saturate(120%);opacity:0.12;animation:rgbFlow 12s linear infinite}
-@keyframes rgbFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.rgb-border > *{position:relative;z-index:1}
+/* Reduce hover theatrics for enterprise clarity */
+.card:hover{ transform:none; box-shadow:0 26px 80px rgba(0,0,0,0.55) }
 
+/* Footer and nav: desktop-first alignment */
+.site-footer .wrap{ display:flex; gap:28px; align-items:flex-start; justify-content:space-between }
+.main-nav ul{ display:flex; gap:12px }
+
+/* Breakpoints: tablet then mobile */
+@media (max-width:1199px){
+  /* tablet adjustments: slightly narrower grids */
+  .grid-3{ grid-template-columns:repeat(2,1fr) }
+  .hero{ min-height:80vh }
+  .wrap{ padding:18px }
+}
+
+@media (max-width:767px){
+  /* mobile: single column, comfortable spacing */
+  .grid-3{ grid-template-columns:1fr }
+  .wrap{ padding:14px }
+  .hero, .hero-visual{ min-height:65vh }
+  .site-footer .wrap{ flex-direction:column; gap:12px }
+}
 .card .card-img{width:100%;height:auto;border-radius:var(--radius)}
 
 /* Grid layouts */
