@@ -479,4 +479,35 @@ nav, .btn {
 
 
 
+/* ===============================
+   EXTRA FINAL TOUCHES
+   - Prevent horizontal scroll, tighten mid-breakpoint grids
+   - Ensure mascot stays subtle and non-interactive
+   =============================== */
+
+/* Prevent accidental horizontal overflow from wide card shadows or transforms */
+html, body { overflow-x: hidden; }
+
+/* Tighten grid behavior on medium screens to max 3 columns */
+@media (min-width: 900px) and (max-width:1199px) {
+  .market-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  .providers-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+
+/* Make sure large card hover transforms don't cause overflow */
+.card, .product-card { -webkit-backface-visibility: hidden; backface-visibility: hidden; will-change: transform; }
+
+/* Additional mascot constraints: smaller, behind UI, no pointer events */
+#unicorn-mascot { --mascot-size: 72px; width: var(--mascot-size); height: var(--mascot-size); position: fixed; bottom: 22px; right: 22px; z-index: 1100 !important; opacity: 0.96 !important; pointer-events: none !important; }
+#unicorn-mascot .trail { opacity: 0.08 !important; filter: blur(6px) !important; }
+#unicorn-mascot img { max-width:100%; height:auto; display:block; }
+
+/* Reduce animation intensity globally for subtlety */
+@media (prefers-reduced-motion: reduce) {
+  #unicorn-mascot, #unicorn-mascot * { animation: none !important; transition: none !important; }
+}
+
+
+
+
 
