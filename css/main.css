@@ -1428,6 +1428,55 @@ section, .sections, .wrap, .container { max-width: 1600px; margin-left: auto; ma
 img[loading="lazy"]{ opacity: 1; transition: opacity .24s ease; }
 
 /* End PERFORMANCE block */
+
+/* ==================================================
+   DESKTOP-ONLY OVERRIDES
+   - Force desktop layouts for all viewports; neutralize mobile-first rules
+   - This is an aggressive, last-resort append to remove mobile behavior
+   - Keep reversible: all rules are appended at EOF and use !important
+   ================================================== */
+
+:root{ --desktop-base-width: 1440px !important; }
+
+/* Force fixed max-width container and desktop typography */
+html,body{ min-width: 1200px !important; overflow-x:hidden !important; }
+.wrap, .container, main, header, footer { max-width: var(--desktop-base-width) !important; margin-left: auto !important; margin-right: auto !important; }
+body{ font-size: 16px !important; }
+
+/* Desktop nav: always show full menu, hide mobile hamburger if present */
+.main-nav ul, .site-nav, .main-nav { display: flex !important; flex-direction: row !important; gap: 20px !important; }
+.mobile-nav, .hamburger, .nav-toggle, .mobile-menu { display: none !important; }
+
+/* Grids: force desktop columns */
+.market-grid, .grid-4, .grid-3, .providers-grid, .grid { grid-template-columns: repeat(4, 1fr) !important; gap: 18px !important; }
+.grid-3 { grid-template-columns: repeat(3, 1fr) !important; }
+
+/* Hero: keep large hero but cap height to desktop sensible value */
+.hero, .page-hero, .hero-section, .hero-visual { min-height: 60vh !important; max-height: 78vh !important; height: auto !important; padding-top: 28px !important; padding-bottom: 28px !important; }
+.hero h1 { font-size: 3.6rem !important; line-height: 1.02 !important; }
+
+/* Buttons and CTAs: desktop sizes */
+.btn, .btn-primary { padding: 14px 22px !important; font-size: 1rem !important; }
+
+/* Forms: show full multi-column forms where available */
+form { display: block !important; }
+form .field, form .form-row { display: inline-block !important; width: calc(50% - 12px) !important; vertical-align: top !important; }
+
+/* Prevent mobile touch styles from shrinking layout */
+*{ -webkit-tap-highlight-color: rgba(0,0,0,0) !important; }
+
+/* Neutralize common mobile media queries by forcing desktop rules */
+@media only screen and (max-width: 1439px){
+  /* ensure the desktop layout still applies on narrower viewports by re-declaring desktop styles inside max-width */
+  .market-grid, .grid-4, .providers-grid, .grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .main-nav ul { display:flex !important; }
+  .mobile-nav, .hamburger, .nav-toggle, .mobile-menu { display:none !important; }
+}
+
+/* Accessibility: ensure focus outlines remain visible when overriding styles */
+:focus{ outline: 3px solid rgba(0,174,239,0.36) !important; outline-offset: 2px !important; }
+
+/* End DESKTOP-ONLY OVERRIDES */
 .grid > *, .market-grid > * { align-self: start !important; width: 100% !important; }
 
 /* 7) Prevent clipping of critical headings (company name etc.) */
