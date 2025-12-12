@@ -20,30 +20,38 @@
       <link rel="icon" href="/favicon.ico">
   </head>
   <body class="site-root provider-register">
-    <main class="wrap bg-vendor-register">
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <main id="main-content" class="wrap bg-vendor-register">
     
       <header class="page-header"><h1>Registrar proveedor</h1><p class="subtle">Envía tus datos para aparecer en NeuralGPT.Store (revisión manual requerida).</p></header>
       <section class="card">
         <form id="provider-form">
-          <label>Nombre de la empresa<input id="prov-name-input" required></label>
-          <label>Website oficial<input id="prov-website" type="url" required></label>
-          <label>Tienda externa (opcional)<input id="prov-store" type="url"></label>
-          <label>Categorías (coma separadas)<input id="prov-categories"></label>
-          <label>Descripción<textarea id="prov-description" rows="4"></textarea></label>
-          <fieldset style="margin-top:8px">
+          <label>Nombre de la empresa<input id="prov-name-input" name="prov-name" required></label>
+          <label>Website oficial<input id="prov-website" name="prov-website" type="url" required></label>
+          <label>Tienda externa (opcional)<input id="prov-store" name="prov-store" type="url"></label>
+          <label>Categorías (coma separadas)<input id="prov-categories" name="prov-categories"></label>
+          <label>Descripción<textarea id="prov-description" name="prov-description" rows="4"></textarea></label>
+          <fieldset class="mt-8">
             <legend>Payout / Pagos (solo visible al equipo administrativo)</legend>
             <label>Banco<input id="prov-bankName" placeholder="Bank name"></label>
             <label>IBAN (no será mostrado públicamente)<input id="prov-iban" placeholder="IBAN"></label>
-            <label>Método de pago<select id="prov-paymentMethod"><option value="bank">Bank transfer</option><option value="paypal">PayPal</option><option value="wire">Wire</option></select></label>
-            <label>Billing Email<input id="prov-billingEmail" type="email" placeholder="billing@company.com"></label>
+            <label>Método de pago<select id="prov-paymentMethod" name="prov-paymentMethod"><option value="bank">Bank transfer</option><option value="paypal">PayPal</option><option value="wire">Wire</option></select></label>
+            <label>Billing Email<input id="prov-billingEmail" name="prov-billingEmail" type="email" placeholder="billing@company.com"></label>
           </fieldset>
-          <div style="margin-top:12px"><button class="btn btn-primary" id="prov-submit" type="button">Enviar solicitud</button></div>
-          <div id="prov-msg" class="muted" style="margin-top:12px"></div>
+          <div class="form-actions"><button class="btn btn-primary" id="prov-submit" type="submit">Enviar solicitud</button></div>
+          <div id="prov-msg" class="muted" role="status" aria-live="polite"></div>
         </form>
       </section>
+      <style>
+        .mt-8{margin-top:8px}
+        .form-actions{margin-top:12px}
+        .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+        .skip-link:focus{position:static;width:auto;height:auto;padding:8px;background:#000;color:#fff}
+      </style>
       <script>
         // Client-side enhancement: collect payout info and show simulated submission message.
-        document.getElementById('prov-submit')?.addEventListener('click', function(){
+        document.getElementById('provider-form')?.addEventListener('submit', function(e){
+          e.preventDefault();
           const data = {
             name: document.getElementById('prov-name-input')?.value||'',
             website: document.getElementById('prov-website')?.value||'',
@@ -60,7 +68,7 @@
           const msg = document.getElementById('prov-msg')
           if(msg) msg.textContent = 'Solicitud recibida (simulada). Los datos de payout se han registrado para revisión.'
           // Note: this is a frontend-only simulation. Persisting requires a backend API.
-          console.info('Provider registration (simulated):', data)
+          console.debug && console.debug('Provider registration (simulated):', data)
           const form = document.getElementById('provider-form'); if(form) form.reset()
         })
       </script>

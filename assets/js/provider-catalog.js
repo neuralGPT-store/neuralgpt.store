@@ -89,6 +89,8 @@
     // wire provider registration (if present)
     const provSubmit = document.getElementById('prov-submit')
     if(provSubmit) provSubmit.addEventListener('click', ()=>{ const msg=document.getElementById('prov-msg'); if(msg) msg.textContent = 'Solicitud simulada enviada. Revisaremos y contactaremos.'; document.getElementById('provider-form')?.reset() })
+    const provForm = document.getElementById('provider-form')
+    if(provForm) provForm.addEventListener('submit', function(e){ e.preventDefault(); const msg=document.getElementById('prov-msg'); if(msg) msg.textContent = 'Solicitud simulada enviada. Revisaremos y contactaremos.'; try{ this.reset() }catch(e){} })
 
     // provider view linking: if on providers-view.html - populate details
     if(location.pathname.endsWith('providers-view.html')){

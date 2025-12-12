@@ -322,6 +322,47 @@
 		if(location.pathname.endsWith('providers.html')) renderProviders()
 		// populate provider view and attach forms if page uses them
 		if(location.pathname.endsWith('providers-view.html')) renderProvidersView()
+
+		// Accessibility: make clickable elements with inline onclick (location.href) keyboard accessible
+		try{
+			document.querySelectorAll('[onclick]').forEach(function(node){
+				try{
+					const script = (node.getAttribute('onclick')||'').trim();
+					const m = script.match(/location\.href\s*=\s*['"]([^'"]+)['"]/i)
+					if(m && m[1]){
+						const url = m[1]
+						if(!node.hasAttribute('role')) node.setAttribute('role','link')
+						if(!node.hasAttribute('tabindex')) node.setAttribute('tabindex','0')
+						node.style.cursor = node.style.cursor || 'pointer'
+						node.addEventListener('keydown', function(ev){ if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); try{ location.href = url }catch(e){} } })
+					}
+				}catch(e){}
+			})
+		}catch(e){}
+
+		// Simulated/static forms: intercept forms that post to '#' or have no actionable server
+		try{
+			document.querySelectorAll('form').forEach(function(f){
+				try{
+					const act = (f.getAttribute('action')||'').trim();
+					if(act === '#' || act === ''){
+						// attach polite submit handler and accessible feedback
+						if(!f.__ngs_simulated){
+							f.__ngs_simulated = true
+							f.addEventListener('submit', function(ev){
+								ev.preventDefault();
+								const msgId = (f.id ? f.id + '-msg' : null)
+								let msgEl = msgId ? document.getElementById(msgId) : null
+								if(!msgEl){ msgEl = document.createElement('div'); msgEl.className='muted'; msgEl.setAttribute('role','status'); msgEl.setAttribute('aria-live','polite'); msgEl.style.marginTop='12px'; f.parentNode && f.parentNode.insertBefore(msgEl, f.nextSibling) }
+								msgEl.textContent = 'Solicitud recibida (simulada). Nos pondremos en contacto pronto.'
+								try{ window.NGS_METRICS && window.NGS_METRICS.record && window.NGS_METRICS.record('form_submit_simulated', { id: f.id || null }) }catch(e){}
+								try{ f.reset && f.reset() }catch(e){}
+							})
+						}
+					}
+				}catch(e){}
+			})
+		}catch(e){}
 	}
 
 	function renderProviders(){
