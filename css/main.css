@@ -496,6 +496,49 @@ html, body { overflow-x: hidden; }
 
 /* mascot removed */
 
+/* ==============================
+   ULTRA FINAL UI FIXES (surgical)
+   - Fullscreen backgrounds, compact spacing, refined typography
+   - Conservative, minimal !important usage only where necessary
+   ============================== */
+
+/* Ensure root sizing and prevent accidental horizontal scroll */
+html, body { height: 100%; overflow-x: hidden; }
+
+/* Enforce fullscreen behaviour for background sections used across the site */
+[class*="bg-"]{
+  min-height: 100vh !important;
+  width: 100vw !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Compact, consistent section spacing */
+.sections{ padding: 10px 0 !important; margin: 8px 0 !important; }
+.hero{ padding: 20px 0 !important; }
+
+/* Typography refinements: maintain fonts but improve legibility */
+body{ line-height: 1.45 !important; letter-spacing: 0.01em !important; font-weight: 400 !important; }
+h1,h2,h3,h4{ line-height: 1.18 !important; letter-spacing: 0 !important; font-weight: 700 !important; margin-top:0; margin-bottom:.5rem }
+.hero-card h1{ font-size: 2.0rem !important; }
+
+/* Consistent radii and compact card sizing */
+.card, .product-card, .quick-view-card, .section { border-radius: var(--global-radius) !important; box-sizing: border-box; }
+.card, .product-card, .provider-card{ min-height: 140px !important; padding: 12px !important }
+
+/* Ensure media elements never overflow viewport */
+img, video, canvas { max-width: 100%; height: auto; display: block; }
+
+/* Keep site container tidy and prevent accidental overflow from wide elements */
+.wrap{ overflow: hidden; padding-left: 16px; padding-right: 16px }
+
+/* Minor hover softening to avoid large layout shifts */
+.card:hover, .product-card:hover{ transform: translateY(-6px) !important; }
+
+/* Accessibility: ensure footer/header full width and above wallpapers */
+.site-header, .site-footer{ width:100%; position:relative; z-index:140 }
+
 
 
 
