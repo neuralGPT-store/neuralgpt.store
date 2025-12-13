@@ -1,3 +1,66 @@
+/* Theme overrides (desktop-first) */
+
+/* Global box-sizing and desktop-only enforcement */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body { min-width: 1440px; overflow-x: hidden; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+/* Primary content wrapper: fixed desktop width and centered */
+.wrap, .container, .main-wrap { max-width: 1200px; width: 1200px; margin: 0 auto; }
+
+/* Ensure sections align and are stable on large screens */
+main, header.site-header, footer.site-footer, .sections { margin-left: auto; margin-right: auto; }
+
+/* Force grid columns explicitly for marketplace and product lists */
+.grid { display: grid !important; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.grid.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.market-grid { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+/* Disable wrapping for major layout containers */
+.header-inner, .footer-grid, .card-row, .provider-list { flex-wrap: nowrap !important; }
+
+/* Prevent use of absolute positioning for layout (keep for small decorative elements only) */
+[class*="-abs"], [class*="absolute"] { position: static !important; }
+
+/* Uniform card sizing for desktop */
+.card { min-height: 320px; padding: 20px; display:flex; flex-direction:column; justify-content:flex-start; }
+.card-img { max-width: 100%; height: auto; display:block; }
+
+/* Header */
+.site-header { position: relative; top: 0; left: 0; right: 0; display:flex; align-items:center; height:72px; }
+.site-header .brand { font-size:22px; margin-right:24px; }
+.main-nav ul { display:flex; gap:18px; align-items:center; }
+
+/* Hero and section backgrounds — full viewport coverage where used */
+.bg-image-set, .bg-product, .hero, .site-hero { background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important; }
+.hero, .site-hero { height: 100vh; min-height: 720px; }
+
+/* Typography tuned for desktop */
+body, input, button, select, textarea { font-size:16px; line-height:1.5; color:#111; }
+h1 { font-size:34px; line-height:1.15; }
+h2 { font-size:26px; }
+h3 { font-size:20px; }
+.subtle { color:#666; }
+
+/* Force high-contrast text handling (avoid white text on low contrast backgrounds) */
+* { color-scheme: light; }
+
+/* Footer formatting */
+.site-footer { padding: 28px 0; }
+
+/* Media query neutralizer: ensure desktop styles apply even below 1440px */
+@media (max-width: 1439px) {
+  .wrap, .container, .main-wrap { width: 1200px !important; max-width: 1200px !important; }
+  body { min-width: 1200px !important; }
+}
+
+/* Utility adjustments */
+.btn { min-height:44px; display:inline-flex; align-items:center; justify-content:center; }
+
+/* Ensure provider logos don't overflow */
+.provider-logo { max-height:48px; width:auto; }
+
+/* End of desktop-first overrides */
 /* Theme override cleaned for CyberNeo preparation
    - Removed black/gold tokens and replaced with temporary neutral variables
    - Purpose: stabilize visuals for redesign (Phase 1)
