@@ -37,6 +37,32 @@ How to validate locally
 - Serve the repo on a static server and open pages: `npx http-server -c-1` or similar.
 - Use Lighthouse in Chrome DevTools (Mobile) to run audits.
 
+Quick developer commands
+------------------------
+- Generate AVIF/WebP optimized images and manifest:
+
+```bash
+npm run images:convert
+```
+
+- Run automated visual verification (starts a local static server and captures screenshots):
+
+```bash
+npm run verify:visual
+```
+
+- Detect unreferenced assets and produce a report:
+
+```bash
+npm run check:unused
+```
+
+- Move reported unused assets to a backup folder (reversible):
+
+```bash
+npm run cleanup:unused
+```
+
 Contact
 -------
 - Partnerships: partnerships@neuralgpt.store

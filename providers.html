@@ -42,6 +42,7 @@
           <li>Paquetes de visibilidad (banner, destacado)</li>
         </ul>
         <p class="muted"><strong>Nota de lanzamiento:</strong> durante el periodo de lanzamiento aplicamos una comisión del 10% sobre ventas completadas.</p>
+        <p class="muted">Consulte la <a href="/legal.html#commission" class="muted">Política de comisiones</a> para más detalles y condiciones.</p>
       </section>
 
       <section class="sections">
@@ -52,7 +53,7 @@
       <section class="sections">
         <h2 class="section-title">Registro de proveedor (simulado)</h2>
         <form id="provider-form" class="card" method="get" action="#">
-          <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="form-vertical">
             <input id="prov-name" name="prov-name" placeholder="Nombre de la empresa" aria-label="Nombre de la empresa" />
             <input id="prov-site" name="prov-site" placeholder="Sitio web" aria-label="Sitio web" />
             <select id="prov-type" name="prov-type" aria-label="Tipo de proveedor"><option value="hardware">Hardware</option><option value="ia">IA</option><option value="service">Servicio</option></select>
@@ -61,18 +62,18 @@
             <button type="submit" id="prov-submit" class="btn btn-primary" aria-label="Enviar solicitud simulada">Enviar solicitud (simulado)</button>
           </div>
         </form>
-        <div id="prov-msg" class="muted" role="status" aria-live="polite" style="margin-top:12px"></div>
+        <div id="prov-msg" class="muted mt-12" role="status" aria-live="polite"></div>
       </section>
       <!-- providers rendering moved to /assets/js/main.js -->
     </main>
     <script src="/assets/js/main.js" defer></script>
-    <footer class="site-footer">
+      <footer class="site-footer">
       <div class="wrap">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
+        <div class="footer-flex">
           <div><a class="brand footer-brand" href="/">neuralgpt.store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
           <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
         </div>
-        <div style="margin-top:10px" class="muted">© neuralgpt.store</div>
+        <div class="muted mt-12">© neuralgpt.store</div>
       </div>
     </footer>
   </body>
