@@ -516,6 +516,23 @@
 							}
 							statsEl.innerHTML = out
 						}
+
+						// wire visit & catalog buttons and logo safely
+						try{
+							const visitBtn = el('prov-visit')
+							const catBtn = el('prov-products-link')
+							const logoEl = el('prov-logo')
+							if(logoEl && providerObj.logo) logoEl.src = safeImgSrc(providerObj.logo)
+							if(visitBtn){
+								const href = safeHref(providerObj.vendorLink || providerObj.url || providerObj.externalStoreURL || providerObj.website || '#')
+								visitBtn.href = href
+								visitBtn.target = '_blank'
+								visitBtn.rel = 'noopener noreferrer'
+								visitBtn.classList.remove('placeholder-link')
+								visitBtn.removeAttribute('aria-disabled')
+							}
+							if(catBtn){ catBtn.href = '#provider-products'; catBtn.classList.remove('placeholder-link'); catBtn.removeAttribute('aria-disabled') }
+						}catch(e){}
 					}
 				} catch(e){/* ignore */}
 			}

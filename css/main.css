@@ -1481,6 +1481,64 @@ form .field, form .form-row { display: inline-block !important; width: calc(50% 
 :focus{ outline: 3px solid rgba(0,174,239,0.36) !important; outline-offset: 2px !important; }
 
 /* End DESKTOP-ONLY OVERRIDES */
+
+/* ==================================================
+   2026 VISION: Round edges, visible RGB borders, no black
+   - Apply rounded corners everywhere, replace black with bone/gradient
+   - Add RGB glowing borders to cards, nav, hero edges and full-bleed wallpapers
+   - Ensure images and background art always cover their container
+   ================================================== */
+
+:root{
+  --bone-1: #F5F4EE;
+  --bone-2: #E9E7DF;
+  --rgb-strong: rgba(0,174,239,0.95);
+  --rgb-soft: rgba(0,174,239,0.16);
+  --surface-contrast: rgba(4,8,12,0.04);
+}
+
+/* Replace any remaining solid black backgrounds with a soft bone gradient */
+html, body { background: linear-gradient(180deg, var(--bone-1), var(--bone-2)) !important; color: #071521 !important; }
+
+/* Global rounded radii and smooth shadows */
+* { border-radius: 12px !important; box-sizing: border-box !important; }
+img, picture, svg, video { border-radius: 10px !important; display:block; width:100% !important; height:auto !important; object-fit:cover !important }
+
+/* Cards and panels: translucent bone surface with RGB border glow */
+.card, .product-card, .provider-card, .hero-card, .quick-view-card, .sponsor-card, .premium-sponsor {
+  background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(250,248,244,0.94)) !important;
+  border: 2px solid rgba(0,174,239,0.14) !important;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.06), 0 0 28px var(--rgb-soft) !important;
+  color: #071521 !important;
+}
+
+/* Strong RGB animated border for CTAs and headers */
+.btn-primary, .site-header, .hero { outline: 2px solid transparent; box-shadow: 0 8px 26px var(--rgb-soft); border-radius: 14px !important }
+.btn-primary { border-image: linear-gradient(90deg,var(--rgb-strong), #7C4DFF) 1 !important; background: linear-gradient(90deg, var(--rgb-strong), #7C4DFF) !important; color: #071521 !important }
+
+@keyframes rgbEdge { 0%{ box-shadow: 0 0 8px rgba(0,174,239,0.08), inset 0 0 8px rgba(0,174,239,0.02) } 50%{ box-shadow: 0 0 36px rgba(0,174,239,0.22), inset 0 0 18px rgba(124,77,255,0.06) } 100%{ box-shadow: 0 0 8px rgba(0,174,239,0.08), inset 0 0 8px rgba(0,174,239,0.02) } }
+.card, .product-card, .hero-card, .sponsor-card { animation: rgbEdge 6s ease-in-out infinite !important }
+
+/* Full-bleed wallpaper edges: add subtle RGB outline around viewport */
+body::before{ content:''; position:fixed; inset:6px; pointer-events:none; border-radius:18px; box-shadow: 0 0 160px rgba(0,174,239,0.06) inset; z-index:150 }
+
+/* Ensure hero images and visuals cover entire area without black bars */
+.hero-visual, [class*="bg-"]{ background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important }
+
+/* Sponsors logos: rounded and subtle RGB frames */
+.sponsors-grid img, .sponsor-card img{ border-radius:10px !important; border:1px solid rgba(0,174,239,0.12); padding:6px; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,248,244,0.95)); }
+
+/* Product cards: make images dominant and full-bleed inside the card */
+.product-card img{ width:100% !important; height:200px !important; object-fit:cover !important; border-radius:10px !important }
+.product-card h3{ margin-top:10px !important; color:#071521 !important }
+
+/* Remove any lingering black overlays (::before) used earlier */
+[class*="bg-"]::before{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00)) !important }
+
+/* Accessibility: ensure focus visible on RGB theme */
+a:focus, button:focus, [tabindex]:focus{ outline: 3px solid rgba(0,174,239,0.28) !important; outline-offset: 3px !important }
+
+/* End 2026 vision block */
 .grid > *, .market-grid > * { align-self: start !important; width: 100% !important; }
 
 /* 7) Prevent clipping of critical headings (company name etc.) */
