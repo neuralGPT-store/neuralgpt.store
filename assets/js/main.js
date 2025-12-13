@@ -1087,4 +1087,22 @@
 		})
 	})()
 
+// Wire product "Comprar" button to Stripe checkout helper when available.
+// Falls back to provider contact if payments are not initialized or server endpoint is missing.
+document.addEventListener('click', function(e){
+	try{
+		const btn = e.target.closest && e.target.closest('#buy-btn');
+		if(!btn) return;
+		e.preventDefault();
+		const productId = btn.getAttribute('data-product-id') || window.__CURRENT_PRODUCT_ID || null;
+		if(window.NGSPayments && typeof window.NGSPayments.startCheckout === 'function'){
+			window.NGSPayments.startCheckout({ productId, quantity: 1 }).catch(()=>{
+				window.location.href = '/providers.html#contact';
+			});
+		} else {
+			window.location.href = '/providers.html#contact';
+		}
+	}catch(err){}
+}, true);
+
 })();
