@@ -350,6 +350,49 @@
 	}catch(e){}
 })()
 
+/* Product rotator and click-to-read description (desktop-only)
+	 - Shows a rotating featured product set in element with id `featured-products`
+	 - If product data not present, picks from state.products when available
+*/
+(function productRotator(){
+	try{
+		function createCard(p){
+			const a = document.createElement('article'); a.className = 'card product-card featured-card';
+			const img = document.createElement('img'); img.src = safeImgSrc(p.image||'/assets/img/vision-pro.svg'); img.alt = _escape(p.imageAlt||p.title||'Producto'); img.loading = 'lazy'; img.style.width='100%'; img.style.height='auto'; img.style.borderRadius='8px';
+			const h = document.createElement('h3'); h.textContent = p.title || p.name || 'Producto';
+			const d = document.createElement('div'); d.className='product-meta'; d.textContent = p.short_description || p.long_description || '';
+			const btn = document.createElement('button'); btn.className='btn btn-primary'; btn.textContent='Ver detalle'; btn.setAttribute('type','button');
+			btn.addEventListener('click', ()=> showProductDetail(p));
+			a.appendChild(img); a.appendChild(h); a.appendChild(d); a.appendChild(btn);
+			return a
+		}
+
+		function showProductDetail(p){
+			// simple modal
+			let modal = document.getElementById('ngs-product-modal');
+			if(!modal){ modal = document.createElement('div'); modal.id='ngs-product-modal'; modal.className='quick-view-modal'; modal.style.padding='28px'; modal.innerHTML = '<div class="quick-view-card"><button id="ngs-close-modal" class="btn-ghost" style="float:right">Cerrar</button><div id="ngs-product-detail"></div></div>' ; document.body.appendChild(modal); document.getElementById('ngs-close-modal').addEventListener('click', ()=> { modal.remove() }) }
+			const detail = document.getElementById('ngs-product-detail'); if(detail){ detail.innerHTML = `<h2>${_escape(p.title||p.name)}</h2><p class="muted">${_escape(p.vendorName||'')}</p><p>${_escape(p.long_description||p.short_description||'Sin descripción disponible.')}</p><p class="product-meta">Precio: ${fmtPrice(p.price)}</p>` }
+		}
+
+		function rotate(){
+			const container = document.getElementById('featured-products');
+			if(!container) return;
+			const list = (window.__PRODUCTS__ && Array.isArray(window.__PRODUCTS__)) ? window.__PRODUCTS__ : (window.__INITIAL_PRODUCTS__ || (window.NGS && window.NGS.products) || window.__NGS_PRODUCTS || null);
+			const source = Array.isArray(list) && list.length ? list : (window.__NGS_METRICS && window.__NGS_METRICS.products) || (window.__NGS_PRODUCTS_STATIC || [])
+			const pool = (state && state.products && state.products.length) ? state.products : (Array.isArray(source)? source : [])
+			if(!pool.length) return;
+			container.innerHTML = '';
+			// pick 4 at random
+			const picks = [];
+			while(picks.length < 4 && picks.length < pool.length){ const p = pool[Math.floor(Math.random()*pool.length)]; if(!picks.includes(p)) picks.push(p) }
+			picks.forEach(p=> container.appendChild(createCard(p)) )
+		}
+
+		// rotate every 6s
+		document.addEventListener('DOMContentLoaded', ()=>{ rotate(); setInterval(rotate, 6000) })
+	}catch(e){/* silent */}
+})()
+
     if(Array.isArray(raw)) return raw.map(c=>({ name: String(c.name||c), slug: String(c.slug || (c.name||'').toLowerCase().replace(/\s+/g,'-')) }))
     // fallback: derive from products
     const set = Array.from(new Set((products||[]).map(p=>p.category).filter(Boolean)))

@@ -783,6 +783,23 @@ nav, .btn {
   .hero-card{ padding:20px !important; background:transparent !important }
   .hero-visual{ min-height:calc(100vh - 160px) !important; height:auto !important; border-radius:12px !important; overflow:hidden !important; background-size:cover !important; background-position:center !important }
 
+    /* Banner / hero polish: clearer overlay and accented heading color */
+    .hero::before{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(2,6,12,0.36), rgba(2,6,12,0.72)); pointer-events:none; z-index:0 }
+    .hero .wrap{ position:relative; z-index:2; display:flex; flex-direction:column; gap:12px }
+    .hero h1{ color: var(--accent) !important; text-shadow: 0 8px 36px rgba(0,0,0,0.6) !important; font-weight:700 !important }
+    .hero .hero-sub{ color: var(--text-muted) !important; font-size:1.05rem }
+
+    /* Nav: center and ensure tabs fit desktop; prevent overflow */
+    .site-header{ position:sticky; top:0; z-index:220; background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25)); backdrop-filter: blur(6px) }
+    .main-nav{ display:flex !important; justify-content:center !important; align-items:center !important }
+    .main-nav ul{ display:flex !important; gap:20px !important; list-style:none; margin:0; padding:0; white-space:nowrap }
+    .main-nav li{ display:inline-flex; align-items:center }
+    .main-nav a{ color: var(--text-main) !important; padding:10px 12px; text-decoration:none; display:inline-block }
+    .main-nav{ overflow:visible !important }
+
+    /* Fix banner CTA contrast */
+    .hero .cta{ background: var(--accent) !important; color:#071521 !important; border-radius:10px !important; padding:12px 18px !important }
+
   /* Ensure hero backgrounds reference existing assets and are visible */
   .bg-home .hero, .bg-home{ background-image: url('/assets/img/vision-pro.svg') !important; background-color:transparent !important }
   .bg-marketplace .hero, .bg-marketplace{ background-image: url('/assets/img/category-robotics.png') !important; background-color:transparent !important }
