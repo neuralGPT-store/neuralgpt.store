@@ -298,3 +298,62 @@ section {
   justify-content: center;
   color: #fff;
 }
+
+/* PRODUCTOS */
+#products {
+  min-height: 100vh;
+  width: 100vw;
+  background: url('/assets/wallpapers/product-bg.webp') center/cover no-repeat;
+  padding-top: 96px;
+}
+
+.pd-wrap {
+  padding: 40px 60px;
+}
+
+.pd-title {
+  color: #ffd700;
+  text-shadow: 0 0 12px #00e5ff;
+}
+
+.pd-sub {
+  color: #cfefff;
+  margin-bottom: 28px;
+}
+
+.pd-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pd-track {
+  display: flex;
+  gap: 24px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+.pd-card {
+  min-width: 260px;
+  height: 220px;
+  background: rgba(0,0,0,.45);
+  border-radius: 18px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg,#00e5ff,#7cff00,#ff2bd6) 1;
+  box-shadow: 0 0 26px rgba(0,229,255,.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.pd-nav {
+  background: transparent;
+  border: none;
+  color: #ffd700;
+  font-size: 36px;
+  cursor: pointer;
+  text-shadow: 0 0 10px #00e5ff;
+}
