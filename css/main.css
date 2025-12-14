@@ -1407,3 +1407,22 @@ html, body { background: transparent !important; }
 /* QUANTUM (si existe, solo visual) */
 #quantum { background-image: url('/assets/wallpapers/quantum-bg.webp') !important; }
 /* === END === */
+
+/* SECTION-WALLPAPERS-BEGIN */
+:root{ --electric:#00eaff; }
+html,body{ background:transparent !important; color:var(--electric) !important; }
+.section{
+  min-height:100vh;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+#marketplace{ background-image:url(''); }
+#contacto{ background-image:url(''); }
+#seguridad{ background-image:url(''); }
+#legal{ background-image:url(''); }
+#proveedores{ background-image:url(''); }
+#home{ background-image:url(''); }
+#productos{ background-image:url(''); }
+#sponsors{ background-image:url(''); }
+/* SECTION-WALLPAPERS-END */
