@@ -673,3 +673,17 @@ header, #global-footer {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* RENDER STABILITY */
+html, body {
+  background-color: #000;
+}
+
+section {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Evitar flashes al cambiar secciones */
+section { opacity: 0; }
+section.active { opacity: 1; transition: opacity .25s ease; }
