@@ -2117,3 +2117,34 @@ html, body {
 .backup, .backup-banner, [class*="backup"], [id*="backup"] {
   display: none !important;
 }
+/* FIX HERO OVERLAY — NO TAPAR FONDO */
+
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: transparent !important;
+  pointer-events: none;
+}
+
+.hero .overlay,
+.hero .hero-content,
+.hero .panel,
+.hero .card {
+  background: rgba(0,0,0,0.35) !important; /* vidrio, no bloque */
+  backdrop-filter: blur(6px);
+  max-width: 720px;
+  margin: auto;
+  border-radius: 16px;
+}
+
+body {
+  overflow: hidden;
+}
