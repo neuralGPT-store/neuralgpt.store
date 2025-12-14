@@ -946,3 +946,37 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   color:#fff;
 }
 .pf-card span{display:block;margin-top:10px;color:#cfefff;font-size:13px;}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.section {
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#home        { background-image: url('/assets/wallpapers/home-hero.webp'); }
+#marketplace{ background-image: url('/assets/wallpapers/marketplace-bg.webp'); }
+#products   { background-image: url('/assets/wallpapers/product-bg.webp'); }
+#providers  { background-image: url('/assets/wallpapers/providers-bg.webp'); }
+#security   { background-image: url('/assets/wallpapers/security-bg.webp'); }
+#blog       { background-image: url('/assets/wallpapers/blog-bg.webp'); }
+#sponsors   { background-image: url('/assets/wallpapers/sponsors-bg.webp'); }
+#checkout   { background-image: url('/assets/wallpapers/checkout-bg.webp'); }
+#vendor     { background-image: url('/assets/wallpapers/vendor-register-bg.webp'); }
+* {
+  color: #00eaff !important;
+  text-shadow:
+    0 0 6px rgba(0,234,255,.8),
+    0 0 12px rgba(0,234,255,.6);
+}
+.section, nav, footer, .card, .panel {
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg, #ff00ff, #00ffff, #00ff00) 1;
+}
