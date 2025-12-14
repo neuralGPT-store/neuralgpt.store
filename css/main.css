@@ -980,3 +980,25 @@ html, body {
   border: 2px solid transparent;
   border-image: linear-gradient(90deg, #ff00ff, #00ffff, #00ff00) 1;
 }
+header, .frame, .overlay { display:none !important; }
+
+.products-rotator {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.products-grid {
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:20px;
+  width:90%;
+}
+
+.product-card {
+  border:2px solid transparent;
+  border-image: linear-gradient(90deg,#ff00ff,#00ffff,#00ff00) 1;
+  padding:10px;
+  text-align:center;
+}
+.product-card img { width:100%; height:auto; }
