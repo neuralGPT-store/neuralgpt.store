@@ -687,3 +687,12 @@ section {
 /* Evitar flashes al cambiar secciones */
 section { opacity: 0; }
 section.active { opacity: 1; transition: opacity .25s ease; }
+
+/* FOCUS VISIBLE */
+:focus-visible {
+  outline: 3px solid #00e5ff;
+  outline-offset: 3px;
+}
+
+/* CURSOR */
+a, button { cursor: pointer; }
