@@ -2063,3 +2063,7 @@ html, body {
   max-width: 1400px;
   margin: 0 auto;
 }
+/* HIDE BACKUP BANNERS */
+.backup, .backup-banner, [class*="backup"], [id*="backup"] {
+  display: none !important;
+}
