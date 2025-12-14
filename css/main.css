@@ -922,3 +922,8 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* A11Y FOCUS */
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid #7cff00;
+  outline-offset: 3px;
+}
