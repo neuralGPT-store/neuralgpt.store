@@ -397,3 +397,47 @@ section {
   display:flex;align-items:center;justify-content:center;
   color:#fff;
 }
+
+/* SEGURIDAD */
+#security {
+  min-height: 100vh;
+  width: 100vw;
+  background: url('/assets/wallpapers/security-bg.webp') center/cover no-repeat;
+  padding-top: 96px;
+}
+
+.sec-wrap { padding: 40px 60px; }
+.sec-title { color:#ffd700; text-shadow:0 0 14px #00e5ff; }
+.sec-sub { color:#cfefff; margin-bottom:28px; }
+
+.sec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.sec-card {
+  height: 180px;
+  background: rgba(0,0,0,.45);
+  border-radius: 18px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg,#00e5ff,#7cff00,#ff2bd6) 1;
+  box-shadow: 0 0 26px rgba(0,229,255,.28);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;text-align:center;padding:16px;
+}
+
+.sec-cta { display:flex; gap:18px; }
+.sec-btn {
+  padding: 14px 26px;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg,#00e5ff,#ff2bd6,#7cff00) 1;
+  background: rgba(0,0,0,.6);
+  color:#ffd700;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow: 0 0 20px rgba(0,229,255,.35);
+}
+.sec-btn.alt { color:#fff; }
