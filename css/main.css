@@ -1556,3 +1556,9 @@ img{
   height:auto;
 }
 /* FULLSCREEN-FIX-END */
+
+/* OPERATIVE-STATES-BEGIN */
+a, button{ cursor:pointer; }
+a[aria-disabled="true"], .disabled{ pointer-events:none; opacity:.6; }
+.section .panel{ pointer-events:auto; }
+/* OPERATIVE-STATES-END */
