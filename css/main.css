@@ -901,3 +901,17 @@ section.active{
   transform:rotate(25deg); animation:holo 3.5s linear infinite;
 }
 @keyframes holo{0%{transform:translateX(-60%) rotate(25deg)}100%{transform:translateX(60%) rotate(25deg)}}
+
+/* GLOBAL SEARCH */
+.global-search{
+  position:absolute; top:18px; left:50%; transform:translateX(-50%);
+  z-index:1200;
+}
+.global-search input{
+  width:420px; padding:12px 18px; border-radius:18px;
+  background:rgba(0,0,0,.65); color:#fff;
+  border:2px solid transparent;
+  border-image:linear-gradient(90deg,#00e5ff,#ff2bd6,#7cff00) 1;
+  box-shadow:0 0 22px rgba(0,229,255,.35);
+}
+.global-search input::placeholder{ color:#9adfff; }
