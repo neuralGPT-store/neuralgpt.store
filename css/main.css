@@ -2190,3 +2190,60 @@ main,.viewport{width:100vw;overflow:hidden;}
 
 /* === KILL BAD TRANSFORMS === */
 *{transform:none!important;}
+
+/* === FORCE FULLSCREEN HERO - EMERGENCY FIX === */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-y: auto;
+}
+
+.hero,
+.hero-section,
+#hero,
+.hero-container {
+  position: relative !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: visible !important;
+}
+
+.panel-central,
+.viewport,
+.main,
+main {
+  position: relative !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow: visible !important;
+}
+
+/* Matar overlays grises */
+.overlay,
+.overlay-bg,
+.modal,
+.backdrop,
+.gray-panel,
+.panel-gray {
+  display: none !important;
+}
+
+/* Header no debe empujar contenido */
+header {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent !important;
+}
+
+/* DEBUG VISUAL (temporal) */
+/* .hero { outline: 3px solid red !important; } */
