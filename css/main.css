@@ -696,3 +696,44 @@ section.active { opacity: 1; transition: opacity .25s ease; }
 
 /* CURSOR */
 a, button { cursor: pointer; }
+
+/* CONSISTENCIA GLOBAL */
+h1,h2,h3,h4,h5,h6 {
+  margin: 0 0 14px 0;
+  letter-spacing: .6px;
+}
+
+p { margin: 0 0 14px 0; line-height: 1.6; }
+
+button {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+section * {
+  box-sizing: border-box;
+}
+
+/* EVITAR DESBORDES */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* SCROLLBAR CUSTOM (DESKTOP) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,#00e5ff,#ff2bd6,#7cff00);
+  border-radius: 10px;
+}
+
+/* Z-INDEX LIMPIO */
+header { z-index: 1000; }
+section { z-index: 1; }
+footer { z-index: 500; }
