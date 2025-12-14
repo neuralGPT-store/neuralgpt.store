@@ -261,3 +261,40 @@ section {
   border: none;
   font-weight: 700;
 }
+
+/* MARKETPLACE */
+#marketplace {
+  min-height: 100vh;
+  width: 100vw;
+  background: url('/assets/wallpapers/marketplace-bg.webp') center/cover no-repeat;
+  padding-top: 96px;
+}
+
+.mk-wrap {
+  padding: 40px 60px;
+}
+
+.mk-title {
+  color: #ffd700;
+  text-shadow: 0 0 10px #00e5ff;
+  margin-bottom: 24px;
+}
+
+.mk-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 22px;
+}
+
+.mk-card {
+  height: 180px;
+  background: rgba(0,0,0,.45);
+  border-radius: 16px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg,#00e5ff,#7cff00,#ff2bd6) 1;
+  box-shadow: 0 0 24px rgba(0,229,255,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
