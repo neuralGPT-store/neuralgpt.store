@@ -1187,3 +1187,188 @@ section, header, footer, nav, .card {
   display: none !important;
 }
 
+
+
+/* IRENE-ULTRA-BLOCK-BEGIN */
+/* ===========================
+   IRENE ULTRA: SISTEMA VISUAL
+   =========================== */
+
+/* Reset real (sin negro por defecto) */
+html, body {
+  height: 100%;
+  background: transparent !important;
+  color: #00eaff !important;
+}
+
+* {
+  color: #00eaff;
+  text-shadow: 0 0 6px rgba(0,234,255,.95), 0 0 14px rgba(0,234,255,.65);
+}
+
+/* Evitar "marcos" raros y scrolls inútiles */
+body { margin: 0; overflow-x: hidden; }
+
+/* Top header estilo Amazon: barra superior fija, links arriba, nada tapando el fondo */
+#top-header, header, .top-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.12); /* mínimo, para legibilidad */
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg,#ff00ff,#00eaff,#00ff88,#ff00ff) 1;
+  box-shadow: 0 0 26px rgba(0,234,255,.85);
+}
+
+/* Empuje de contenido para que no quede debajo del header */
+.page, main, #app, .app, .content {
+  padding-top: 90px;
+}
+
+/* Corner brand (arriba derecha), oro puro + RGB en contorno */
+.brand-corner {
+  position: absolute;
+  top: 18px;
+  right: 26px;
+  text-align: right;
+  pointer-events: none;
+}
+.brand-title {
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: 34px;
+  color: #ffd54a !important;
+  text-shadow:
+    0 0 10px rgba(255,213,74,.9),
+    0 0 22px rgba(255,0,255,.55),
+    0 0 22px rgba(0,234,255,.55),
+    0 0 22px rgba(0,255,136,.45);
+}
+.brand-sub {
+  font-weight: 800;
+  font-size: 14px;
+  color: #ffd54a !important;
+  opacity: .95;
+  text-shadow: 0 0 12px rgba(255,213,74,.8);
+}
+
+/* ÚNICA barra de búsqueda */
+.top-search {
+  max-width: 780px;
+  margin: 10px auto 0 auto;
+  padding: 10px 16px;
+}
+#globalSearch {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 18px;
+  outline: none;
+  background: rgba(255,255,255,.08);
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg,#ff00ff,#00eaff,#00ff88,#ff00ff) 1;
+  color: #00eaff !important;
+  box-shadow: 0 0 18px rgba(0,234,255,.8);
+}
+#globalSearch::placeholder { color: rgba(0,234,255,.75); }
+
+/* Fondos por sección (full screen) */
+section, .section {
+  min-height: 100vh;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Cada sección con su wallpaper */
+#home        { background-image: url('/assets/wallpapers/home-hero.webp') !important; }
+#marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') !important; }
+#products    { background-image: url('/assets/wallpapers/product-bg.webp') !important; }
+#providers   { background-image: url('/assets/wallpapers/providers-bg.webp') !important; }
+#sponsors    { background-image: url('/assets/wallpapers/sponsors-bg.webp') !important; }
+#security    { background-image: url('/assets/wallpapers/security-bg.webp') !important; }
+#blog        { background-image: url('/assets/wallpapers/blog-bg.webp') !important; }
+#account     { background-image: url('/assets/wallpapers/account-bg.webp') !important; }
+#checkout    { background-image: url('/assets/wallpapers/checkout-bg.webp') !important; }
+#ai-lab      { background-image: url('/assets/wallpapers/ai-lab-bg.webp') !important; }
+#global      { background-image: url('/assets/wallpapers/global-banner-bg.webp') !important; }
+#vendor-register { background-image: url('/assets/wallpapers/vendor-register-bg.webp') !important; }
+
+/* Overlay suave para legibilidad sin "cartel gris asqueroso" */
+.home-overlay {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 30%, rgba(0,0,0,.18), rgba(0,0,0,.35));
+  padding: 40px 22px 60px 22px;
+}
+
+/* Prohibido: banners/hero-text gigantes que tapan todo */
+.hero, .banner, .headline, .page-title, .hero-title {
+  display: none !important;
+}
+
+/* Grid de productos (10 visibles) */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(170px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.product-card {
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(0,0,0,.18);
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg,#ff00ff,#00eaff,#00ff88,#ff00ff) 1;
+  box-shadow: 0 0 22px rgba(0,234,255,.7);
+  padding: 12px;
+}
+
+.product-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(0,234,255,.25);
+}
+
+.product-title {
+  font-weight: 900;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #00eaff !important;
+}
+
+.product-meta {
+  font-size: 12px;
+  opacity: .9;
+}
+
+.btn-rgb {
+  border-radius: 14px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,.18);
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg,#ff00ff,#00eaff,#00ff88,#ff00ff) 1;
+  box-shadow: 0 0 18px rgba(0,234,255,.85);
+  cursor: pointer;
+}
+
+.home-rotator-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Secciones y tarjetas con RGB duro (nada tenue) */
+section, header, nav, footer, .card, .product-card {
+  box-shadow: 0 0 26px rgba(0,234,255,.9);
+}
+
+/* Eliminar duplicados de inputs de búsqueda (CSS fallback) */
+input[type="search"] + input[type="search"],
+#globalSearch + input[type="search"] {
+  display: none !important;
+}
+/* IRENE-ULTRA-BLOCK-END */
+
