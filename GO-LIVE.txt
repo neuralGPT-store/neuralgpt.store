@@ -1,0 +1,7 @@
+neuralGPT.store — GO LIVE OK
+Fecha: 12/14/2025 23:33:59
+SPA: OK
+Assets: OK
+Data: OK
+Stripe: TEST
+Publicación: GitHub Pages
