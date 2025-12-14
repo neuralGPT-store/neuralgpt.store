@@ -616,3 +616,60 @@ section.active { display: block; }
   color:#cfefff;
   opacity:.9;
 }
+
+/* MICROINTERACCIONES RGB INTENSAS */
+:root{
+  --rgb-a:#00e5ff;
+  --rgb-b:#ff2bd6;
+  --rgb-c:#7cff00;
+}
+
+a, button, .product-card, .mk-card, .pd-card, .pv-card, .sec-card, .sp-card, .qp-card {
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+a:hover, button:hover {
+  filter: brightness(1.15);
+}
+
+.product-card:hover,
+.mk-card:hover,
+.pd-card:hover,
+.pv-card:hover,
+.sec-card:hover,
+.sp-card:hover,
+.qp-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 0 18px var(--rgb-a),
+    0 0 28px var(--rgb-b),
+    0 0 36px var(--rgb-c);
+}
+
+/* BORDE RGB PULSANTE */
+@keyframes rgbPulse {
+  0% { box-shadow: 0 0 10px var(--rgb-a); }
+  50% { box-shadow: 0 0 22px var(--rgb-b); }
+  100% { box-shadow: 0 0 10px var(--rgb-c); }
+}
+
+section {
+  animation: rgbPulse 6s linear infinite;
+}
+
+/* HEADER Y FOOTER GLOW */
+header, #global-footer {
+  box-shadow:
+    inset 0 -1px 0 rgba(255,255,255,.06),
+    0 0 18px var(--rgb-a);
+}
+
+/* PERFORMANCE */
+* {
+  will-change: transform;
+}
+
+/* ACCESIBILIDAD: reducir animaciones */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
