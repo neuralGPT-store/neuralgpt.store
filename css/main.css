@@ -927,3 +927,22 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   outline: 3px solid #7cff00;
   outline-offset: 3px;
 }
+
+/* SOCIAL PROOF */
+#proof{
+  min-height:100vh;width:100vw;
+  background:url('/assets/wallpapers/proof-bg.webp') center/cover no-repeat;
+  padding-top:96px;
+}
+.pf-wrap{padding:40px 60px;text-align:center;}
+.pf-title{color:#ffd700;text-shadow:0 0 14px #00e5ff;margin-bottom:26px;}
+.pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+.pf-card{
+  background:rgba(0,0,0,.45);
+  border-radius:18px;padding:22px;
+  border:2px solid transparent;
+  border-image:linear-gradient(135deg,#00e5ff,#7cff00,#ff2bd6) 1;
+  box-shadow:0 0 26px rgba(0,229,255,.28);
+  color:#fff;
+}
+.pf-card span{display:block;margin-top:10px;color:#cfefff;font-size:13px;}
