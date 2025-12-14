@@ -1067,3 +1067,17 @@ header{
 #quantum{background:url('/assets/wallpapers/quantum-bg.webp') center/cover no-repeat fixed;}
 #sponsors{background:url('/assets/wallpapers/sponsors-bg.webp') center/cover no-repeat fixed;}
 #vendor-register{background:url('/assets/wallpapers/vendor-register-bg.webp') center/cover no-repeat fixed;}
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:20px;
+  padding:40px;
+}
+.product-card{
+  border:2px solid transparent;
+  border-image:linear-gradient(90deg,red,cyan,magenta,lime) 1;
+  padding:15px;
+  backdrop-filter:blur(6px);
+}
+.product-card img{width:100%;border-radius:12px;}
+.product-card span{display:block;text-align:center;margin-top:8px;}
