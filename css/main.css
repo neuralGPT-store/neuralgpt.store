@@ -146,3 +146,55 @@ section {
   border-image: linear-gradient(135deg,#00e5ff,#7cff00,#ff2bd6) 1;
   box-shadow: 0 0 20px rgba(0,229,255,.25);
 }
+
+/* NAV SUPERIOR */
+.top-nav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg,#00e5ff,#ff2bd6,#7cff00) 1;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffd700;
+  text-shadow: 0 0 10px #00e5ff;
+  letter-spacing: 1px;
+}
+
+.nav-links a {
+  margin-left: 28px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  text-shadow: 0 0 6px #00e5ff;
+}
+
+/* SECCIONES FULLSCREEN */
+section {
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top: 96px;
+}
+
+/* FONDOS */
+#home        { background-image: url('/assets/wallpapers/home-hero.webp'); }
+#marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp'); }
+#products    { background-image: url('/assets/wallpapers/product-bg.webp'); }
+#providers   { background-image: url('/assets/wallpapers/providers-bg.webp'); }
+#security    { background-image: url('/assets/wallpapers/security-bg.webp'); }
+#quantum     { background-image: url('/assets/wallpapers/quantum-bg.webp'); }
+#contact     { background-image: url('/assets/wallpapers/global-banner-bg.webp'); }
