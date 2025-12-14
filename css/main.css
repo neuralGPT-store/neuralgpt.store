@@ -869,3 +869,35 @@ section.active{
   from{ opacity:0; transform:translateY(14px); }
   to{ opacity:1; transform:none; }
 }
+
+/* ADS RAIL */
+.ad-rail{
+  position:absolute; top:24px; left:24px; display:flex; gap:14px; z-index:3;
+}
+.ad{
+  padding:8px 14px; border-radius:14px; background:rgba(0,0,0,.6);
+  border:2px solid transparent;
+  border-image:linear-gradient(90deg,#00e5ff,#ff2bd6,#7cff00) 1;
+  color:#ffd700; font-weight:800; animation: adFloat 6s linear infinite;
+}
+@keyframes adFloat{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+/* TRUST BADGES */
+.trust{
+  position:absolute; top:24px; right:24px; display:flex; gap:12px; z-index:3;
+}
+.trust span{
+  padding:6px 10px; border-radius:10px; background:rgba(0,0,0,.6);
+  color:#cfefff; border:1px solid #00e5ff; box-shadow:0 0 10px #00e5ff;
+}
+
+/* HOLOGRAM CARDS */
+.product-card, .sec-card, .sp-card{
+  position:relative; overflow:hidden;
+}
+.product-card::after, .sec-card::after, .sp-card::after{
+  content:''; position:absolute; inset:-40%;
+  background:linear-gradient(120deg,transparent,rgba(0,229,255,.25),transparent);
+  transform:rotate(25deg); animation:holo 3.5s linear infinite;
+}
+@keyframes holo{0%{transform:translateX(-60%) rotate(25deg)}100%{transform:translateX(60%) rotate(25deg)}}
