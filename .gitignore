@@ -30,3 +30,9 @@ Thumbs.db
 # Compiled output
 dist/
 build/
+*.bak
+*.bak-*
+docs/
+*.bak
+*.bak-*
+docs/
