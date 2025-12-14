@@ -1426,3 +1426,15 @@ html,body{ background:transparent !important; color:var(--electric) !important; 
 #productos{ background-image:url(''); }
 #sponsors{ background-image:url(''); }
 /* SECTION-WALLPAPERS-END */
+
+/* HEADER-CLEAN-BEGIN */
+#hero h1, #hero .subtitle, .ia-banner, .operativo-ia { display:none !important; }
+input[type="search"]:not(#globalSearch){ display:none !important; }
+header{ background:transparent !important; }
+#brand-title{
+  position:fixed; top:16px; right:24px; z-index:1200;
+  font-weight:900; letter-spacing:3px;
+  color:#00eaff;
+  text-shadow:0 0 10px #00eaff, 0 0 24px #00eaff;
+}
+/* HEADER-CLEAN-END */
