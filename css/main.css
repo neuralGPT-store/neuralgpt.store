@@ -198,3 +198,66 @@ section {
 #security    { background-image: url('/assets/wallpapers/security-bg.webp'); }
 #quantum     { background-image: url('/assets/wallpapers/quantum-bg.webp'); }
 #contact     { background-image: url('/assets/wallpapers/global-banner-bg.webp'); }
+
+/* HOME OVERLAY */
+.home-overlay {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.6));
+  padding: 40px 60px;
+}
+
+/* ROTADOR */
+.ads-rotator {
+  height: 48px;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.ad {
+  display: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffd700;
+  text-shadow: 0 0 10px #00e5ff;
+}
+.ad.active { display: block; }
+
+/* GRID PRODUCTOS */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.product-card {
+  height: 140px;
+  background: rgba(0,0,0,.45);
+  border-radius: 16px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg,#00e5ff,#ff2bd6,#7cff00) 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* CHAT IA */
+.ai-chat {
+  display: flex;
+  gap: 12px;
+}
+.ai-chat input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  border: 2px solid #00e5ff;
+  background: rgba(0,0,0,.6);
+  color: #fff;
+}
+.ai-chat button {
+  padding: 14px 24px;
+  border-radius: 12px;
+  background: #00e5ff;
+  border: none;
+  font-weight: 700;
+}
