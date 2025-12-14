@@ -2053,3 +2053,13 @@ html, body {
 .hub-section.active {
   display: block;
 }
+/* HUB CONTENT FIX */
+
+.hub-section {
+  overflow: auto !important;
+}
+
+.hub-section > * {
+  max-width: 1400px;
+  margin: 0 auto;
+}

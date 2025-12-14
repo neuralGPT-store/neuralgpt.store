@@ -42,3 +42,22 @@ document.querySelectorAll("[data-target]").forEach(btn=>{
 
 </body>
 </html>
+<script>
+async function loadSection(id, url){
+  const res = await fetch(url);
+  const html = await res.text();
+  document.getElementById(id).innerHTML =
+    html.match(/<main[^>]*>([\s\S]*?)<\/main>/)?.[1] || html;
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  loadSection("home","/index_off.html");
+  loadSection("marketplace","/marketplace.html");
+  loadSection("productos","/product.html");
+  loadSection("proveedores","/providers.html");
+  loadSection("sponsors","/sponsors.html");
+  loadSection("seguridad","/security.html");
+  loadSection("contacto","/contact.html");
+  loadSection("legal","/legal.html");
+});
+</script>
