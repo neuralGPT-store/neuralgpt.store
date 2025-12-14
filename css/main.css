@@ -2148,3 +2148,9 @@ html, body {
 body {
   overflow: hidden;
 }
+
+/* FORCE FULL VIEWPORT */
+html,body{width:100vw;height:100vh;margin:0;overflow-x:hidden;}
+.hero{min-height:100vh;width:100vw;background-size:cover;background-position:center;}
+.panel,.overlay,.hero-panel,.hero-content{background:transparent!important;box-shadow:none!important;}
+.hero>*{background:transparent;}
