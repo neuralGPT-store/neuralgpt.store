@@ -1372,3 +1372,38 @@ input[type="search"] + input[type="search"],
 }
 /* IRENE-ULTRA-BLOCK-END */
 
+
+/* === FULLSCREEN WALLPAPERS POR SECCIÓN === */
+html, body { background: transparent !important; }
+
+.section {
+  min-height: 100vh;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* HOME */
+#home { background-image: url('/assets/wallpapers/home-hero.webp') !important; }
+
+/* MARKETPLACE */
+#marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') !important; }
+
+/* PRODUCTS */
+#products { background-image: url('/assets/wallpapers/product-bg.webp') !important; }
+
+/* PROVIDERS */
+#providers { background-image: url('/assets/wallpapers/providers-bg.webp') !important; }
+
+/* SPONSORS */
+#sponsors { background-image: url('/assets/wallpapers/sponsors-bg.webp') !important; }
+
+/* SECURITY */
+#security { background-image: url('/assets/wallpapers/security-bg.webp') !important; }
+
+/* BLOG */
+#blog { background-image: url('/assets/wallpapers/blog-bg.webp') !important; }
+
+/* QUANTUM (si existe, solo visual) */
+#quantum { background-image: url('/assets/wallpapers/quantum-bg.webp') !important; }
+/* === END === */
