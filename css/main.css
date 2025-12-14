@@ -5,12 +5,13 @@
 /* === EMERGENCY VISIBILITY FIXES (safer, reversible) ===
   Ensure core containers and navigation are visible and not hidden
   This block is intentionally minimal and conservative. Remove to revert. */
-html, body, main, section { overflow: visible !important; width: auto !important; min-width: 0 !important; }
+html, body, main { overflow: visible !important; width: 100vw !important; height: 100vh !important; min-width: 0 !important; }
+section { overflow: visible !important; }
 body { background: #00040D !important; color: #e6f0ff !important; }
-.hero, .hero-section, .hero-visual { overflow: visible !important; width: auto !important; min-height: 40vh !important; }
+.hero, .hero-section, .hero-visual { overflow: visible !important; width: 100vw !important; min-height: 100vh !important; }
 .main-nav ul { display: flex !important; }
 .menu-toggle { display: none !important; }
-.wrap { max-width: 1400px !important; width: auto !important; padding-left: 20px !important; padding-right: 20px !important; }
+.wrap { max-width: none !important; width: 100% !important; padding-left: 20px !important; padding-right: 20px !important; }
 /* === end emergency fixes === */
 /* ==========================
    Desktop-first enforcement and fullscreen hero backgrounds
@@ -256,6 +257,44 @@ a:focus,button:focus,input:focus{outline:3px solid rgba(0,200,255,0.12);outline-
 
 /* End of futuristic stylesheet */
 
+/* ====== USER REQUEST: FORCE FULL-VIEW LAYOUT AND SINGLE VISIBLE SECTION ======
+  Minimal, conservative overrides — do not change HTML structure.
+  - Force core containers to full viewport
+  - Prevent horizontal overflow / black side bands
+  - Ensure only hero visible by default (other sections hidden)
+  - These rules are intentionally narrow and placed at EOF to win cascades
+*/
+html, body, main, #main-content { width: 100vw !important; min-width: 100vw !important; height: 100vh !important; min-height: 100vh !important; overflow-x: hidden !important; }
+/* Ensure hero occupies the full viewport */
+.hero, .hero-section { width: 100vw !important; min-width: 100vw !important; height: 100vh !important; min-height: 100vh !important; box-sizing: border-box !important; }
+/* Prevent lateral gaps from max-width or negative margins */
+.wrap { margin-left: auto !important; margin-right: auto !important; padding-left: 24px !important; padding-right: 24px !important; }
+/* Hide non-hero sections by default so a single section is visible (HOME) */
+#main-content > section:not(.hero) { display: none !important; }
+
+/* Small safeguard: ensure no body-level background gutters */
+body { margin: 0 !important; padding: 0 !important; }
+
+/* End user-request overrides */
+
+/* ====== STRONG ENFORCEMENT: Full-viewport, remove lateral bands ======
+  Placed at EOF to ensure cascade priority. Minimal and intentional.
+*/
+html, body, #main-content { width: 100vw !important; min-width: 100vw !important; height: 100vh !important; min-height: 100vh !important; margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; overflow-y: auto !important; }
+
+/* Remove any centering / max-width artifacts that cause lateral gutters */
+.wrap, .site-footer .wrap, .hero .wrap, main .wrap { max-width: none !important; width: 100% !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; }
+
+/* Ensure hero is an exact viewport-sized block */
+.hero, .hero-section, .hero-visual { width: 100vw !important; min-width: 100vw !important; height: 100vh !important; min-height: 100vh !important; box-sizing: border-box !important; margin: 0 !important; padding: 0 !important; display: block !important; }
+
+/* Hide other sections so only HOME hero is visible by default */
+#main-content > section:not(.hero) { display: none !important; }
+
+/* Prevent images or inner elements from causing horizontal overflow */
+#main-content, #main-content * { max-width: 100vw !important; box-sizing: border-box !important; }
+
+/* End strict enforcement */
 /* Micro-interactions */
 /* hover glow electrical */
 .product-card:hover, .card:hover{ box-shadow: 0 44px 100px rgba(0,200,255,0.14); transform: translateY(-10px) scale(1.006); }

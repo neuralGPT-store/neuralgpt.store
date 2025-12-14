@@ -55,6 +55,50 @@
 			}
 		}
 
+		/* Minimal navigation show/hide (no fetch) — user-request: toggle existing sections
+			 - Intercepts clicks on main nav and shows matching section classes if present
+			 - Does NOT fetch remote pages, does not add new loaders
+			 - Conservative: falls back to full navigation when no matching section found
+		*/
+		(function sectionToggleNav(){
+			try{
+				function mapHrefToSelector(href){
+					if(!href) return null
+					if(href.indexOf('marketplace')!==-1) return '#main-content .bg-marketplace'
+					if(href.indexOf('providers')!==-1) return '#main-content .bg-providers'
+					if(href.indexOf('sponsors')!==-1) return '#main-content .bg-sponsors'
+					if(href.indexOf('security')!==-1) return '#main-content .bg-security'
+					if(href.indexOf('quantum')!==-1) return '#main-content .bg-quantum'
+					if(href === '/' || href.indexOf('index')!==-1) return '#main-content .hero'
+					return null
+				}
+
+				document.addEventListener('click', function(e){
+					try{
+						const a = e.target.closest && e.target.closest('a') ? e.target.closest('a') : null
+						if(!a) return
+						const nav = a.closest && a.closest('.main-nav') ? a.closest('.main-nav') : null
+						if(!nav) return
+						const href = a.getAttribute('href') || ''
+						const sel = mapHrefToSelector(href)
+						if(!sel) return // let normal navigation occur
+						const target = document.querySelector(sel)
+						if(!target) return // let normal navigation occur
+						// show target section, hide siblings
+						e.preventDefault()
+						const main = document.getElementById('main-content')
+						if(!main) return
+						Array.from(main.querySelectorAll('section')).forEach(s=> s.style.display = 'none')
+						target.style.display = ''
+						// ensure hero sizing remains correct after toggle
+						try{ if(target.classList.contains('hero')){ target.style.height = '100vh'; target.style.minHeight = '100vh' } }
+						catch(err){}
+						window.scrollTo(0,0)
+					}catch(err){}
+				}, true)
+			}catch(e){}
+		})()
+
 		// Automatic listeners
 		// - page_view (recorded on DOMContentLoaded/init)
 		// - click_cta (on anchors/buttons with class btn-primary or data-track)
