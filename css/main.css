@@ -108,3 +108,41 @@ section {
   border: 2px solid transparent;
   border-image: linear-gradient(135deg,var(--rgb-a),var(--rgb-b),var(--rgb-c)) 1;
 }
+
+.home-products {
+  width: 100%;
+  padding: 120px 60px 80px;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.ads-rotator {
+  height: 48px;
+  margin-bottom: 40px;
+  text-align: center;
+  color: #ffd700;
+  font-size: 18px;
+  text-shadow: 0 0 8px #00e5ff;
+}
+
+.ad { display: none; }
+.ad.active { display: block; }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+
+.product-card {
+  height: 160px;
+  background: rgba(0,0,0,0.55);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg,#00e5ff,#7cff00,#ff2bd6) 1;
+  box-shadow: 0 0 20px rgba(0,229,255,.25);
+}
