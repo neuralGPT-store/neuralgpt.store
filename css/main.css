@@ -915,3 +915,10 @@ section.active{
   box-shadow:0 0 22px rgba(0,229,255,.35);
 }
 .global-search input::placeholder{ color:#9adfff; }
+
+/* PERFORMANCE FONTS */
+body{
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
