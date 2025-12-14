@@ -16,3 +16,12 @@
   const h=location.hash.replace('#','');
   show(h||'home');
 })();
+const q=document.getElementById('globalSearch');
+if(q){
+  q.addEventListener('input',()=>{
+    const v=q.value.toLowerCase();
+    document.querySelectorAll('.product-card,.sec-card,.sp-card').forEach(c=>{
+      c.style.display = c.textContent.toLowerCase().includes(v) ? '' : 'none';
+    });
+  });
+}

@@ -1081,3 +1081,41 @@ header{
 }
 .product-card img{width:100%;border-radius:12px;}
 .product-card span{display:block;text-align:center;margin-top:8px;}
+/* HEADER AMAZON-KILLER */
+#top-header{
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  background:transparent;
+}
+#top-header .top-row{
+  display:grid; grid-template-columns: auto 1fr auto;
+  align-items:center; gap:20px;
+  padding:14px 20px;
+}
+#top-header .brand{
+  font-weight:900; letter-spacing:2px;
+  color:#00eaff;
+  text-shadow:0 0 10px #00eaff, 0 0 22px #00eaff;
+}
+#top-header .search input{
+  width:100%; max-width:520px;
+  padding:12px 18px; border-radius:18px;
+  background:rgba(255,255,255,.08);
+  border:2px solid transparent;
+  border-image:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00) 1;
+  color:#00eaff;
+}
+#top-header .quick a{
+  margin-left:14px; text-decoration:none;
+  color:#00eaff;
+  text-shadow:0 0 8px #00eaff;
+}
+#top-header .mega{
+  display:flex; gap:18px; padding:10px 20px;
+  border-top:1px solid rgba(0,234,255,.25);
+  border-bottom:1px solid rgba(0,234,255,.25);
+}
+#top-header .mega a{
+  text-decoration:none; font-weight:700;
+  color:#00eaff;
+}
+body{ padding-top:120px; }
