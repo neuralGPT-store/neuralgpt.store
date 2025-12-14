@@ -2247,3 +2247,39 @@ header {
 
 /* DEBUG VISUAL (temporal) */
 /* .hero { outline: 3px solid red !important; } */
+
+
+/* --- FORCE FIX: REMOVE TOP BLOCKING OVERLAYS --- */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+  overflow-x: hidden !important;
+}
+
+body > div:not(.hero):not(header):not(footer) {
+  display: none !important;
+}
+
+header {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent !important;
+  z-index: 10;
+}
+
+.hero {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  z-index: 1;
+}
+
+.hero * {
+  pointer-events: auto;
+}
+
