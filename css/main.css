@@ -1,6 +1,17 @@
 /* NeuralGPT.Store — Futuristic premium theme (Blue Electric / Quantum Violet / RGB) */
 :root{
   --bg-1:#00040D;
+
+/* === EMERGENCY VISIBILITY FIXES (safer, reversible) ===
+  Ensure core containers and navigation are visible and not hidden
+  This block is intentionally minimal and conservative. Remove to revert. */
+html, body, main, section { overflow: visible !important; width: auto !important; min-width: 0 !important; }
+body { background: #00040D !important; color: #e6f0ff !important; }
+.hero, .hero-section, .hero-visual { overflow: visible !important; width: auto !important; min-height: 40vh !important; }
+.main-nav ul { display: flex !important; }
+.menu-toggle { display: none !important; }
+.wrap { max-width: 1400px !important; width: auto !important; padding-left: 20px !important; padding-right: 20px !important; }
+/* === end emergency fixes === */
 /* ==========================
    Desktop-first enforcement and fullscreen hero backgrounds
    - Desktop (default) applies unless media queries reduce it
