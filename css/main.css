@@ -784,3 +784,9 @@ footer { z-index: 500; }
 #ngpt-chat .msg{ margin-bottom:8px; }
 #ngpt-chat .msg.user{ color:#cfefff; }
 #ngpt-chat .msg.ai{ color:#ffd700; }
+
+/* QA FIXES */
+nav ul { align-items:center; }
+nav li { list-style:none; }
+section { align-items:stretch; }
+.sec-grid, .sp-grid, .qp-grid, .bg-grid { align-items:stretch; }
