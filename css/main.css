@@ -756,3 +756,31 @@ footer { z-index: 500; }
 .product-card img{max-height:80px;margin:0 auto 8px;}
 .product-card h4{color:#ffd700;font-size:14px;}
 .product-card span{color:#cfefff;font-size:12px;}
+
+/* CHAT IA */
+#ngpt-chat{
+  position:fixed; right:18px; bottom:18px; width:320px; height:420px;
+  background:rgba(0,0,0,.6); border-radius:18px;
+  border:2px solid transparent;
+  border-image:linear-gradient(135deg,#00e5ff,#ff2bd6,#7cff00) 1;
+  box-shadow:0 0 26px rgba(0,229,255,.35); z-index:2000;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+#ngpt-chat .chat-head{
+  padding:10px 14px; color:#ffd700; font-weight:900;
+  text-shadow:0 0 10px #00e5ff; border-bottom:1px solid rgba(255,255,255,.1);
+}
+#ngpt-chat .chat-body{ flex:1; padding:10px; overflow:auto; color:#fff; }
+#ngpt-chat .chat-foot{ display:flex; gap:8px; padding:10px; }
+#ngpt-chat input{
+  flex:1; padding:10px; border-radius:12px; border:2px solid #00e5ff;
+  background:rgba(0,0,0,.6); color:#fff;
+}
+#ngpt-chat button{
+  padding:10px 14px; border-radius:12px; border:2px solid transparent;
+  border-image:linear-gradient(90deg,#00e5ff,#ff2bd6,#7cff00) 1;
+  background:rgba(0,0,0,.6); color:#ffd700; font-weight:800;
+}
+#ngpt-chat .msg{ margin-bottom:8px; }
+#ngpt-chat .msg.user{ color:#cfefff; }
+#ngpt-chat .msg.ai{ color:#ffd700; }
