@@ -1033,3 +1033,37 @@ body { padding-top: 0 !important; overflow-x: hidden; }.section { min-height: 10
   0%{transform:translateX(0)}
   100%{transform:translateX(-50%)}
 }
+html,body{
+  background:none!important;
+  color:#00e5ff!important;
+}
+
+.hero,.banner,.hero-overlay,.global-banner{
+  display:none!important;
+}
+
+header{
+  background:transparent!important;
+  border:none!important;
+}
+
+.search-bar + .search-bar{
+  display:none!important;
+}
+
+/* Texto azul eléctrico */
+*{
+  color:#00e5ff!important;
+  text-shadow:0 0 8px rgba(0,229,255,.9);
+}
+
+/* Fondos por sección */
+#home{background:url('/assets/wallpapers/home-hero.webp') center/cover no-repeat fixed;}
+#marketplace{background:url('/assets/wallpapers/marketplace-bg.webp') center/cover no-repeat fixed;}
+#product{background:url('/assets/wallpapers/product-bg.webp') center/cover no-repeat fixed;}
+#providers{background:url('/assets/wallpapers/providers-bg.webp') center/cover no-repeat fixed;}
+#security{background:url('/assets/wallpapers/security-bg.webp') center/cover no-repeat fixed;}
+#blog{background:url('/assets/wallpapers/blog-bg.webp') center/cover no-repeat fixed;}
+#quantum{background:url('/assets/wallpapers/quantum-bg.webp') center/cover no-repeat fixed;}
+#sponsors{background:url('/assets/wallpapers/sponsors-bg.webp') center/cover no-repeat fixed;}
+#vendor-register{background:url('/assets/wallpapers/vendor-register-bg.webp') center/cover no-repeat fixed;}
