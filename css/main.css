@@ -259,7 +259,7 @@ a:focus,button:focus,input:focus{outline:3px solid rgba(0,200,255,0.12);outline-
 @keyframes cardBreathe{ 0%{ box-shadow: 0 20px 50px rgba(0,200,255,0.06) } 50%{ box-shadow: 0 34px 90px rgba(0,200,255,0.10) } 100%{ box-shadow: 0 20px 50px rgba(0,200,255,0.06) } }
 
 /* Import project theme overrides (black & gold) */
-@import url('theme-override.css');
+/* @import url('theme-override.css'); */
 
 /* ==========================
    Phase1B — Layout Normalization
@@ -1712,7 +1712,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid rgba(0,174,239,0.
 .hero .wrap { padding-left: 20px !important; padding-right: 20px !important; }
 
 /* Avoid 100vw horizontal overflow issues */
-html, body, main, section { width: 100% !important; max-width: 100% !important; overflow-x: hidden !important; }
+/* neutralized by DESKTOP SYSTEM OVERRIDES */
 
 /* ===============  Accessibility & final defensive guards  =============== */
 a:focus, button:focus, input:focus { outline: 3px solid rgba(0,174,239,0.20) !important; outline-offset: 3px !important; }
@@ -1734,3 +1734,82 @@ a:focus, button:focus, input:focus { outline: 3px solid rgba(0,174,239,0.20) !im
 
 
 
+/* DESKTOP SYSTEM OVERRIDES — SAFE RESET */
+html, body, main, section {
+  width: auto !important;
+  max-width: none !important;
+}
+
+.container, .wrap {
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.hero, .hero-section, .hero-visual {
+  min-height: 70vh !important;
+}
+/* DESKTOP SYSTEM OVERRIDES — FINAL SYSTEM */
+
+.container {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+
+body {
+  background: linear-gradient(to bottom, #2f3436, #1a1d20) !important;
+  color: #87ceeb !important;
+}
+
+h1, h2, h3 {
+  color: #03A9F4 !important;
+}
+
+.hero, .hero-section, .hero-visual {
+  max-height: 70vh !important;
+  min-height: 60vh !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.grid-container,
+.grid,
+.cards,
+.card-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 20px !important;
+}
+
+.card {
+  background: rgba(40,40,40,0.85) !important;
+  border-radius: 12px !important;
+  padding: 18px !important;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.6) !important;
+  position: relative !important;
+}
+
+.card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 12px !important;
+  pointer-events: none !important;
+  box-shadow: 0 0 12px rgba(0,174,239,0.6) !important;
+}
+
+a, button, .btn {
+  color: #87ceeb !important;
+  border-radius: 12px !important;
+  padding: 10px 18px !important;
+  background: transparent !important;
+  border: 1px solid rgba(0,174,239,0.6) !important;
+  cursor: pointer !important;
+}
+
+a:hover, button:hover, .btn:hover {
+  background: rgba(0,174,239,0.15) !important;
+  box-shadow: 0 0 14px rgba(0,174,239,0.8) !important;
+}
