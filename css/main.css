@@ -1119,3 +1119,71 @@ header{
   color:#00eaff;
 }
 body{ padding-top:120px; }
+
+/* === RESET TOTAL DE NEGRO === */
+body, html {
+  background: transparent !important;
+  color: #00eaff;
+}
+
+/* === TEXTO AZUL RAYO GLOBAL === */
+* {
+  color: #00eaff;
+  text-shadow: 0 0 6px rgba(0,234,255,.9), 0 0 14px rgba(0,234,255,.6);
+}
+
+/* === FONDOS POR SECCIÓN (FULL SCREEN) === */
+section, .section {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* HOME */
+#home {
+  background-image: url('/assets/wallpapers/home-hero.webp');
+}
+
+/* MARKETPLACE */
+#marketplace {
+  background-image: url('/assets/wallpapers/marketplace-bg.webp');
+}
+
+/* PRODUCTOS */
+#products {
+  background-image: url('/assets/wallpapers/product-bg.webp');
+}
+
+/* PROVEEDORES */
+#providers {
+  background-image: url('/assets/wallpapers/providers-bg.webp');
+}
+
+/* SEGURIDAD */
+#security {
+  background-image: url('/assets/wallpapers/security-bg.webp');
+}
+
+/* BLOG */
+#blog {
+  background-image: url('/assets/wallpapers/blog-bg.webp');
+}
+
+/* SPONSORS */
+#sponsors {
+  background-image: url('/assets/wallpapers/sponsors-bg.webp');
+}
+
+/* === RGB INTENSO EN TODO === */
+section, header, footer, nav, .card {
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg,#ff00ff,#00eaff,#00ff88,#ff00ff) 1;
+  box-shadow: 0 0 25px rgba(0,234,255,.8);
+}
+
+/* === ELIMINAR BANNERS ASQUEROSOS === */
+.hero, .banner, .headline {
+  display: none !important;
+}
+
