@@ -737,3 +737,22 @@ img, video {
 header { z-index: 1000; }
 section { z-index: 1; }
 footer { z-index: 500; }
+
+/* PRODUCTS ROTATION */
+.home-products{
+  display:grid;
+  grid-template-columns: repeat(5,1fr);
+  gap:18px;
+  margin-top:24px;
+}
+.product-card{
+  background:rgba(0,0,0,.45);
+  border-radius:16px;
+  border:2px solid transparent;
+  border-image:linear-gradient(135deg,#00e5ff,#7cff00,#ff2bd6) 1;
+  padding:12px;
+  text-align:center;
+}
+.product-card img{max-height:80px;margin:0 auto 8px;}
+.product-card h4{color:#ffd700;font-size:14px;}
+.product-card span{color:#cfefff;font-size:12px;}
