@@ -217,7 +217,23 @@
 <script defer src="/js/spa-guard.js?v=202512150128"></script>
 <script defer src="/js/observability.js"></script>
 <section id="home" class="section"></section>
-<section id="marketplace" class="section"></section>
+<section id="marketplace" class="section">
+<div id="marketplace-filters">
+  <input id="q" class="premium-search" placeholder="Buscar productos">
+  <select id="f-cat">
+    <option value="">Todas</option>
+    <option value="robotica">Robótica</option>
+    <option value="informatica">Informática</option>
+    <option value="automatismos">Automatismos</option>
+    <option value="hardware ia">Hardware IA</option>
+    <option value="componentes">Componentes</option>
+    <option value="placas">Placas</option>
+    <option value="materiales androides">Materiales androides</option>
+  </select>
+  <input id="f-min" type="number" placeholder="€ mín">
+  <input id="f-max" type="number" placeholder="€ máx">
+  <select id="f-prov"><option value="">Proveedor</option></select>
+</div></section>
 <section id="products" class="section"></section>
 <section id="sponsors" class="section"></section>
 <section id="security" class="section"></section>
@@ -226,6 +242,16 @@
 <script defer src="/js/catalog-loader.js"></script>
 <script defer src="/js/render.js"></script>
 <script defer src="/js/catalog-wire.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const sel=document.getElementById('f-prov');
+  if(!sel||!window.CATALOG) return;
+  [...new Set((window.CATALOG.products||[]).map(p=>p.brand).filter(Boolean))]
+    .sort().forEach(b=>{ const o=document.createElement('option'); o.value=b; o.textContent=b; sel.appendChild(o); });
+});
+</script>
+<script defer src="/js/rank.js"></script>
+<script defer src="/js/filters.js"></script>
 </body>
     </html>
 
@@ -279,7 +305,23 @@
 <script defer src="/js/spa-guard.js?v=202512150128"></script>
 <script defer src="/js/observability.js"></script>
 <section id="home" class="section"></section>
-<section id="marketplace" class="section"></section>
+<section id="marketplace" class="section">
+<div id="marketplace-filters">
+  <input id="q" class="premium-search" placeholder="Buscar productos">
+  <select id="f-cat">
+    <option value="">Todas</option>
+    <option value="robotica">Robótica</option>
+    <option value="informatica">Informática</option>
+    <option value="automatismos">Automatismos</option>
+    <option value="hardware ia">Hardware IA</option>
+    <option value="componentes">Componentes</option>
+    <option value="placas">Placas</option>
+    <option value="materiales androides">Materiales androides</option>
+  </select>
+  <input id="f-min" type="number" placeholder="€ mín">
+  <input id="f-max" type="number" placeholder="€ máx">
+  <select id="f-prov"><option value="">Proveedor</option></select>
+</div></section>
 <section id="products" class="section"></section>
 <section id="sponsors" class="section"></section>
 <section id="security" class="section"></section>
@@ -288,6 +330,16 @@
 <script defer src="/js/catalog-loader.js"></script>
 <script defer src="/js/render.js"></script>
 <script defer src="/js/catalog-wire.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const sel=document.getElementById('f-prov');
+  if(!sel||!window.CATALOG) return;
+  [...new Set((window.CATALOG.products||[]).map(p=>p.brand).filter(Boolean))]
+    .sort().forEach(b=>{ const o=document.createElement('option'); o.value=b; o.textContent=b; sel.appendChild(o); });
+});
+</script>
+<script defer src="/js/rank.js"></script>
+<script defer src="/js/filters.js"></script>
 </body>
   </html>
 
@@ -385,6 +437,8 @@ products.forEach(p=>{
   grid.appendChild(d);
 });
 </script>
+
+
 
 
 
