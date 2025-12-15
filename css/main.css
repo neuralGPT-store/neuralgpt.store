@@ -1705,3 +1705,31 @@ header, .top-tabs, .premium-search-wrap{ pointer-events:auto; }
 }
 .premium-search:focus{ outline:none; box-shadow:0 0 28px rgba(0,234,255,.9); }
 
+
+/* FULL-BLEED SECTIONS */
+.section{
+  min-height:100vh;
+  width:100vw;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+#home{background-image:url('/assets/bg/home.jpg')}
+#marketplace{background-image:url('/assets/bg/marketplace.jpg')}
+#products{background-image:url('/assets/bg/products.jpg')}
+#providers{background-image:url('/assets/bg/providers.jpg')}
+#sponsors{background-image:url('/assets/bg/sponsors.jpg')}
+#security{background-image:url('/assets/bg/security.jpg')}
+#contact{background-image:url('/assets/bg/contact.jpg')}
+#legal{background-image:url('/assets/bg/legal.jpg')}
+
+/* QUITAR NEGROS */
+body,html{background:transparent}
+
+/* BRAND + RGB */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(0,0,0,.25);backdrop-filter:blur(6px)}
+.brand{color:#ffd700;font-weight:800;letter-spacing:.5px;text-shadow:0 0 12px #ffd700,0 0 22px #00eaff}
+.tabs a{margin:0 10px;padding:8px 12px;border-radius:14px;color:#00eaff;border:2px solid #00eaff;box-shadow:0 0 16px rgba(0,234,255,.7)}
+.tabs a:hover{box-shadow:0 0 28px rgba(0,234,255,1)}
+/* OFFSET HEADER */
+.section{padding-top:64px}
