@@ -1,16 +1,25 @@
-\ = @()
-# Secciones
-'home','marketplace','products','providers','sponsors','security','contact' | %{
-  if(-not (Select-String -Path .\index.html -Pattern \"id=\\\"\\\"\")){ \ += \"section:\" }
+$fails = @()
+
+# Secciones obligatorias
+$sections = @("home","marketplace","products","providers","sponsors","security","contact")
+foreach ($s in $sections) {
+  if (-not (Select-String -Path ".\index.html" -SimpleMatch "id=""$s""" -Quiet)) {
+    $fails += "section:$s"
+  }
 }
+
 # Scripts clave
-'js/spa-nav.js','js/god-ux.js','js/observability.js' | %{
-  if(-not (Test-Path .\\)){ \ += \"script:\" }
+$scripts = @("js\spa-nav.js","js\god-ux.js","js\observability.js")
+foreach ($p in $scripts) {
+  if (-not (Test-Path ".\$p")) {
+    $fails += "script:$p"
+  }
 }
-if(\.Count){
-  Write-Host \"SMOKE FAIL:\" -ForegroundColor Red
-  \ | % { Write-Host \" - \" }
+
+if ($fails.Count -gt 0) {
+  Write-Host "SMOKE FAIL:" -ForegroundColor Red
+  $fails | ForEach-Object { Write-Host " - $_" }
   exit 1
-}else{
-  Write-Host \"SMOKE OK\" -ForegroundColor Green
+} else {
+  Write-Host "SMOKE OK" -ForegroundColor Green
 }
