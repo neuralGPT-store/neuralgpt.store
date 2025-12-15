@@ -1680,3 +1680,11 @@ img{ content-visibility:auto; }
 .cta.primary{ box-shadow:0 0 28px rgba(0,234,255,.95); }
 .cta:hover{ transform:translateY(-2px); }
 /* CTA-END */
+
+/* PERF-FAST-BEGIN */
+img{ content-visibility:auto; }
+.section{ contain:layout paint; }
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
+}
+/* PERF-FAST-END */
