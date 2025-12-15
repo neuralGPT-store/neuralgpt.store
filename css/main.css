@@ -1038,9 +1038,7 @@ html,body{
   color:#00e5ff;
 }
 
-.hero,.banner,.hero-overlay,.global-banner{
-  display:none;
-}
+.hero,
 
 header{
   background:transparent;
@@ -1183,9 +1181,7 @@ section, header, footer, nav, .card {
 }
 
 /* === ELIMINAR BANNERS ASQUEROSOS === */
-.hero, .banner, .headline {
-  display: none ;
-}
+.hero, 
 
 
 
@@ -1302,9 +1298,7 @@ section, .section {
 }
 
 /* Prohibido: banners/hero-text gigantes que tapan todo */
-.hero, .banner, .headline, .page-title, .hero-title {
-  display: none ;
-}
+.hero, 
 
 /* Grid de productos (10 visibles) */
 .products-grid {
@@ -1699,3 +1693,15 @@ img{ content-visibility:auto; }
 .section{ isolation:isolate; }
 header, .top-tabs, .premium-search-wrap{ pointer-events:auto; }
 /* NONOMETRIC-END */
+
+/* PREMIUM SEARCH */
+.premium-search{
+  border-radius:18px;
+  padding:14px 18px;
+  border:2px solid var(--electric,#00eaff);
+  box-shadow:0 0 18px rgba(0,234,255,.6);
+  background:rgba(0,0,0,.35);
+  color:#00eaff;
+}
+.premium-search:focus{ outline:none; box-shadow:0 0 28px rgba(0,234,255,.9); }
+
