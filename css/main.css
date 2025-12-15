@@ -1737,3 +1737,8 @@ body,html{background:transparent}
 img{max-width:100%;height:auto}
 .product-card img,.sponsor-card img{aspect-ratio:1/1;object-fit:contain}
 /* IMG-RATIO-END */
+/* CTA-PREMIUM */
+.cta{padding:12px 18px;border-radius:16px;border:2px solid #00eaff;
+box-shadow:0 0 22px rgba(0,234,255,.8);color:#00eaff}
+.cta:hover{box-shadow:0 0 36px rgba(0,234,255,1)}
+/* END */
