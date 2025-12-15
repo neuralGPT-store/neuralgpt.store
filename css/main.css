@@ -1688,3 +1688,8 @@ img{ content-visibility:auto; }
   *{ animation:none !important; transition:none !important; }
 }
 /* PERF-FAST-END */
+
+/* A11Y-BEGIN */
+:focus-visible{ outline:3px solid #00eaff; outline-offset:3px; }
+[aria-hidden="true"]{ display:none !important; }
+/* A11Y-END */
