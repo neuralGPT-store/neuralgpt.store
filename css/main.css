@@ -1667,3 +1667,16 @@ img{ content-visibility:auto; }
 }
 
 /* GOD-UX-END */
+
+/* CTA-BEGIN */
+.cta-bar{ display:flex; gap:14px; justify-content:center; margin:18px 0; }
+.cta{
+  padding:12px 22px; border-radius:999px; text-decoration:none;
+  color:#00eaff; background:rgba(0,0,0,.35);
+  border:2px solid transparent;
+  border-image:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00) 1;
+  box-shadow:0 0 18px rgba(0,234,255,.7);
+}
+.cta.primary{ box-shadow:0 0 28px rgba(0,234,255,.95); }
+.cta:hover{ transform:translateY(-2px); }
+/* CTA-END */
