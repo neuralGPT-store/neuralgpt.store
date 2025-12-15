@@ -1742,3 +1742,11 @@ img{max-width:100%;height:auto}
 box-shadow:0 0 22px rgba(0,234,255,.8);color:#00eaff}
 .cta:hover{box-shadow:0 0 36px rgba(0,234,255,1)}
 /* END */
+
+/* HIERARCHY */
+.hero-title{font-size:clamp(28px,4vw,44px);margin:24px 0 12px;color:#00eaff}
+.grid-hero{gap:18px;margin-top:16px}
+.section h2{font-size:22px;margin:12px 0}
+.card{padding:16px}
+/* FLOW */
+.section a{cursor:pointer}
