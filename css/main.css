@@ -1,31 +1,43 @@
 /* RESET TOTAL */
-html,body{margin:0;padding:0;background:transparent !important;color:#00eaff !important}
-*{outline:none !important;box-shadow:none !important}
+*{box-sizing:border-box; outline:none!important; transform:none!important;}
+html,body{
+  margin:0; padding:0;
+  width:100%;
+  height:auto;
+  background:transparent!important;
+  color:#00eaff!important;
+  font-family:system-ui,Segoe UI,Arial;
+}
 
-/* HEADER LIMPIO ARRIBA */
-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:transparent}
-nav{display:flex;gap:18px;align-items:center}
-nav a{color:#00eaff;text-decoration:none;font-weight:700;text-shadow:0 0 8px rgba(0,234,255,.9)}
+/* HEADER FIJO ARRIBA, ESTILO AMAZON */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:9999;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(8px);
+}
+main{ padding-top:84px; }
 
-/* SEARCH ÚNICO */
-#globalSearch{margin-left:auto;max-width:520px;padding:12px 18px;border-radius:18px;
-  background:rgba(255,255,255,.08);border:2px solid transparent;
-  border-image:linear-gradient(90deg,#00eaff,#00fff0,#00eaff) 1;color:#00eaff}
+/* UNA SOLA PÁGINA: SECCIONES EN COLUMNA */
+section{
+  position:relative;
+  min-height:100vh;
+  display:block!important;
+  background-size:cover!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+}
 
-/* SECCIONES FULLSCREEN */
-section{min-height:100vh;padding-top:96px;background-size:cover !important;background-position:center !important;background-repeat:no-repeat !important}
+/* FONDOS POR SECCIÓN (TUS IMÁGENES) */
+#home{background-image:url('/assets/wallpapers/home-hero.webp');}
+#marketplace{background-image:url('/assets/wallpapers/marketplace-bg.webp');}
+#products{background-image:url('/assets/wallpapers/product-bg.webp');}
+#providers{background-image:url('/assets/wallpapers/providers-bg.webp');}
+#security{background-image:url('/assets/wallpapers/security-bg.webp');}
+#blog{background-image:url('/assets/wallpapers/blog-bg.webp');}
+#account{background-image:url('/assets/wallpapers/account-bg.webp');}
 
-/* MAPA FONDOS (USA TUS IMÁGENES) */
-#home{background-image:url('/assets/wallpapers/home-hero.webp')}
-#marketplace{background-image:url('/assets/wallpapers/marketplace-bg.webp')}
-#products{background-image:url('/assets/wallpapers/product-bg.webp')}
-#providers{background-image:url('/assets/wallpapers/providers-bg.webp')}
-#security{background-image:url('/assets/wallpapers/security-bg.webp')}
-#blog{background-image:url('/assets/wallpapers/blog-bg.webp')}
-#account{background-image:url('/assets/wallpapers/account-bg.webp')}
+/* TEXTO AZUL RAYO */
+*{color:#00eaff!important; text-shadow:0 0 10px rgba(0,234,255,.9);}
 
-/* TEXTO AZUL RAYO GLOBAL */
-*{color:#00eaff !important;text-shadow:0 0 8px rgba(0,234,255,.85)}
-
-/* OCULTAR MARCOS/DEBUG */
-.debug,.frame,[style*="outline"],[style*="border:"]{display:none !important}
+/* QUITAR CAJAS/DEBUG */
+[class*='debug'], [style*='outline']{display:none!important;}
