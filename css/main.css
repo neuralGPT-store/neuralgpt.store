@@ -100,3 +100,34 @@ input,textarea,button{
   border-image:var(--rgb) 1;
 }
 button{cursor:pointer}
+/* --- FIX TOTAL MOVIMIENTO --- */
+*,
+*::before,
+*::after{
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* bloquear scroll global */
+html, body{
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
+/* home fija, sin desplazarse */
+#home{
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* solo las secciones internas pueden scrollear */
+.section-scroll{
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+/* evitar jitter por fondos */
+body{
+  background-attachment: fixed !important;
+}
