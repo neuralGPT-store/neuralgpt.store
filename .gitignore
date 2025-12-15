@@ -36,3 +36,6 @@ docs/
 *.bak
 *.bak-*
 docs/
+
+_backup/
+*.bak*
