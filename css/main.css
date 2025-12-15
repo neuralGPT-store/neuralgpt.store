@@ -18,7 +18,7 @@ html, body {
 
 /* HEADER AMAZON STYLE */
 header {
-  position: fixed !important;
+  position: fixed ;
   top: 0;
   left: 0;
   right: 0;
@@ -657,7 +657,7 @@ header, #global-footer {
 
 /* ACCESIBILIDAD: reducir animaciones */
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+  * { animation: none ; transition: none ; }
 }
 
 /* RENDER STABILITY */
@@ -957,7 +957,7 @@ html, body {
 #checkout   { background-image: url('/assets/wallpapers/checkout-bg.webp'); }
 #vendor     { background-image: url('/assets/wallpapers/vendor-register-bg.webp'); }
 * {
-  color: #00eaff !important;
+  color: #00eaff ;
   text-shadow:
     0 0 6px rgba(0,234,255,.8),
     0 0 12px rgba(0,234,255,.6);
@@ -991,10 +991,10 @@ header, .frame,
 header, .header {
   position: fixed;
   top: 0; left: 0; right: 0;
-  background: transparent !important;
+  background: transparent ;
   z-index: 50;
 }
-body { padding-top: 0 !important; overflow-x: hidden; }.section { min-height: 100vh; background-size: cover; background-position: center; }
+body { padding-top: 0 ; overflow-x: hidden; }.section { min-height: 100vh; background-size: cover; background-position: center; }
 #home{background-image:url('/assets/wallpapers/home-hero.webp')}
 #marketplace{background-image:url('/assets/wallpapers/marketplace-bg.webp')}
 #products{background-image:url('/assets/wallpapers/product-bg.webp')}
@@ -1034,26 +1034,26 @@ body { padding-top: 0 !important; overflow-x: hidden; }.section { min-height: 10
   100%{transform:translateX(-50%)}
 }
 html,body{
-  background:none!important;
-  color:#00e5ff!important;
+  background:none;
+  color:#00e5ff;
 }
 
 .hero,.banner,.hero-overlay,.global-banner{
-  display:none!important;
+  display:none;
 }
 
 header{
-  background:transparent!important;
-  border:none!important;
+  background:transparent;
+  border:none;
 }
 
 .search-bar + .search-bar{
-  display:none!important;
+  display:none;
 }
 
 /* Texto azul eléctrico */
 *{
-  color:#00e5ff!important;
+  color:#00e5ff;
   text-shadow:0 0 8px rgba(0,229,255,.9);
 }
 
@@ -1122,7 +1122,7 @@ body{ padding-top:120px; }
 
 /* === RESET TOTAL DE NEGRO === */
 body, html {
-  background: transparent !important;
+  background: transparent ;
   color: #00eaff;
 }
 
@@ -1184,7 +1184,7 @@ section, header, footer, nav, .card {
 
 /* === ELIMINAR BANNERS ASQUEROSOS === */
 .hero, .banner, .headline {
-  display: none !important;
+  display: none ;
 }
 
 
@@ -1197,8 +1197,8 @@ section, header, footer, nav, .card {
 /* Reset real (sin negro por defecto) */
 html, body {
   height: 100%;
-  background: transparent !important;
-  color: #00eaff !important;
+  background: transparent ;
+  color: #00eaff ;
 }
 
 * {
@@ -1238,7 +1238,7 @@ body { margin: 0; overflow-x: hidden; }
   font-weight: 900;
   letter-spacing: 2px;
   font-size: 34px;
-  color: #ffd54a !important;
+  color: #ffd54a ;
   text-shadow:
     0 0 10px rgba(255,213,74,.9),
     0 0 22px rgba(255,0,255,.55),
@@ -1248,7 +1248,7 @@ body { margin: 0; overflow-x: hidden; }
 .brand-sub {
   font-weight: 800;
   font-size: 14px;
-  color: #ffd54a !important;
+  color: #ffd54a ;
   opacity: .95;
   text-shadow: 0 0 12px rgba(255,213,74,.8);
 }
@@ -1267,7 +1267,7 @@ body { margin: 0; overflow-x: hidden; }
   background: rgba(255,255,255,.08);
   border: 2px solid transparent;
   border-image: linear-gradient(90deg,#ff00ff,#00eaff,#00ff88,#ff00ff) 1;
-  color: #00eaff !important;
+  color: #00eaff ;
   box-shadow: 0 0 18px rgba(0,234,255,.8);
 }
 #globalSearch::placeholder { color: rgba(0,234,255,.75); }
@@ -1275,24 +1275,24 @@ body { margin: 0; overflow-x: hidden; }
 /* Fondos por sección (full screen) */
 section, .section {
   min-height: 100vh;
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
+  background-size: cover ;
+  background-position: center ;
+  background-repeat: no-repeat ;
 }
 
 /* Cada sección con su wallpaper */
-#home        { background-image: url('/assets/wallpapers/home-hero.webp') !important; }
-#marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') !important; }
-#products    { background-image: url('/assets/wallpapers/product-bg.webp') !important; }
-#providers   { background-image: url('/assets/wallpapers/providers-bg.webp') !important; }
-#sponsors    { background-image: url('/assets/wallpapers/sponsors-bg.webp') !important; }
-#security    { background-image: url('/assets/wallpapers/security-bg.webp') !important; }
-#blog        { background-image: url('/assets/wallpapers/blog-bg.webp') !important; }
-#account     { background-image: url('/assets/wallpapers/account-bg.webp') !important; }
-#checkout    { background-image: url('/assets/wallpapers/checkout-bg.webp') !important; }
-#ai-lab      { background-image: url('/assets/wallpapers/ai-lab-bg.webp') !important; }
-#global      { background-image: url('/assets/wallpapers/global-banner-bg.webp') !important; }
-#vendor-register { background-image: url('/assets/wallpapers/vendor-register-bg.webp') !important; }
+#home        { background-image: url('/assets/wallpapers/home-hero.webp') ; }
+#marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') ; }
+#products    { background-image: url('/assets/wallpapers/product-bg.webp') ; }
+#providers   { background-image: url('/assets/wallpapers/providers-bg.webp') ; }
+#sponsors    { background-image: url('/assets/wallpapers/sponsors-bg.webp') ; }
+#security    { background-image: url('/assets/wallpapers/security-bg.webp') ; }
+#blog        { background-image: url('/assets/wallpapers/blog-bg.webp') ; }
+#account     { background-image: url('/assets/wallpapers/account-bg.webp') ; }
+#checkout    { background-image: url('/assets/wallpapers/checkout-bg.webp') ; }
+#ai-lab      { background-image: url('/assets/wallpapers/ai-lab-bg.webp') ; }
+#global      { background-image: url('/assets/wallpapers/global-banner-bg.webp') ; }
+#vendor-register { background-image: url('/assets/wallpapers/vendor-register-bg.webp') ; }
 
 /* Overlay suave para legibilidad sin "cartel gris asqueroso" */
 .home-overlay {
@@ -1303,7 +1303,7 @@ section, .section {
 
 /* Prohibido: banners/hero-text gigantes que tapan todo */
 .hero, .banner, .headline, .page-title, .hero-title {
-  display: none !important;
+  display: none ;
 }
 
 /* Grid de productos (10 visibles) */
@@ -1336,7 +1336,7 @@ section, .section {
   font-weight: 900;
   margin-top: 10px;
   font-size: 14px;
-  color: #00eaff !important;
+  color: #00eaff ;
 }
 
 .product-meta {
@@ -1368,49 +1368,49 @@ section, header, nav, footer, .card, .product-card {
 /* Eliminar duplicados de inputs de búsqueda (CSS fallback) */
 input[type="search"] + input[type="search"],
 #globalSearch + input[type="search"] {
-  display: none !important;
+  display: none ;
 }
 /* IRENE-ULTRA-BLOCK-END */
 
 
 /* === FULLSCREEN WALLPAPERS POR SECCIÓN === */
-html, body { background: transparent !important; }
+html, body { background: transparent ; }
 
 .section {
   min-height: 100vh;
-  background-size: cover !important;
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
+  background-size: cover ;
+  background-position: center center ;
+  background-repeat: no-repeat ;
 }
 
 /* HOME */
-#home { background-image: url('/assets/wallpapers/home-hero.webp') !important; }
+#home { background-image: url('/assets/wallpapers/home-hero.webp') ; }
 
 /* MARKETPLACE */
-#marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') !important; }
+#marketplace { background-image: url('/assets/wallpapers/marketplace-bg.webp') ; }
 
 /* PRODUCTS */
-#products { background-image: url('/assets/wallpapers/product-bg.webp') !important; }
+#products { background-image: url('/assets/wallpapers/product-bg.webp') ; }
 
 /* PROVIDERS */
-#providers { background-image: url('/assets/wallpapers/providers-bg.webp') !important; }
+#providers { background-image: url('/assets/wallpapers/providers-bg.webp') ; }
 
 /* SPONSORS */
-#sponsors { background-image: url('/assets/wallpapers/sponsors-bg.webp') !important; }
+#sponsors { background-image: url('/assets/wallpapers/sponsors-bg.webp') ; }
 
 /* SECURITY */
-#security { background-image: url('/assets/wallpapers/security-bg.webp') !important; }
+#security { background-image: url('/assets/wallpapers/security-bg.webp') ; }
 
 /* BLOG */
-#blog { background-image: url('/assets/wallpapers/blog-bg.webp') !important; }
+#blog { background-image: url('/assets/wallpapers/blog-bg.webp') ; }
 
 /* QUANTUM (si existe, solo visual) */
-#quantum { background-image: url('/assets/wallpapers/quantum-bg.webp') !important; }
+#quantum { background-image: url('/assets/wallpapers/quantum-bg.webp') ; }
 /* === END === */
 
 /* SECTION-WALLPAPERS-BEGIN */
 :root{ --electric:#00eaff; }
-html,body{ background:transparent !important; color:var(--electric) !important; }
+html,body{ background:transparent ; color:var(--electric) ; }
 .section{
   min-height:100vh;
   background-size:cover;
@@ -1428,9 +1428,9 @@ html,body{ background:transparent !important; color:var(--electric) !important; 
 /* SECTION-WALLPAPERS-END */
 
 /* HEADER-CLEAN-BEGIN */
-#hero h1, #hero .subtitle, .ia-banner, .operativo-ia { display:none !important; }
-input[type="search"]:not(#globalSearch){ display:none !important; }
-header{ background:transparent !important; }
+#hero h1, #hero .subtitle, .ia-banner, .operativo-ia { display:none ; }
+input[type="search"]:not(#globalSearch){ display:none ; }
+header{ background:transparent ; }
 #brand-title{
   position:fixed; top:16px; right:24px; z-index:1200;
   font-weight:900; letter-spacing:3px;
@@ -1523,7 +1523,7 @@ html, body {
   width:100%;
   height:100%;
   margin:0;
-  background:transparent !important;
+  background:transparent ;
 }
 
 .section{
@@ -1543,12 +1543,12 @@ html, body {
 
 header, .top-tabs, .premium-search-wrap{
   z-index:1000;
-  background:transparent !important;
+  background:transparent ;
 }
 
 main, .wrap, .container{
-  background:transparent !important;
-  box-shadow:none !important;
+  background:transparent ;
+  box-shadow:none ;
 }
 
 img{
@@ -1685,11 +1685,17 @@ img{ content-visibility:auto; }
 img{ content-visibility:auto; }
 .section{ contain:layout paint; }
 @media (prefers-reduced-motion: reduce){
-  *{ animation:none !important; transition:none !important; }
+  *{ animation:none ; transition:none ; }
 }
 /* PERF-FAST-END */
 
 /* A11Y-BEGIN */
 :focus-visible{ outline:3px solid #00eaff; outline-offset:3px; }
-[aria-hidden="true"]{ display:none !important; }
+[aria-hidden="true"]{ display:none ; }
 /* A11Y-END */
+/* NONOMETRIC-BEGIN */
+:root{ --electric:#00eaff; }
+*{ box-sizing:border-box; }
+.section{ isolation:isolate; }
+header, .top-tabs, .premium-search-wrap{ pointer-events:auto; }
+/* NONOMETRIC-END */
