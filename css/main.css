@@ -1733,3 +1733,7 @@ body,html{background:transparent}
 .tabs a:hover{box-shadow:0 0 28px rgba(0,234,255,1)}
 /* OFFSET HEADER */
 .section{padding-top:64px}
+/* IMG-RATIO */
+img{max-width:100%;height:auto}
+.product-card img,.sponsor-card img{aspect-ratio:1/1;object-fit:contain}
+/* IMG-RATIO-END */
