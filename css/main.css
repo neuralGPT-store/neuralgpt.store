@@ -1583,3 +1583,26 @@ form button{ margin-top:10px; }
 }
 #contact button{ width:100%; }
 /* CONTACT-HIDDEN-EMAIL-END */
+
+/* PROVIDERS-GRID-BEGIN */
+.providers-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:18px;
+}
+.provider-card{
+  padding:18px;
+  text-align:center;
+  border-radius:18px;
+  text-decoration:none;
+  color:#00eaff;
+  background:rgba(0,0,0,.25);
+  border:2px solid transparent;
+  border-image:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00) 1;
+  box-shadow:0 0 16px rgba(0,234,255,.55);
+}
+.provider-card:hover{
+  box-shadow:0 0 28px rgba(0,234,255,.95);
+  transform:translateY(-2px);
+}
+/* PROVIDERS-GRID-END */

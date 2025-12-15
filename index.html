@@ -216,6 +216,7 @@
 <script src="/js/spa-nav.js"></script>
 <script src="/js/a11y-wire.js"></script>
 <script src="/js/contact-wire.js"></script>
+<script src="/js/providers-wire.js"></script>
 </body>
     </html>
 
@@ -255,6 +256,7 @@
 <script src="/js/spa-nav.js"></script>
 <script src="/js/a11y-wire.js"></script>
 <script src="/js/contact-wire.js"></script>
+<script src="/js/providers-wire.js"></script>
 </body>
   </html>
 
@@ -264,7 +266,23 @@
 
 <section id='products' class='active-fallback'></section>
 
-<section id='providers' class='active-fallback'></section>
+<section id="providers" class="section">
+  <div class="panel">
+    <h2>Proveedores verificados</h2>
+    <div class="providers-grid">
+      <a class="provider-card" href="#marketplace" data-provider="seeed">Seeed Studio</a>
+      <a class="provider-card" href="#marketplace" data-provider="dfrobot">DFRobot</a>
+      <a class="provider-card" href="#marketplace" data-provider="waveshare">Waveshare</a>
+      <a class="provider-card" href="#marketplace" data-provider="sparkfun">SparkFun</a>
+      <a class="provider-card" href="#marketplace" data-provider="adafruit">Adafruit</a>
+      <a class="provider-card" href="#marketplace" data-provider="nvidia">NVIDIA Jetson</a>
+      <a class="provider-card" href="#marketplace" data-provider="luxonis">Luxonis</a>
+      <a class="provider-card" href="#marketplace" data-provider="robotis">Robotis</a>
+      <a class="provider-card" href="#marketplace" data-provider="jlcpcb">JLCPCB</a>
+      <a class="provider-card" href="#marketplace" data-provider="pcbway">PCBWay</a>
+    </div>
+  </div>
+</section>
 
 <section id='sponsors' class='active-fallback'></section>
 
@@ -324,6 +342,8 @@ products.forEach(p=>{
   grid.appendChild(d);
 });
 </script>
+
+
 
 
 
