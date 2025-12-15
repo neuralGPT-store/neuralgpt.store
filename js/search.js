@@ -1,22 +1,14 @@
-(async()=>{
-  const q=document.getElementById('q');
-  if(!q) return;
-  const [products,providers,sponsors]=await Promise.all([
-    fetch('/data/products.json').then(r=>r.json()),
-    fetch('/data/providers.json').then(r=>r.json()),
-    fetch('/data/sponsors.json').then(r=>r.json())
-  ]);
-  const all=[...products,...providers,...sponsors].map(x=>({
-    name:(x.name||'').toLowerCase(),
-    el:x
-  }));
-  q.addEventListener('input',()=>{
-    const v=q.value.toLowerCase();
-    document.querySelectorAll('.product-card,.sec-card,.sp-card').forEach(c=>c.style.display='');
-    if(!v) return;
-    document.querySelectorAll('.product-card,.sec-card,.sp-card').forEach(c=>{
-      const t=c.textContent.toLowerCase();
-      if(!t.includes(v)) c.style.display='none';
-    });
-  });
+(()=>{
+  const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const match=(p,q)=> norm(p.title+' '+p.brand+' '+p.desc).includes(q);
+
+  window.searchCatalog=(q,filters={})=>{
+    q=norm(q||'');
+    let r = (window.CATALOG?.products||[]);
+    if(q) r = r.filter(p=>match(p,q));
+    if(filters.category) r = r.filter(p=>p.category===filters.category);
+    if(filters.min) r = r.filter(p=>p.price>=filters.min);
+    if(filters.max) r = r.filter(p=>p.price<=filters.max);
+    return r;
+  };
 })();
