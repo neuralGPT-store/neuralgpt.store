@@ -1620,3 +1620,50 @@ form button{ margin-top:10px; }
 /* PERF-HARDEN */
 .section{ contain:layout paint; }
 img{ content-visibility:auto; }
+
+/* GOD-UX-BEGIN */
+
+/* Protagonista por sección */
+.section h1, .section h2 { letter-spacing:.6px; }
+.section h1{ font-size:clamp(28px,3vw,44px); }
+.section h2{ font-size:clamp(20px,2.2vw,28px); opacity:.95; }
+
+/* Cards que respiran */
+.card, .rotator-card, .provider-card{
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+}
+.card:hover, .rotator-card:hover, .provider-card:hover{
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 0 34px rgba(0,234,255,.9);
+  filter: saturate(1.1);
+}
+
+/* Transición SPA suave */
+.section{ transition: opacity .22s ease, transform .22s ease; }
+.section.hide{ opacity:0; transform: scale(.98); }
+.section.show{ opacity:1; transform: scale(1); }
+
+/* Tooltips discretos */
+.tip{ position:relative; }
+.tip:hover::after{
+  content: attr(data-tip);
+  position:absolute; bottom:120%; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,.6); padding:8px 12px; border-radius:12px;
+  white-space:nowrap; box-shadow:0 0 16px rgba(0,234,255,.6);
+}
+
+/* Sellos de confianza */
+.trust{ display:flex; gap:14px; flex-wrap:wrap; }
+.trust .seal{
+  padding:10px 14px; border-radius:999px;
+  background:rgba(0,0,0,.35);
+  border:2px solid transparent;
+  border-image:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00) 1;
+}
+
+/* Footer emocional */
+.footer-epic{
+  text-align:center; padding:28px 16px; opacity:.95;
+}
+
+/* GOD-UX-END */
