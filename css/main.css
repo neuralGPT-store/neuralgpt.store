@@ -1614,3 +1614,6 @@ form button{ margin-top:10px; }
   gap:18px;
 }
 /* MARKETPLACE-GRID-END */
+
+/* PERF-PRELOAD */
+.section{ will-change:transform; }
