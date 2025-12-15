@@ -392,6 +392,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 <section id='blog' class='active-fallback'></section>
 
 <section id="contact" class="section">
+<form id="contact-form" class="card">
+  <input name="name" placeholder="Nombre" required>
+  <input name="email" type="email" placeholder="Email" required>
+  <textarea name="message" placeholder="Mensaje" required></textarea>
+  <button type="submit">Enviar</button>
+</form>
   <div class="panel">
     <h2>Contacto</h2>
     <form id="contactForm" action="mailto:contacto@neuralgpt.store" method="post" enctype="text/plain">
@@ -441,6 +447,7 @@ products.forEach(p=>{
   grid.appendChild(d);
 });
 </script>
+
 
 
 
