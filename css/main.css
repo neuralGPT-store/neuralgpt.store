@@ -1,43 +1,62 @@
-/* RESET TOTAL */
-*{box-sizing:border-box; outline:none!important; transform:none!important;}
+/* RESET REAL */
+*{box-sizing:border-box;}
 html,body{
   margin:0; padding:0;
   width:100%;
-  height:auto;
-  background:transparent!important;
-  color:#00eaff!important;
+  height:100%;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+  background:#000;
+  color:#eafcff;
   font-family:system-ui,Segoe UI,Arial;
 }
 
-/* HEADER FIJO ARRIBA, ESTILO AMAZON */
+/* HEADER FIJO */
 header{
-  position:fixed; top:0; left:0; right:0; z-index:9999;
-  background:rgba(0,0,0,.35);
-  backdrop-filter:blur(8px);
+  position:fixed;
+  top:0; left:0; right:0;
+  height:72px;
+  z-index:9999;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(10px);
 }
-main{ padding-top:84px; }
+main{ margin-top:72px; }
 
-/* UNA SOLA PÁGINA: SECCIONES EN COLUMNA */
+/* SECCIONES CONTROLADAS */
 section{
-  position:relative;
-  min-height:100vh;
-  display:block!important;
-  background-size:cover!important;
-  background-position:center!important;
-  background-repeat:no-repeat!important;
+  width:100%;
+  padding:80px 64px;
+  display:block;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
 }
 
-/* FONDOS POR SECCIÓN (TUS IMÁGENES) */
-#home{background-image:url('/assets/wallpapers/home-hero.webp');}
-#marketplace{background-image:url('/assets/wallpapers/marketplace-bg.webp');}
-#products{background-image:url('/assets/wallpapers/product-bg.webp');}
-#providers{background-image:url('/assets/wallpapers/providers-bg.webp');}
-#security{background-image:url('/assets/wallpapers/security-bg.webp');}
-#blog{background-image:url('/assets/wallpapers/blog-bg.webp');}
-#account{background-image:url('/assets/wallpapers/account-bg.webp');}
+/* SOLO HOME ES FULLSCREEN */
+#home{
+  min-height:calc(100vh - 72px);
+  display:flex;
+  align-items:center;
+}
 
-/* TEXTO AZUL RAYO */
-*{color:#00eaff!important; text-shadow:0 0 10px rgba(0,234,255,.9);}
+/* RESTO NORMAL (NO INFINITO) */
+#marketplace,
+#products,
+#providers,
+#security,
+#blog,
+#account{
+  min-height:auto;
+}
 
-/* QUITAR CAJAS/DEBUG */
-[class*='debug'], [style*='outline']{display:none!important;}
+/* CONTENIDO CENTRADO */
+.section-inner{
+  max-width:1200px;
+  margin:0 auto;
+}
+
+/* TEXTO LEGIBLE */
+h1,h2,h3,p,li{max-width:900px;}
+
+/* QUITAR MIERDAS VISUALES */
+canvas, video, iframe{display:none!important;}
