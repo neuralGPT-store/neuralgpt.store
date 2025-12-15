@@ -215,6 +215,7 @@
 <script src="/js/unblock-backgrounds.js"></script>
 <script src="/js/spa-nav.js"></script>
 <script src="/js/a11y-wire.js"></script>
+<script src="/js/contact-wire.js"></script>
 </body>
     </html>
 
@@ -253,6 +254,7 @@
 <script src="/js/unblock-backgrounds.js"></script>
 <script src="/js/spa-nav.js"></script>
 <script src="/js/a11y-wire.js"></script>
+<script src="/js/contact-wire.js"></script>
 </body>
   </html>
 
@@ -272,7 +274,26 @@
 
 <section id='blog' class='active-fallback'></section>
 
-<section id='contact' class='active-fallback'></section>
+<section id="contact" class="section">
+  <div class="panel">
+    <h2>Contacto directo</h2>
+    <p class="hint">Cuéntanos qué necesitas. Respondemos rápido.</p>
+    <form id="contactForm">
+      <input type="text" name="name" placeholder="Tu nombre" required />
+      <input type="email" name="email" placeholder="Tu email" required />
+      <select name="topic" required>
+        <option value="">¿Sobre qué?</option>
+        <option>Productos</option>
+        <option>Proveedores</option>
+        <option>Patrocinios</option>
+        <option>Soporte</option>
+      </select>
+      <textarea name="msg" placeholder="Mensaje" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+    <div id="contactOK" style="display:none">Mensaje enviado ✔</div>
+  </div>
+</section>
 
 <section id='legal' class='active-fallback'></section>
 
@@ -305,6 +326,8 @@ products.forEach(p=>{
   grid.appendChild(d);
 });
 </script>
+
+
 
 
 

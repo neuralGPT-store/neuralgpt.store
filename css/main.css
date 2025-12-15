@@ -1562,3 +1562,15 @@ a, button{ cursor:pointer; }
 a[aria-disabled="true"], .disabled{ pointer-events:none; opacity:.6; }
 .section .panel{ pointer-events:auto; }
 /* OPERATIVE-STATES-END */
+
+/* DIDACTIC-UX-BEGIN */
+.panel{ background:rgba(0,0,0,.25); padding:22px; border-radius:18px; }
+.hint{ opacity:.85; }
+form input, form select, form textarea{
+  width:100%; margin:8px 0; padding:12px 16px;
+  border-radius:14px; background:rgba(0,0,0,.35);
+  color:#00eaff; border:2px solid transparent;
+  border-image:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00) 1;
+}
+form button{ margin-top:10px; }
+/* DIDACTIC-UX-END */
