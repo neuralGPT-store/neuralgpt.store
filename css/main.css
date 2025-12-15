@@ -1617,3 +1617,6 @@ form button{ margin-top:10px; }
 
 /* PERF-PRELOAD */
 .section{ will-change:transform; }
+/* PERF-HARDEN */
+.section{ contain:layout paint; }
+img{ content-visibility:auto; }
