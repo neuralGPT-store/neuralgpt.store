@@ -276,22 +276,20 @@
 
 <section id="contact" class="section">
   <div class="panel">
-    <h2>Contacto directo</h2>
-    <p class="hint">Cuéntanos qué necesitas. Respondemos rápido.</p>
-    <form id="contactForm">
-      <input type="text" name="name" placeholder="Tu nombre" required />
-      <input type="email" name="email" placeholder="Tu email" required />
-      <select name="topic" required>
-        <option value="">¿Sobre qué?</option>
+    <h2>Contacto</h2>
+    <form id="contactForm" action="mailto:contacto@neuralgpt.store" method="post" enctype="text/plain">
+      <input type="text" name="Nombre" placeholder="Tu nombre" required />
+      <input type="email" name="Email" placeholder="Tu email" required />
+      <select name="Tema" required>
+        <option value="">Motivo</option>
         <option>Productos</option>
         <option>Proveedores</option>
-        <option>Patrocinios</option>
+        <option>Sponsors</option>
         <option>Soporte</option>
       </select>
-      <textarea name="msg" placeholder="Mensaje" required></textarea>
+      <textarea name="Mensaje" placeholder="Mensaje" required></textarea>
       <button type="submit">Enviar</button>
     </form>
-    <div id="contactOK" style="display:none">Mensaje enviado ✔</div>
   </div>
 </section>
 
@@ -326,6 +324,7 @@ products.forEach(p=>{
   grid.appendChild(d);
 });
 </script>
+
 
 
 

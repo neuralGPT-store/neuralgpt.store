@@ -1574,3 +1574,12 @@ form input, form select, form textarea{
 }
 form button{ margin-top:10px; }
 /* DIDACTIC-UX-END */
+
+/* CONTACT-HIDDEN-EMAIL-BEGIN */
+#contact .panel{ max-width:520px; margin:auto; }
+#contact input,#contact select,#contact textarea{
+  width:100%; margin:10px 0; padding:14px 18px;
+  border-radius:16px;
+}
+#contact button{ width:100%; }
+/* CONTACT-HIDDEN-EMAIL-END */
