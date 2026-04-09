@@ -1,46 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeuralGPT.store · Mantenimiento</title>
-<style>
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  background:#000;
-  color:#00eaff;
-  font-family:system-ui,Segoe UI,Roboto,Arial;
-}
-.maintenance{
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-.box{
-  padding:40px 60px;
-  border-radius:22px;
-  border:2px solid transparent;
-  background:
-    linear-gradient(#000,#000) padding-box,
-    linear-gradient(90deg,#00eaff,#7f00ff,#ff0080,#00eaff) border-box;
-  box-shadow:0 0 40px rgba(0,234,255,.4);
-}
-h1{margin:0 0 20px;font-size:32px}
-p{margin:0;font-size:18px;opacity:.85}
-</style>
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  
+ 
+  <meta name="theme-color" content="#00040D" />
+  <title>neuralgpt.store — Your Technological Marketplace (backup)</title>
+  <meta name="description" content="neuralgpt.store — Premium marketplace for hardware, AI, sensors, robotics, dev boards and industrial components." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/img/vision-pro.svg" as="image">
+  <link rel="icon" href="/favicon.ico">
+  <style>
+    /* Critical styles preserved for backup view */
+    :root{--bg:#00040D;--muted:#9aa3b2;--accent:#08f}
+    html,body{height:100%;margin:0;background:var(--bg);color:#e6f0ff;font-family:Orbitron,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial sans-serif}
+  </style>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
 </head>
-<body>
-<div class="maintenance">
-  <div class="box">
-    <h1>NeuralGPT.store</h1>
-    <p>Mantenimiento en curso</p>
-    <p>Volvemos pronto</p>
-  </div>
-</div>
+<body class="site-root">
+  <header class="site-header premium-header rgb-border" role="banner">
+    <div class="wrap header-inner" style="align-items:center">
+      <a class="brand" href="/" aria-label="NeuralGPT Store">neuralgpt.store</a>
+      <nav class="main-nav" aria-label="Principal">
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/marketplace.html">Marketplace</a></li>
+          <li><a href="/providers.html">Proveedores</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero-card">
+      <h1>Backup — neuralgpt.store</h1>
+      <p class="subtle">Copia preservada del sitio.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">© neuralgpt.store — backup</div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>
+            <div style="flex:1">
+              <h3>NeuralEdge</h3>
+              <p class="subtle">Hardware y soporte optimizado.</p>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <a class="btn" href="/providers-view.html?provider=neuraledge">Ver perfil</a>
+              <a class="btn btn-primary" href="/providers.html">Regístrate como proveedor</a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <script>
+        // root search to marketplace
+        document.getElementById('site-search')?.addEventListener('keydown', function(e){
+          if(e.key === 'Enter'){
+            const q = encodeURIComponent(this.value.trim());
+            location.href = '/marketplace.html'+(q?('?search='+q):'');
+          }
+        });
+      </script>
+
+      <script src="/assets/js/quantum-security.js" defer></script>
+      <script src="/assets/js/sponsors.js" defer></script>
+      <script src="/assets/js/main.js" defer></script>
+
+      <footer class="site-footer premium-footer" role="contentinfo">
+        <div class="wrap footer-grid">
+          <div>
+            <a class="brand footer-brand" href="/">neuralgpt.store</a>
+            <p class="subtle">Marketplace premium para hardware, soluciones IA y proveedores especializados.</p>
+          </div>
+          <div>
+            <strong>Empresa</strong>
+            <nav class="foot-nav">
+              <a href="/about.html">Acerca</a>
+              <a href="/sponsors.html">Partners</a>
+              <a href="/guides.html">Guías</a>
+            </nav>
+          </div>
+          <div>
+            <strong>Proveedores</strong>
+            <nav class="foot-nav">
+              <a href="/providers.html">Listado</a>
+              <a href="/providers.html#join">Regístrate</a>
+              <a href="/providers.html">Portal</a>
+            </nav>
+          </div>
+          <div>
+            <strong>Legal & API</strong>
+            <nav class="foot-nav">
+              <a href="/legal.html">Términos</a>
+              <a href="/privacy.html">Privacidad</a>
+              <a href="/api.html">API (próximamente)</a>
+            </nav>
+          </div>
+        </div>
+        <div class="wrap" style="margin-top:18px;display:flex;align-items:center;justify-content:space-between">
+          <form id="newsletter" action="#" onsubmit="event.preventDefault();document.getElementById('newsletter-msg').innerText='¡Gracias! Suscripción confirmada.'">
+            <label for="newsletter-email" class="muted">Newsletter</label>
+            <input id="newsletter-email" class="search-input" type="email" placeholder="Tu correo" aria-label="Correo para newsletter">
+            <button class="btn btn-primary" type="submit">Suscribirme</button>
+            <span id="newsletter-msg" class="muted" style="margin-left:12px"></span>
+          </form>
+          <div class="muted">© neuralgpt.store — 2025</div>
+        </div>
+      </footer>
+
+      <script>
+        document.getElementById('global-search')?.addEventListener('input', function(e){
+          // client-side filtering for demo content
+          const q = e.target.value.toLowerCase();
+          document.querySelectorAll('.grid .card').forEach(card => {
+            const txt = (card.innerText||'').toLowerCase();
+            card.style.display = q && txt.indexOf(q)===-1 ? 'none' : '';
+          });
+        });
+      </script>
+    </body>
+    </html>
+
+  </main>
+  </body>
+  </html>
