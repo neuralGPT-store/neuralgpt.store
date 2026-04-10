@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "language": "es",
-  "botName": "NeuralBot",
-  "greeting": "¡Hola! Soy NeuralBot, el asistente de neuralgpt.store. ¿En qué puedo ayudarte hoy?",
+  "botName": "Chany",
+  "greeting": "¡Hola! Soy Chany, el asistente de neuralgpt.store. ¿En qué puedo ayudarte hoy?",
   "fallback": "No encontré una respuesta exacta para eso. Puedes escribirnos a wilfreyera@gmail.com o explorar nuestro marketplace.",
   "intents": [
     {

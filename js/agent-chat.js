@@ -1,5 +1,5 @@
 /**
- * NeuralBot — Agente IA flotante para neuralgpt.store
+ * Chany — Agente IA flotante para neuralgpt.store
  * Sin API externa. Lee /data/agent-kb.json y usa keyword matching.
  */
 (function () {
@@ -14,13 +14,13 @@
 
     const html = `
 <div class="ai-chat" id="neural-chat" role="complementary" aria-label="Asistente IA">
-  <button class="chat-toggle" id="chat-toggle-btn" aria-label="Abrir asistente IA" aria-expanded="false" title="NeuralBot — Asistente IA">
+  <button class="chat-toggle" id="chat-toggle-btn" aria-label="Abrir asistente IA" aria-expanded="false" title="Chany — Asistente IA">
     🤖
   </button>
-  <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat con NeuralBot" aria-modal="true">
+  <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat con Chany" aria-modal="true">
     <div class="chat-header">
       <div>
-        <div class="chat-header-title">🤖 NEURALBOT</div>
+        <div class="chat-header-title">🤖 CHANY</div>
         <div style="font-size:0.65rem;color:var(--muted);font-family:var(--font-body)">Asistente de neuralgpt.store</div>
       </div>
       <button class="chat-close" id="chat-close-btn" aria-label="Cerrar chat" title="Cerrar">✕</button>
@@ -54,7 +54,7 @@
       .catch(() => {
         // Fallback inline si fetch falla
         kb = { fallback: 'Escríbenos a wilfreyera@gmail.com', intents: [] };
-        addBotMsg('¡Hola! Soy NeuralBot. ¿En qué puedo ayudarte?');
+        addBotMsg('¡Hola! Soy Chany. ¿En qué puedo ayudarte?');
         renderSuggestions(['Productos', 'Precios', 'Vender']);
       });
   }
