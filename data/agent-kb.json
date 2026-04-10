@@ -1,0 +1,84 @@
+{
+  "version": "1.0",
+  "language": "es",
+  "botName": "NeuralBot",
+  "greeting": "¡Hola! Soy NeuralBot, el asistente de neuralgpt.store. ¿En qué puedo ayudarte hoy?",
+  "fallback": "No encontré una respuesta exacta para eso. Puedes escribirnos a wilfreyera@gmail.com o explorar nuestro marketplace.",
+  "intents": [
+    {
+      "id": "greeting",
+      "keywords": ["hola", "hello", "hi", "buenos días", "buenas tardes", "buenas noches", "saludos", "hey"],
+      "response": "¡Hola! Bienvenido/a a neuralgpt.store. Soy tu asistente virtual. Puedo ayudarte con información sobre productos, precios, cómo vender o cualquier duda del marketplace. ¿Qué necesitas?"
+    },
+    {
+      "id": "ghostwriter",
+      "keywords": ["ghostwriter", "escritura", "redacción", "blog", "artículos", "contenido", "textos", "copyriting"],
+      "response": "📝 GhostWriter es nuestro asistente de redacción con IA. Genera artículos de blog, copies de marketing, emails y contenido SEO en segundos. Compatible con Linux, Windows y Mac. Precio desde 19€/mes. ¿Quieres verlo en el marketplace?"
+    },
+    {
+      "id": "neuralbill",
+      "keywords": ["neuralbill", "factura", "facturación", "contabilidad", "invoice", "billing", "bill"],
+      "response": "💳 NeuralBill es nuestra solución de facturación automatizada con IA. Genera facturas, controla gastos y genera informes fiscales automáticamente. Integra con Stripe. Precio: 29€/mes. ¿Te interesa?"
+    },
+    {
+      "id": "pokerbot",
+      "keywords": ["pokerbot", "poker", "casino", "cartas", "juego", "bot", "póker"],
+      "response": "🃏 PokerBot es un analizador de manos de póker con IA. Aprende estrategias ganadoras, analiza tu juego y te da sugerencias en tiempo real. Solo para uso en partidas privadas y aprendizaje. Precio: 39€. ¿Quieres saber más?"
+    },
+    {
+      "id": "prices",
+      "keywords": ["precio", "precios", "coste", "costar", "cuánto cuesta", "cuanto", "tarifa", "cuánto vale", "price"],
+      "response": "💰 Nuestros productos tienen precios desde 9€ hasta 99€. Puedes ver todos los precios en /pricing.html o navegar el marketplace en /marketplace.html. También ofrecemos planes de suscripción mensual con descuento. ¿Buscas algo en concreto?"
+    },
+    {
+      "id": "commission",
+      "keywords": ["comisión", "comision", "vender", "vendedor", "proveedor", "seller", "porcentaje", "15%", "20%"],
+      "response": "📊 Modelo de comisiones:\n• Periodo de lanzamiento: 15% sobre ventas\n• A partir del 1 de septiembre 2025: 20%\nEl pago al vendedor es mensual via Stripe. Sin cuota mensual fija, solo pagas si vendes. ¿Quieres registrarte como vendedor?"
+    },
+    {
+      "id": "sell",
+      "keywords": ["quiero vender", "publicar", "subir software", "mi producto", "como vender", "cómo vendo", "registro", "registrar", "alta de vendedor"],
+      "response": "🚀 ¡Genial! Para vender en neuralgpt.store:\n1. Regístrate en /provider-register.html\n2. Nuestro equipo verifica tu software (anti-malware, seguridad)\n3. Publicas tu producto con precio\n4. Cobras mensualmente vía Stripe\nComisión del 15% en lanzamiento. ¿Tienes alguna duda sobre el proceso?"
+    },
+    {
+      "id": "security",
+      "keywords": ["seguridad", "seguro", "malware", "virus", "verificado", "confianza", "verificación", "safe"],
+      "response": "🛡️ Todo el software en neuralgpt.store pasa por verificación:\n• Análisis anti-malware automático\n• Revisión manual de código\n• Badge 'Software Verificado' visible en cada producto\n• Pagos procesados 100% por Stripe (PCI-DSS)\nPuedes ver nuestra política en /security.html"
+    },
+    {
+      "id": "payment",
+      "keywords": ["pago", "pagar", "comprar", "stripe", "tarjeta", "visa", "mastercard", "paypal", "cómo pago"],
+      "response": "💳 Aceptamos:\n• Tarjetas Visa/Mastercard/Amex vía Stripe\n• Apple Pay y Google Pay\n• PayPal\nTodos los pagos son seguros (SSL + Stripe PCI-DSS). Tras el pago, la descarga es inmediata y automática."
+    },
+    {
+      "id": "platforms",
+      "keywords": ["plataforma", "linux", "windows", "android", "mac", "ios", "compatible", "sistema operativo", "os"],
+      "response": "💻 Nuestros productos están disponibles para:\n• Linux (prioritario, muchos optimizados para BlackArch)\n• Windows 10/11\n• Android\n• Algunos son multiplataforma\nPuedes filtrar por plataforma en el marketplace. ¿Buscas algo para una plataforma específica?"
+    },
+    {
+      "id": "download",
+      "keywords": ["descarga", "descargar", "download", "acceso", "cómo descargo", "donde descargo"],
+      "response": "⬇️ El proceso de descarga es:\n1. Compra el producto\n2. Recibes el enlace de descarga inmediatamente\n3. También tienes el enlace en tu email de confirmación\nLas actualizaciones futuras están incluidas en la compra."
+    },
+    {
+      "id": "contact",
+      "keywords": ["contacto", "contactar", "email", "correo", "soporte", "support", "ayuda", "help", "problema"],
+      "response": "📧 Puedes contactarnos en:\n• Email: wilfreyera@gmail.com\n• Página de contacto: /contact.html\n• Para soporte técnico incluye tu número de pedido\nRespondemos en menos de 24h laborables."
+    },
+    {
+      "id": "about",
+      "keywords": ["qué es", "que es", "neuralgpt", "empresa", "quiénes sois", "about", "información"],
+      "response": "🧠 neuralgpt.store es un marketplace premium de software creado con inteligencia artificial. Conectamos desarrolladores que crean herramientas con IA con usuarios que las necesitan. Verificamos todo el software antes de publicarlo. Fundado en 2025."
+    },
+    {
+      "id": "categories",
+      "keywords": ["categoría", "categorias", "tipo", "tipos", "automatización", "ia", "inteligencia artificial", "seguridad", "datos"],
+      "response": "📁 Categorías disponibles:\n• ⚡ Automatización — Scripts, bots, workflows\n• 🤖 Inteligencia Artificial — Modelos, agentes\n• 🛡️ Seguridad — Pentesting, auditoría\n• 🌐 Web & APIs — Scrapers, dashboards\n• 📊 Datos & Analytics\n• 🐧 Linux & Sistemas\nExplóralas en /marketplace.html"
+    },
+    {
+      "id": "refund",
+      "keywords": ["reembolso", "devolución", "devolver", "refund", "no funciona", "no me gusta"],
+      "response": "↩️ Nuestra política de devoluciones:\n• 7 días para solicitar reembolso si el producto no funciona como se describe\n• Escribe a wilfreyera@gmail.com con tu número de pedido\n• Los productos con descarga completada pueden tener condiciones especiales\nVer política completa en /terms.html"
+    }
+  ]
+}

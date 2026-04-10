@@ -4,6 +4,8 @@
 
 # Credentials / private keys
 *.json
+# Excepción: archivos de datos del sitio (no contienen credenciales)
+!data/*.json
 
 # Node
 node_modules/
