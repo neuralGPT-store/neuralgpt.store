@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
   <title>neuralgpt.store — Marketplace de Software e IA</title>
-  <meta name="description" content="neuralgpt.store — Marketplace premium de software, herramientas de IA, automatizaciones y soluciones tecnológicas." />
+  <meta name="description" content="neuralgpt.store — Marketplace premium de software, herramientas de IA, automatizaciones y soluciones tecnológicas. Verificado, seguro y con pago Stripe." />
   <meta property="og:title" content="neuralgpt.store — Marketplace de Software e IA" />
-  <meta property="og:description" content="Descubre y compra software profesional, herramientas de IA y automatizaciones creadas con inteligencia artificial." />
+  <meta property="og:description" content="Descubre y compra software profesional creado con inteligencia artificial." />
   <meta property="og:site_name" content="neuralgpt.store" />
   <meta property="og:url" content="https://neuralgpt.store/" />
-  <meta property="og:image" content="/assets/img/vision-pro.svg" />
+  <meta property="og:image" content="https://neuralgpt.store/assets/img/og-home.png" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Frame-Options" content="DENY">
@@ -20,175 +20,694 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
-  <style>
-    :root{--bg:#00040D;--accent:#00eaff;--accent2:#7f00ff;--accent3:#ff0080;--accent4:#00ff99;--text:#e6f0ff;--muted:#7a8ba0;--rgb:linear-gradient(90deg,#00eaff,#7f00ff,#ff0080,#00ff99,#00eaff);--card-bg:rgba(0,10,25,0.7);--border:rgba(0,234,255,0.18)}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html,body{background:var(--bg);color:var(--text);font-family:Orbitron,system-ui,Arial,sans-serif;min-height:100%}
-    .site-header{position:sticky;top:0;z-index:100;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(0,4,13,0.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-    .brand{font-size:1.2rem;font-weight:900;color:var(--accent);text-decoration:none;letter-spacing:1px}
-    .brand span{color:var(--accent3)}
-    .main-nav ul{list-style:none;display:flex;gap:28px}
-    .main-nav a{color:var(--muted);text-decoration:none;font-size:0.78rem;font-weight:600;letter-spacing:1px;transition:color .2s}
-    .main-nav a:hover{color:var(--accent)}
-    .header-actions{display:flex;gap:12px;align-items:center}
-    .hero{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(0,234,255,0.07) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 80% 70%,rgba(127,0,255,0.06) 0%,transparent 60%),var(--bg)}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;border-radius:999px;border:1px solid var(--border);background:rgba(0,234,255,0.06);font-size:0.72rem;letter-spacing:2px;color:var(--accent);margin-bottom:32px}
-    .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent4);animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-    .hero h1{font-size:clamp(2.2rem,6vw,5rem);font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:24px;background:linear-gradient(135deg,#fff 0%,var(--accent) 50%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hero p{font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);max-width:600px;line-height:1.7;margin-bottom:40px;font-family:system-ui,Arial,sans-serif;font-weight:400}
-    .hero-search{display:flex;max-width:520px;width:100%;border-radius:14px;overflow:hidden;border:1.5px solid var(--border);background:rgba(0,10,25,0.8)}
-    .hero-search input{flex:1;padding:16px 20px;background:transparent;color:var(--text);font-family:system-ui,Arial,sans-serif;font-size:0.95rem;border:none;outline:none}
-    .hero-search input::placeholder{color:var(--muted)}
-    .hero-search button{padding:16px 24px;background:var(--accent);color:#000;font-weight:700;font-size:0.85rem;border:none;cursor:pointer;font-family:Orbitron,system-ui;letter-spacing:1px;transition:background .2s}
-    .hero-search button:hover{background:var(--accent4)}
-    .stats-bar{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;padding:40px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(0,234,255,0.02)}
-    .stat{text-align:center}
-    .stat-num{font-size:2rem;font-weight:900;color:var(--accent);display:block}
-    .stat-label{font-size:0.72rem;color:var(--muted);letter-spacing:2px;margin-top:4px}
-    .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
-    .section{padding:80px 0}
-    .section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;margin-bottom:12px;letter-spacing:-0.5px}
-    .section-sub{color:var(--muted);font-family:system-ui,Arial,sans-serif;font-size:1rem;margin-bottom:48px}
-    .categories-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-    .cat-card{border-radius:18px;padding:28px 20px;background:var(--card-bg);border:1.5px solid var(--border);text-decoration:none;color:var(--text);transition:border-color .2s,transform .2s,box-shadow .2s;display:flex;flex-direction:column;gap:12px}
-    .cat-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,234,255,0.12)}
-    .cat-icon{font-size:2rem}
-    .cat-name{font-size:0.9rem;font-weight:700;letter-spacing:1px}
-    .cat-desc{font-size:0.78rem;color:var(--muted);font-family:system-ui,Arial,sans-serif;line-height:1.5}
-    .cat-count{font-size:0.72rem;color:var(--accent);letter-spacing:1px;margin-top:auto}
-    .products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-    .product-card{border-radius:20px;overflow:hidden;background:var(--card-bg);border:1.5px solid var(--border);transition:border-color .2s,transform .2s,box-shadow .2s;display:flex;flex-direction:column}
-    .product-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,234,255,0.1)}
-    .product-img{height:160px;background:linear-gradient(135deg,rgba(0,234,255,0.08),rgba(127,0,255,0.08));display:flex;align-items:center;justify-content:center;font-size:3rem}
-    .product-body{padding:20px;flex:1;display:flex;flex-direction:column;gap:10px}
-    .product-tag{font-size:0.68rem;letter-spacing:2px;color:var(--accent2);font-weight:700}
-    .product-name{font-size:1rem;font-weight:700;line-height:1.3}
-    .product-desc{font-size:0.82rem;color:var(--muted);font-family:system-ui,Arial,sans-serif;line-height:1.6;flex:1}
-    .product-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
-    .product-price{font-size:1.2rem;font-weight:900;color:var(--accent)}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:10px;font-size:0.8rem;font-weight:700;letter-spacing:1px;cursor:pointer;text-decoration:none;border:1.5px solid var(--border);color:var(--text);background:transparent;transition:all .2s;font-family:Orbitron,system-ui}
-    .btn:hover{border-color:var(--accent);color:var(--accent)}
-    .btn-primary{background:var(--accent);color:#000;border-color:var(--accent)}
-    .btn-primary:hover{background:var(--accent4);border-color:var(--accent4);color:#000}
-    .btn-lg{padding:14px 32px;font-size:0.88rem;border-radius:12px}
-    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-    .feature-card{padding:28px;border-radius:18px;background:var(--card-bg);border:1.5px solid var(--border)}
-    .feature-icon{font-size:2rem;margin-bottom:16px}
-    .feature-title{font-size:0.95rem;font-weight:700;margin-bottom:10px;letter-spacing:0.5px}
-    .feature-desc{font-size:0.82rem;color:var(--muted);font-family:system-ui,Arial,sans-serif;line-height:1.6}
-    .cta-section{text-align:center;padding:100px 24px;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(0,234,255,0.06) 0%,transparent 70%);border-top:1px solid var(--border)}
-    .cta-section h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;margin-bottom:16px}
-    .cta-section p{color:var(--muted);font-family:system-ui,Arial,sans-serif;max-width:500px;margin:0 auto 40px;line-height:1.7}
-    .site-footer{background:rgba(0,4,13,0.95);border-top:1px solid var(--border);padding:48px 32px 24px}
-    .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px;max-width:1200px;margin:0 auto 40px}
-    .footer-col h4{font-size:0.78rem;letter-spacing:2px;color:var(--accent);margin-bottom:16px}
-    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-    .footer-col a{color:var(--muted);text-decoration:none;font-size:0.82rem;font-family:system-ui,Arial,sans-serif;transition:color .2s}
-    .footer-col a:hover{color:var(--text)}
-    .footer-bottom{text-align:center;color:var(--muted);font-size:0.75rem;font-family:system-ui,Arial,sans-serif;padding-top:24px;border-top:1px solid var(--border);max-width:1200px;margin:0 auto}
-    .rgb-divider{height:2px;background:var(--rgb)}
-    @media(max-width:768px){.site-header{padding:0 16px}.main-nav{display:none}.hero{padding:40px 16px;min-height:80vh}.stats-bar{gap:24px}.section{padding:48px 0}}
-  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"neuralgpt.store","url":"https://neuralgpt.store","potentialAction":{"@type":"SearchAction","target":"https://neuralgpt.store/marketplace.html?search={search_term_string}","query-input":"required name=search_term_string"}}
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+  <!-- ── HEADER ── -->
   <header class="site-header" role="banner">
     <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
-    <nav class="main-nav" aria-label="Principal">
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
       <ul>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/marketplace.html">Marketplace</a></li>
-        <li><a href="/providers.html">Proveedores</a></li>
-        <li><a href="/pricing.html">Precios</a></li>
-        <li><a href="/blog.html">Blog</a></li>
-        <li><a href="/contact.html">Contacto</a></li>
+        <li><a href="/" aria-current="page" data-i18n="nav_home">Inicio</a></li>
+        <li><a href="/marketplace.html" data-i18n="nav_marketplace">Marketplace</a></li>
+        <li><a href="/providers.html" data-i18n="nav_providers">Proveedores</a></li>
+        <li><a href="/pricing.html" data-i18n="nav_pricing">Precios</a></li>
+        <li><a href="/blog.html" data-i18n="nav_blog">Blog</a></li>
+        <li><a href="/contact.html" data-i18n="nav_contact">Contacto</a></li>
       </ul>
     </nav>
     <div class="header-actions">
-      <a href="/marketplace.html" class="btn">Explorar</a>
-      <a href="/provider-register.html" class="btn btn-primary">Vender</a>
+      <button class="btn btn-sm" id="lang-btn" aria-label="Cambiar idioma" title="Idioma" style="font-size:1rem;padding:6px 10px">🌐</button>
+      <a href="/marketplace.html" class="btn" data-i18n="btn_explore">Explorar</a>
+      <a href="/provider-register.html" class="btn btn-primary" data-i18n="btn_sell">Vender</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
   <div class="rgb-divider"></div>
-  <section class="hero" role="main">
-    <div class="hero-badge"><span class="dot"></span>MARKETPLACE ACTIVO · SOFTWARE + IA</div>
-    <h1>El futuro del software<br>está aquí</h1>
-    <p>Descubre, compra y descarga software profesional creado con inteligencia artificial. Automatizaciones, herramientas, apps y soluciones para empresas y particulares.</p>
-    <div class="hero-search" role="search">
-      <input id="site-search" type="search" placeholder="Busca software, herramientas, automatizaciones…" aria-label="Buscar productos" />
-      <button type="button" onclick="doSearch()">BUSCAR</button>
-    </div>
-    <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:32px">
-      <a href="/marketplace.html" class="btn btn-primary btn-lg">Ver Marketplace</a>
-      <a href="/about.html" class="btn btn-lg">¿Qué es neuralgpt?</a>
-    </div>
-  </section>
-  <div class="stats-bar" aria-label="Estadísticas">
-    <div class="stat"><span class="stat-num">50+</span><span class="stat-label">PRODUCTOS</span></div>
-    <div class="stat"><span class="stat-num">100%</span><span class="stat-label">IA GENERADO</span></div>
-    <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">DISPONIBLE</span></div>
-    <div class="stat"><span class="stat-num">🔒</span><span class="stat-label">PAGO SEGURO</span></div>
-  </div>
-  <div class="wrap">
-    <section class="section">
-      <h2 class="section-title">Explora por categoría</h2>
-      <p class="section-sub">Software profesional organizado para que encuentres exactamente lo que necesitas.</p>
-      <div class="categories-grid">
-        <a href="/marketplace.html?cat=automatizacion" class="cat-card"><span class="cat-icon">⚡</span><span class="cat-name">AUTOMATIZACIÓN</span><span class="cat-desc">Scripts, bots y flujos de trabajo automáticos.</span><span class="cat-count">VER PRODUCTOS →</span></a>
-        <a href="/marketplace.html?cat=ia" class="cat-card"><span class="cat-icon">🤖</span><span class="cat-name">INTELIGENCIA ARTIFICIAL</span><span class="cat-desc">Modelos, agentes y herramientas de IA.</span><span class="cat-count">VER PRODUCTOS →</span></a>
-        <a href="/marketplace.html?cat=seguridad" class="cat-card"><span class="cat-icon">🛡️</span><span class="cat-name">SEGURIDAD</span><span class="cat-desc">Auditoría, pentesting y protección de sistemas.</span><span class="cat-count">VER PRODUCTOS →</span></a>
-        <a href="/marketplace.html?cat=web" class="cat-card"><span class="cat-icon">🌐</span><span class="cat-name">WEB & APIs</span><span class="cat-desc">Scrapers, APIs, dashboards y herramientas web.</span><span class="cat-count">VER PRODUCTOS →</span></a>
-        <a href="/marketplace.html?cat=datos" class="cat-card"><span class="cat-icon">📊</span><span class="cat-name">DATOS & ANALYTICS</span><span class="cat-desc">Análisis, visualización y procesamiento de datos.</span><span class="cat-count">VER PRODUCTOS →</span></a>
-        <a href="/marketplace.html?cat=linux" class="cat-card"><span class="cat-icon">🐧</span><span class="cat-name">LINUX & SISTEMAS</span><span class="cat-desc">Herramientas para Linux, BlackArch y sistemas.</span><span class="cat-count">VER PRODUCTOS →</span></a>
+
+  <!-- ── HERO ── -->
+  <section class="hero" role="main" id="main-content">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="particles-wrap" id="particles" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span data-i18n="hero_badge">MARKETPLACE ACTIVO · SOFTWARE + IA VERIFICADO</span>
       </div>
-    </section>
-    <section class="section" style="padding-top:0">
-      <h2 class="section-title">Productos destacados</h2>
-      <p class="section-sub">Los más descargados y mejor valorados de nuestra tienda.</p>
-      <div class="products-grid">
-        <div class="product-card"><div class="product-img">⚡</div><div class="product-body"><span class="product-tag">AUTOMATIZACIÓN</span><span class="product-name">ClawBot Automation Suite</span><p class="product-desc">Sistema de automatización modular para Linux. Construye, despliega y gestiona cualquier flujo de trabajo.</p><div class="product-footer"><span class="product-price">29€</span><a href="/marketplace.html" class="btn">Ver más</a></div></div></div>
-        <div class="product-card"><div class="product-img">🤖</div><div class="product-body"><span class="product-tag">INTELIGENCIA ARTIFICIAL</span><span class="product-name">NeuralAgent Framework</span><p class="product-desc">Framework para construir agentes de IA personalizados. Compatible con todos los modelos principales.</p><div class="product-footer"><span class="product-price">49€</span><a href="/marketplace.html" class="btn">Ver más</a></div></div></div>
-        <div class="product-card"><div class="product-img">🛡️</div><div class="product-body"><span class="product-tag">SEGURIDAD</span><span class="product-name">BlackArch Security Toolkit</span><p class="product-desc">Suite de herramientas de seguridad optimizada para BlackArch Linux. Auditoría y pentesting profesional.</p><div class="product-footer"><span class="product-price">39€</span><a href="/marketplace.html" class="btn">Ver más</a></div></div></div>
+      <h1 data-i18n="hero_title">El futuro del<br>software está aquí</h1>
+      <p data-i18n="hero_subtitle">Descubre, compra y descarga software profesional creado con inteligencia artificial. Automatizaciones, herramientas IA y soluciones para empresas y particulares. 100% verificado.</p>
+
+      <!-- Search bar con sugerencias -->
+      <div class="search-wrap" style="max-width:560px;width:100%;margin:0 auto 32px">
+        <div class="search-bar" role="search">
+          <input id="hero-search" type="search" placeholder="Busca software, herramientas, automatizaciones…" aria-label="Buscar productos" autocomplete="off" data-i18n-placeholder="search_placeholder" />
+          <button type="button" onclick="doSearch()" data-i18n="btn_search">BUSCAR</button>
+        </div>
+        <div id="hero-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias" hidden></div>
       </div>
-      <div style="text-align:center;margin-top:40px"><a href="/marketplace.html" class="btn btn-primary btn-lg">Ver todos los productos</a></div>
-    </section>
-    <section class="section" style="padding-top:0">
-      <h2 class="section-title">¿Por qué neuralgpt.store?</h2>
-      <p class="section-sub">Una plataforma construida para desarrolladores, por desarrolladores.</p>
-      <div class="features-grid">
-        <div class="feature-card"><div class="feature-icon">🚀</div><div class="feature-title">DESCARGA INMEDIATA</div><p class="feature-desc">Tras el pago accedes al producto al instante. Sin esperas, sin procesos manuales.</p></div>
-        <div class="feature-card"><div class="feature-icon">💳</div><div class="feature-title">PAGO SEGURO CON STRIPE</div><p class="feature-desc">Todos los pagos procesados por Stripe. Tarjeta de crédito, débito y más métodos disponibles.</p></div>
-        <div class="feature-card"><div class="feature-icon">🤖</div><div class="feature-title">SOFTWARE CON IA</div><p class="feature-desc">Todo el software está desarrollado y optimizado con inteligencia artificial de última generación.</p></div>
-        <div class="feature-card"><div class="feature-icon">🐧</div><div class="feature-title">NATIVO EN LINUX</div><p class="feature-desc">Optimizado para Linux, BlackArch y sistemas Unix. Sin dependencias innecesarias.</p></div>
-        <div class="feature-card"><div class="feature-icon">📦</div><div class="feature-title">ACTUALIZACIONES INCLUIDAS</div><p class="feature-desc">Compra una vez y recibe todas las actualizaciones del producto sin coste adicional.</p></div>
-        <div class="feature-card"><div class="feature-icon">🌍</div><div class="feature-title">SOPORTE EN ESPAÑOL</div><p class="feature-desc">Documentación, soporte y comunidad completamente en castellano.</p></div>
+
+      <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+        <a href="/marketplace.html" class="btn btn-primary btn-lg" data-i18n="btn_marketplace">Ver Marketplace</a>
+        <a href="/about.html" class="btn btn-lg" data-i18n="btn_about">¿Qué es neuralgpt?</a>
       </div>
-    </section>
-  </div>
-  <section class="cta-section">
-    <h2>¿Tienes un software que vender?</h2>
-    <p>Únete como proveedor y publica tus productos en neuralgpt.store. Llega a miles de compradores sin complicaciones.</p>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-      <a href="/provider-register.html" class="btn btn-primary btn-lg">Registrarme como vendedor</a>
-      <a href="/marketplace.html" class="btn btn-lg">Explorar marketplace</a>
     </div>
   </section>
+
+  <!-- ── STATS (contadores animados) ── -->
+  <div class="stats-bar" aria-label="Estadísticas de la plataforma" id="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num" data-count="50" id="stat-products">50+</span>
+      <span class="stat-label" data-i18n="stat_products">PRODUCTOS</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-count="120" id="stat-devs">120+</span>
+      <span class="stat-label" data-i18n="stat_devs">DESARROLLADORES</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-count="2400" id="stat-downloads">2.4K+</span>
+      <span class="stat-label" data-i18n="stat_downloads">DESCARGAS</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100%</span>
+      <span class="stat-label" data-i18n="stat_verified">SOFTWARE VERIFICADO</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4.8 ★</span>
+      <span class="stat-label" data-i18n="stat_rating">VALORACIÓN MEDIA</span>
+    </div>
+  </div>
   <div class="rgb-divider"></div>
+
+  <main>
+    <!-- ── PRODUCTOS PROPIOS ── -->
+    <section class="section" id="own-products">
+      <div class="wrap">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+          <h2 class="section-title" style="margin-bottom:0" data-i18n="own_products_title">Nuestros Productos</h2>
+          <span class="badge badge-own" style="font-size:0.65rem">EXCLUSIVO</span>
+        </div>
+        <p class="section-sub" data-i18n="own_products_sub">Software premium creado por el equipo neuralgpt. Verificado, soportado y con actualizaciones incluidas.</p>
+
+        <div class="auto-grid-3">
+          <!-- GhostWriter -->
+          <div class="product-card rgb-card">
+            <div class="product-thumb" style="background:linear-gradient(135deg,rgba(0,234,255,0.12),rgba(127,0,255,0.12))">
+              <span>📝</span>
+              <div style="position:absolute;top:12px;right:12px;display:flex;gap:6px">
+                <span class="badge badge-verified">VERIFICADO</span>
+                <span class="badge badge-own">OFICIAL</span>
+              </div>
+            </div>
+            <div class="product-body">
+              <span class="product-tag">INTELIGENCIA ARTIFICIAL</span>
+              <span class="product-name">GhostWriter</span>
+              <p class="product-desc">Asistente de redacción con IA. Genera artículos, copies y contenido SEO en segundos. Compatible con Linux, Windows y Mac.</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+                <span class="platform-pill">🐧 Linux</span>
+                <span class="platform-pill">🪟 Windows</span>
+                <span class="platform-pill">🍎 Mac</span>
+              </div>
+              <div style="margin-top:6px">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">(48)</span>
+              </div>
+              <div class="product-footer">
+                <div>
+                  <span class="product-price-orig">29€</span>
+                  <span class="product-price">19€/mes</span>
+                </div>
+                <a href="/product.html?id=ghostwriter" class="btn btn-primary btn-sm">Ver más</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- NeuralBill -->
+          <div class="product-card rgb-card">
+            <div class="product-thumb" style="background:linear-gradient(135deg,rgba(0,255,153,0.10),rgba(0,234,255,0.10))">
+              <span>💳</span>
+              <div style="position:absolute;top:12px;right:12px;display:flex;gap:6px">
+                <span class="badge badge-verified">VERIFICADO</span>
+                <span class="badge badge-hot">POPULAR</span>
+              </div>
+            </div>
+            <div class="product-body">
+              <span class="product-tag">AUTOMATIZACIÓN · FINTECH</span>
+              <span class="product-name">NeuralBill</span>
+              <p class="product-desc">Facturación automatizada con IA. Genera facturas, controla gastos y crea informes fiscales automáticamente. Integra con Stripe.</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+                <span class="platform-pill">🐧 Linux</span>
+                <span class="platform-pill">🪟 Windows</span>
+                <span class="platform-pill">🌐 Web</span>
+              </div>
+              <div style="margin-top:6px">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">(31)</span>
+              </div>
+              <div class="product-footer">
+                <span class="product-price">29€/mes</span>
+                <a href="/product.html?id=neuralbill" class="btn btn-primary btn-sm">Ver más</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- PokerBot -->
+          <div class="product-card rgb-card">
+            <div class="product-thumb" style="background:linear-gradient(135deg,rgba(255,0,128,0.10),rgba(127,0,255,0.10))">
+              <span>🃏</span>
+              <div style="position:absolute;top:12px;right:12px;display:flex;gap:6px">
+                <span class="badge badge-verified">VERIFICADO</span>
+                <span class="badge badge-new">NUEVO</span>
+              </div>
+            </div>
+            <div class="product-body">
+              <span class="product-tag">IA · ANÁLISIS</span>
+              <span class="product-name">PokerBot</span>
+              <p class="product-desc">Analizador de manos de póker con IA. Aprende estrategias ganadoras y analiza tu juego en tiempo real. Solo para uso educativo.</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+                <span class="platform-pill">🐧 Linux</span>
+                <span class="platform-pill">🪟 Windows</span>
+                <span class="platform-pill">🤖 Android</span>
+              </div>
+              <div style="margin-top:6px">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-count">(17)</span>
+              </div>
+              <div class="product-footer">
+                <span class="product-price">39€</span>
+                <a href="/product.html?id=pokerbot" class="btn btn-primary btn-sm">Ver más</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rgb-divider"></div>
+
+    <!-- ── CATEGORÍAS ── -->
+    <section class="section" style="padding-top:56px">
+      <div class="wrap">
+        <h2 class="section-title" data-i18n="cat_title">Explora el Marketplace</h2>
+        <p class="section-sub" data-i18n="cat_sub">Software profesional de terceros organizado por categorías. Todos los productos verificados y seguros.</p>
+        <div class="auto-grid-4" style="margin-bottom:40px">
+          <a href="/marketplace.html?cat=automatizacion" class="cat-card">
+            <span class="cat-icon">⚡</span>
+            <span class="cat-name">AUTOMATIZACIÓN</span>
+            <span class="cat-desc">Scripts, bots y flujos de trabajo automáticos.</span>
+            <span class="cat-count">VER PRODUCTOS →</span>
+          </a>
+          <a href="/marketplace.html?cat=ia" class="cat-card">
+            <span class="cat-icon">🤖</span>
+            <span class="cat-name">INTELIGENCIA ARTIFICIAL</span>
+            <span class="cat-desc">Modelos, agentes y herramientas de IA.</span>
+            <span class="cat-count">VER PRODUCTOS →</span>
+          </a>
+          <a href="/marketplace.html?cat=seguridad" class="cat-card">
+            <span class="cat-icon">🛡️</span>
+            <span class="cat-name">SEGURIDAD</span>
+            <span class="cat-desc">Auditoría, pentesting y protección de sistemas.</span>
+            <span class="cat-count">VER PRODUCTOS →</span>
+          </a>
+          <a href="/marketplace.html?cat=web" class="cat-card">
+            <span class="cat-icon">🌐</span>
+            <span class="cat-name">WEB & APIs</span>
+            <span class="cat-desc">Scrapers, APIs, dashboards y herramientas web.</span>
+            <span class="cat-count">VER PRODUCTOS →</span>
+          </a>
+          <a href="/marketplace.html?cat=datos" class="cat-card">
+            <span class="cat-icon">📊</span>
+            <span class="cat-name">DATOS & ANALYTICS</span>
+            <span class="cat-desc">Análisis, visualización y procesamiento de datos.</span>
+            <span class="cat-count">VER PRODUCTOS →</span>
+          </a>
+          <a href="/marketplace.html?cat=linux" class="cat-card">
+            <span class="cat-icon">🐧</span>
+            <span class="cat-name">LINUX & SISTEMAS</span>
+            <span class="cat-desc">Herramientas para Linux, BlackArch y sistemas.</span>
+            <span class="cat-count">VER PRODUCTOS →</span>
+          </a>
+        </div>
+        <div style="text-align:center">
+          <a href="/marketplace.html" class="btn btn-primary btn-lg" data-i18n="btn_marketplace">Ver todos los productos</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="rgb-divider"></div>
+
+    <!-- ── POR QUÉ NEURALGPT ── -->
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title text-center" data-i18n="why_title">¿Por qué neuralgpt.store?</h2>
+        <p class="section-sub text-center" style="margin:0 auto 48px" data-i18n="why_sub">Una plataforma construida para desarrolladores, por desarrolladores. Segura, rápida y transparente.</p>
+        <div class="auto-grid-3">
+          <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <div class="feature-title" data-i18n="feat1_title">DESCARGA INMEDIATA</div>
+            <p class="feature-desc" data-i18n="feat1_desc">Tras el pago accedes al producto al instante. Sin esperas, sin procesos manuales.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <div class="feature-title" data-i18n="feat2_title">SOFTWARE VERIFICADO</div>
+            <p class="feature-desc" data-i18n="feat2_desc">Todo el software pasa por análisis anti-malware y revisión manual antes de publicarse. Badge verificado visible.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💳</div>
+            <div class="feature-title" data-i18n="feat3_title">PAGO SEGURO STRIPE</div>
+            <p class="feature-desc" data-i18n="feat3_desc">Pagos procesados 100% por Stripe (PCI-DSS). Tarjeta, Google Pay y más. Sin datos bancarios en nuestros servidores.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <div class="feature-title" data-i18n="feat4_title">CREADO CON IA</div>
+            <p class="feature-desc" data-i18n="feat4_desc">Todo el software está desarrollado y optimizado con inteligencia artificial de última generación.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🐧</div>
+            <div class="feature-title" data-i18n="feat5_title">NATIVO EN LINUX</div>
+            <p class="feature-desc" data-i18n="feat5_desc">Optimizado para Linux, BlackArch y sistemas Unix. Compatibilidad total con entornos profesionales.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <div class="feature-title" data-i18n="feat6_title">ACTUALIZACIONES INCLUIDAS</div>
+            <p class="feature-desc" data-i18n="feat6_desc">Compra una vez, recibe todas las actualizaciones del producto sin coste adicional.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rgb-divider"></div>
+
+    <!-- ── TESTIMONIOS ── -->
+    <section class="section" style="overflow:hidden">
+      <div class="wrap" style="padding-bottom:0">
+        <h2 class="section-title text-center" data-i18n="testimonials_title">Lo que dicen nuestros usuarios</h2>
+        <p class="section-sub text-center" style="margin:0 auto 40px" data-i18n="testimonials_sub">Más de 120 desarrolladores y empresas confían en neuralgpt.store</p>
+      </div>
+      <div class="testimonials-wrap">
+        <div class="testimonials-track" id="testimonials-track">
+          <!-- Set 1 -->
+          <div class="testimonial-card">
+            <p class="testimonial-text">"GhostWriter me ahorra 6 horas a la semana en redacción. El mejor ROI que he hecho en software."</p>
+            <div class="testimonial-author">Carlos M.</div>
+            <div class="testimonial-role">Consultor de Marketing Digital</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"NeuralBill me automatizó toda la facturación. Cero errores en los informes fiscales de este año."</p>
+            <div class="testimonial-author">Laura S.</div>
+            <div class="testimonial-role">Freelance Diseñadora Web</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"El badge de software verificado me dio confianza. El ClawBot Automation Suite funciona perfecto en mi BlackArch."</p>
+            <div class="testimonial-author">Alejandro R.</div>
+            <div class="testimonial-role">Sysadmin Senior</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"El proceso de venta como proveedor fue muy limpio. En 48h tuve mi software publicado y verificado."</p>
+            <div class="testimonial-author">Priya K.</div>
+            <div class="testimonial-role">Desarrolladora Indie</div>
+            <div style="margin-top:6px"><span class="stars">★★★★☆</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"El soporte en español marca la diferencia. No encontré otro marketplace técnico con documentación tan buena en castellano."</p>
+            <div class="testimonial-author">Miguel Á. T.</div>
+            <div class="testimonial-role">CTO Startup Madrid</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Descarga inmediata tras el pago Stripe. Compré PokerBot y en 2 minutos ya lo tenía funcionando en Kali."</p>
+            <div class="testimonial-author">David F.</div>
+            <div class="testimonial-role">Security Researcher</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <!-- Set 2 (duplicado para bucle infinito) -->
+          <div class="testimonial-card">
+            <p class="testimonial-text">"GhostWriter me ahorra 6 horas a la semana en redacción. El mejor ROI que he hecho en software."</p>
+            <div class="testimonial-author">Carlos M.</div>
+            <div class="testimonial-role">Consultor de Marketing Digital</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"NeuralBill me automatizó toda la facturación. Cero errores en los informes fiscales de este año."</p>
+            <div class="testimonial-author">Laura S.</div>
+            <div class="testimonial-role">Freelance Diseñadora Web</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"El badge de software verificado me dio confianza. El ClawBot Automation Suite funciona perfecto en mi BlackArch."</p>
+            <div class="testimonial-author">Alejandro R.</div>
+            <div class="testimonial-role">Sysadmin Senior</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"El proceso de venta como proveedor fue muy limpio. En 48h tuve mi software publicado y verificado."</p>
+            <div class="testimonial-author">Priya K.</div>
+            <div class="testimonial-role">Desarrolladora Indie</div>
+            <div style="margin-top:6px"><span class="stars">★★★★☆</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"El soporte en español marca la diferencia. No encontré otro marketplace técnico con documentación tan buena en castellano."</p>
+            <div class="testimonial-author">Miguel Á. T.</div>
+            <div class="testimonial-role">CTO Startup Madrid</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Descarga inmediata tras el pago Stripe. Compré PokerBot y en 2 minutos ya lo tenía funcionando en Kali."</p>
+            <div class="testimonial-author">David F.</div>
+            <div class="testimonial-role">Security Researcher</div>
+            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rgb-divider"></div>
+
+    <!-- ── PARA DESARROLLADORES ── -->
+    <section class="section" id="para-desarrolladores">
+      <div class="wrap">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+          <div>
+            <span class="badge badge-own" style="margin-bottom:16px">PARA DESARROLLADORES</span>
+            <h2 class="section-title" data-i18n="dev_title">Vende tu software<br>en neuralgpt.store</h2>
+            <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin-bottom:32px" data-i18n="dev_sub">Publica tus herramientas y llega a miles de compradores técnicos. Proceso simple, verificación rápida y comisiones transparentes.</p>
+            <div style="padding:16px;border-radius:12px;background:rgba(0,255,153,0.05);border:1.5px solid rgba(0,255,153,0.2);margin-bottom:24px">
+              <div style="font-family:var(--font-title);font-size:0.72rem;letter-spacing:1px;color:var(--accent4);margin-bottom:8px">COMISIONES</div>
+              <div style="font-family:var(--font-title);font-size:1.5rem;font-weight:900;color:var(--accent4)">15% lanzamiento</div>
+              <div style="font-size:0.8rem;color:var(--muted);margin-top:4px">→ 20% estándar desde sep. 2025. Sin cuota fija.</div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <a href="/provider-register.html" class="btn btn-primary btn-lg" data-i18n="btn_sell_now">Registrarme como vendedor</a>
+              <a href="/pricing.html" class="btn btn-lg" data-i18n="btn_more_info">Ver comisiones</a>
+            </div>
+          </div>
+
+          <div class="dev-steps">
+            <div class="dev-step">
+              <div class="dev-step-num">1</div>
+              <div>
+                <div class="dev-step-title" data-i18n="step1_title">Regístrate como proveedor</div>
+                <p class="dev-step-desc" data-i18n="step1_desc">Completa el formulario de alta con los datos de tu software y empresa. Proceso de 5 minutos.</p>
+              </div>
+            </div>
+            <div class="dev-step">
+              <div class="dev-step-num">2</div>
+              <div>
+                <div class="dev-step-title" data-i18n="step2_title">Verificación de seguridad</div>
+                <p class="dev-step-desc" data-i18n="step2_desc">Nuestro equipo analiza el software contra malware y revisa la funcionalidad descrita. 24-48h.</p>
+              </div>
+            </div>
+            <div class="dev-step">
+              <div class="dev-step-num">3</div>
+              <div>
+                <div class="dev-step-title" data-i18n="step3_title">Publica y vende</div>
+                <p class="dev-step-desc" data-i18n="step3_desc">Tu producto aparece con el badge "Verificado" en el marketplace. Cobra mensualmente vía Stripe.</p>
+              </div>
+            </div>
+            <div class="dev-step">
+              <div class="dev-step-num">4</div>
+              <div>
+                <div class="dev-step-title" data-i18n="step4_title">Cobra cada mes</div>
+                <p class="dev-step-desc" data-i18n="step4_desc">Pago automático vía Stripe Connect. Mínimo 10€ de payout. Informes detallados de ventas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rgb-divider"></div>
+
+    <!-- ── CTA ── -->
+    <section class="cta-section">
+      <h2 data-i18n="cta_title">¿Listo para empezar?</h2>
+      <p data-i18n="cta_sub">Explora el marketplace o únete como proveedor. La plataforma de software IA más grande en español.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="/marketplace.html" class="btn btn-primary btn-lg" data-i18n="btn_explore_mp">Explorar marketplace</a>
+        <a href="/provider-register.html" class="btn btn-lg" data-i18n="btn_register_seller">Registrarme como vendedor</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="rgb-divider"></div>
+
+  <!-- ── FOOTER ── -->
   <footer class="site-footer" role="contentinfo">
     <div class="footer-grid">
-      <div class="footer-col"><h4>NEURALGPT.STORE</h4><ul><li><a href="/about.html">Sobre nosotros</a></li><li><a href="/blog.html">Blog</a></li><li><a href="/contact.html">Contacto</a></li><li><a href="/sponsors.html">Sponsors</a></li></ul></div>
-      <div class="footer-col"><h4>MARKETPLACE</h4><ul><li><a href="/marketplace.html">Todos los productos</a></li><li><a href="/category.html">Categorías</a></li><li><a href="/pricing.html">Precios</a></li><li><a href="/trends.html">Tendencias</a></li></ul></div>
-      <div class="footer-col"><h4>VENDEDORES</h4><ul><li><a href="/provider-register.html">Registrarse</a></li><li><a href="/providers.html">Directorio</a></li><li><a href="/provider-hub.html">Panel proveedor</a></li><li><a href="/vendor-onboarding.html">Guía de inicio</a></li></ul></div>
-      <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li><li><a href="/legal.html">Aviso legal</a></li><li><a href="/commercial-terms.html">Condiciones comerciales</a></li></ul></div>
-      <div class="footer-col"><h4>SEGURIDAD</h4><ul><li><a href="/security.html">Centro de seguridad</a></li><li><a href="/security-enterprise.html">Enterprise</a></li><li><a href="/security-pyme.html">PYME</a></li><li><a href="mailto:security@neuralgpt.store">Reportar vulnerabilidad</a></li></ul></div>
+      <div class="footer-brand-col">
+        <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
+        <p data-i18n="footer_tagline">Marketplace premium de software creado con IA. Verificado, seguro y con pago Stripe.</p>
+        <div class="footer-social">
+          <a href="https://twitter.com/neuralgptstore" target="_blank" rel="noopener noreferrer" aria-label="Twitter" title="Twitter">𝕏</a>
+          <a href="https://github.com/neuralgpt-store" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">⌥</a>
+          <a href="https://t.me/neuralgptstore" target="_blank" rel="noopener noreferrer" aria-label="Telegram" title="Telegram">✈</a>
+          <a href="mailto:wilfreyera@gmail.com" aria-label="Email" title="Email">✉</a>
+        </div>
+        <!-- Newsletter -->
+        <div style="margin-top:20px">
+          <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:2px;color:var(--accent);margin-bottom:10px" data-i18n="newsletter_label">NEWSLETTER</div>
+          <form class="newsletter-form" id="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" name="email" placeholder="tu@email.com" required aria-label="Tu email para el newsletter" data-i18n-placeholder="newsletter_placeholder" />
+            <button type="submit" class="btn btn-primary btn-sm" data-i18n="btn_subscribe">Suscribirse</button>
+          </form>
+          <div id="newsletter-msg" style="font-size:0.75rem;color:var(--accent4);margin-top:6px" role="status"></div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_company">NEURALGPT</h4>
+        <ul>
+          <li><a href="/about.html" data-i18n="footer_about">Sobre nosotros</a></li>
+          <li><a href="/blog.html" data-i18n="footer_blog">Blog</a></li>
+          <li><a href="/contact.html" data-i18n="footer_contact">Contacto</a></li>
+          <li><a href="/sponsors.html" data-i18n="footer_sponsors">Sponsors</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_marketplace_label">MARKETPLACE</h4>
+        <ul>
+          <li><a href="/marketplace.html" data-i18n="footer_all_products">Todos los productos</a></li>
+          <li><a href="/category.html" data-i18n="footer_categories">Categorías</a></li>
+          <li><a href="/pricing.html" data-i18n="footer_pricing">Precios</a></li>
+          <li><a href="/trends.html" data-i18n="footer_trends">Tendencias</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_sellers">VENDEDORES</h4>
+        <ul>
+          <li><a href="/provider-register.html" data-i18n="footer_register">Registrarse</a></li>
+          <li><a href="/providers.html" data-i18n="footer_directory">Directorio</a></li>
+          <li><a href="/vendor-onboarding.html" data-i18n="footer_guide">Guía de inicio</a></li>
+          <li><a href="mailto:wilfreyera@gmail.com" data-i18n="footer_seller_contact">Contactar equipo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_legal">LEGAL & SEGURIDAD</h4>
+        <ul>
+          <li><a href="/privacy.html" data-i18n="footer_privacy">Privacidad</a></li>
+          <li><a href="/terms.html" data-i18n="footer_terms">Términos</a></li>
+          <li><a href="/legal.html" data-i18n="footer_legal_notice">Aviso legal</a></li>
+          <li><a href="/security.html" data-i18n="footer_security">Centro de seguridad</a></li>
+          <li><a href="mailto:wilfreyera@gmail.com" data-i18n="footer_vuln">Reportar vulnerabilidad</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-bottom"><p>© 2025–2026 neuralgpt.store · Todos los derechos reservados · Pagos procesados por <strong>Stripe</strong></p></div>
+
+    <div class="footer-bottom">
+      <span data-i18n="footer_copy">© 2025–2026 neuralgpt.store · Todos los derechos reservados</span>
+      <span>Pagos procesados por <strong>Stripe</strong> · <a href="mailto:wilfreyera@gmail.com" style="color:var(--accent)">wilfreyera@gmail.com</a></span>
+      <span>
+        <a href="/privacy.html" style="color:var(--muted)" data-i18n="footer_privacy">Privacidad</a> ·
+        <a href="/terms.html" style="color:var(--muted)" data-i18n="footer_terms">Términos</a>
+      </span>
+    </div>
   </footer>
+
+  <!-- ── SCRIPTS ── -->
   <script>
-    function doSearch(){const q=document.getElementById('site-search').value.trim();location.href='/marketplace.html'+(q?'?search='+encodeURIComponent(q):'');}
-    document.getElementById('site-search').addEventListener('keydown',function(e){if(e.key==='Enter')doSearch();});
+  // ── Partículas CSS ────────────────────────────────────────────
+  (function(){
+    var wrap = document.getElementById('particles');
+    if(!wrap) return;
+    var colors = ['#00eaff','#7f00ff','#ff0080','#00ff99','#ffffff'];
+    for(var i=0;i<35;i++){
+      var p = document.createElement('span');
+      p.className = 'particle';
+      var size = Math.random()*3+1;
+      var left = Math.random()*100;
+      var dur  = Math.random()*12+8;
+      var delay = Math.random()*15;
+      var color = colors[Math.floor(Math.random()*colors.length)];
+      p.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+left+'%;bottom:-10px;background:'+color+';animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
+      wrap.appendChild(p);
+    }
+  })();
+
+  // ── Search ──────────────────────────────────────────────────────
+  var suggestions = ['GhostWriter','NeuralBill','PokerBot','ClawBot','NeuralAgent','automatización Linux','pentesting tools','facturación IA','bot Telegram','scraper Python'];
+  var inp = document.getElementById('hero-search');
+  var box = document.getElementById('hero-suggestions');
+  if(inp && box){
+    inp.addEventListener('input', function(){
+      var v = this.value.trim().toLowerCase();
+      if(!v){ box.hidden=true; return; }
+      var matches = suggestions.filter(s=>s.toLowerCase().includes(v)).slice(0,5);
+      if(!matches.length){ box.hidden=true; return; }
+      box.innerHTML='';
+      matches.forEach(function(m){
+        var d=document.createElement('div');
+        d.className='suggestion-item'; d.textContent=m;
+        d.addEventListener('click',function(){ inp.value=m; box.hidden=true; doSearch(); });
+        box.appendChild(d);
+      });
+      box.hidden=false;
+    });
+    inp.addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch(); if(e.key==='Escape') box.hidden=true; });
+    document.addEventListener('click',function(e){ if(!inp.contains(e.target)&&!box.contains(e.target)) box.hidden=true; });
+  }
+  function doSearch(){
+    var q=(document.getElementById('hero-search')||{}).value||'';
+    q=q.trim();
+    location.href='/marketplace.html'+(q?'?search='+encodeURIComponent(q):'');
+  }
+
+  // ── Contadores animados ─────────────────────────────────────────
+  function animateCounter(el, target, suffix){
+    var start=0, duration=1800, step=16;
+    var inc = target/(duration/step);
+    var t = setInterval(function(){
+      start+=inc;
+      if(start>=target){ start=target; clearInterval(t); }
+      var val = Math.floor(start);
+      el.textContent = (target>=1000 ? (val/1000).toFixed(1)+'K' : val) + (suffix||'') + '+';
+    }, step);
+  }
+  var statsObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var el = document.getElementById('stat-products');
+        var el2 = document.getElementById('stat-devs');
+        var el3 = document.getElementById('stat-downloads');
+        if(el) animateCounter(el, 50, '');
+        if(el2) animateCounter(el2, 120, '');
+        if(el3) animateCounter(el3, 2400, '');
+        statsObserver.disconnect();
+      }
+    });
+  }, {threshold:0.3});
+  var statsBar = document.getElementById('stats-bar');
+  if(statsBar) statsObserver.observe(statsBar);
+
+  // ── Mobile nav toggle ───────────────────────────────────────────
+  var navToggle = document.getElementById('nav-toggle');
+  var mainNav   = document.getElementById('main-nav');
+  if(navToggle && mainNav){
+    navToggle.addEventListener('click', function(){
+      var open = mainNav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open);
+    });
+  }
+
+  // ── Newsletter ──────────────────────────────────────────────────
+  function subscribeNewsletter(e){
+    e.preventDefault();
+    var msg = document.getElementById('newsletter-msg');
+    if(msg) msg.textContent = '✓ Suscripción registrada. ¡Gracias!';
+    e.target.reset();
+  }
+
+  // ── i18n básico ─────────────────────────────────────────────────
+  var translations = {
+    en: {
+      hero_badge:'ACTIVE MARKETPLACE · VERIFIED SOFTWARE + AI',
+      hero_title:'The future of<br>software is here',
+      hero_subtitle:'Discover, buy and download professional software built with artificial intelligence. Verified and secure.',
+      btn_explore:'Explore',btn_sell:'Sell',btn_search:'SEARCH',
+      btn_marketplace:'View Marketplace',btn_about:'What is neuralgpt?',
+      stat_products:'PRODUCTS',stat_devs:'DEVELOPERS',stat_downloads:'DOWNLOADS',
+      stat_verified:'VERIFIED SOFTWARE',stat_rating:'AVG RATING',
+      own_products_title:'Our Products',own_products_sub:'Premium software by the neuralgpt team. Verified, supported and with included updates.',
+      cat_title:'Explore the Marketplace',cat_sub:'Third-party professional software organized by category. All products verified and secure.',
+      why_title:'Why neuralgpt.store?',why_sub:'A platform built for developers, by developers. Secure, fast and transparent.',
+      dev_title:'Sell your software<br>on neuralgpt.store',dev_sub:'Publish your tools and reach thousands of technical buyers.',
+      testimonials_title:'What our users say',testimonials_sub:'Over 120 developers and companies trust neuralgpt.store',
+      cta_title:'Ready to start?',cta_sub:'Explore the marketplace or join as a provider.',
+      btn_explore_mp:'Explore marketplace',btn_register_seller:'Register as seller',
+      footer_tagline:'Premium software marketplace built with AI. Verified, secure and Stripe payments.',
+      footer_copy:'© 2025–2026 neuralgpt.store · All rights reserved',
+      nav_home:'Home',nav_marketplace:'Marketplace',nav_providers:'Providers',
+      nav_pricing:'Pricing',nav_blog:'Blog',nav_contact:'Contact',
+    },
+    ar: {
+      hero_title:'مستقبل البرمجيات<br>هنا الآن',
+      hero_subtitle:'اكتشف وأشترِ برامج احترافية مبنية بالذكاء الاصطناعي. موثقة وآمنة.',
+    },
+    ja: {
+      hero_title:'ソフトウェアの<br>未来はここに',
+      hero_subtitle:'AIで構築されたプロフェッショナルソフトウェアを発見、購入、ダウンロードできます。',
+    },
+    zh: {
+      hero_title:'软件的未来<br>就在这里',
+      hero_subtitle:'发现、购买和下载由人工智能构建的专业软件。已验证，安全可靠。',
+    },
+    ru: {
+      hero_title:'Будущее<br>программного обеспечения здесь',
+      hero_subtitle:'Открывайте, покупайте и скачивайте профессиональное ПО, созданное с ИИ. Проверено и безопасно.',
+    },
+    fr: {
+      hero_title:'Le futur du<br>logiciel est là',
+      hero_subtitle:'Découvrez, achetez et téléchargez des logiciels professionnels créés avec IA. Vérifiés et sécurisés.',
+      btn_explore:'Explorer',btn_sell:'Vendre',btn_search:'CHERCHER',
+    },
+    de: {
+      hero_title:'Die Zukunft der<br>Software ist hier',
+      hero_subtitle:'Entdecken, kaufen und laden Sie professionelle KI-Software herunter. Geprüft und sicher.',
+      btn_explore:'Erkunden',btn_sell:'Verkaufen',btn_search:'SUCHEN',
+    }
+  };
+
+  function applyI18n(lang){
+    var t = translations[lang];
+    if(!t) return;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if(t[key]) el.innerHTML = t[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-placeholder');
+      if(t[key]) el.placeholder = t[key];
+    });
+  }
+
+  // Detect browser language
+  var browserLang = (navigator.language||'es').substring(0,2);
+  if(browserLang !== 'es') applyI18n(browserLang);
+
+  // Lang toggle button
+  var langBtn = document.getElementById('lang-btn');
+  var langs = ['es','en','fr','de','ru','zh','ja','ar'];
+  var langIdx = 0;
+  if(langBtn){
+    langBtn.addEventListener('click', function(){
+      langIdx = (langIdx+1)%langs.length;
+      var l = langs[langIdx];
+      document.documentElement.setAttribute('lang', l);
+      applyI18n(l);
+      langBtn.title = 'Idioma: '+l.toUpperCase();
+    });
+  }
   </script>
-  <script src="/assets/js/quantum-security.js" defer></script>
-  <script src="/assets/js/main.js" defer></script>
+  <script src="/js/agent-chat.js" defer></script>
 </body>
 </html>

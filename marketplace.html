@@ -1,207 +1,424 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-    
-  <!-- Security: CSP, Referrer and Permissions (static-site-safe defaults) -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Permissions-Policy" content="geolocation=(), camera=(), microphone=(), payment=()">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <title>neuralgpt.store — Your Technological Marketplace</title>
-  <meta name="description" content="neuralgpt.store — Marketplace for curated hardware, sensors, robotics, dev boards and industrial components." />
-  <meta property="og:title" content="neuralgpt.store — Your Technological Marketplace" />
-  <meta property="og:description" content="neuralgpt.store — Marketplace for curated hardware, sensors, robotics, dev boards and industrial components." />
-  <script type="application/ld+json" id="breadcrumb-schema">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://neuralgpt.store/"},
-      {"@type": "ListItem", "position": 2, "name": "Marketplace", "item": "https://neuralgpt.store/marketplace.html"}
-    ]
-  }
-  </script>
+  <meta name="theme-color" content="#00040D" />
+  <title>Marketplace — neuralgpt.store</title>
+  <meta name="description" content="Explora el marketplace de neuralgpt.store: software verificado, herramientas IA, automatizaciones y más. Filtros por categoría, precio, plataforma y valoración." />
+  <meta property="og:title" content="Marketplace — neuralgpt.store" />
+  <meta property="og:description" content="Software verificado y seguro. Filtra por categoría, precio, plataforma y valoración." />
   <meta property="og:site_name" content="neuralgpt.store" />
   <meta property="og:url" content="https://neuralgpt.store/marketplace.html" />
-  <meta property="og:image" content="/assets/img/vision-pro.svg" />
-  <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
-  <meta name="twitter:description" content="neuralgpt.store — Marketplace for curated hardware, sensors, robotics, dev boards and industrial components." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Frame-Options" content="DENY">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/img/vision-pro.svg" as="image">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
-   <link rel="stylesheet" href="/css/theme-override.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "name": "Marketplace - neuralgpt.store",
-        "url": "https://neuralgpt.store/marketplace.html",
-        "description": "Browse curated hardware, sensors, robotics and industrial components on neuralgpt.store",
-        "mainEntity": {
-          "@type": "ItemList",
-          "name": "Marketplace Featured Categories",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "url": "https://neuralgpt.store/marketplace.html?cat=Rob%C3%B3tica" },
-            { "@type": "ListItem", "position": 2, "url": "https://neuralgpt.store/marketplace.html?cat=Electr%C3%B3nica" },
-            { "@type": "ListItem", "position": 3, "url": "https://neuralgpt.store/marketplace.html?cat=IA+Edge" }
-          ]
-        }
-      },
-      {
-        "@type": "Organization",
-        "name": "neuralgpt.store",
-        "url": "https://neuralgpt.store/",
-        "logo": "https://neuralgpt.store/core/assets/img/logo.png"
-      }
-    ]
-  }
+  {"@context":"https://schema.org","@type":"ItemList","name":"neuralgpt.store Marketplace","url":"https://neuralgpt.store/marketplace.html"}
   </script>
 </head>
-<body class="site-root">
+<body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
-  <header class="site-header premium-header rgb-border" role="banner">
-    <div class="wrap header-inner" style="align-items:center">
-      <a class="brand" href="/" aria-label="NeuralGPT Store">neuralgpt.store</a>
-      <nav class="main-nav" aria-label="Principal">
-        <ul>
-          <li><a href="/">Inicio</a></li>
-          <li class="has-mega" aria-haspopup="true"><a href="/marketplace.html" aria-current="page">Marketplace ▾</a>
-            <div class="mega-menu" role="menu" aria-label="Categorias principales">
-              <div class="mega-grid">
-                <div>
-                  <h4>Hardware</h4>
-                  <ul>
-                    <li><a href="/marketplace.html?cat=Robótica">Robótica</a></li>
-                    <li><a href="/marketplace.html?cat=Electrónica">Electrónica</a></li>
-                    <li><a href="/marketplace.html?cat=Impresión+3D">Impresión 3D</a></li>
-                    <li><a href="/marketplace.html?cat=Placas+de+Desarrollo">Placas de Desarrollo</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4>Soluciones</h4>
-                  <ul>
-                    <li><a href="/marketplace.html?cat=Biomecánica">Biomecánica</a></li>
-                    <li><a href="/marketplace.html?cat=Fabricación+Cyberface">Fabricación Cyberface</a></li>
-                    <li><a href="/marketplace.html?cat=IA+Edge">IA Edge</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4>Proveedores</h4>
-                  <ul>
-                    <li><a href="/providers.html">Ver proveedores</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4>Recursos</h4>
-                  <ul>
-                    <li><a href="/guides.html">Guías</a></li>
-                    <li><a href="/blog.html">Blog</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li><a href="/quantum.html">Quantum Pass</a></li>
-          <li><a href="/security.html">Seguridad IA</a></li>
-          <li><a href="/providers.html">Proveedores</a></li>
-        </ul>
-      </nav>
-      <div class="search-wrap">
-        <input id="mp-search" class="search-input" type="search" placeholder="Buscar en Marketplace..." aria-label="Buscar en Marketplace" autocomplete="off">
-        <div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias de búsqueda" hidden></div>
+
+  <!-- ── HEADER ── -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/marketplace.html" aria-current="page">Marketplace</a></li>
+        <li><a href="/providers.html">Proveedores</a></li>
+        <li><a href="/pricing.html">Precios</a></li>
+        <li><a href="/contact.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <div class="search-wrap" style="position:relative">
+        <input id="mp-search" type="search" placeholder="Buscar software…"
+          aria-label="Buscar en Marketplace" autocomplete="off"
+          style="padding:8px 14px;background:rgba(0,10,25,0.8);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85rem;outline:none;width:200px">
+        <div id="mp-suggestions" class="search-suggestions" hidden role="listbox"></div>
       </div>
+      <a href="/provider-register.html" class="btn btn-primary">Vender</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+  <div class="rgb-divider"></div>
 
-  <main id="main-content" class="wrap bg-marketplace">
-    <section>
-      <h1 class="section-title">Marketplace</h1>
-      <p class="subtle">Explora proveedores, soluciones y componentes verificados para proyectos empresariales y de integración.</p>
-    </section>
+  <!-- ── HERO MARKETPLACE ── -->
+  <section style="padding:40px 0 24px;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,234,255,0.05) 0%,transparent 60%),var(--bg);border-bottom:1px solid var(--border)">
+    <div class="wrap text-center">
+      <h1 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem)">Marketplace</h1>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto;font-size:0.95rem;line-height:1.7">Software verificado y seguro. Herramientas IA, automatizaciones, seguridad y más. Todos los productos con badge de verificación.</p>
 
-    <section class="sections">
-      <h2 class="section-title">Explorar</h2>
-      <div class="filters"><!-- dynamic controls injected --></div>
-      <div id="filter-list" class="filter-list" role="tablist" aria-label="Filtrar por categoría"></div>
-      <div id="market-grid" class="market-grid" aria-live="polite"></div>
-    </section>
-
-    <section>
-      <h2 class="section-title">Recomendados</h2>
-      <div id="featured-products" class="market-grid"></div>
-    </section>
-
-    <section class="sections slide-up">
-      <h2 class="section-title">Nuestros Sponsors</h2>
-      <div id="sponsors-grid" class="grid grid-4 sponsors-grid"></div>
-    </section>
-
-    <section>
-      <h2 class="section-title">Nuevos lanzamientos</h2>
-      <div id="new-products" class="market-grid"></div>
-    </section>
-
-      <div class="filters" style="margin-top:10px"></div>
-      <div class="grid grid-4" style="margin-top:14px">
-        <div id="cat-ai-components" class="card-list"></div>
-        <div id="cat-robotics" class="card-list"></div>
-        <div id="cat-smart-sensors" class="card-list"></div>
-        <div id="cat-security" class="card-list"></div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap">
+        <span class="badge badge-verified" style="font-size:0.7rem;padding:5px 14px">TODO VERIFICADO</span>
+        <span class="badge badge-new" style="font-size:0.7rem;padding:5px 14px">PAGO STRIPE SEGURO</span>
+        <span class="badge" style="background:rgba(255,0,128,0.1);color:var(--accent3);border:1px solid rgba(255,0,128,0.3);font-size:0.7rem;padding:5px 14px">DESCARGA INMEDIATA</span>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- products sections consolidated above to avoid duplicate IDs -->
+  <!-- ── MAIN ── -->
+  <main id="main-content" class="wrap" style="padding-top:28px;padding-bottom:80px">
 
-    <section class="sections">
-      <h2 class="section-title">Proveedores Destacados</h2>
-      <div class="providers-spot">
-        <div style="flex:1">
-          <h3>NeuralEdge</h3>
-          <p class="subtle">Proveedor verificado: hardware, integración y soporte técnico.</p>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <a class="btn" href="/providers-view.html?provider=neuraledge">Ver perfil</a>
-          <a class="btn btn-primary" href="/providers.html">Solicitar incorporación</a>
-        </div>
+    <!-- Filtros -->
+    <div class="filters-bar" id="filters-bar" role="search" aria-label="Filtros del marketplace">
+      <!-- Categoría -->
+      <select id="filter-cat" class="filter-select" aria-label="Filtrar por categoría">
+        <option value="">Todas las categorías</option>
+        <option value="ia">🤖 Inteligencia Artificial</option>
+        <option value="automatizacion">⚡ Automatización</option>
+        <option value="seguridad">🛡️ Seguridad</option>
+        <option value="web">🌐 Web & APIs</option>
+        <option value="datos">📊 Datos & Analytics</option>
+        <option value="linux">🐧 Linux & Sistemas</option>
+        <option value="fintech">💳 Fintech</option>
+        <option value="gaming">🎮 Gaming & Análisis</option>
+      </select>
+
+      <!-- Precio -->
+      <select id="filter-price" class="filter-select" aria-label="Filtrar por precio">
+        <option value="">Cualquier precio</option>
+        <option value="free">Gratis</option>
+        <option value="0-20">Hasta 20€</option>
+        <option value="20-50">20€ – 50€</option>
+        <option value="50-100">50€ – 100€</option>
+        <option value="100+">Más de 100€</option>
+      </select>
+
+      <!-- Plataforma -->
+      <select id="filter-platform" class="filter-select" aria-label="Filtrar por plataforma">
+        <option value="">Todas las plataformas</option>
+        <option value="linux">🐧 Linux</option>
+        <option value="windows">🪟 Windows</option>
+        <option value="android">🤖 Android</option>
+        <option value="mac">🍎 macOS</option>
+        <option value="web">🌐 Web</option>
+      </select>
+
+      <!-- Rating -->
+      <select id="filter-rating" class="filter-select" aria-label="Filtrar por valoración">
+        <option value="">Cualquier valoración</option>
+        <option value="4.5">★★★★★ 4.5+</option>
+        <option value="4">★★★★☆ 4.0+</option>
+        <option value="3">★★★☆☆ 3.0+</option>
+      </select>
+
+      <!-- Pills de categoría rápida -->
+      <button class="filter-pill active" data-cat="" onclick="quickFilter(this,'')">Todos</button>
+      <button class="filter-pill" data-cat="ia" onclick="quickFilter(this,'ia')">IA</button>
+      <button class="filter-pill" data-cat="seguridad" onclick="quickFilter(this,'seguridad')">Seguridad</button>
+      <button class="filter-pill" data-cat="linux" onclick="quickFilter(this,'linux')">Linux</button>
+
+      <!-- Vista toggle -->
+      <div class="view-toggle" style="margin-left:auto">
+        <button class="view-btn active" id="btn-grid" onclick="setView('grid')" aria-label="Vista cuadrícula" title="Cuadrícula">⊞</button>
+        <button class="view-btn" id="btn-list" onclick="setView('list')" aria-label="Vista lista" title="Lista">☰</button>
       </div>
-    </section>
+    </div>
 
-    <div id="reco" class="muted" style="padding:14px">Cargando recomendaciones…</div>
+    <!-- Resultado info -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px">
+      <span id="results-count" style="font-size:0.82rem;color:var(--muted)">Cargando productos…</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:0.78rem;color:var(--muted)">Ordenar por:</span>
+        <select id="filter-sort" class="filter-select" aria-label="Ordenar por" style="font-size:0.78rem">
+          <option value="popular">Más popular</option>
+          <option value="newest">Más nuevos</option>
+          <option value="price-asc">Precio: menor a mayor</option>
+          <option value="price-desc">Precio: mayor a menor</option>
+          <option value="rating">Mejor valorados</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Grid de productos -->
+    <div id="market-grid" class="market-grid" aria-live="polite" role="list"></div>
+
+    <!-- Sin resultados -->
+    <div id="no-results" style="display:none;text-align:center;padding:60px 0">
+      <div style="font-size:3rem;margin-bottom:16px">🔍</div>
+      <h3 style="font-family:var(--font-title);margin-bottom:8px">Sin resultados</h3>
+      <p style="color:var(--muted)">No encontramos productos con esos filtros. <a href="/marketplace.html" style="color:var(--accent)">Limpiar filtros</a></p>
+    </div>
+
+    <!-- Paginación -->
+    <div id="pagination" class="pagination" aria-label="Paginación" role="navigation"></div>
+
+    <!-- Seguridad banner -->
+    <div class="security-banner" style="margin-top:48px">
+      <div class="security-banner-icon">🛡️</div>
+      <div class="security-banner-text">
+        <h4>TODO EL SOFTWARE ESTÁ VERIFICADO</h4>
+        <p>Analizamos cada producto contra malware, revisamos el código y verificamos la funcionalidad antes de publicarlo. <a href="/security.html" style="color:var(--accent4)">Ver política de seguridad →</a></p>
+      </div>
+    </div>
   </main>
 
-  <footer class="site-footer premium-footer" role="contentinfo">
-    <div class="wrap footer-grid">
-      <div>
-        <a class="brand footer-brand" href="/">neuralgpt.store</a>
-        <p class="subtle">Marketplace premium para hardware, soluciones IA y proveedores especializados.</p>
+  <div class="rgb-divider"></div>
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a class="brand" href="/">neural<span>GPT</span>.store</a>
+        <p>Marketplace premium de software creado con IA. Verificado, seguro y con pago Stripe.</p>
+        <div class="footer-social">
+          <a href="mailto:wilfreyera@gmail.com" title="Email" aria-label="Email">✉</a>
+        </div>
       </div>
-      <div>
-        <strong>Empresa</strong>
-        <nav class="foot-nav">
-          <a href="/about.html">Acerca</a>
-          <a href="/sponsors.html">Partners</a>
-        </nav>
+      <div class="footer-col">
+        <h4>NEURALGPT</h4>
+        <ul>
+          <li><a href="/about.html">Sobre nosotros</a></li>
+          <li><a href="/contact.html">Contacto</a></li>
+        </ul>
       </div>
-      <div>
-        <strong>Proveedores</strong>
-        <nav class="foot-nav">
-          <a href="/providers.html">Listado</a>
-          <a href="/providers.html">Portal</a>
-        </nav>
+      <div class="footer-col">
+        <h4>MARKETPLACE</h4>
+        <ul>
+          <li><a href="/marketplace.html">Todos los productos</a></li>
+          <li><a href="/pricing.html">Precios</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>VENDEDORES</h4>
+        <ul>
+          <li><a href="/provider-register.html">Registrarse</a></li>
+          <li><a href="/providers.html">Directorio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>LEGAL</h4>
+        <ul>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Términos</a></li>
+          <li><a href="/security.html">Seguridad</a></li>
+        </ul>
       </div>
     </div>
-    <div class="wrap" style="margin-top:18px;display:flex;align-items:center;justify-content:space-between">
-      <div class="muted">© neuralgpt.store — 2025</div>
-      <div><a class="btn" href="/legal.html">Legal</a></div>
+    <div class="footer-bottom">
+      <span>© 2025–2026 neuralgpt.store · Todos los derechos reservados</span>
+      <span>Pagos por <strong>Stripe</strong> · <a href="mailto:wilfreyera@gmail.com" style="color:var(--accent)">wilfreyera@gmail.com</a></span>
     </div>
   </footer>
-  <script src="/assets/js/quantum-security.js" defer></script>
-  <script src="/assets/js/sponsors.js" defer></script>
-  <script src="/assets/js/main.js" defer></script>
+
+  <script>
+  // ── Catálogo de productos (base hardcoded + carga dinámica desde JSON) ──
+  var CATALOG = [
+    {id:'ghostwriter',name:'GhostWriter',tag:'IA · REDACCIÓN',desc:'Asistente de redacción con IA. Genera artículos, copies y contenido SEO en segundos.',price:19,period:'/mes',icon:'📝',platforms:['linux','windows','mac','web'],rating:5.0,reviews:48,verified:true,own:true,cat:'ia',new:false,hot:true},
+    {id:'neuralbill',name:'NeuralBill',tag:'AUTOMATIZACIÓN · FINTECH',desc:'Facturación automatizada con IA. Genera facturas, controla gastos e informes fiscales.',price:29,period:'/mes',icon:'💳',platforms:['linux','windows','web'],rating:5.0,reviews:31,verified:true,own:true,cat:'fintech',new:false,hot:true},
+    {id:'pokerbot',name:'PokerBot',tag:'IA · ANÁLISIS',desc:'Analizador de manos de póker con IA. Aprende estrategias y analiza tu juego en tiempo real.',price:39,period:'',icon:'🃏',platforms:['linux','windows','android'],rating:4.5,reviews:17,verified:true,own:true,cat:'gaming',new:true,hot:false},
+    {id:'clawbot',name:'ClawBot Automation Suite',tag:'AUTOMATIZACIÓN',desc:'Sistema de automatización modular para Linux. Construye y gestiona cualquier flujo de trabajo.',price:29,period:'',icon:'⚡',platforms:['linux'],rating:4.8,reviews:62,verified:true,own:false,cat:'automatizacion',new:false,hot:true},
+    {id:'neuralagent',name:'NeuralAgent Framework',tag:'INTELIGENCIA ARTIFICIAL',desc:'Framework para construir agentes de IA personalizados. Compatible con todos los modelos principales.',price:49,period:'',icon:'🤖',platforms:['linux','windows'],rating:4.9,reviews:44,verified:true,own:false,cat:'ia',new:false,hot:false},
+    {id:'blackarch-toolkit',name:'BlackArch Security Toolkit',tag:'SEGURIDAD',desc:'Suite de herramientas de seguridad optimizada para BlackArch Linux. Auditoría y pentesting profesional.',price:39,period:'',icon:'🛡️',platforms:['linux'],rating:4.7,reviews:89,verified:true,own:false,cat:'seguridad',new:false,hot:true},
+    {id:'datascraper',name:'DataScraper Pro',tag:'WEB & APIs',desc:'Scraper web avanzado con soporte para sitios dinámicos, proxies y exportación a múltiples formatos.',price:19,period:'',icon:'🌐',platforms:['linux','windows'],rating:4.6,reviews:55,verified:true,own:false,cat:'web',new:false,hot:false},
+    {id:'analytics-ai',name:'AnalyticsAI Dashboard',tag:'DATOS & ANALYTICS',desc:'Dashboard de análisis de datos con IA integrada. Conecta a cualquier fuente de datos y genera informes.',price:59,period:'',icon:'📊',platforms:['web'],rating:4.8,reviews:33,verified:true,own:false,cat:'datos',new:true,hot:false},
+    {id:'linux-hardener',name:'Linux Hardener',tag:'LINUX · SEGURIDAD',desc:'Herramienta de hardening automático para servidores Linux. Aplica las mejores prácticas de seguridad.',price:15,period:'',icon:'🐧',platforms:['linux'],rating:4.9,reviews:71,verified:true,own:false,cat:'linux',new:false,hot:false},
+    {id:'telegram-bot-builder',name:'TelegramBot Builder',tag:'AUTOMATIZACIÓN',desc:'Construye bots de Telegram sin código. Conecta APIs, envía alertas y automatiza tareas.',price:24,period:'',icon:'✈️',platforms:['linux','windows'],rating:4.5,reviews:28,verified:true,own:false,cat:'automatizacion',new:true,hot:false},
+    {id:'pentest-toolkit',name:'PenTest Toolkit',tag:'SEGURIDAD · PENTESTING',desc:'Colección de herramientas de pentesting curadas. Incluye recon, explotación y reportes.',price:79,period:'',icon:'🔍',platforms:['linux'],rating:4.7,reviews:41,verified:true,own:false,cat:'seguridad',new:false,hot:false},
+    {id:'ai-copywriter',name:'AI Copywriter API',tag:'IA · WEB',desc:'API de generación de copies para marketing. Integra en tu app o web y genera textos en segundos.',price:29,period:'/mes',icon:'✍️',platforms:['web'],rating:4.6,reviews:22,verified:true,own:false,cat:'ia',new:false,hot:false},
+  ];
+
+  var currentView = 'grid';
+  var currentPage = 1;
+  var pageSize    = 9;
+  var filtered    = CATALOG.slice();
+
+  // Intentar cargar catálogo externo
+  fetch('/data/product-catalog.json')
+    .then(r=>r.json())
+    .then(data=>{
+      if(Array.isArray(data) && data.length) {
+        // Merge: añadir productos del JSON que no estén en el hardcoded
+        var existingIds = CATALOG.map(p=>p.id);
+        data.forEach(function(p){
+          if(p.id && !existingIds.includes(p.id)) CATALOG.push(p);
+        });
+      }
+      initMarketplace();
+    })
+    .catch(()=> initMarketplace());
+
+  function initMarketplace(){
+    // Leer URL params
+    var params = new URLSearchParams(location.search);
+    var urlCat    = params.get('cat') || '';
+    var urlSearch = params.get('search') || '';
+    if(urlCat) document.getElementById('filter-cat').value = urlCat;
+    if(urlSearch) document.getElementById('mp-search').value = urlSearch;
+    applyFilters();
+    bindFilters();
+  }
+
+  function bindFilters(){
+    ['filter-cat','filter-price','filter-platform','filter-rating','filter-sort'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.addEventListener('change', function(){ currentPage=1; applyFilters(); });
+    });
+    var mpSearch = document.getElementById('mp-search');
+    if(mpSearch){
+      mpSearch.addEventListener('input', function(){ currentPage=1; applyFilters(); });
+      mpSearch.addEventListener('keydown', function(e){ if(e.key==='Enter'){ currentPage=1; applyFilters(); }});
+    }
+
+    // Nav toggle mobile
+    var toggle = document.getElementById('nav-toggle');
+    var nav    = document.getElementById('main-nav');
+    if(toggle&&nav) toggle.addEventListener('click',function(){ var o=nav.classList.toggle('open'); toggle.setAttribute('aria-expanded',o); });
+  }
+
+  function quickFilter(btn, cat){
+    document.querySelectorAll('.filter-pill').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('filter-cat').value = cat;
+    currentPage = 1;
+    applyFilters();
+  }
+
+  function applyFilters(){
+    var cat      = document.getElementById('filter-cat').value;
+    var priceRng = document.getElementById('filter-price').value;
+    var platform = document.getElementById('filter-platform').value;
+    var rating   = parseFloat(document.getElementById('filter-rating').value)||0;
+    var sort     = document.getElementById('filter-sort').value;
+    var search   = (document.getElementById('mp-search').value||'').toLowerCase().trim();
+
+    filtered = CATALOG.filter(function(p){
+      if(cat && p.cat !== cat) return false;
+      if(search && !p.name.toLowerCase().includes(search) && !p.desc.toLowerCase().includes(search) && !p.tag.toLowerCase().includes(search)) return false;
+      if(priceRng){
+        if(priceRng==='free'  && p.price>0) return false;
+        if(priceRng==='0-20'  && (p.price===0||p.price>20)) return false;
+        if(priceRng==='20-50' && (p.price<=20||p.price>50)) return false;
+        if(priceRng==='50-100'&& (p.price<=50||p.price>100)) return false;
+        if(priceRng==='100+'  && p.price<=100) return false;
+      }
+      if(platform && !(p.platforms||[]).includes(platform)) return false;
+      if(rating && (p.rating||0) < rating) return false;
+      return true;
+    });
+
+    // Ordenar
+    filtered.sort(function(a,b){
+      if(sort==='price-asc')  return (a.price||0)-(b.price||0);
+      if(sort==='price-desc') return (b.price||0)-(a.price||0);
+      if(sort==='rating')     return (b.rating||0)-(a.rating||0);
+      if(sort==='newest')     return (b.new?1:0)-(a.new?1:0);
+      return (b.reviews||0)-(a.reviews||0); // popular
+    });
+
+    renderPage();
+  }
+
+  function renderPage(){
+    var start = (currentPage-1)*pageSize;
+    var page  = filtered.slice(start, start+pageSize);
+    var grid  = document.getElementById('market-grid');
+    var noRes = document.getElementById('no-results');
+
+    document.getElementById('results-count').textContent = filtered.length + ' producto' + (filtered.length!==1?'s':'') + ' encontrado' + (filtered.length!==1?'s':'');
+
+    if(!filtered.length){
+      grid.innerHTML='';
+      noRes.style.display='block';
+      document.getElementById('pagination').innerHTML='';
+      return;
+    }
+    noRes.style.display='none';
+    grid.className = currentView==='list' ? 'market-list' : 'market-grid';
+    grid.innerHTML = page.map(renderCard).join('');
+    renderPagination();
+
+    // Lazy load observer
+    grid.querySelectorAll('.product-card').forEach(function(card,i){
+      card.style.opacity='0';
+      card.style.transform='translateY(16px)';
+      card.style.transition='opacity 0.3s ease '+(i*0.06)+'s, transform 0.3s ease '+(i*0.06)+'s';
+      setTimeout(function(){ card.style.opacity='1'; card.style.transform=''; }, 50);
+    });
+  }
+
+  function renderCard(p){
+    var stars = renderStars(p.rating||0);
+    var platformBadges = (p.platforms||[]).map(function(pl){
+      var labels={linux:'🐧 Linux',windows:'🪟 Win',android:'🤖 Android',mac:'🍎 Mac',web:'🌐 Web'};
+      return '<span class="platform-pill">'+(labels[pl]||pl)+'</span>';
+    }).join('');
+    var price = p.price===0 ? 'GRATIS' : p.price+'€'+(p.period||'');
+    var badges = '';
+    if(p.verified) badges+='<span class="badge badge-verified" style="font-size:0.58rem">VERIFICADO</span>';
+    if(p.own)      badges+='<span class="badge badge-own" style="font-size:0.58rem">OFICIAL</span>';
+    if(p.new)      badges+='<span class="badge badge-new" style="font-size:0.58rem">NUEVO</span>';
+    if(p.hot)      badges+='<span class="badge badge-hot" style="font-size:0.58rem">POPULAR</span>';
+
+    return '<article class="product-card" role="listitem" itemscope itemtype="https://schema.org/SoftwareApplication">'
+      +'<div class="product-thumb" style="position:relative">'
+      +'<span>'+p.icon+'</span>'
+      +'<div style="position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:4px;align-items:flex-end">'+badges+'</div>'
+      +'</div>'
+      +'<div class="product-body">'
+      +'<span class="product-tag">'+p.tag+'</span>'
+      +'<span class="product-name" itemprop="name">'+escapeHtml(p.name)+'</span>'
+      +'<p class="product-desc" itemprop="description">'+escapeHtml(p.desc)+'</p>'
+      +'<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+platformBadges+'</div>'
+      +'<div style="margin-top:4px;display:flex;align-items:center;gap:6px">'
+      +'<span class="stars" aria-label="'+p.rating+' estrellas">'+stars+'</span>'
+      +'<span class="rating-count">('+p.reviews+')</span>'
+      +'</div>'
+      +'<div class="product-footer">'
+      +'<span class="product-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="'+(p.price||0)+'">'+price+'</span></span>'
+      +'<a href="/product.html?id='+encodeURIComponent(p.id)+'" class="btn btn-primary btn-sm">Ver más</a>'
+      +'</div>'
+      +'</div>'
+      +'</article>';
+  }
+
+  function renderPagination(){
+    var total = Math.ceil(filtered.length/pageSize);
+    if(total<=1){ document.getElementById('pagination').innerHTML=''; return; }
+    var html='';
+    html+='<button class="page-btn" onclick="goPage('+(currentPage-1)+')" '+(currentPage<=1?'disabled':'')+' aria-label="Página anterior">‹</button>';
+    for(var i=1;i<=total;i++){
+      if(i===1||i===total||Math.abs(i-currentPage)<=2){
+        html+='<button class="page-btn'+(i===currentPage?' active':'')+'" onclick="goPage('+i+')" aria-label="Página '+i+'" aria-current="'+(i===currentPage?'page':'false')+'">'+i+'</button>';
+      } else if(Math.abs(i-currentPage)===3){
+        html+='<span style="color:var(--muted);padding:0 4px;line-height:40px">…</span>';
+      }
+    }
+    html+='<button class="page-btn" onclick="goPage('+(currentPage+1)+')" '+(currentPage>=total?'disabled':'')+' aria-label="Página siguiente">›</button>';
+    document.getElementById('pagination').innerHTML=html;
+  }
+
+  function goPage(n){
+    var total=Math.ceil(filtered.length/pageSize);
+    if(n<1||n>total) return;
+    currentPage=n;
+    renderPage();
+    document.getElementById('main-content').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function setView(v){
+    currentView=v;
+    document.getElementById('btn-grid').classList.toggle('active',v==='grid');
+    document.getElementById('btn-list').classList.toggle('active',v==='list');
+    renderPage();
+  }
+
+  function renderStars(r){
+    var full=Math.floor(r), half=(r%1>=0.5)?1:0, empty=5-full-half;
+    return '★'.repeat(full)+(half?'½':'')+'☆'.repeat(empty);
+  }
+  function escapeHtml(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+  </script>
+  <script src="/js/agent-chat.js" defer></script>
+</body>
+</html>
