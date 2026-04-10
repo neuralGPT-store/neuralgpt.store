@@ -1,78 +1,265 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    
-    <title>neuralgpt.store — Your Technological Marketplace</title>
-    <meta name="description" content="neuralgpt.store — Register your provider profile to sell hardware, sensors and services on our marketplace." />
-    <meta property="og:title" content="neuralgpt.store — Your Technological Marketplace" />
-    <meta property="og:description" content="neuralgpt.store — Register your provider profile to sell hardware, sensors and services on our marketplace." />
-    <meta property="og:site_name" content="neuralgpt.store" />
-    <meta property="og:url" content="https://neuralgpt.store/provider-register.html" />
-    <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
-    <meta name="twitter:description" content="neuralgpt.store — Register your provider profile to sell hardware, sensors and services on our marketplace." />
-    <meta property="og:image" content="/assets/img/vision-pro.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="/css/theme-override.css">
-      <link rel="icon" href="/favicon.ico">
-  </head>
-  <body class="site-root provider-register">
-    <a class="skip-link" href="#main-content">Saltar al contenido</a>
-    <main id="main-content" class="wrap bg-vendor-register">
-    
-      <header class="page-header"><h1>Registrar proveedor</h1><p class="subtle">Envía tus datos para aparecer en NeuralGPT.Store (revisión manual requerida).</p></header>
-      <section class="card">
-        <form id="provider-form">
-          <label>Nombre de la empresa<input id="prov-name-input" name="prov-name" required></label>
-          <label>Website oficial<input id="prov-website" name="prov-website" type="url" required></label>
-          <label>Tienda externa (opcional)<input id="prov-store" name="prov-store" type="url"></label>
-          <label>Categorías (coma separadas)<input id="prov-categories" name="prov-categories"></label>
-          <label>Descripción<textarea id="prov-description" name="prov-description" rows="4"></textarea></label>
-          <fieldset class="mt-8">
-            <legend>Payout / Pagos (solo visible al equipo administrativo)</legend>
-            <label>Banco<input id="prov-bankName" placeholder="Bank name"></label>
-            <label>IBAN (no será mostrado públicamente)<input id="prov-iban" placeholder="IBAN"></label>
-            <label>Método de pago<select id="prov-paymentMethod" name="prov-paymentMethod"><option value="bank">Bank transfer</option><option value="paypal">PayPal</option><option value="wire">Wire</option></select></label>
-            <label>Billing Email<input id="prov-billingEmail" name="prov-billingEmail" type="email" placeholder="billing@company.com"></label>
-          </fieldset>
-          <div class="form-actions"><button class="btn btn-primary" id="prov-submit" type="submit" data-track="cta:submit_provider">Enviar solicitud</button></div>
-          <div id="prov-msg" class="muted" role="status" aria-live="polite"></div>
-        </form>
-      </section>
-      <style>
-        .mt-8{margin-top:8px}
-        .form-actions{margin-top:12px}
-        .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
-        .skip-link:focus{position:static;width:auto;height:auto;padding:8px;background:#000;color:#fff}
-      </style>
-      <script>
-        // Client-side enhancement: collect payout info and show simulated submission message.
-        document.getElementById('provider-form')?.addEventListener('submit', function(e){
-          e.preventDefault();
-          const data = {
-            name: document.getElementById('prov-name-input')?.value||'',
-            website: document.getElementById('prov-website')?.value||'',
-            store: document.getElementById('prov-store')?.value||'',
-            categories: (document.getElementById('prov-categories')?.value||'').split(',').map(s=>s.trim()).filter(Boolean),
-            description: document.getElementById('prov-description')?.value||'',
-            payoutInfo: {
-              bankName: document.getElementById('prov-bankName')?.value||'',
-              iban: document.getElementById('prov-iban')?.value||'',
-              paymentMethod: document.getElementById('prov-paymentMethod')?.value||'',
-              billingEmail: document.getElementById('prov-billingEmail')?.value||''
-            }
-          }
-          const msg = document.getElementById('prov-msg')
-          if(msg) msg.textContent = 'Solicitud recibida (simulada). Los datos de payout se han registrado para revisión.'
-          // Note: this is a frontend-only simulation. Persisting requires a backend API.
-          console.debug && console.debug('Provider registration (simulated):', data)
-          const form = document.getElementById('provider-form'); if(form) form.reset()
-        })
-      </script>
-    </main>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>Registrarme como vendedor — neuralgpt.store</title>
+  <meta name="description" content="Regístrate como vendedor en neuralgpt.store. Comisión del 15% durante el lanzamiento. Proceso simple, verificación rápida." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/marketplace.html">Marketplace</a></li>
+        <li><a href="/providers.html">Proveedores</a></li>
+        <li><a href="/pricing.html">Precios</a></li>
+        <li><a href="/contact.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="/marketplace.html" class="btn">Explorar</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="rgb-divider"></div>
+
+  <main id="main-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 70px);max-width:1200px;margin:0 auto;padding:0 24px;gap:48px;align-items:start;padding-top:48px;padding-bottom:80px">
+
+      <!-- ── COLUMNA INFO ── -->
+      <div>
+        <div class="hero-badge" style="display:inline-flex;margin-bottom:20px">
+          <span class="dot"></span>15% COMISIÓN DE LANZAMIENTO
+        </div>
+        <h1 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem);margin-bottom:16px">Vende tu software<br>en neuralgpt.store</h1>
+        <p style="color:var(--muted);font-size:0.95rem;line-height:1.8;margin-bottom:32px">Llega a miles de compradores técnicos. Proceso simple de registro, verificación en 24-48h y cobro mensual automático vía Stripe.</p>
+
+        <!-- Comisiones destacadas -->
+        <div style="padding:20px;background:rgba(0,255,153,0.05);border:1.5px solid rgba(0,255,153,0.2);border-radius:var(--radius);margin-bottom:24px">
+          <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent4);margin-bottom:12px">MODELO DE COMISIONES</div>
+          <div style="display:flex;gap:20px;flex-wrap:wrap">
+            <div>
+              <div style="font-family:var(--font-title);font-size:1.8rem;font-weight:900;color:var(--accent4)">15%</div>
+              <div style="font-size:0.72rem;color:var(--muted)">Hasta sep. 2025</div>
+            </div>
+            <div style="display:flex;align-items:center;color:var(--muted)">→</div>
+            <div>
+              <div style="font-family:var(--font-title);font-size:1.8rem;font-weight:900;color:var(--accent)">20%</div>
+              <div style="font-size:0.72rem;color:var(--muted)">Desde sep. 2025</div>
+            </div>
+          </div>
+          <p style="font-size:0.78rem;color:var(--muted);margin-top:10px">Sin cuota mensual. Solo pagas si vendes. Pago mensual vía Stripe Connect.</p>
+        </div>
+
+        <!-- Beneficios -->
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px">
+          <div style="display:flex;gap:12px;align-items:flex-start;font-size:0.85rem">
+            <span style="color:var(--accent4);flex-shrink:0;margin-top:1px">✓</span>
+            <div><strong>Badge "Software Verificado"</strong> — Genera confianza en los compradores</div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;font-size:0.85rem">
+            <span style="color:var(--accent4);flex-shrink:0;margin-top:1px">✓</span>
+            <div><strong>Cobro automático mensual</strong> — Stripe Connect, pago directo a tu cuenta</div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;font-size:0.85rem">
+            <span style="color:var(--accent4);flex-shrink:0;margin-top:1px">✓</span>
+            <div><strong>Panel de analíticas</strong> — Ventas, conversiones y más</div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;font-size:0.85rem">
+            <span style="color:var(--accent4);flex-shrink:0;margin-top:1px">✓</span>
+            <div><strong>Verificación en 24-48h</strong> — Proceso rápido y transparente</div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;font-size:0.85rem">
+            <span style="color:var(--accent4);flex-shrink:0;margin-top:1px">✓</span>
+            <div><strong>Sin restricciones de categoría</strong> — IA, seguridad, automatización, etc.</div>
+          </div>
+        </div>
+
+        <!-- Proceso -->
+        <div style="padding:20px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius)">
+          <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent);margin-bottom:14px">PROCESO EN 4 PASOS</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:0.82rem">
+            <div style="display:flex;gap:10px;align-items:center">
+              <span style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:#000;font-family:var(--font-title);font-size:0.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</span>
+              <span style="color:var(--muted)">Completa el formulario de registro (5 min)</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <span style="width:22px;height:22px;border-radius:50%;background:var(--accent2);color:#fff;font-family:var(--font-title);font-size:0.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</span>
+              <span style="color:var(--muted)">Revisión de seguridad (24-48h laborables)</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <span style="width:22px;height:22px;border-radius:50%;background:var(--accent3);color:#fff;font-family:var(--font-title);font-size:0.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</span>
+              <span style="color:var(--muted)">Publicación con badge verificado</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <span style="width:22px;height:22px;border-radius:50%;background:var(--accent4);color:#000;font-family:var(--font-title);font-size:0.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</span>
+              <span style="color:var(--muted)">Cobro mensual automático vía Stripe</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:16px;font-size:0.78rem;color:var(--muted)">¿Dudas? Escríbenos a <a href="mailto:wilfreyera@gmail.com" style="color:var(--accent)">wilfreyera@gmail.com</a></p>
+      </div>
+
+      <!-- ── FORMULARIO ── -->
+      <div>
+        <div style="padding:32px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius-lg)">
+          <h2 style="font-family:var(--font-title);font-size:0.85rem;letter-spacing:1px;color:var(--accent);margin-bottom:24px">FORMULARIO DE REGISTRO</h2>
+
+          <form id="provider-form" novalidate>
+            <!-- Datos empresa -->
+            <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--muted);margin-bottom:12px;margin-top:4px">DATOS DEL VENDEDOR</div>
+            <div class="form-group">
+              <label for="prov-name">NOMBRE / EMPRESA</label>
+              <input type="text" id="prov-name" name="name" class="form-control" placeholder="Tu nombre o empresa" required maxlength="100" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prov-email">EMAIL DE CONTACTO</label>
+                <input type="email" id="prov-email" name="email" class="form-control" placeholder="tu@email.com" required />
+              </div>
+              <div class="form-group">
+                <label for="prov-country">PAÍS</label>
+                <input type="text" id="prov-country" name="country" class="form-control" placeholder="España" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="prov-website">SITIO WEB (opcional)</label>
+              <input type="url" id="prov-website" name="website" class="form-control" placeholder="https://tusitio.com" />
+            </div>
+
+            <!-- Datos del software -->
+            <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--muted);margin-bottom:12px;margin-top:20px">DATOS DEL SOFTWARE</div>
+            <div class="form-group">
+              <label for="prov-software-name">NOMBRE DEL SOFTWARE</label>
+              <input type="text" id="prov-software-name" name="software_name" class="form-control" placeholder="Nombre de tu producto" required maxlength="80" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prov-category">CATEGORÍA</label>
+                <select id="prov-category" name="category" class="form-control">
+                  <option value="">Selecciona categoría</option>
+                  <option value="ia">🤖 Inteligencia Artificial</option>
+                  <option value="automatizacion">⚡ Automatización</option>
+                  <option value="seguridad">🛡️ Seguridad</option>
+                  <option value="web">🌐 Web & APIs</option>
+                  <option value="datos">📊 Datos & Analytics</option>
+                  <option value="linux">🐧 Linux & Sistemas</option>
+                  <option value="fintech">💳 Fintech</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="prov-price">PRECIO PROPUESTO (€)</label>
+                <input type="number" id="prov-price" name="price" class="form-control" placeholder="29" min="0" step="0.01" />
+              </div>
+            </div>
+
+            <!-- Plataformas -->
+            <div class="form-group">
+              <label>PLATAFORMAS COMPATIBLES</label>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
+                <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
+                  <input type="checkbox" name="platforms" value="linux" style="width:auto" /> 🐧 Linux
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
+                  <input type="checkbox" name="platforms" value="windows" style="width:auto" /> 🪟 Windows
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
+                  <input type="checkbox" name="platforms" value="android" style="width:auto" /> 🤖 Android
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
+                  <input type="checkbox" name="platforms" value="mac" style="width:auto" /> 🍎 macOS
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
+                  <input type="checkbox" name="platforms" value="web" style="width:auto" /> 🌐 Web
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="prov-description">DESCRIPCIÓN DEL PRODUCTO</label>
+              <textarea id="prov-description" name="description" class="form-control" rows="4" placeholder="Describe qué hace tu software, para quién es y qué lo hace especial…" required maxlength="1000"></textarea>
+            </div>
+
+            <!-- Acepto comisiones -->
+            <div style="padding:14px;background:rgba(0,255,153,0.04);border:1px solid rgba(0,255,153,0.15);border-radius:10px;margin-bottom:16px">
+              <label style="display:flex;gap:10px;align-items:flex-start;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
+                <input type="checkbox" id="prov-commission" required style="width:auto;margin-top:2px" />
+                <span>Acepto el modelo de comisiones: <strong style="color:var(--accent4)">15%</strong> durante el lanzamiento (hasta sep. 2025) y <strong style="color:var(--accent)">20%</strong> a partir de entonces. Sin cuota mensual fija.</span>
+              </label>
+            </div>
+            <div style="margin-bottom:16px">
+              <label style="display:flex;gap:10px;align-items:flex-start;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
+                <input type="checkbox" id="prov-terms" required style="width:auto;margin-top:2px" />
+                <span>Acepto los <a href="/terms.html" style="color:var(--accent)">términos de uso</a> y la <a href="/privacy.html" style="color:var(--accent)">política de privacidad</a>. Confirmo que el software no contiene malware ni comportamientos maliciosos.</span>
+              </label>
+            </div>
+
+            <button type="submit" id="prov-submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+              Enviar solicitud de registro →
+            </button>
+            <div id="prov-msg" style="margin-top:12px;font-size:0.82rem;color:var(--accent4);text-align:center" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="rgb-divider"></div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand-col"><a class="brand" href="/">neural<span>GPT</span>.store</a><p>Marketplace premium de software creado con IA.</p></div>
+      <div class="footer-col"><h4>NEURALGPT</h4><ul><li><a href="/about.html">Sobre nosotros</a></li><li><a href="/contact.html">Contacto</a></li></ul></div>
+      <div class="footer-col"><h4>MARKETPLACE</h4><ul><li><a href="/marketplace.html">Productos</a></li><li><a href="/pricing.html">Precios</a></li></ul></div>
+      <div class="footer-col"><h4>VENDEDORES</h4><ul><li><a href="/providers.html">Directorio</a></li><li><a href="/vendor-onboarding.html">Guía</a></li></ul></div>
+      <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:wilfreyera@gmail.com" style="color:var(--accent)">wilfreyera@gmail.com</a></span></div>
+  </footer>
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+
+  document.getElementById('provider-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name     = (document.getElementById('prov-name').value||'').trim();
+    var email    = (document.getElementById('prov-email').value||'').trim();
+    var swName   = (document.getElementById('prov-software-name').value||'').trim();
+    var desc     = (document.getElementById('prov-description').value||'').trim();
+    var comm     = document.getElementById('prov-commission').checked;
+    var terms    = document.getElementById('prov-terms').checked;
+    var msg      = document.getElementById('prov-msg');
+
+    if(!name||!email||!swName||!desc){ msg.textContent='Por favor completa todos los campos obligatorios.'; msg.style.color='var(--accent3)'; return; }
+    if(!comm){ msg.textContent='Debes aceptar el modelo de comisiones.'; msg.style.color='var(--accent3)'; return; }
+    if(!terms){ msg.textContent='Debes aceptar los términos de uso.'; msg.style.color='var(--accent3)'; return; }
+
+    // Simulated submission — replace with actual backend API
+    var btn = document.getElementById('prov-submit');
+    btn.disabled=true; btn.textContent='Enviando…';
+
+    setTimeout(function(){
+      msg.innerHTML='✓ <strong>Solicitud recibida.</strong> Te contactaremos en <strong>wilfreyera@gmail.com</strong> en menos de 48h laborables para continuar el proceso de verificación.';
+      msg.style.color='var(--accent4)';
+      document.getElementById('provider-form').reset();
+      btn.disabled=false; btn.textContent='Enviar solicitud de registro →';
+    }, 800);
+  });
+  </script>
+  <script src="/js/agent-chat.js" defer></script>
+</body>
 </html>
