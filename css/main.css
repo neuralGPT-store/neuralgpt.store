@@ -863,3 +863,307 @@ select.form-control { cursor: pointer; }
   .hero h1 { background: var(--accent); -webkit-background-clip: text; background-clip: text; }
 }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ============================================================
+   RGB UNIVERSAL v3 — Conic-gradient 360° true rotation
+   + Metallic Hero + Particle glow
+   ============================================================ */
+
+/* @property permite interpolar el ángulo del conic-gradient */
+@property --rgb-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Rotación continua real 360° */
+@keyframes rgb-rotate {
+  to { --rgb-angle: 360deg; }
+}
+
+/* Ciclo de colores RGB para inputs/selects (no admiten ::before fiable) */
+@keyframes rgb-shadow-cycle {
+  0%,100% { box-shadow: 0 0 0 1.5px rgba(0,234,255,0.9),  0 0 14px rgba(0,234,255,0.25); }
+  25%      { box-shadow: 0 0 0 1.5px rgba(127,0,255,0.9), 0 0 14px rgba(127,0,255,0.25); }
+  50%      { box-shadow: 0 0 0 1.5px rgba(255,0,128,0.9), 0 0 14px rgba(255,0,128,0.25); }
+  75%      { box-shadow: 0 0 0 1.5px rgba(0,255,153,0.9), 0 0 14px rgba(0,255,153,0.25); }
+}
+
+/* Brillo metálico que recorre el hero de izquierda a derecha */
+@keyframes metallic-shine {
+  0%       { transform: translateX(-220%) skewX(-18deg); opacity: 0; }
+  4%       { opacity: 1; }
+  38%      { transform: translateX(220%) skewX(-18deg); opacity: 1; }
+  40%      { opacity: 0; }
+  100%     { transform: translateX(220%) skewX(-18deg); opacity: 0; }
+}
+
+/* ── 1. CARDS + CONTENEDORES: borde conic-gradient 360° ── */
+
+/* Actualizar .rgb-card para usar conic verdadero */
+.rgb-card::before {
+  background: conic-gradient(from var(--rgb-angle), #00eaff, #7f00ff, #ff0080, #00ff99, #00eaff) !important;
+  background-size: unset !important;
+  animation: rgb-rotate 3s linear infinite !important;
+}
+
+/* Aplicar a todas las demás cards y contenedores */
+.card,
+.product-card,
+.cat-card,
+.feature-card,
+.testimonial-card,
+.pricing-card,
+.review-card,
+.security-banner,
+.product-gallery,
+.product-buy-box,
+.chat-panel,
+.search-bar,
+.hero-badge,
+.filter-pill {
+  border-color: transparent;
+  position: relative;
+  isolation: isolate;
+}
+
+/* El pseudo-elemento con gradiente cónico + mask */
+.card::before,
+.product-card::before,
+.cat-card::before,
+.feature-card::before,
+.testimonial-card::before,
+.pricing-card::before,
+.review-card::before,
+.security-banner::before,
+.product-gallery::before,
+.product-buy-box::before,
+.chat-panel::before,
+.search-bar::before,
+.hero-badge::before,
+.filter-pill::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  --rgb-angle: 0deg;
+  background: conic-gradient(from var(--rgb-angle), #00eaff, #7f00ff, #ff0080, #00ff99, #00eaff);
+  animation: rgb-rotate 4s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  padding: 1.5px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Velocidades variadas para efecto orgánico */
+.card::before               { animation-duration: 4s; }
+.product-card::before       { animation-duration: 3s; }
+.cat-card::before           { animation-duration: 5s; }
+.feature-card::before       { animation-duration: 4.5s; }
+.testimonial-card::before   { animation-duration: 7s; animation-direction: reverse; }
+.pricing-card::before       { animation-duration: 4s; }
+.pricing-card.featured::before { animation-duration: 2s; }
+.review-card::before        { animation-duration: 5.5s; }
+.chat-panel::before         { animation-duration: 2.5s; }
+.hero-badge::before         { animation-duration: 2s; }
+.search-bar::before         { animation-duration: 3s; }
+.filter-pill::before        { animation-duration: 3.5s; }
+
+/* ── 2. BOTONES: borde conic-gradient 360° ── */
+
+.btn,
+.page-btn,
+.view-btn,
+.chat-send,
+.chat-suggestion-btn,
+.filter-pill {
+  position: relative;
+  isolation: isolate;
+}
+
+.btn         { border-color: transparent; }
+.page-btn    { border-color: transparent; }
+.view-btn    { border-color: transparent; }
+
+.btn::before,
+.page-btn::before,
+.view-btn::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  --rgb-angle: 0deg;
+  background: conic-gradient(from var(--rgb-angle), #00eaff, #7f00ff, #ff0080, #00ff99, #00eaff);
+  animation: rgb-rotate 3s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  padding: 1.5px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Botones rellenos: glow más intenso */
+.btn-primary::before        { animation-duration: 2s; }
+.btn-accent2::before        { animation-duration: 2s; }
+.page-btn.active::before    { animation-duration: 1.5s; }
+.view-btn.active::before    { animation-duration: 1.5s; }
+
+/* Tab activo: resaltar con glow sin romper el indicador de línea */
+.tab-btn.active {
+  position: relative;
+  text-shadow: 0 0 12px rgba(0,234,255,0.6);
+}
+.tab-btn.active::after {
+  background: linear-gradient(90deg, #00eaff, #7f00ff, #ff0080, #00ff99);
+  background-size: 200% 100%;
+  animation: rgbBorderAnim 2s linear infinite;
+}
+
+/* ── 3. INPUTS / SELECTS / TEXTAREA: rgb box-shadow ── */
+
+.form-control,
+.filter-select,
+.chat-input,
+.newsletter-form input {
+  border-color: transparent;
+  animation: rgb-shadow-cycle 3s ease-in-out infinite;
+}
+
+/* Inputs al focus: más intenso */
+.form-control:focus,
+.filter-select:focus,
+.chat-input:focus,
+.newsletter-form input:focus {
+  animation: rgb-shadow-cycle 1s ease-in-out infinite;
+}
+
+/* ── 4. HEADER: borde inferior RGB animado ── */
+
+.site-header {
+  border-bottom: none;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #00eaff, #7f00ff, #ff0080, #00ff99, #00eaff);
+  background-size: 200% 100%;
+  animation: rgbBorderAnim 3s linear infinite;
+}
+
+/* ── 5. HERO METÁLICO: titanio oscuro pulido ── */
+
+.hero-bg {
+  overflow: hidden; /* Necesario para que el shine quede contenido */
+  background:
+    /* Bandas horizontales tipo metal cepillado */
+    repeating-linear-gradient(
+      180deg,
+      transparent 0, transparent 3px,
+      rgba(80,160,255,0.013) 3px, rgba(80,160,255,0.013) 4px
+    ),
+    /* Rejilla vertical fina */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0, transparent 79px,
+      rgba(0,234,255,0.018) 79px, rgba(0,234,255,0.018) 80px
+    ),
+    /* Reflejo superior (luz cenital) */
+    radial-gradient(ellipse 90% 25% at 50% -5%, rgba(120,200,255,0.09) 0%, transparent 60%),
+    /* Reflejo lateral izquierdo */
+    radial-gradient(ellipse 35% 70% at -5% 50%, rgba(80,160,255,0.06) 0%, transparent 55%),
+    /* Reflejo lateral derecho */
+    radial-gradient(ellipse 35% 70% at 105% 50%, rgba(60,100,200,0.05) 0%, transparent 55%),
+    /* Atmósfera de acento cian */
+    radial-gradient(ellipse 55% 45% at 25% 65%, rgba(0,234,255,0.05) 0%, transparent 60%),
+    /* Atmósfera de acento púrpura */
+    radial-gradient(ellipse 45% 40% at 78% 35%, rgba(127,0,255,0.05) 0%, transparent 60%),
+    /* Base titanio oscuro: gradiente metálico */
+    linear-gradient(160deg, #000d1c 0%, #00040D 30%, #000812 55%, #000e1a 80%, #000c18 100%);
+}
+
+/* Shine que recorre el hero cada 8 segundos */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(180,220,255,0.03) 30%,
+    rgba(220,240,255,0.09) 50%,
+    rgba(180,220,255,0.03) 70%,
+    transparent 100%
+  );
+  animation: metallic-shine 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Bordes RGB en galería de thumbs y elementos menores */
+.product-gallery-thumb {
+  position: relative;
+  isolation: isolate;
+  border-color: transparent;
+}
+.product-gallery-thumb::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  --rgb-angle: 0deg;
+  background: conic-gradient(from var(--rgb-angle), #00eaff, #7f00ff, #ff0080, #00ff99, #00eaff);
+  animation: rgb-rotate 5s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  padding: 1.5px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Stats bar: borde inferior RGB */
+.stats-bar {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  position: relative;
+}
+.stats-bar::before,
+.stats-bar::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #00eaff, #7f00ff, #ff0080, #00ff99, #00eaff);
+  background-size: 200% 100%;
+  animation: rgbBorderAnim 4s linear infinite;
+}
+.stats-bar::before { top: 0; }
+.stats-bar::after  { bottom: 0; animation-direction: reverse; }
+
+/* Reducir movimiento: desactivar todos los nuevos efectos */
+@media (prefers-reduced-motion: reduce) {
+  .card::before, .product-card::before, .cat-card::before,
+  .feature-card::before, .testimonial-card::before, .pricing-card::before,
+  .review-card::before, .security-banner::before, .product-gallery::before,
+  .product-buy-box::before, .chat-panel::before, .search-bar::before,
+  .hero-badge::before, .filter-pill::before, .rgb-card::before,
+  .btn::before, .page-btn::before, .view-btn::before,
+  .product-gallery-thumb::before, .hero-bg::after, .site-header::after,
+  .stats-bar::before, .stats-bar::after {
+    animation: none !important;
+  }
+  .form-control, .filter-select, .chat-input, .newsletter-form input {
+    animation: none !important;
+    border-color: var(--border);
+    box-shadow: none;
+  }
+}

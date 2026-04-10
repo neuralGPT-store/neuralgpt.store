@@ -540,16 +540,42 @@
   (function(){
     var wrap = document.getElementById('particles');
     if(!wrap) return;
-    var colors = ['#00eaff','#7f00ff','#ff0080','#00ff99','#ffffff'];
-    for(var i=0;i<35;i++){
+    // Colores RGB del ecosistema
+    var colors = [
+      '#00eaff','#00eaff','#00eaff', // cian (más frecuente)
+      '#7f00ff','#7f00ff',            // púrpura
+      '#ff0080','#ff0080',            // rosa
+      '#00ff99','#00ff99',            // verde
+      '#b400ff',                      // violeta
+      '#00ffee',                      // cian-verde
+      '#ffffff'                       // blanco
+    ];
+    for(var i=0;i<60;i++){
       var p = document.createElement('span');
       p.className = 'particle';
-      var size = Math.random()*3+1;
-      var left = Math.random()*100;
-      var dur  = Math.random()*12+8;
-      var delay = Math.random()*15;
+      var size  = Math.random()*4.5 + 1;   // 1 – 5.5 px
+      var left  = Math.random()*100;
+      var dur   = Math.random()*14 + 6;    // 6 – 20 s
+      // delay negativo: las partículas arrancan en distintos puntos del ciclo
+      var delay = -(Math.random()*20);
       var color = colors[Math.floor(Math.random()*colors.length)];
-      p.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+left+'%;bottom:-10px;background:'+color+';animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
+
+      // 45% de las partículas llevan glow
+      var glow = '';
+      if(Math.random() > 0.55){
+        var glowR = Math.round(size * 2.5 + 2);
+        glow = 'box-shadow:0 0 '+glowR+'px '+Math.round(glowR*0.6)+'px '+color+';';
+      }
+
+      p.style.cssText =
+        'width:'+size+'px;'+
+        'height:'+size+'px;'+
+        'left:'+left+'%;'+
+        'bottom:-8px;'+
+        'background:'+color+';'+
+        'animation-duration:'+dur+'s;'+
+        'animation-delay:'+delay+'s;'+
+        glow;
       wrap.appendChild(p);
     }
   })();
