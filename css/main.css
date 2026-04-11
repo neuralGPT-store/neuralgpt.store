@@ -219,8 +219,8 @@ ul, ol { list-style: none; }
    LAYOUT UTILITIES
    ============================================================ */
 .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
-.section { padding: 80px 0; }
-.section-sm { padding: 48px 0; }
+.section { padding: 40px 0; }
+.section-sm { padding: 24px 0; }
 
 .section-title {
   font-family: var(--font-title);
@@ -236,9 +236,9 @@ ul, ol { list-style: none; }
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.auto-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-.auto-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-.auto-grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.auto-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.auto-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.auto-grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
 .flex { display: flex; }
 .flex-center { display: flex; align-items: center; justify-content: center; }
 .gap-8 { gap: 8px; }
@@ -263,7 +263,7 @@ ul, ol { list-style: none; }
    ============================================================ */
 .card {
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 16px;
   background: var(--card-bg);
   border: 1.5px solid var(--border);
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
@@ -333,9 +333,9 @@ ul, ol { list-style: none; }
    ============================================================ */
 .hero {
   position: relative;
-  min-height: 92vh; display: flex; flex-direction: column;
+  min-height: 70vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; padding: 80px 24px;
+  text-align: center; padding: 48px 24px;
   overflow: hidden;
 }
 .hero-bg {
@@ -429,7 +429,7 @@ ul, ol { list-style: none; }
   background: rgba(0,234,255,0.02);
 }
 .stat-item {
-  flex: 1; min-width: 140px; padding: 36px 24px; text-align: center;
+  flex: 1; min-width: 140px; padding: 20px 24px; text-align: center;
   border-right: 1px solid var(--border);
 }
 .stat-item:last-child { border-right: none; }
@@ -448,7 +448,7 @@ ul, ol { list-style: none; }
    CATEGORY CARDS
    ============================================================ */
 .cat-card {
-  border-radius: var(--radius); padding: 24px 20px;
+  border-radius: var(--radius); padding: 16px;
   background: var(--card-bg); border: 1.5px solid var(--border);
   display: flex; flex-direction: column; gap: 10px;
   transition: all var(--transition);
@@ -463,7 +463,7 @@ ul, ol { list-style: none; }
    FEATURES / WHY
    ============================================================ */
 .feature-card {
-  padding: 28px; border-radius: var(--radius);
+  padding: 20px; border-radius: var(--radius);
   background: var(--card-bg); border: 1.5px solid var(--border);
   transition: border-color var(--transition);
 }
@@ -486,7 +486,7 @@ ul, ol { list-style: none; }
 }
 .testimonials-wrap:hover .testimonials-track { animation-play-state: paused; }
 .testimonial-card {
-  flex-shrink: 0; width: 320px; padding: 24px;
+  flex-shrink: 0; width: 320px; padding: 16px;
   border-radius: var(--radius); background: var(--card-bg);
   border: 1.5px solid var(--border);
 }
@@ -634,7 +634,7 @@ ul, ol { list-style: none; }
    ============================================================ */
 .product-hero {
   display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-  align-items: start; padding: 48px 0;
+  align-items: start; padding: 24px 0;
 }
 .product-gallery {
   border-radius: var(--radius-lg); overflow: hidden;
@@ -736,22 +736,63 @@ select.form-control { cursor: pointer; }
 .pricing-features li::before { content: '✓'; color: var(--accent4); font-weight: 900; flex-shrink: 0; }
 
 /* ============================================================
-   AI CHAT WIDGET
+   AI CHAT WIDGET — Chany Premium v2
    ============================================================ */
+@keyframes chany-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes chany-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95%           { transform: scaleY(0.1); }
+}
+@keyframes chany-pencil-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; transform: rotate(-5deg) scale(1.05); }
+}
+
 .ai-chat {
   position: fixed; bottom: 24px; right: 24px; z-index: 9000;
 }
-.chat-toggle {
-  width: 58px; height: 58px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border: none; display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 24px rgba(0,234,255,0.35);
-  transition: transform var(--transition), box-shadow var(--transition);
-  animation: rgbGlow 4s ease-in-out infinite;
+.chat-toggle-wrap {
+  position: relative; display: inline-block;
 }
-.chat-toggle:hover { transform: scale(1.1); }
+.chat-toggle {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: transparent;
+  border: none; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; padding: 0;
+  animation: chany-float 2s ease-in-out infinite;
+  transition: transform var(--transition);
+  position: relative;
+}
+.chat-toggle:hover { animation-play-state: paused; transform: scale(1.08); }
+.chat-toggle svg { width: 56px; height: 56px; filter: drop-shadow(0 0 12px rgba(0,234,255,0.5)); }
+.chat-toggle-tooltip {
+  position: absolute; bottom: 72px; right: 0;
+  background: rgba(0,6,15,0.95); border: 1px solid var(--accent);
+  color: var(--accent); font-family: var(--font-title); font-size: 0.65rem;
+  letter-spacing: 1px; padding: 5px 10px; border-radius: 8px;
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transform: translateY(4px);
+  transition: all 0.2s ease;
+}
+.chat-toggle-tooltip::after {
+  content: ''; position: absolute; bottom: -5px; right: 16px;
+  width: 8px; height: 8px; background: rgba(0,6,15,0.95);
+  border-right: 1px solid var(--accent); border-bottom: 1px solid var(--accent);
+  transform: rotate(45deg);
+}
+.chat-toggle-wrap:hover .chat-toggle-tooltip {
+  opacity: 1; transform: translateY(0);
+}
+/* Ojos parpadeantes via animateTransform en SVG — CSS fallback */
+.chany-eye { animation: chany-blink 4s ease-in-out infinite; transform-origin: center; }
+.chany-eye-r { animation-delay: 0.15s; }
+.chany-pencil { animation: chany-pencil-pulse 2.5s ease-in-out infinite; transform-origin: center; }
+
 .chat-panel {
-  position: absolute; bottom: 70px; right: 0;
+  position: absolute; bottom: 76px; right: 0;
   width: 340px; max-height: 480px;
   border-radius: 20px; overflow: hidden;
   background: rgba(0,6,15,0.97); border: 1.5px solid var(--border);
@@ -764,12 +805,18 @@ select.form-control { cursor: pointer; }
   opacity: 1; visibility: visible; transform: translateY(0) scale(1);
 }
 .chat-header {
-  padding: 16px 18px; background: linear-gradient(90deg, rgba(0,234,255,0.1), rgba(127,0,255,0.1));
+  padding: 12px 16px; background: linear-gradient(90deg, rgba(0,234,255,0.1), rgba(127,0,255,0.1));
   border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; gap: 10px;
 }
+.chat-header-avatar {
+  width: 36px; height: 36px; flex-shrink: 0;
+}
+.chat-header-avatar svg { width: 36px; height: 36px; animation: chany-float 2s ease-in-out infinite; filter: drop-shadow(0 0 6px rgba(0,234,255,0.4)); }
+.chat-header-info { flex: 1; }
 .chat-header-title { font-family: var(--font-title); font-size: 0.78rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; }
-.chat-close { background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; transition: color var(--transition); }
+.chat-header-sub { font-size: 0.62rem; color: var(--muted); font-family: var(--font-body); margin-top: 1px; }
+.chat-close { background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; transition: color var(--transition); margin-left: auto; }
 .chat-close:hover { color: var(--text); }
 .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
 .chat-msg {
@@ -838,7 +885,7 @@ select.form-control { cursor: pointer; }
   .hero { padding: 48px 16px; min-height: 80vh; }
   .stats-bar { flex-wrap: wrap; }
   .stat-item { min-width: 45%; }
-  .section { padding: 48px 0; }
+  .section { padding: 24px 0; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-brand-col { grid-column: 1 / -1; }
   .footer-bottom { flex-direction: column; text-align: center; }
@@ -919,6 +966,7 @@ select.form-control { cursor: pointer; }
 .product-gallery,
 .product-buy-box,
 .chat-panel,
+.chat-toggle,
 .search-bar,
 .hero-badge,
 .filter-pill {
@@ -939,6 +987,7 @@ select.form-control { cursor: pointer; }
 .product-gallery::before,
 .product-buy-box::before,
 .chat-panel::before,
+.chat-toggle::before,
 .search-bar::before,
 .hero-badge::before,
 .filter-pill::before {
@@ -968,6 +1017,7 @@ select.form-control { cursor: pointer; }
 .pricing-card.featured::before { animation-duration: 2s; }
 .review-card::before        { animation-duration: 5.5s; }
 .chat-panel::before         { animation-duration: 2.5s; }
+.chat-toggle::before        { animation-duration: 1.8s; padding: 2px; inset: -2px; }
 .hero-badge::before         { animation-duration: 2s; }
 .search-bar::before         { animation-duration: 3s; }
 .filter-pill::before        { animation-duration: 3.5s; }
@@ -1154,7 +1204,7 @@ select.form-control { cursor: pointer; }
   .card::before, .product-card::before, .cat-card::before,
   .feature-card::before, .testimonial-card::before, .pricing-card::before,
   .review-card::before, .security-banner::before, .product-gallery::before,
-  .product-buy-box::before, .chat-panel::before, .search-bar::before,
+  .product-buy-box::before, .chat-panel::before, .chat-toggle::before, .search-bar::before,
   .hero-badge::before, .filter-pill::before, .rgb-card::before,
   .btn::before, .page-btn::before, .view-btn::before,
   .product-gallery-thumb::before, .hero-bg::after, .site-header::after,

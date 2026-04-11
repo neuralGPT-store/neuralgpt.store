@@ -12,16 +12,59 @@
   function injectWidget() {
     if (document.getElementById('neural-chat')) return;
 
+    /* Fantasmita SVG reutilizable */
+    const ghostSVG = (size) => `<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">
+  <!-- Cuerpo del fantasma -->
+  <defs>
+    <radialGradient id="ghost-body" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#e8f4ff"/>
+      <stop offset="100%" stop-color="#b0d0f0"/>
+    </radialGradient>
+    <radialGradient id="ghost-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(0,234,255,0.25)"/>
+      <stop offset="100%" stop-color="rgba(127,0,255,0.05)"/>
+    </radialGradient>
+  </defs>
+  <!-- Aura RGB -->
+  <ellipse cx="28" cy="30" rx="24" ry="22" fill="url(#ghost-glow)"/>
+  <!-- Cuerpo -->
+  <path d="M6 34 C6 18 12 6 28 6 C44 6 50 18 50 34 L50 50 L44 45 L38 50 L32 45 L26 50 L20 45 L14 50 L8 45 Z" fill="url(#ghost-body)" opacity="0.95"/>
+  <!-- Ojos (grandes, expresivos) -->
+  <g class="chany-eye">
+    <ellipse cx="20" cy="28" rx="5.5" ry="6" fill="#0a0020"/>
+    <ellipse cx="21.5" cy="26.5" rx="1.8" ry="1.8" fill="white" opacity="0.9"/>
+    <ellipse cx="20" cy="28" rx="2.5" ry="2.8" fill="#7f00ff"/>
+    <ellipse cx="19" cy="27" rx="1" ry="1" fill="white" opacity="0.7"/>
+  </g>
+  <g class="chany-eye chany-eye-r">
+    <ellipse cx="36" cy="28" rx="5.5" ry="6" fill="#0a0020"/>
+    <ellipse cx="37.5" cy="26.5" rx="1.8" ry="1.8" fill="white" opacity="0.9"/>
+    <ellipse cx="36" cy="28" rx="2.5" ry="2.8" fill="#00eaff"/>
+    <ellipse cx="35" cy="27" rx="1" ry="1" fill="white" opacity="0.7"/>
+  </g>
+  <!-- Lápiz dorado -->
+  <g class="chany-pencil" transform="translate(34,14) rotate(35,8,8)">
+    <rect x="4" y="0" width="6" height="20" rx="1" fill="#ffd700"/>
+    <polygon points="4,20 10,20 7,26" fill="#ffaa00"/>
+    <polygon points="5,24 9,24 7,27" fill="#333"/>
+    <rect x="4" y="0" width="6" height="4" rx="1" fill="#ff6b9d"/>
+  </g>
+</svg>`;
+
     const html = `
 <div class="ai-chat" id="neural-chat" role="complementary" aria-label="Asistente IA">
-  <button class="chat-toggle" id="chat-toggle-btn" aria-label="Abrir asistente IA" aria-expanded="false" title="Chany — Asistente IA">
-    🤖
-  </button>
+  <div class="chat-toggle-wrap">
+    <button class="chat-toggle" id="chat-toggle-btn" aria-label="Abrir asistente IA" aria-expanded="false">
+      ${ghostSVG(56)}
+    </button>
+    <div class="chat-toggle-tooltip">CHANY — Asistente IA</div>
+  </div>
   <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat con Chany" aria-modal="true">
     <div class="chat-header">
-      <div>
-        <div class="chat-header-title">🤖 CHANY</div>
-        <div style="font-size:0.65rem;color:var(--muted);font-family:var(--font-body)">Asistente de neuralgpt.store</div>
+      <div class="chat-header-avatar">${ghostSVG(36)}</div>
+      <div class="chat-header-info">
+        <div class="chat-header-title">CHANY</div>
+        <div class="chat-header-sub">Asistente de neuralgpt.store</div>
       </div>
       <button class="chat-close" id="chat-close-btn" aria-label="Cerrar chat" title="Cerrar">✕</button>
     </div>
