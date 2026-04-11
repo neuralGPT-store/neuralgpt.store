@@ -53,7 +53,7 @@
       })
       .catch(() => {
         // Fallback inline si fetch falla
-        kb = { fallback: 'Escríbenos a wilfreyera@gmail.com', intents: [] };
+        kb = { fallback: 'Escríbenos a support@neuralgpt.store', intents: [] };
         addBotMsg('¡Hola! Soy Chany. ¿En qué puedo ayudarte?');
         renderSuggestions(['Productos', 'Precios', 'Vender']);
       });

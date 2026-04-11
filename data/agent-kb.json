@@ -1,84 +1,99 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "language": "es",
   "botName": "Chany",
   "greeting": "¡Hola! Soy Chany, el asistente de neuralgpt.store. ¿En qué puedo ayudarte hoy?",
-  "fallback": "No encontré una respuesta exacta para eso. Puedes escribirnos a wilfreyera@gmail.com o explorar nuestro marketplace.",
+  "fallback": "No encontré una respuesta exacta para eso. Puedes escribirnos a support@neuralgpt.store o explorar nuestro marketplace.",
   "intents": [
     {
       "id": "greeting",
       "keywords": ["hola", "hello", "hi", "buenos días", "buenas tardes", "buenas noches", "saludos", "hey"],
-      "response": "¡Hola! Bienvenido/a a neuralgpt.store. Soy tu asistente virtual. Puedo ayudarte con información sobre productos, precios, cómo vender o cualquier duda del marketplace. ¿Qué necesitas?"
+      "response": "¡Hola! Bienvenido/a a neuralgpt.store. Soy Chany, tu asistente virtual. Puedo ayudarte con información sobre productos, precios, cómo vender tu software o cualquier duda del marketplace. ¿Qué necesitas?"
     },
     {
       "id": "ghostwriter",
-      "keywords": ["ghostwriter", "escritura", "redacción", "blog", "artículos", "contenido", "textos", "copyriting"],
-      "response": "📝 GhostWriter es nuestro asistente de redacción con IA. Genera artículos de blog, copies de marketing, emails y contenido SEO en segundos. Compatible con Linux, Windows y Mac. Precio desde 19€/mes. ¿Quieres verlo en el marketplace?"
+      "keywords": ["ghostwriter", "escritura", "redacción", "blog", "artículos", "contenido", "textos", "copywriting", "kdp", "editorial", "libro", "ebook"],
+      "response": "📝 GhostWriter es nuestro asistente de redacción con IA. Genera libros KDP por capítulos, artículos SEO, copies de marketing y contenido profesional. Compatible con Linux, Windows y Android. Precio: 29€ (pago único, actualizaciones incluidas de por vida). ¿Quieres verlo en el marketplace?"
     },
     {
       "id": "neuralbill",
-      "keywords": ["neuralbill", "factura", "facturación", "contabilidad", "invoice", "billing", "bill"],
-      "response": "💳 NeuralBill es nuestra solución de facturación automatizada con IA. Genera facturas, controla gastos y genera informes fiscales automáticamente. Integra con Stripe. Precio: 29€/mes. ¿Te interesa?"
+      "keywords": ["neuralbill", "factura", "facturación", "contabilidad", "invoice", "billing", "bill", "autónomo", "freelance", "fiscal"],
+      "response": "💳 NeuralBill es el facturador inteligente para autónomos y freelancers. Genera facturas legales, controla gastos deducibles y prepara informes fiscales automáticamente. Compatible con España, México, Argentina y Colombia. Precio: 19€ (pago único). ¿Te interesa?"
     },
     {
       "id": "pokerbot",
-      "keywords": ["pokerbot", "poker", "casino", "cartas", "juego", "bot", "póker"],
-      "response": "🃏 PokerBot es un analizador de manos de póker con IA. Aprende estrategias ganadoras, analiza tu juego y te da sugerencias en tiempo real. Solo para uso en partidas privadas y aprendizaje. Precio: 39€. ¿Quieres saber más?"
+      "keywords": ["pokerbot", "poker", "casino", "cartas", "juego", "bot", "póker", "análisis", "gto", "estrategia"],
+      "response": "🃏 PokerBot es un analizador de manos de póker con IA. Aprende estrategias GTO, analiza tu historial de partidas y detecta patrones de error. Incluye módulo de detección de bots para equipos de seguridad. Precio: 39€ (pago único). Compatible con Linux, Windows y Android. ¿Quieres saber más?"
     },
     {
       "id": "prices",
       "keywords": ["precio", "precios", "coste", "costar", "cuánto cuesta", "cuanto", "tarifa", "cuánto vale", "price"],
-      "response": "💰 Nuestros productos tienen precios desde 9€ hasta 99€. Puedes ver todos los precios en /pricing.html o navegar el marketplace en /marketplace.html. También ofrecemos planes de suscripción mensual con descuento. ¿Buscas algo en concreto?"
+      "response": "💰 Nuestros productos propios:\n• GhostWriter (redacción IA KDP): 29€ único\n• NeuralBill (facturación autónomos): 19€ único\n• PokerBot (análisis + seguridad): 39€ único\n\nTodos con actualizaciones de por vida incluidas. Puedes ver todos los productos en /marketplace.html. ¿Buscas algo en concreto?"
     },
     {
       "id": "commission",
       "keywords": ["comisión", "comision", "vender", "vendedor", "proveedor", "seller", "porcentaje", "15%", "20%"],
-      "response": "📊 Modelo de comisiones:\n• Periodo de lanzamiento: 15% sobre ventas\n• A partir del 1 de septiembre 2025: 20%\nEl pago al vendedor es mensual via Stripe. Sin cuota mensual fija, solo pagas si vendes. ¿Quieres registrarte como vendedor?"
+      "response": "📊 Modelo de comisiones de neuralgpt.store:\n• Periodo de lanzamiento: 15% sobre ventas (hasta el 1 de septiembre de 2025)\n• Tarifa estándar: 20% a partir del 1 de septiembre de 2025\n\nSin cuota mensual fija — solo pagas si vendes. Pago mensual vía Stripe Connect. ¿Quieres registrarte como vendedor?"
     },
     {
       "id": "sell",
-      "keywords": ["quiero vender", "publicar", "subir software", "mi producto", "como vender", "cómo vendo", "registro", "registrar", "alta de vendedor"],
-      "response": "🚀 ¡Genial! Para vender en neuralgpt.store:\n1. Regístrate en /provider-register.html\n2. Nuestro equipo verifica tu software (anti-malware, seguridad)\n3. Publicas tu producto con precio\n4. Cobras mensualmente vía Stripe\nComisión del 15% en lanzamiento. ¿Tienes alguna duda sobre el proceso?"
+      "keywords": ["quiero vender", "publicar", "subir software", "mi producto", "como vender", "cómo vendo", "registro", "registrar", "alta de vendedor", "vender aquí"],
+      "response": "🚀 ¡Genial! Para vender en neuralgpt.store:\n1. Regístrate en /provider-register.html\n2. Aloja tu software en tu servidor, GitHub, R2 o cualquier URL pública\n3. Proporciona la URL de descarga verificada\n4. Nuestro equipo verifica el software (anti-malware, seguridad)\n5. Aprobamos tu ficha y gestionamos los pagos vía Stripe\n6. Tras cada pago confirmado, el comprador recibe acceso a tu URL de descarga\n\nComisión: 15% en lanzamiento, 20% estándar desde sep. 2025. ¿Tienes alguna duda?"
+    },
+    {
+      "id": "hosting_model",
+      "keywords": ["alojar", "hosting", "dónde subo", "donde subo", "servidor", "github", "r2", "drive", "url descarga", "url de descarga", "subir archivo"],
+      "response": "🗄️ El modelo de hosting de neuralgpt.store:\n\n• Tú alojas tu software en tu propio servidor, GitHub Releases, Cloudflare R2, Google Drive o cualquier URL estable\n• Proporcionas la URL de descarga a neuralgpt.store al registrarte\n• Nosotros validamos la URL y verificamos el software (análisis anti-malware)\n• Gestionamos el pago (Stripe) — al confirmarse, el comprador es redirigido a tu URL\n• Tú no necesitas gestionar pagos ni cobros\n\n¿Necesitas ayuda con el proceso de registro?"
+    },
+    {
+      "id": "verification",
+      "keywords": ["verificación", "verificar", "aprobación", "cómo verifican", "proceso verificación", "cuánto tarda", "antivirús", "malware"],
+      "response": "🛡️ Proceso de verificación de software en neuralgpt.store:\n1. Recibes la URL de descarga proporcionada por el vendedor\n2. Análisis automático anti-malware (VirusTotal + análisis interno)\n3. Revisión manual de funcionalidad descrita vs real\n4. Comprobación de que la URL es estable y accesible\n5. Aprobación y publicación con badge 'Software Verificado'\n\nEl proceso tarda 24-48h laborables."
     },
     {
       "id": "security",
-      "keywords": ["seguridad", "seguro", "malware", "virus", "verificado", "confianza", "verificación", "safe"],
-      "response": "🛡️ Todo el software en neuralgpt.store pasa por verificación:\n• Análisis anti-malware automático\n• Revisión manual de código\n• Badge 'Software Verificado' visible en cada producto\n• Pagos procesados 100% por Stripe (PCI-DSS)\nPuedes ver nuestra política en /security.html"
+      "keywords": ["seguridad", "seguro", "malware", "virus", "verificado", "confianza", "safe"],
+      "response": "🛡️ Todo el software en neuralgpt.store pasa por verificación:\n• Análisis anti-malware automático\n• Revisión manual de funcionalidad\n• Badge 'Software Verificado' visible en cada producto\n• Pagos procesados 100% por Stripe (PCI-DSS)\n• Política DMCA activa para software con copyright\n\nPara reportar problemas de seguridad: security@neuralgpt.store"
     },
     {
       "id": "payment",
       "keywords": ["pago", "pagar", "comprar", "stripe", "tarjeta", "visa", "mastercard", "paypal", "cómo pago"],
-      "response": "💳 Aceptamos:\n• Tarjetas Visa/Mastercard/Amex vía Stripe\n• Apple Pay y Google Pay\n• PayPal\nTodos los pagos son seguros (SSL + Stripe PCI-DSS). Tras el pago, la descarga es inmediata y automática."
+      "response": "💳 Aceptamos:\n• Tarjetas Visa/Mastercard/Amex vía Stripe\n• Apple Pay y Google Pay\nTodos los pagos son seguros (SSL + Stripe PCI-DSS). Tras el pago confirmado, se redirige automáticamente a la URL de descarga del producto. El acceso es inmediato."
+    },
+    {
+      "id": "download_after_payment",
+      "keywords": ["descarga tras pago", "después de pagar", "cómo descargo", "donde descargo", "acceso tras compra", "no recibí descarga", "link descarga"],
+      "response": "⬇️ Proceso de descarga tras el pago:\n1. Pagas con Stripe en la ficha del producto\n2. Stripe confirma el pago (instantáneo)\n3. neuralgpt.store redirige automáticamente a la URL de descarga del vendedor\n4. También recibes el enlace de descarga en tu email de confirmación\n\nSi no recibes el acceso en 5 minutos, escribe a support@neuralgpt.store con tu número de pedido."
     },
     {
       "id": "platforms",
       "keywords": ["plataforma", "linux", "windows", "android", "mac", "ios", "compatible", "sistema operativo", "os"],
-      "response": "💻 Nuestros productos están disponibles para:\n• Linux (prioritario, muchos optimizados para BlackArch)\n• Windows 10/11\n• Android\n• Algunos son multiplataforma\nPuedes filtrar por plataforma en el marketplace. ¿Buscas algo para una plataforma específica?"
-    },
-    {
-      "id": "download",
-      "keywords": ["descarga", "descargar", "download", "acceso", "cómo descargo", "donde descargo"],
-      "response": "⬇️ El proceso de descarga es:\n1. Compra el producto\n2. Recibes el enlace de descarga inmediatamente\n3. También tienes el enlace en tu email de confirmación\nLas actualizaciones futuras están incluidas en la compra."
+      "response": "💻 Compatibilidad de nuestros productos:\n• GhostWriter: Linux, Windows, Android\n• NeuralBill: Linux, Windows, Web (sin instalación)\n• PokerBot: Linux, Windows, Android\n\nPuedes filtrar por plataforma en el marketplace. ¿Buscas algo para una plataforma específica?"
     },
     {
       "id": "contact",
       "keywords": ["contacto", "contactar", "email", "correo", "soporte", "support", "ayuda", "help", "problema"],
-      "response": "📧 Puedes contactarnos en:\n• Email: wilfreyera@gmail.com\n• Página de contacto: /contact.html\n• Para soporte técnico incluye tu número de pedido\nRespondemos en menos de 24h laborables."
+      "response": "📧 Emails de contacto:\n• Soporte general y compras: support@neuralgpt.store\n• Seguridad y vulnerabilidades: security@neuralgpt.store\n• Partnerships y colaboraciones: partners@neuralgpt.store\n\nRespondemos en menos de 24h laborables. Para soporte técnico incluye tu número de pedido."
     },
     {
       "id": "about",
       "keywords": ["qué es", "que es", "neuralgpt", "empresa", "quiénes sois", "about", "información"],
-      "response": "🧠 neuralgpt.store es un marketplace premium de software creado con inteligencia artificial. Conectamos desarrolladores que crean herramientas con IA con usuarios que las necesitan. Verificamos todo el software antes de publicarlo. Fundado en 2025."
+      "response": "🧠 neuralgpt.store es un marketplace premium de software digital. Conectamos desarrolladores que crean herramientas con IA con los usuarios que las necesitan. Solo software digital: apps, automatizaciones, herramientas IA. Verificamos todo el software antes de publicarlo. Pagos gestionados 100% por Stripe."
     },
     {
       "id": "categories",
       "keywords": ["categoría", "categorias", "tipo", "tipos", "automatización", "ia", "inteligencia artificial", "seguridad", "datos"],
-      "response": "📁 Categorías disponibles:\n• ⚡ Automatización — Scripts, bots, workflows\n• 🤖 Inteligencia Artificial — Modelos, agentes\n• 🛡️ Seguridad — Pentesting, auditoría\n• 🌐 Web & APIs — Scrapers, dashboards\n• 📊 Datos & Analytics\n• 🐧 Linux & Sistemas\nExplóralas en /marketplace.html"
+      "response": "📁 Categorías disponibles:\n• ⚡ Automatización — Scripts, bots, workflows\n• 🤖 Inteligencia Artificial — Modelos, agentes, asistentes\n• 🛡️ Seguridad — Auditoría, análisis, pentesting\n• 🌐 Web & APIs — Scrapers, APIs, dashboards\n• 📊 Datos & Analytics — Análisis y procesamiento\n• 🐧 Linux & Sistemas — Herramientas para Linux\n\nExplóralas en /marketplace.html"
     },
     {
       "id": "refund",
       "keywords": ["reembolso", "devolución", "devolver", "refund", "no funciona", "no me gusta"],
-      "response": "↩️ Nuestra política de devoluciones:\n• 7 días para solicitar reembolso si el producto no funciona como se describe\n• Escribe a wilfreyera@gmail.com con tu número de pedido\n• Los productos con descarga completada pueden tener condiciones especiales\nVer política completa en /terms.html"
+      "response": "↩️ Política de reembolsos de neuralgpt.store:\n• No se emiten reembolsos una vez que la descarga ha sido completada (software digital)\n• Excepción: fallo técnico documentado — el producto no funciona según lo descrito\n• Para solicitar reembolso por fallo técnico: support@neuralgpt.store con número de pedido y descripción del problema\n• Plazo: 7 días desde la compra para reportar fallos técnicos\n\nVer política completa en /terms.html"
+    },
+    {
+      "id": "technical_support",
+      "keywords": ["soporte técnico", "ayuda técnica", "no funciona", "error", "bug", "fallo", "problema técnico", "no instala"],
+      "response": "🔧 Para soporte técnico:\n1. Escribe a support@neuralgpt.store\n2. Incluye: nombre del producto, número de pedido, sistema operativo y descripción del problema\n3. Adjunta capturas de pantalla si es posible\n\nRespondemos en menos de 24h laborables. Para problemas urgentes, indica [URGENTE] en el asunto."
     }
   ]
 }
