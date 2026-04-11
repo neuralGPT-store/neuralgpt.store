@@ -164,6 +164,7 @@
                   <option value="web">🌐 Web & APIs</option>
                   <option value="datos">📊 Datos & Analytics</option>
                   <option value="linux">🐧 Linux & Sistemas</option>
+                  <option value="movil">📱 Apps Móviles</option>
                   <option value="fintech">💳 Fintech</option>
                   <option value="otro">Otro</option>
                 </select>
@@ -188,12 +189,31 @@
                   <input type="checkbox" name="platforms" value="android" style="width:auto" /> 🤖 Android
                 </label>
                 <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
-                  <input type="checkbox" name="platforms" value="mac" style="width:auto" /> 🍎 macOS
+                  <input type="checkbox" name="platforms" value="ios" style="width:auto" /> 🍎 iOS
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
+                  <input type="checkbox" name="platforms" value="mac" style="width:auto" /> 💻 macOS
                 </label>
                 <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
                   <input type="checkbox" name="platforms" value="web" style="width:auto" /> 🌐 Web
                 </label>
               </div>
+            </div>
+
+            <!-- Tipo de producto -->
+            <div class="form-group">
+              <label for="prov-product-type">TIPO DE PRODUCTO</label>
+              <select id="prov-product-type" name="product_type" class="form-control">
+                <option value="">Selecciona tipo</option>
+                <option value="desktop">🖥️ Aplicación de escritorio</option>
+                <option value="cli">⌨️ Herramienta CLI / script</option>
+                <option value="web-app">🌐 Web app / SaaS</option>
+                <option value="android-app">🤖 App Android (APK / Play Store)</option>
+                <option value="ios-app">🍎 App iOS (TestFlight / App Store)</option>
+                <option value="library">📦 Librería / SDK</option>
+                <option value="api">🔌 API / servicio backend</option>
+                <option value="plugin">🧩 Plugin / extensión</option>
+              </select>
             </div>
 
             <div class="form-group">
