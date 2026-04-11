@@ -221,6 +221,43 @@
               <textarea id="prov-description" name="description" class="form-control" rows="4" placeholder="Describe qué hace tu software, para quién es y qué lo hace especial…" required maxlength="1000"></textarea>
             </div>
 
+            <!-- CATEGORÍA DE PROVEEDOR — Marco legal -->
+            <div class="form-group" style="margin-top:20px">
+              <label for="prov-legal-category" style="display:flex;align-items:center;gap:8px">
+                CATEGORÍA DE PROVEEDOR
+                <span style="font-size:0.65rem;color:var(--accent);background:rgba(0,234,255,0.1);border:1px solid rgba(0,234,255,0.2);padding:2px 6px;border-radius:4px;font-family:var(--font-title)">MARCO LEGAL</span>
+              </label>
+              <select id="prov-legal-category" name="legal_category" class="form-control" required>
+                <option value="">— Selecciona tu categoría jurídica —</option>
+                <option value="A">Categoría A — Titular originario (software de mi exclusiva autoría)</option>
+                <option value="B">Categoría B — Distribuidor autorizado (tengo contrato de distribución)</option>
+                <option value="C">Categoría C — Open source redistribuible (licencia MIT/Apache/BSD/etc.)</option>
+                <option value="D">Categoría D — Licencia perpetua UE (reventa de segunda mano, excepcional)</option>
+                <option value="E">Categoría E — SaaS autorizado (servicio en la nube propio o con autorización)</option>
+              </select>
+              <div id="legal-cat-desc" style="margin-top:8px;padding:10px 14px;background:rgba(0,234,255,0.04);border:1px solid rgba(0,234,255,0.12);border-radius:8px;font-size:0.76rem;color:var(--muted);line-height:1.65;display:none"></div>
+            </div>
+            <script>
+            (function(){
+              var catDescs = {
+                A: 'Eres el autor original del software y ostenta la totalidad de los derechos de explotación. Deberás acreditar titularidad con declaración jurada y repositorio o historial verificable.',
+                B: 'Distribuyes software de terceros bajo contrato de distribución válido y vigente. Deberás aportar la autorización escrita del titular original con alcance territorial y temporal.',
+                C: 'Redistribuyes software bajo licencia de código abierto (MIT, Apache 2.0, BSD, MPL 2.0 u equivalente) que permite la comercialización. Deberás respetar íntegramente los términos de la licencia, incluyendo atribución.',
+                D: 'Categoría excepcional. Reventa de licencias perpetuas al amparo de la jurisprudencia UsedSoft (TJUE C-128/11). Cada caso se evalúa individualmente. Requiere prueba de adquisición original y declaración de inutilización de la copia propia.',
+                E: 'Comercializas acceso a un servicio SaaS del que eres titular o tienes autorización de reventa. El servicio debe tener términos de uso publicados y SLA mínimo del 99% documentado.'
+              };
+              var sel = document.getElementById('prov-legal-category');
+              var desc = document.getElementById('legal-cat-desc');
+              if(sel && desc){
+                sel.addEventListener('change', function(){
+                  var v = sel.value;
+                  if(v && catDescs[v]){ desc.textContent = catDescs[v]; desc.style.display='block'; }
+                  else { desc.style.display='none'; }
+                });
+              }
+            })();
+            </script>
+
             <!-- URL Descarga — MODELO HOSTING -->
             <div style="padding:14px;background:rgba(0,234,255,0.04);border:1px solid rgba(0,234,255,0.15);border-radius:10px;margin-bottom:14px">
               <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--accent);margin-bottom:6px">🗄️ MODELO DE HOSTING</div>
@@ -277,11 +314,13 @@
     var email    = (document.getElementById('prov-email').value||'').trim();
     var swName   = (document.getElementById('prov-software-name').value||'').trim();
     var desc     = (document.getElementById('prov-description').value||'').trim();
+    var legalCat = (document.getElementById('prov-legal-category').value||'').trim();
     var comm     = document.getElementById('prov-commission').checked;
     var terms    = document.getElementById('prov-terms').checked;
     var msg      = document.getElementById('prov-msg');
 
     if(!name||!email||!swName||!desc){ msg.textContent='Por favor completa todos los campos obligatorios.'; msg.style.color='var(--accent3)'; return; }
+    if(!legalCat){ msg.textContent='Debes seleccionar la categoría jurídica de proveedor.'; msg.style.color='var(--accent3)'; return; }
     if(!comm){ msg.textContent='Debes aceptar el modelo de comisiones.'; msg.style.color='var(--accent3)'; return; }
     if(!terms){ msg.textContent='Debes aceptar los términos de uso.'; msg.style.color='var(--accent3)'; return; }
 
