@@ -1047,6 +1047,20 @@ select.form-control { cursor: pointer; }
    MOBILE-FIRST TOUCH & LAYOUT PATCHES (BLOQUE 9)
    ============================================================ */
 
+/* Filter selects — flex shrink properly on mobile */
+.filter-select {
+  flex: 1 1 150px;
+  max-width: 100%;
+}
+
+/* Two-column developer / landing section grid */
+.dev-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
 /* 44px minimum touch targets */
 .btn {
   min-height: 44px;
@@ -1076,6 +1090,11 @@ select.form-control {
     grid-template-columns: 1fr !important;
     min-height: unset !important;
   }
+  /* Developer section collapses to single column */
+  .dev-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 }
 
 /* Product page info-title sizing on mobile */
@@ -1100,6 +1119,13 @@ select.form-control {
   .pricing-card { padding: 20px 16px; }
   /* Footer stack to single column */
   .footer-grid { grid-template-columns: 1fr !important; }
+  /* Market grid force 1 column on very small screens */
+  .market-grid { grid-template-columns: 1fr !important; }
+  /* Filter selects full width */
+  .filter-select { flex: 1 1 100%; }
+  /* Dev steps: compress padding */
+  .dev-step { gap: 10px; }
+  .dev-step-num { width: 28px; height: 28px; font-size: 0.78rem; flex-shrink: 0; }
 }
 
 /* ============================================================
