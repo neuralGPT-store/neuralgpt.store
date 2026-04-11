@@ -94,6 +94,36 @@
       "id": "technical_support",
       "keywords": ["soporte técnico", "ayuda técnica", "no funciona", "error", "bug", "fallo", "problema técnico", "no instala"],
       "response": "🔧 Para soporte técnico:\n1. Escribe a support@neuralgpt.store\n2. Incluye: nombre del producto, número de pedido, sistema operativo y descripción del problema\n3. Adjunta capturas de pantalla si es posible\n\nRespondemos en menos de 24h laborables. Para problemas urgentes, indica [URGENTE] en el asunto."
+    },
+    {
+      "id": "safe_to_buy",
+      "keywords": ["es seguro comprar", "seguro comprar", "fiable", "confiable", "puedo fiarme", "es de confianza", "estafa", "fraude", "garantía"],
+      "response": "✅ Comprar en neuralgpt.store es seguro:\n• Todos los pagos se procesan exclusivamente por Stripe (certificación PCI-DSS nivel 1). neuralgpt.store nunca almacena tus datos bancarios.\n• Todo el software pasa verificación anti-malware (hash SHA-256 + análisis VirusTotal) antes de publicarse.\n• Badge 'Verificado por Chany ✓' visible en cada producto aprobado.\n• Descarga inmediata garantizada tras confirmación de pago Stripe.\n• Política de reembolso por fallo técnico documentado en 7 días.\n\n¿Tienes alguna duda específica?"
+    },
+    {
+      "id": "download_after_payment",
+      "keywords": ["cómo descargo", "como descargo", "tras el pago", "después de pagar", "acceso tras compra", "no recibí descarga", "link descarga", "donde descargo", "descarga inmediata"],
+      "response": "⬇️ Proceso de descarga tras el pago:\n1. Pagas con Stripe en la ficha del producto\n2. Stripe confirma el pago (instantáneo)\n3. neuralgpt.store redirige automáticamente a la URL de descarga del vendedor\n4. También recibes el enlace en tu email de confirmación Stripe\n\nSi no recibes el acceso en 5 minutos, escribe a support@neuralgpt.store con tu número de pedido."
+    },
+    {
+      "id": "sell_my_app",
+      "keywords": ["puedo vender", "vender mi app", "publicar mi software", "soy desarrollador", "quiero publicar", "mi aplicación", "mi herramienta", "vender aquí", "cómo publico"],
+      "response": "🚀 ¡Sí, puedes vender tu software en neuralgpt.store!\n\nRequisitos:\n• Software digital (app, script, automatización, herramienta IA, SaaS, etc.)\n• URL de descarga pública y estable (GitHub Releases, Cloudflare R2, servidor propio…)\n• Software libre de malware y con licencia correcta sobre el código\n\nProceso:\n1. Regístrate en /provider-register.html (5 min)\n2. Verificación de seguridad (24-48h)\n3. Publicación con badge verificado\n4. Cobro mensual automático vía Stripe Connect\n\nComisión estándar: 20% sobre ventas. Sin cuota mensual fija.\n\nMás info en /vendor-onboarding.html"
+    },
+    {
+      "id": "what_is_neuralgpt",
+      "keywords": ["qué es neuralgpt", "que es neuralgpt", "neuralgpt.store", "de qué trata", "para qué sirve", "qué hacéis", "qué ofrecéis"],
+      "response": "🧠 neuralgpt.store es un marketplace premium de software digital. Nos especializamos en herramientas creadas con inteligencia artificial: automatizaciones, agentes IA, herramientas de seguridad, apps móviles y software para Linux.\n\nNuestro valor diferencial:\n✓ Todo el software pasa verificación anti-malware antes de publicarse\n✓ Pagos 100% gestionados por Stripe — seguros y con descarga inmediata\n✓ Soporte en español\n✓ Comisiones transparentes para vendedores: 20% sin cuota fija\n✓ Productos propios: GhostWriter (29€), NeuralBill (19€), PokerBot (39€)\n\n¿Eres comprador o desarrollador que quiere vender?"
+    },
+    {
+      "id": "verification_process",
+      "keywords": ["cómo funciona verificación", "proceso verificación", "cómo verifican", "qué comprueba", "antivirus", "sha256", "hash", "malware check", "cuánto tarda verificación", "documentación proveedor"],
+      "response": "🛡️ Proceso de verificación de software en neuralgpt.store:\n\n1. El proveedor proporciona la URL de descarga (GitHub Releases, R2, etc.)\n2. Chany descarga el archivo y verifica el hash SHA-256 para garantizar integridad\n3. Análisis anti-malware automático (VirusTotal + análisis interno)\n4. Revisión manual: funcionalidad descrita vs real, URL estable, licencia legal\n5. Si pasa: badge 'Verificado por Chany ✓' + publicación\n6. Si falla: notificación al proveedor con detalle del problema\n\nTiempo estimado: 24-48h laborables\n\nDocumentación mínima exigible según la categoría de proveedor (A-E). Ver /vendor-onboarding.html#marco-legal-proveedores"
+    },
+    {
+      "id": "verification_failure",
+      "keywords": ["falla verificación", "rechazado", "no aprobado", "qué pasa si falla", "resultado negativo", "malware detectado"],
+      "response": "❌ Si el software falla la verificación:\n\n1. Recibirás un email a support@neuralgpt.store con el detalle específico del problema detectado\n2. Tienes 14 días para corregir el problema y reenviar el archivo\n3. Si en el nuevo análisis el software no supera la verificación, el registro queda suspendido temporalmente\n4. En caso de malware confirmado o comportamiento malicioso deliberado, la cuenta es inhabilitada permanentemente\n\nLas causas más frecuentes de fallo: dependencias con comportamiento sospechoso, scripts de instalación que modifican el sistema sin consentimiento, o URL de descarga inestable.\n\nPara dudas: support@neuralgpt.store"
     }
   ]
 }

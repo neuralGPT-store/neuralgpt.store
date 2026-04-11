@@ -108,6 +108,26 @@
             <span>Pago procesado por <strong>Stripe</strong>. Descarga inmediata tras confirmación.</span>
           </div>
 
+          <!-- Badge Verificado por Chany -->
+          <div style="margin-top:12px;padding:10px 14px;background:rgba(0,234,255,0.05);border:1.5px solid rgba(0,234,255,0.2);border-radius:10px;display:flex;align-items:center;gap:10px;cursor:default" id="chany-verified-badge">
+            <span style="font-size:1.1rem" aria-hidden="true">🛡️</span>
+            <div style="flex:1">
+              <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--accent);font-weight:700">VERIFICADO POR CHANY ✓</div>
+              <div style="font-size:0.72rem;color:var(--muted)" id="verified-date-display">Análisis completado — software limpio</div>
+            </div>
+            <div style="position:relative" id="chany-tooltip-wrap">
+              <button type="button" style="width:18px;height:18px;border-radius:50%;background:rgba(0,234,255,0.1);border:1px solid rgba(0,234,255,0.3);color:var(--accent);font-size:0.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" aria-label="Información sobre verificación Chany" onclick="toggleChanyTooltip()">?</button>
+              <div id="chany-tooltip" style="display:none;position:absolute;right:0;bottom:26px;width:260px;padding:12px 14px;background:#001220;border:1.5px solid rgba(0,234,255,0.3);border-radius:10px;font-size:0.74rem;color:var(--muted);line-height:1.6;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,0.5)">
+                <div style="font-family:var(--font-title);font-size:0.62rem;letter-spacing:1px;color:var(--accent);margin-bottom:6px">¿QUÉ SIGNIFICA ESTE BADGE?</div>
+                Este software ha superado el proceso de verificación de Chany:<br>
+                1. Análisis anti-malware automático (hash SHA-256 verificado)<br>
+                2. Revisión manual de funcionalidad declarada vs real<br>
+                3. URL de descarga comprobada y activa<br>
+                <span style="color:var(--accent4);font-size:0.7rem">La verificación se renueva en cada actualización.</span>
+              </div>
+            </div>
+          </div>
+
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
             <div style="font-size:0.75rem;color:var(--muted);display:flex;flex-direction:column;gap:4px">
               <span>✓ Descarga inmediata tras pago</span>
@@ -380,6 +400,9 @@
 
     // Buy button text
     document.getElementById('buy-btn').innerHTML = '💳 Comprar ' + p.name + ' por ' + p.price + '€' + (p.period||'');
+
+    // Fecha de verificación Chany
+    setVerifiedDate(id);
   }
 
   function setThumb(el, emoji){
@@ -495,6 +518,32 @@
     } else {
       // Fallback: redirigir a contacto
       window.location.href = 'mailto:support@neuralgpt.store?subject=Compra%3A%20' + encodeURIComponent(productId);
+    }
+  }
+
+  // ── Badge Verificado por Chany ──────────────────────────────────
+  function toggleChanyTooltip(){
+    var t = document.getElementById('chany-tooltip');
+    if(t) t.style.display = (t.style.display==='none'||!t.style.display) ? 'block' : 'none';
+  }
+  // Cerrar al hacer click fuera
+  document.addEventListener('click',function(e){
+    var wrap = document.getElementById('chany-tooltip-wrap');
+    if(wrap && !wrap.contains(e.target)){
+      var t = document.getElementById('chany-tooltip');
+      if(t) t.style.display='none';
+    }
+  });
+  // Mostrar fecha de verificación según producto
+  function setVerifiedDate(productId){
+    var dates = {
+      ghostwriter: '12/03/2026',
+      neuralbill:  '05/03/2026',
+      pokerbot:    '20/03/2026'
+    };
+    var el = document.getElementById('verified-date-display');
+    if(el && dates[productId]){
+      el.textContent = 'Análisis completado · Última verificación: ' + dates[productId];
     }
   }
 

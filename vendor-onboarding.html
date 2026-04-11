@@ -98,37 +98,39 @@
         </div>
       </section>
 
-      <!-- PROCESO DE VERIFICACIÓN -->
-      <section style="margin-bottom:64px">
-        <h2 class="section-title">🛡️ Proceso de verificación del software</h2>
-        <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;margin-bottom:28px">Antes de publicar tu producto, lo verificamos para garantizar la seguridad de los compradores. El proceso tarda <strong>24-48h laborables</strong>.</p>
+      <!-- PROCESO DE VERIFICACIÓN DE SEGURIDAD -->
+      <section id="proceso-verificacion" style="margin-bottom:64px">
+        <h2 class="section-title">🛡️ Proceso de verificación de seguridad — Chany Anti-Malware</h2>
+        <div style="padding:14px 18px;background:rgba(0,234,255,0.04);border:1.5px solid rgba(0,234,255,0.2);border-radius:10px;margin-bottom:28px">
+          <p style="font-size:0.85rem;color:var(--muted);line-height:1.75;margin:0">Antes de publicar tu producto, Chany realiza un proceso de verificación exhaustivo para garantizar la seguridad de los compradores. <strong style="color:var(--text)">Ningún software se publica sin superar este proceso.</strong> El tiempo estimado es de <strong>24-48 horas laborables</strong>. Si el software falla la verificación, te notificamos con el detalle del problema para que puedas corregirlo.</p>
+        </div>
         <div class="dev-steps">
           <div class="dev-step">
             <div class="dev-step-num">1</div>
             <div>
-              <div class="dev-step-title">Análisis anti-malware</div>
-              <p class="dev-step-desc">Ejecutamos tu archivo a través de VirusTotal y análisis interno adicional. Si detectamos cualquier comportamiento sospechoso, te notificamos y pausamos el proceso hasta resolverlo.</p>
+              <div class="dev-step-title">Proveedor sube URL o archivo</div>
+              <p class="dev-step-desc">El proveedor proporciona la URL de descarga pública y estable al completar el formulario de registro. Puede ser GitHub Releases, Cloudflare R2, servidor propio u otra URL HTTPS pública. Chany descarga el archivo y calcula su hash SHA-256 como referencia de integridad.</p>
             </div>
           </div>
           <div class="dev-step">
             <div class="dev-step-num">2</div>
             <div>
-              <div class="dev-step-title">Verificación de la URL</div>
-              <p class="dev-step-desc">Comprobamos que la URL de descarga es estable, accesible, el archivo se descarga correctamente y corresponde al producto descrito.</p>
+              <div class="dev-step-title">Chany verifica metadatos y hash SHA-256</div>
+              <p class="dev-step-desc">Se comprueba la integridad del archivo (hash SHA-256), el tipo MIME real vs el declarado, el tamaño, la firma digital si la tiene, y se ejecuta análisis anti-malware automático via VirusTotal y análisis interno adicional. Cualquier comportamiento sospechoso genera una alerta inmediata.</p>
             </div>
           </div>
           <div class="dev-step">
             <div class="dev-step-num">3</div>
             <div>
-              <div class="dev-step-title">Revisión de la ficha</div>
-              <p class="dev-step-desc">Verificamos que la descripción del producto, las plataformas compatibles y las funcionalidades declaradas son precisas y no engañosas.</p>
+              <div class="dev-step-title">Revisión manual de seguridad</div>
+              <p class="dev-step-desc">El equipo de neuralgpt.store revisa manualmente que la funcionalidad descrita en la ficha corresponde con el comportamiento real del software. Se verifica que no hay scripts de instalación que modifiquen el sistema sin consentimiento, que la URL de descarga es estable y que la licencia declarada es correcta según la categoría de proveedor.</p>
             </div>
           </div>
           <div class="dev-step">
             <div class="dev-step-num">4</div>
             <div>
-              <div class="dev-step-title">Aprobación y publicación</div>
-              <p class="dev-step-desc">Tras la aprobación, tu producto aparece en el marketplace con el badge "Software Verificado". Los pagos se activan automáticamente.</p>
+              <div class="dev-step-title">Aprobación y publicación con badge</div>
+              <p class="dev-step-desc">Si el software supera todos los controles, se publica en el marketplace con el badge <strong>"Verificado por Chany ✓"</strong> y la fecha de última verificación visible en la ficha. Los pagos Stripe se activan automáticamente. Si el software falla la verificación, recibirás un email con el detalle y tendrás 14 días para corregirlo.</p>
             </div>
           </div>
         </div>
