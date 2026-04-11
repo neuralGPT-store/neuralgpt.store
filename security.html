@@ -1,69 +1,272 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  
-  <title>neuralgpt.store — Your Technological Marketplace</title>
-  <meta name="description" content="neuralgpt.store — AI security solutions and compliance for hardware and services." />
-  <meta property="og:title" content="neuralgpt.store — Your Technological Marketplace" />
-  <meta property="og:description" content="neuralgpt.store — AI security solutions and compliance for hardware and services." />
-  <meta property="og:site_name" content="neuralgpt.store" />
-  <meta property="og:url" content="https://neuralgpt.store/security.html" />
-  <meta property="og:image" content="/assets/img/vision-pro.svg" />
-  <meta name="twitter:title" content="neuralgpt.store — Your Technological Marketplace" />
-  <meta name="twitter:description" content="neuralgpt.store — AI security solutions and compliance for hardware and services." />
+  <meta name="theme-color" content="#00040D" />
+  <title>Política de Seguridad y Divulgación Responsable — neuralgpt.store</title>
+  <meta name="description" content="Política de divulgación responsable de vulnerabilidades de neuralgpt.store. Scope, safe harbor, SLA de respuesta y reconocimiento público a investigadores." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/theme-override.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
 </head>
-<body class="site-root">
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="/">neuralgpt.store</a>
-      <nav class="main-nav">
-        <ul>
-          <li><a href="/">Inicio</a></li>
-          <li><a href="/marketplace.html">Marketplace</a></li>
-          <li><a href="/security.html" aria-current="page">Seguridad IA</a></li>
-          <li><a href="/legal.html">Legal</a></li>
-        </ul>
-      </nav>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+  <header class="site-header" role="banner">
+    <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/marketplace.html">Marketplace</a></li>
+        <li><a href="/providers.html">Proveedores</a></li>
+        <li><a href="/pricing.html">Precios</a></li>
+        <li><a href="/contact.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="/marketplace.html" class="btn">Explorar</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
+  <div class="rgb-divider"></div>
 
-  <main class="wrap bg-security">
-    <section>
-      <h1 class="section-title">AI Security Suite</h1>
-      <p class="subtle">Soluciones verticales para proteger modelos, datos y despliegues.</p>
-    </section>
+  <main id="main-content">
 
-    <section class="sections">
-      <div class="grid grid-2 security-grid">
-        <a class="card" href="/security-pc.html"><h3>PC</h3><p class="subtle">Protección de endpoints para usuarios individuales.</p></a>
-        <a class="card" href="/security-pyme.html"><h3>PYME</h3><p class="subtle">Monitoreo y cumplimiento para pequeñas y medianas empresas.</p></a>
-        <a class="card" href="/security-enterprise.html"><h3>Enterprise</h3><p class="subtle">Auditorías de modelos y controles a escala.</p></a>
-        <a class="card" href="/security-insurers.html"><h3>Insurers / Server</h3><p class="subtle">Evaluación de riesgo, SLAs y protección para infraestructuras.</p></a>
+    <!-- Hero -->
+    <section style="padding:72px 0 48px;text-align:center;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(255,0,128,0.05) 0%,transparent 60%),var(--bg);border-bottom:1px solid var(--border)">
+      <div class="wrap">
+        <div class="hero-badge" style="display:inline-flex;margin-bottom:20px">
+          <span class="dot"></span>DIVULGACIÓN RESPONSABLE
+        </div>
+        <h1 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem)">Política de Seguridad<br>y Divulgación Responsable</h1>
+        <p style="color:var(--muted);max-width:640px;margin:0 auto 28px;font-size:0.93rem;line-height:1.8">neuralgpt.store toma en serio la seguridad de su plataforma y de sus usuarios. Si has descubierto una vulnerabilidad de seguridad, te pedimos que nos lo comuniques de forma responsable siguiendo esta política.</p>
+        <a href="mailto:security@neuralgpt.store" class="btn btn-primary">✉ Reportar vulnerabilidad</a>
+        <p style="color:var(--muted);font-size:0.78rem;margin-top:12px">security@neuralgpt.store · Respuesta en &lt;72h</p>
       </div>
     </section>
 
-    <section class="sections">
-      <h2 class="section-title">Comparativa de planes</h2>
-      <div class="card rgb-border">
-        <p class="subtle">Matriz de características por plan: detección de anomalías, WAF para modelos, registro de trazas, integraciones SIEM.</p>
+    <div class="wrap section" style="max-width:860px">
+
+      <!-- 1. Programa de disclosure responsable -->
+      <section style="margin-bottom:56px">
+        <h2 class="section-title" id="programa">1. Programa de Divulgación Responsable</h2>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:16px">neuralgpt.store opera un programa de divulgación responsable de vulnerabilidades (<em>Responsible Disclosure Program</em>). Este programa está dirigido a investigadores de seguridad, pentesters y cualquier persona que descubra un problema de seguridad en nuestros sistemas.</p>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8">No existe actualmente un programa de recompensas económicas (<em>bug bounty</em>). Sin embargo, reconocemos públicamente —con el consentimiento del investigador— a todos aquellos que reporten vulnerabilidades válidas siguiendo esta política.</p>
+      </section>
+
+      <!-- 2. Scope -->
+      <section style="margin-bottom:56px">
+        <h2 class="section-title" id="scope">2. Alcance (<em>Scope</em>)</h2>
+
+        <div style="margin-bottom:20px">
+          <div style="font-family:var(--font-title);font-size:0.72rem;letter-spacing:1px;color:var(--accent4);margin-bottom:10px">✓ DENTRO DEL SCOPE</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="padding:12px 16px;background:rgba(0,255,153,0.04);border:1px solid rgba(0,255,153,0.2);border-radius:8px;font-size:0.85rem;color:var(--muted)">
+              <strong style="color:var(--text)">Aplicación web</strong> — neuralgpt.store y todos sus subdominios: marketplace, checkout, formularios, APIs públicas
+            </div>
+            <div style="padding:12px 16px;background:rgba(0,255,153,0.04);border:1px solid rgba(0,255,153,0.2);border-radius:8px;font-size:0.85rem;color:var(--muted)">
+              <strong style="color:var(--text)">Autenticación y autorización</strong> — bypass de acceso, escalada de privilegios, session hijacking
+            </div>
+            <div style="padding:12px 16px;background:rgba(0,255,153,0.04);border:1px solid rgba(0,255,153,0.2);border-radius:8px;font-size:0.85rem;color:var(--muted)">
+              <strong style="color:var(--text)">Inyección y XSS</strong> — SQL injection, XSS persistente, CSRF, SSRF, XXE
+            </div>
+            <div style="padding:12px 16px;background:rgba(0,255,153,0.04);border:1px solid rgba(0,255,153,0.2);border-radius:8px;font-size:0.85rem;color:var(--muted)">
+              <strong style="color:var(--text)">Exposición de datos</strong> — acceso no autorizado a datos de usuarios, vendedores o transacciones
+            </div>
+            <div style="padding:12px 16px;background:rgba(0,255,153,0.04);border:1px solid rgba(0,255,153,0.2);border-radius:8px;font-size:0.85rem;color:var(--muted)">
+              <strong style="color:var(--text)">Verificación de software</strong> — bypass del proceso de verificación anti-malware de Chany
+            </div>
+            <div style="padding:12px 16px;background:rgba(0,255,153,0.04);border:1px solid rgba(0,255,153,0.2);border-radius:8px;font-size:0.85rem;color:var(--muted)">
+              <strong style="color:var(--text)">Configuración de seguridad</strong> — headers incorrectos, CSP bypassable, TLS débil, secretos expuestos
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:var(--font-title);font-size:0.72rem;letter-spacing:1px;color:var(--accent3);margin-bottom:10px">✗ FUERA DEL SCOPE</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="padding:12px 16px;background:rgba(255,0,128,0.03);border:1px solid rgba(255,0,128,0.15);border-radius:8px;font-size:0.84rem;color:var(--muted)">
+              Infraestructura de Stripe — los sistemas de pago pertenecen a Stripe, Inc. y tienen su propio programa de seguridad
+            </div>
+            <div style="padding:12px 16px;background:rgba(255,0,128,0.03);border:1px solid rgba(255,0,128,0.15);border-radius:8px;font-size:0.84rem;color:var(--muted)">
+              Ataques de denegación de servicio (DoS/DDoS) — reportarlos no genera reconocimiento
+            </div>
+            <div style="padding:12px 16px;background:rgba(255,0,128,0.03);border:1px solid rgba(255,0,128,0.15);border-radius:8px;font-size:0.84rem;color:var(--muted)">
+              Ingeniería social o phishing dirigido a empleados o usuarios
+            </div>
+            <div style="padding:12px 16px;background:rgba(255,0,128,0.03);border:1px solid rgba(255,0,128,0.15);border-radius:8px;font-size:0.84rem;color:var(--muted)">
+              Vulnerabilidades en dependencias de terceros ya conocidas y públicas (CVE publicado) sin PoC aplicado a neuralgpt.store
+            </div>
+            <div style="padding:12px 16px;background:rgba(255,0,128,0.03);border:1px solid rgba(255,0,128,0.15);border-radius:8px;font-size:0.84rem;color:var(--muted)">
+              Tests automatizados de escaneado masivo, fuzzing no dirigido o spam a formularios
+            </div>
+            <div style="padding:12px 16px;background:rgba(255,0,128,0.03);border:1px solid rgba(255,0,128,0.15);border-radius:8px;font-size:0.84rem;color:var(--muted)">
+              Acceso físico a servidores o dispositivos de empleados
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Safe harbor -->
+      <section style="margin-bottom:56px" id="safe-harbor">
+        <h2 class="section-title">3. Safe Harbor — Puerto Seguro</h2>
+        <div style="padding:20px 24px;background:rgba(0,234,255,0.04);border:1.5px solid rgba(0,234,255,0.2);border-radius:var(--radius);margin-bottom:16px">
+          <p style="font-size:0.88rem;color:var(--muted);line-height:1.8;margin:0">neuralgpt.store se compromete a <strong style="color:var(--text)">no emprender acciones legales</strong> contra investigadores de seguridad que actúen de buena fe y cumplan las siguientes condiciones:</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:0.85rem;color:var(--muted)">
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span><span>La investigación se realiza <strong>sin acceder, modificar ni exfiltrar datos</strong> de otros usuarios más allá de lo estrictamente necesario para demostrar el problema</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span><span>El investigador <strong>reporta la vulnerabilidad a neuralgpt.store antes de hacerla pública</strong> o comunicarla a terceros</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span><span>El investigador respeta el <strong>período de espera</strong> acordado con neuralgpt.store antes de publicar (ver SLA)</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span><span>No se usa la vulnerabilidad para obtener <strong>beneficio económico</strong> propio ni de terceros</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span><span>No se compromete la <strong>disponibilidad del servicio</strong> ni se realizan acciones destructivas o irreversibles</span></div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:14px;font-style:italic">Este safe harbor es una política interna de neuralgpt.store y no exime de responsabilidad legal ante autoridades en caso de acciones maliciosas, acceso no autorizado deliberado a datos de terceros, o incumplimiento de la legislación aplicable.</p>
+      </section>
+
+      <!-- 4. SLA de respuesta -->
+      <section style="margin-bottom:56px">
+        <h2 class="section-title">4. SLA de Respuesta</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
+          <div style="padding:20px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);text-align:center">
+            <div style="font-family:var(--font-title);font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:6px">72h</div>
+            <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--muted)">ACUSE DE RECIBO</div>
+            <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">Confirmación de recepción del reporte y asignación de número de caso</p>
+          </div>
+          <div style="padding:20px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);text-align:center">
+            <div style="font-family:var(--font-title);font-size:2rem;font-weight:900;color:var(--accent2);margin-bottom:6px">7d</div>
+            <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--muted)">EVALUACIÓN INICIAL</div>
+            <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">Confirmación de si la vulnerabilidad es válida, severidad (CVSS) y plan de acción</p>
+          </div>
+          <div style="padding:20px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);text-align:center">
+            <div style="font-family:var(--font-title);font-size:2rem;font-weight:900;color:var(--accent3);margin-bottom:6px">30d</div>
+            <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--muted)">MITIGACIÓN CRÍTICA</div>
+            <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">Objetivo para vulnerabilidades críticas (CVSS ≥9.0). Alta severidad: 60 días. Media: 90 días</p>
+          </div>
+          <div style="padding:20px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);text-align:center">
+            <div style="font-family:var(--font-title);font-size:2rem;font-weight:900;color:var(--accent4);margin-bottom:6px">90d</div>
+            <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--muted)">DIVULGACIÓN PÚBLICA</div>
+            <p style="font-size:0.76rem;color:var(--muted);margin-top:6px">Período máximo de espera antes de que el investigador pueda divulgar públicamente</p>
+          </div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:16px">Si neuralgpt.store no cumple los plazos establecidos, el investigador puede contactar de nuevo para acordar una extensión o, transcurridos 90 días, divulgar de forma pública con previo aviso de 7 días.</p>
+      </section>
+
+      <!-- 5. Canales de reporte -->
+      <section style="margin-bottom:56px">
+        <h2 class="section-title">5. Canales de Reporte</h2>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="padding:18px 22px;background:var(--card-bg);border:1.5px solid rgba(0,234,255,0.25);border-radius:var(--radius);display:flex;gap:16px;align-items:flex-start">
+            <span style="font-size:1.5rem" aria-hidden="true">✉</span>
+            <div>
+              <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:4px">EMAIL PRINCIPAL (recomendado)</div>
+              <a href="mailto:security@neuralgpt.store" style="color:var(--text);font-size:0.9rem">security@neuralgpt.store</a>
+              <p style="font-size:0.78rem;color:var(--muted);margin-top:4px">Usa este canal para todos los reportes de seguridad. Incluye en el asunto: <code style="background:rgba(0,234,255,0.08);padding:2px 6px;border-radius:4px;font-size:0.72rem">[SECURITY] descripción breve</code></p>
+            </div>
+          </div>
+          <div style="padding:18px 22px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);display:flex;gap:16px;align-items:flex-start">
+            <span style="font-size:1.5rem" aria-hidden="true">📄</span>
+            <div>
+              <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:4px">ARCHIVO SECURITY.TXT</div>
+              <a href="/.well-known/security.txt" style="color:var(--text);font-size:0.87rem">/.well-known/security.txt</a>
+              <p style="font-size:0.78rem;color:var(--muted);margin-top:4px">Archivo estándar RFC 9116 con información actualizada de contacto de seguridad</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;padding:16px 20px;background:rgba(0,234,255,0.04);border:1px solid rgba(0,234,255,0.15);border-radius:10px">
+          <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px">QUÉ INCLUIR EN TU REPORTE</div>
+          <div style="display:flex;flex-direction:column;gap:5px;font-size:0.82rem;color:var(--muted)">
+            <div style="display:flex;gap:8px"><span style="color:var(--accent4)">▸</span> Descripción clara de la vulnerabilidad y su impacto potencial</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--accent4)">▸</span> Pasos reproducibles (PoC) para verificar el problema</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--accent4)">▸</span> URL o endpoint afectado</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--accent4)">▸</span> Capturas de pantalla, petición/respuesta HTTP si aplica</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--accent4)">▸</span> Tu nombre o alias para el reconocimiento (opcional)</div>
+            <div style="display:flex;gap=8px"><span style="color:var(--accent4)">▸</span> Si usas PGP, puedes solicitarnos la clave pública</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Política de recompensas -->
+      <section style="margin-bottom:56px">
+        <h2 class="section-title">6. Política de Reconocimiento</h2>
+        <div style="padding:20px 24px;background:rgba(0,255,153,0.04);border:1.5px solid rgba(0,255,153,0.2);border-radius:var(--radius);margin-bottom:20px">
+          <p style="font-size:0.88rem;color:var(--muted);line-height:1.8;margin:0">Actualmente neuralgpt.store <strong style="color:var(--text)">no ofrece recompensas económicas</strong> por reportes de vulnerabilidades. Sin embargo, reconocemos el trabajo de los investigadores que actúan de buena fe mediante <strong style="color:var(--accent4)">reconocimiento público</strong> en nuestro Hall of Fame (con consentimiento del investigador).</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="padding:16px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius)">
+            <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px">RECONOCIMIENTO INCLUYE</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:6px">
+              <li style="font-size:0.8rem;color:var(--muted);display:flex;gap:6px"><span style="color:var(--accent4)">✓</span> Mención en la página de Hall of Fame</li>
+              <li style="font-size:0.8rem;color:var(--muted);display:flex;gap:6px"><span style="color:var(--accent4)">✓</span> Crédito en el aviso de seguridad (advisory) si se publica</li>
+              <li style="font-size:0.8rem;color:var(--muted);display:flex;gap=6px"><span style="color:var(--accent4)">✓</span> Carta de reconocimiento firmada si se solicita</li>
+              <li style="font-size:0.8rem;color:var(--muted);display:flex;gap:6px"><span style="color:var(--accent4)">✓</span> Referencia profesional verificable</li>
+            </ul>
+          </div>
+          <div style="padding:16px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius)">
+            <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px">SEVERIDAD PARA RECONOCIMIENTO</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:6px">
+              <li style="font-size:0.8rem;color:var(--muted);display:flex;gap:6px"><span style="color:var(--accent3)">◆</span> Crítica (CVSS ≥9.0) — Hall of Fame destacado</li>
+              <li style="font-size:0.8rem;color:var(--muted);display:flex;gap:6px"><span style="color:#ffaa00">◆</span> Alta (CVSS 7.0-8.9) — Hall of Fame</li>
+              <li style="font-size:0.8rem;color:var(--muted);display:flex;gap:6px"><span style="color:var(--accent)">◆</span> Media (CVSS 4.0-6.9) — Mención en listado</li>
+              <li style="font-size:0.8rem;color:var(--muted);display:flex;gap:6px"><span style="color:var(--muted)">◆</span> Baja (CVSS &lt;4.0) — Agradecimiento interno</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Compromisos -->
+      <section style="margin-bottom:56px">
+        <h2 class="section-title">7. Compromisos de neuralgpt.store</h2>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:0.85rem;color:var(--muted)">
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span> Responder a todos los reportes válidos dentro del SLA establecido</div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span> Tratar los reportes con <strong>confidencialidad</strong> y no compartir información del investigador sin su consentimiento</div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span> Comunicar al investigador el estado de la corrección una vez desplegada</div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span> No demandar ni amenazar legalmente a investigadores que actúen de buena fe según esta política</div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span> Dar crédito público al investigador en cualquier advisory relacionado, salvo que prefiera el anonimato</div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:var(--accent4);flex-shrink:0">✓</span> Notificar con antelación si necesitamos extender el plazo de corrección</div>
+        </div>
+      </section>
+
+      <!-- Footer info -->
+      <div style="padding:20px 24px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);text-align:center;margin-bottom:48px">
+        <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--muted);margin-bottom:8px">VERSIÓN DE LA POLÍTICA</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:4px">Versión 1.0 · Publicada: abril 2026 · Próxima revisión: enero 2027</p>
+        <p style="font-size:0.78rem;color:var(--muted)">Security.txt: <a href="/.well-known/security.txt" style="color:var(--accent)">/.well-known/security.txt</a> (RFC 9116)</p>
+        <p style="font-size:0.78rem;color:var(--muted);margin-top:6px">Preguntas sobre esta política: <a href="mailto:security@neuralgpt.store" style="color:var(--accent)">security@neuralgpt.store</a></p>
       </div>
-    </section>
+
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:18px">
-        <div><a class="brand footer-brand" href="/">neuralgpt.store</a><p class="subtle">Marketplace para IA, hardware y servicios.</p></div>
-        <nav class="foot-nav"><a href="/providers.html">Proveedores</a> <a href="/security.html">Seguridad</a> <a href="/quantum.html">Quantum Pass</a> <a href="/providers.html#contact">Contacto</a> <a href="/legal.html">Legal</a></nav>
+  <div class="rgb-divider"></div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a class="brand" href="/">neural<span>GPT</span>.store</a>
+        <p>Marketplace premium de software digital creado con IA.</p>
       </div>
-      <div style="margin-top:10px" class="muted">© neuralgpt.store</div>
+      <div class="footer-col"><h4>NEURALGPT</h4><ul><li><a href="/about.html">Sobre nosotros</a></li><li><a href="/contact.html">Contacto</a></li></ul></div>
+      <div class="footer-col"><h4>MARKETPLACE</h4><ul><li><a href="/marketplace.html">Productos</a></li><li><a href="/pricing.html">Precios</a></li></ul></div>
+      <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li><li><a href="/legal.html">Aviso legal</a></li></ul></div>
+      <div class="footer-col"><h4>SEGURIDAD</h4><ul><li><a href="/security.html" aria-current="page">Esta política</a></li><li><a href="/.well-known/security.txt">security.txt</a></li><li><a href="mailto:security@neuralgpt.store">Reportar vuln.</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025–2026 neuralgpt.store · Todos los derechos reservados</span>
+      <span>Pagos por <strong>Stripe</strong> · <a href="mailto:security@neuralgpt.store" style="color:var(--accent)">security@neuralgpt.store</a></span>
     </div>
   </footer>
-  <script src="/assets/js/main.js"></script>
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+  </script>
   <script src="/js/i18n-global.js" defer></script>
+  <script src="/js/agent-chat.js" defer></script>
 </body>
 </html>

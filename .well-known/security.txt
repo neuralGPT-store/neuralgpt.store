@@ -1,0 +1,12 @@
+# neuralgpt.store — Security Contact
+# Política de divulgación responsable de vulnerabilidades
+
+Contact: mailto:security@neuralgpt.store
+Expires: 2027-01-01T00:00:00Z
+Preferred-Languages: es, en
+Policy: https://neuralgpt.store/security.html
+Canonical: https://neuralgpt.store/.well-known/security.txt
+
+# Alcance: aplicación web neuralgpt.store, API, infraestructura de pago (excluye Stripe)
+# Safe harbor: ver https://neuralgpt.store/security.html#safe-harbor
+# Reconocimiento público a investigadores que reporten de forma responsable
