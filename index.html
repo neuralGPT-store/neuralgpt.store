@@ -20,6 +20,109 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
+  <style>
+  /* ── PROMO REEL — Spot publicitario animado ── */
+  @keyframes promo-ring-spin { to { transform: rotate(360deg); } }
+  @keyframes promo-svg-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+  @keyframes promo-svg-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  @keyframes promo-slide-in  { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+  @keyframes promo-slide-out { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-40px)} }
+
+  .promo-reel-wrap {
+    position:relative;padding:0 0 8px;background:transparent;overflow:hidden;
+  }
+  .promo-reel-inner {
+    position:relative;max-width:900px;margin:0 auto;
+    border-radius:18px;overflow:hidden;
+    background:linear-gradient(135deg,rgba(0,10,30,0.85),rgba(0,20,50,0.9));
+    border:2px solid transparent;
+    background-clip:padding-box;
+  }
+  /* RGB border via pseudo */
+  .promo-reel-inner::before {
+    content:'';position:absolute;inset:-2px;border-radius:20px;z-index:0;
+    background:conic-gradient(from var(--rgb-angle,0deg),
+      #00eaff,#7f00ff,#ff0080,#00ff99,#00eaff);
+    animation:rgb-rotate 4s linear infinite;
+  }
+  .promo-reel-inner::after {
+    content:'';position:absolute;inset:2px;border-radius:16px;
+    background:linear-gradient(135deg,#00040D,#000814);z-index:1;
+  }
+  .promo-slide {
+    display:none;position:relative;z-index:2;
+    padding:28px 40px 24px;
+    align-items:center;gap:36px;
+    animation:promo-slide-in .35s ease forwards;
+  }
+  .promo-slide.active {
+    display:flex;
+  }
+  .promo-slide-icon {
+    flex:0 0 120px;display:flex;align-items:center;justify-content:center;
+  }
+  .promo-svg {
+    width:96px;height:96px;filter:drop-shadow(0 0 16px rgba(0,234,255,0.3));
+  }
+  .promo-svg-spin-slow { animation:promo-ring-spin 12s linear infinite; }
+  .promo-svg-pulse     { animation:promo-svg-pulse 2.5s ease-in-out infinite; }
+  .promo-svg-bounce    { animation:promo-svg-bounce 2s ease-in-out infinite; }
+  .promo-ring { transform-origin:50% 50%; animation:promo-ring-spin 8s linear infinite; }
+  .promo-slide-content { flex:1;min-width:0; }
+  .promo-slide-tag {
+    display:inline-block;font-family:var(--font-title);font-size:0.6rem;
+    letter-spacing:2px;color:var(--accent);margin-bottom:6px;opacity:.8;
+  }
+  .promo-slide-name {
+    font-family:var(--font-title);font-size:clamp(1.4rem,3vw,2rem);
+    font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin:0 0 8px;line-height:1.15;
+  }
+  .promo-slide-tagline {
+    color:var(--muted);font-size:0.9rem;line-height:1.6;
+    margin:0 0 16px;max-width:480px;
+  }
+  .promo-slide-meta {
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  }
+  .promo-slide-price {
+    font-family:var(--font-title);font-size:1.5rem;font-weight:900;
+    color:var(--accent);
+  }
+  .promo-slide-price small { font-size:0.7rem;color:var(--muted);font-weight:400; }
+  .promo-cta {
+    white-space:nowrap;
+  }
+  .promo-dots {
+    position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+    display:flex;gap:8px;z-index:10;
+  }
+  .promo-dot {
+    width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(0,234,255,0.25);transition:all .25s;padding:0;
+  }
+  .promo-dot.active {
+    background:var(--accent);width:22px;border-radius:4px;
+  }
+  .promo-arrow {
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(0,234,255,0.3);
+    background:rgba(0,10,30,0.7);color:var(--accent);font-size:1.4rem;
+    cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;
+    transition:all .2s;line-height:1;padding-bottom:2px;
+  }
+  .promo-arrow:hover { background:rgba(0,234,255,0.15);border-color:var(--accent); }
+  .promo-arrow-left  { left:12px; }
+  .promo-arrow-right { right:12px; }
+  @media(max-width:680px){
+    .promo-slide { flex-direction:column;padding:24px 20px 36px;gap:16px; }
+    .promo-slide-icon { flex:none; }
+    .promo-svg { width:72px;height:72px; }
+    .promo-slide-name { font-size:1.3rem; }
+    .promo-arrow { display:none; }
+  }
+  </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebSite","name":"neuralgpt.store","url":"https://neuralgpt.store","potentialAction":{"@type":"SearchAction","target":"https://neuralgpt.store/marketplace.html?search={search_term_string}","query-input":"required name=search_term_string"}}
   </script>
@@ -75,6 +178,140 @@
         <a href="/marketplace.html" class="btn btn-primary btn-lg" data-i18n="btn_marketplace">Ver Marketplace</a>
         <a href="/about.html" class="btn btn-lg" data-i18n="btn_about">¿Qué es neuralgpt?</a>
       </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SPOT PUBLICITARIO — CARRUSEL PREMIUM DE PRODUCTOS
+  ══════════════════════════════════════════════════════ -->
+  <section class="promo-reel-wrap" aria-label="Productos destacados" id="promo-reel">
+    <div class="promo-reel-inner">
+      <!-- Slide 1: GhostWriter -->
+      <div class="promo-slide active" data-href="/product.html?id=ghostwriter">
+        <div class="promo-slide-icon">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="promo-svg promo-svg-spin-slow" aria-hidden="true">
+            <defs>
+              <radialGradient id="gw-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00eaff" stop-opacity=".3"/><stop offset="100%" stop-color="#7f00ff" stop-opacity="0"/></radialGradient>
+              <linearGradient id="gw-pen" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00eaff"/><stop offset="100%" stop-color="#7f00ff"/></linearGradient>
+            </defs>
+            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#gw-glow)"/>
+            <rect x="24" y="14" width="32" height="44" rx="4" fill="rgba(0,234,255,0.08)" stroke="#00eaff" stroke-width="1.5"/>
+            <line x1="30" y1="26" x2="50" y2="26" stroke="#00eaff" stroke-width="2" stroke-linecap="round"/>
+            <line x1="30" y1="34" x2="50" y2="34" stroke="#00eaff" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <line x1="30" y1="42" x2="44" y2="42" stroke="#00eaff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+            <g transform="translate(42,44) rotate(-40)">
+              <rect x="-3" y="-18" width="6" height="18" rx="1" fill="url(#gw-pen)"/>
+              <polygon points="-3,0 3,0 0,7" fill="#00eaff"/>
+            </g>
+            <circle cx="40" cy="40" r="38" fill="none" stroke="url(#gw-pen)" stroke-width="1" stroke-dasharray="8 4" opacity=".4" class="promo-ring"/>
+          </svg>
+        </div>
+        <div class="promo-slide-content">
+          <span class="promo-slide-tag">INTELIGENCIA ARTIFICIAL</span>
+          <h3 class="promo-slide-name">GhostWriter</h3>
+          <p class="promo-slide-tagline">Redacción IA para autores KDP. Libros completos por capítulos, SEO y copies profesionales en segundos.</p>
+          <div class="promo-slide-meta">
+            <span class="promo-slide-price">29€ <small>pago único</small></span>
+            <a href="/product.html?id=ghostwriter" class="btn btn-primary btn-sm promo-cta">Ver producto →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: NeuralBill -->
+      <div class="promo-slide" data-href="/product.html?id=neuralbill">
+        <div class="promo-slide-icon">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="promo-svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="nb-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00ff99" stop-opacity=".35"/><stop offset="100%" stop-color="#00eaff" stop-opacity="0"/></radialGradient>
+              <linearGradient id="nb-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00ff99"/><stop offset="100%" stop-color="#00eaff"/></linearGradient>
+            </defs>
+            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#nb-glow)"/>
+            <rect x="18" y="20" width="44" height="32" rx="4" fill="rgba(0,255,153,0.08)" stroke="#00ff99" stroke-width="1.5"/>
+            <rect x="18" y="20" width="44" height="10" rx="4" fill="rgba(0,255,153,0.15)" stroke="none"/>
+            <line x1="24" y1="40" x2="38" y2="40" stroke="#00ff99" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="24" y1="46" x2="34" y2="46" stroke="#00ff99" stroke-width="1" stroke-linecap="round" opacity=".6"/>
+            <rect x="42" y="38" width="14" height="10" rx="2" fill="rgba(0,255,153,0.2)" stroke="#00ff99" stroke-width="1"/>
+            <text x="49" y="46" text-anchor="middle" font-size="6" fill="#00ff99" font-weight="bold">€</text>
+            <circle cx="40" cy="40" r="38" fill="none" stroke="url(#nb-grad)" stroke-width="1" stroke-dasharray="6 3" opacity=".4" class="promo-ring"/>
+          </svg>
+        </div>
+        <div class="promo-slide-content">
+          <span class="promo-slide-tag">AUTOMATIZACIÓN · FINTECH</span>
+          <h3 class="promo-slide-name">NeuralBill</h3>
+          <p class="promo-slide-tagline">Facturación inteligente para autónomos. Genera facturas legales, controla gastos e informes fiscales automáticamente.</p>
+          <div class="promo-slide-meta">
+            <span class="promo-slide-price" style="background:linear-gradient(90deg,#00ff99,#00eaff);-webkit-background-clip:text;background-clip:text;color:transparent">19€ <small style="color:var(--muted)">pago único</small></span>
+            <a href="/product.html?id=neuralbill" class="btn btn-primary btn-sm promo-cta">Ver producto →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: PokerBot -->
+      <div class="promo-slide" data-href="/product.html?id=pokerbot">
+        <div class="promo-slide-icon">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="promo-svg promo-svg-pulse" aria-hidden="true">
+            <defs>
+              <radialGradient id="pk-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff0080" stop-opacity=".3"/><stop offset="100%" stop-color="#7f00ff" stop-opacity="0"/></radialGradient>
+              <linearGradient id="pk-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff0080"/><stop offset="100%" stop-color="#7f00ff"/></linearGradient>
+            </defs>
+            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#pk-glow)"/>
+            <rect x="22" y="18" width="18" height="26" rx="3" fill="rgba(255,0,128,0.1)" stroke="#ff0080" stroke-width="1.5" transform="rotate(-8,31,31)"/>
+            <rect x="40" y="22" width="18" height="26" rx="3" fill="rgba(127,0,255,0.12)" stroke="#7f00ff" stroke-width="1.5" transform="rotate(8,49,35)"/>
+            <text x="27" y="33" text-anchor="middle" font-size="9" fill="#ff0080" font-weight="bold">♠</text>
+            <text x="54" y="37" text-anchor="middle" font-size="9" fill="#7f00ff" font-weight="bold">♥</text>
+            <circle cx="40" cy="40" r="38" fill="none" stroke="url(#pk-grad)" stroke-width="1" stroke-dasharray="5 3" opacity=".5" class="promo-ring"/>
+          </svg>
+        </div>
+        <div class="promo-slide-content">
+          <span class="promo-slide-tag">SEGURIDAD · ANÁLISIS GTO</span>
+          <h3 class="promo-slide-name">PokerBot</h3>
+          <p class="promo-slide-tagline">Análisis de manos con IA y detección de bots para equipos de seguridad empresarial. Linux, Windows y Android.</p>
+          <div class="promo-slide-meta">
+            <span class="promo-slide-price" style="background:linear-gradient(90deg,#ff0080,#7f00ff);-webkit-background-clip:text;background-clip:text;color:transparent">39€ <small style="color:var(--muted)">pago único</small></span>
+            <a href="/product.html?id=pokerbot" class="btn btn-primary btn-sm promo-cta">Ver producto →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Apps Móviles -->
+      <div class="promo-slide" data-href="/marketplace.html?cat=mobile">
+        <div class="promo-slide-icon">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="promo-svg promo-svg-bounce" aria-hidden="true">
+            <defs>
+              <radialGradient id="mob-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#b400ff" stop-opacity=".3"/><stop offset="100%" stop-color="#00eaff" stop-opacity="0"/></radialGradient>
+              <linearGradient id="mob-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b400ff"/><stop offset="100%" stop-color="#00eaff"/></linearGradient>
+            </defs>
+            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#mob-glow)"/>
+            <rect x="27" y="12" width="26" height="46" rx="5" fill="rgba(180,0,255,0.1)" stroke="url(#mob-grad)" stroke-width="1.5"/>
+            <rect x="31" y="17" width="18" height="32" rx="2" fill="rgba(0,234,255,0.06)" stroke="#00eaff" stroke-width=".8"/>
+            <circle cx="40" cy="54" r="2.5" fill="#b400ff" opacity=".8"/>
+            <line x1="36" y1="14" x2="44" y2="14" stroke="url(#mob-grad)" stroke-width="2" stroke-linecap="round"/>
+            <text x="40" y="36" text-anchor="middle" font-size="10" fill="url(#mob-grad)">📲</text>
+            <circle cx="40" cy="40" r="38" fill="none" stroke="url(#mob-grad)" stroke-width="1" stroke-dasharray="7 4" opacity=".4" class="promo-ring"/>
+          </svg>
+        </div>
+        <div class="promo-slide-content">
+          <span class="promo-slide-tag">APPS MÓVILES · ANDROID & iOS</span>
+          <h3 class="promo-slide-name">Apps Móviles</h3>
+          <p class="promo-slide-tagline">Marketplace de aplicaciones móviles para desarrolladores indie. Android e iOS nativas verificadas. +40 apps disponibles.</p>
+          <div class="promo-slide-meta">
+            <span class="promo-slide-price">Desde 9€ <small>pago único</small></span>
+            <a href="/marketplace.html?cat=mobile" class="btn btn-primary btn-sm promo-cta">Ver apps →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indicadores de posición -->
+      <div class="promo-dots" aria-label="Indicadores de diapositiva">
+        <button class="promo-dot active" data-idx="0" aria-label="Slide 1" aria-current="true"></button>
+        <button class="promo-dot" data-idx="1" aria-label="Slide 2"></button>
+        <button class="promo-dot" data-idx="2" aria-label="Slide 3"></button>
+        <button class="promo-dot" data-idx="3" aria-label="Slide 4"></button>
+      </div>
+
+      <!-- Flechas de navegación -->
+      <button class="promo-arrow promo-arrow-left" id="promo-prev" aria-label="Anterior">‹</button>
+      <button class="promo-arrow promo-arrow-right" id="promo-next" aria-label="Siguiente">›</button>
     </div>
   </section>
 
@@ -795,6 +1032,71 @@
     if(msg) msg.textContent = '✓ Suscripción registrada. ¡Gracias!';
     e.target.reset();
   }
+
+  // ── PROMO REEL ──────────────────────────────────────────────────
+  (function(){
+    var slides   = document.querySelectorAll('.promo-slide');
+    var dots     = document.querySelectorAll('.promo-dot');
+    var prevBtn  = document.getElementById('promo-prev');
+    var nextBtn  = document.getElementById('promo-next');
+    var wrap     = document.getElementById('promo-reel');
+    if(!slides.length) return;
+
+    var current  = 0;
+    var total    = slides.length;
+    var timer    = null;
+    var paused   = false;
+
+    function goTo(idx){
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      dots[current].removeAttribute('aria-current');
+      current = (idx + total) % total;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+      dots[current].setAttribute('aria-current','true');
+    }
+
+    function startTimer(){
+      clearInterval(timer);
+      timer = setInterval(function(){ if(!paused) goTo(current+1); }, 4000);
+    }
+
+    // Dots
+    dots.forEach(function(d){
+      d.addEventListener('click', function(){
+        goTo(+d.dataset.idx);
+        startTimer();
+      });
+    });
+
+    // Arrows
+    if(prevBtn) prevBtn.addEventListener('click',function(){ goTo(current-1); startTimer(); });
+    if(nextBtn) nextBtn.addEventListener('click',function(){ goTo(current+1); startTimer(); });
+
+    // Pause on hover
+    if(wrap){
+      wrap.addEventListener('mouseenter', function(){ paused=true; });
+      wrap.addEventListener('mouseleave', function(){ paused=false; });
+    }
+
+    // Touch swipe
+    var touchX = null;
+    document.getElementById('promo-reel').addEventListener('touchstart',function(e){
+      touchX = e.touches[0].clientX;
+    }, {passive:true});
+    document.getElementById('promo-reel').addEventListener('touchend',function(e){
+      if(touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if(Math.abs(dx) > 40){
+        goTo(dx < 0 ? current+1 : current-1);
+        startTimer();
+      }
+      touchX = null;
+    }, {passive:true});
+
+    startTimer();
+  })();
 
   </script>
   <script src="/js/i18n-global.js" defer></script>
