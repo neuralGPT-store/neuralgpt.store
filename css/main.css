@@ -445,6 +445,61 @@ ul, ol { list-style: none; }
 }
 
 /* ============================================================
+   HOME HERO PRODUCT CARDS — premium
+   ============================================================ */
+@keyframes hero-card-pulse-badge {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px currentColor; }
+  50%       { opacity: 0.75; box-shadow: 0 0 18px currentColor; }
+}
+@keyframes hero-card-icon-glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(0,234,255,0.4)) brightness(1); }
+  50%       { filter: drop-shadow(0 0 20px rgba(0,234,255,0.8)) brightness(1.15); }
+}
+@keyframes hero-card-icon-glow-green {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(0,255,153,0.4)) brightness(1); }
+  50%       { filter: drop-shadow(0 0 20px rgba(0,255,153,0.8)) brightness(1.15); }
+}
+@keyframes hero-card-icon-glow-pink {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255,0,128,0.4)) brightness(1); }
+  50%       { filter: drop-shadow(0 0 20px rgba(255,0,128,0.8)) brightness(1.15); }
+}
+.hero-product-card {
+  border-radius: var(--radius); overflow: hidden;
+  background: var(--card-bg); display: flex; flex-direction: column;
+}
+.hero-product-thumb {
+  position: relative; height: 120px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-product-thumb-icon {
+  font-size: 3.5rem; line-height: 1;
+  transition: transform var(--transition);
+}
+.hero-product-card:hover .hero-product-thumb-icon { transform: scale(1.15); }
+.hero-product-badges {
+  position: absolute; top: 10px; right: 10px;
+  display: flex; gap: 5px;
+}
+.hero-badge-pulse {
+  animation: hero-card-pulse-badge 2s ease-in-out infinite;
+}
+.hero-product-body { padding: 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.hero-product-tag { font-family: var(--font-title); font-size: 0.6rem; letter-spacing: 1.5px; color: var(--muted); }
+.hero-product-name { font-family: var(--font-title); font-size: 1.05rem; font-weight: 900; letter-spacing: 0.5px; }
+.hero-product-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.55; flex: 1; }
+.hero-product-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; gap: 8px; }
+.hero-product-price {
+  font-family: var(--font-title); font-size: 1.3rem; font-weight: 900;
+  background: linear-gradient(90deg, #00eaff, #7f00ff);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-product-price-period { font-size: 0.65rem; color: var(--muted); -webkit-text-fill-color: var(--muted); }
+.hero-icon-glow-cyan  { animation: hero-card-icon-glow 3s ease-in-out infinite; }
+.hero-icon-glow-green { animation: hero-card-icon-glow-green 3s ease-in-out infinite; }
+.hero-icon-glow-pink  { animation: hero-card-icon-glow-pink 3s ease-in-out infinite; }
+
+/* ============================================================
    MOBILE APPS BANNER
    ============================================================ */
 .mobile-apps-banner {
@@ -635,13 +690,18 @@ ul, ol { list-style: none; }
 }
 .footer-brand-col .brand { font-size: 1.3rem; margin-bottom: 12px; display: block; }
 .footer-brand-col p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; max-width: 220px; }
-.footer-social { display: flex; gap: 12px; margin-top: 20px; }
-.footer-social a {
+.footer-social { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.footer-social-link {
   width: 36px; height: 36px; border-radius: 8px;
   border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; color: var(--muted); transition: all var(--transition);
+  color: var(--muted); transition: all var(--transition); flex-shrink: 0;
 }
-.footer-social a:hover { border-color: var(--accent); color: var(--accent); }
+.footer-social-link:hover {
+  border-color: var(--accent); color: var(--accent);
+  box-shadow: 0 0 12px rgba(0,234,255,0.35), 0 0 24px rgba(0,234,255,0.1);
+  transform: translateY(-2px);
+}
+.footer-social-link svg { width: 18px; height: 18px; }
 .footer-col h4 {
   font-family: var(--font-title); font-size: 0.68rem; letter-spacing: 2px;
   color: var(--accent); margin-bottom: 16px; text-transform: uppercase;
