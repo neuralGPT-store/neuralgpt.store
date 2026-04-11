@@ -143,21 +143,68 @@
     loadKB();
   }
 
+  // ── Contexto de página ────────────────────────────────────────────────
+  function getPageContext() {
+    const path = location.pathname;
+    const params = new URLSearchParams(location.search);
+    const productId = params.get('id') || '';
+
+    if (path === '/' || path.endsWith('/index.html')) return 'home';
+    if (path.includes('marketplace'))   return 'marketplace';
+    if (path.includes('product'))       return productId ? 'product:' + productId : 'product';
+    if (path.includes('provider-register') || path.includes('vendor-onboarding')) return 'seller';
+    if (path.includes('pricing'))       return 'pricing';
+    if (path.includes('contact'))       return 'contact';
+    if (path.includes('providers'))     return 'providers';
+    return 'other';
+  }
+
+  function getContextGreeting(ctx, kbGreeting) {
+    const lang = getLang();
+    if (lang !== 'es') {
+      // Non-Spanish: use pre-built L10N prefix
+      const prefix = t('greeting_prefix');
+      if (prefix !== null) return prefix;
+    }
+    // Spanish — page-aware greeting
+    if (ctx === 'home')        return kbGreeting;
+    if (ctx.startsWith('product:')) {
+      const id = ctx.split(':')[1];
+      const names = { ghostwriter:'GhostWriter', neuralbill:'NeuralBill', pokerbot:'PokerBot' };
+      const name = names[id] || id;
+      return `¡Hola! Soy Chany. Veo que estás mirando ${name}. ¿Tienes alguna pregunta sobre este producto, el proceso de compra o la descarga?`;
+    }
+    if (ctx === 'marketplace')  return '¡Hola! Soy Chany. Puedo ayudarte a encontrar el software que buscas. ¿Qué tipo de herramienta necesitas?';
+    if (ctx === 'seller')       return '¡Hola! Soy Chany. Estoy aquí para responder tus dudas sobre cómo vender en neuralgpt.store: hosting, verificación, comisiones y pagos.';
+    if (ctx === 'pricing')      return '¡Hola! Soy Chany. ¿Tienes dudas sobre precios, comisiones o formas de pago? Pregúntame lo que necesites.';
+    return kbGreeting;
+  }
+
+  function getContextSuggestions(ctx) {
+    const lang = getLang();
+    if (lang !== 'es') return t('suggestions');
+    if (ctx === 'home')        return ['¿Qué productos tenéis?', '¿Cómo funciona la compra?', 'Quiero vender', '¿Es seguro?'];
+    if (ctx.startsWith('product:')) return ['¿Cómo descargo tras pagar?', '¿Es seguro comprar?', '¿Hay devoluciones?', '¿Qué incluye la licencia?'];
+    if (ctx === 'marketplace')  return ['¿Qué categorías hay?', '¿Cómo filtro productos?', '¿Hay productos gratis?', '¿Cómo pago?'];
+    if (ctx === 'seller')       return ['¿Qué es el modelo de hosting?', '¿Cuánto tarda la verificación?', '¿Cuándo cobro?', 'Categorías legales'];
+    if (ctx === 'pricing')      return ['¿Hay IVA?', '¿Cómo funciona la descarga?', '¿Cuánto tarda el payout?', 'Registrarme como vendedor'];
+    return t('suggestions');
+  }
+
   // ── Cargar base de conocimiento ─────────────────────────────────────
   function loadKB() {
+    const ctx = getPageContext();
     fetch(KB_URL)
       .then(r => r.json())
       .then(data => {
         kb = data;
-        // Greeting: use lang-specific override for non-ES, else use KB greeting
-        const langGreeting = t('greeting_prefix');
-        addBotMsg(langGreeting !== null ? langGreeting : data.greeting);
-        renderSuggestions(t('suggestions'));
+        addBotMsg(getContextGreeting(ctx, data.greeting));
+        renderSuggestions(getContextSuggestions(ctx));
       })
       .catch(() => {
         kb = { fallback: t('fallback'), intents: [] };
-        addBotMsg(t('greeting_prefix') || '¡Hola! Soy Chany. ¿En qué puedo ayudarte?');
-        renderSuggestions(t('suggestions'));
+        addBotMsg(getContextGreeting(ctx, '¡Hola! Soy Chany. ¿En qué puedo ayudarte?'));
+        renderSuggestions(getContextSuggestions(ctx));
       });
   }
 

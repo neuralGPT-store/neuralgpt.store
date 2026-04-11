@@ -61,11 +61,6 @@
       "response": "💳 Aceptamos:\n• Tarjetas Visa/Mastercard/Amex vía Stripe\n• Apple Pay y Google Pay\nTodos los pagos son seguros (SSL + Stripe PCI-DSS). Tras el pago confirmado, se redirige automáticamente a la URL de descarga del producto. El acceso es inmediato."
     },
     {
-      "id": "download_after_payment",
-      "keywords": ["descarga tras pago", "después de pagar", "cómo descargo", "donde descargo", "acceso tras compra", "no recibí descarga", "link descarga"],
-      "response": "⬇️ Proceso de descarga tras el pago:\n1. Pagas con Stripe en la ficha del producto\n2. Stripe confirma el pago (instantáneo)\n3. neuralgpt.store redirige automáticamente a la URL de descarga del vendedor\n4. También recibes el enlace de descarga en tu email de confirmación\n\nSi no recibes el acceso en 5 minutos, escribe a support@neuralgpt.store con tu número de pedido."
-    },
-    {
       "id": "platforms",
       "keywords": ["plataforma", "linux", "windows", "android", "mac", "ios", "compatible", "sistema operativo", "os"],
       "response": "💻 Compatibilidad de nuestros productos:\n• GhostWriter: Linux, Windows, Android\n• NeuralBill: Linux, Windows, Web (sin instalación)\n• PokerBot: Linux, Windows, Android\n\nPuedes filtrar por plataforma en el marketplace. ¿Buscas algo para una plataforma específica?"
@@ -82,8 +77,8 @@
     },
     {
       "id": "categories",
-      "keywords": ["categoría", "categorias", "tipo", "tipos", "automatización", "ia", "inteligencia artificial", "seguridad", "datos"],
-      "response": "📁 Categorías disponibles:\n• ⚡ Automatización — Scripts, bots, workflows\n• 🤖 Inteligencia Artificial — Modelos, agentes, asistentes\n• 🛡️ Seguridad — Auditoría, análisis, pentesting\n• 🌐 Web & APIs — Scrapers, APIs, dashboards\n• 📊 Datos & Analytics — Análisis y procesamiento\n• 🐧 Linux & Sistemas — Herramientas para Linux\n\nExplóralas en /marketplace.html"
+      "keywords": ["categoría", "categorias", "tipo", "tipos", "automatización", "ia", "inteligencia artificial", "seguridad", "datos", "gaming", "fintech", "facturación"],
+      "response": "📁 Categorías disponibles:\n• 🤖 Inteligencia Artificial — Modelos, agentes, asistentes\n• ⚡ Automatización — Scripts, bots, workflows\n• 🛡️ Seguridad — Auditoría, análisis, pentesting\n• 🌐 Web & APIs — Scrapers, APIs, dashboards\n• 📊 Datos & Analytics — Análisis y procesamiento\n• 🐧 Linux & Sistemas — Herramientas para Linux\n• 💳 Fintech — Facturación, pagos, contabilidad\n• 🎮 Gaming & Análisis — Herramientas de análisis para juegos\n\nExplóralas en /marketplace.html o en /category.html"
     },
     {
       "id": "refund",
@@ -133,7 +128,7 @@
     {
       "id": "all_products",
       "keywords": ["qué productos hay", "todos los productos", "ver productos", "catálogo", "catalogo", "lista de productos", "qué vendéis", "qué software", "que software hay"],
-      "response": "📦 Productos disponibles en neuralgpt.store:\n\nProductos propios (neuralgpt.store):\n• 📝 GhostWriter — Redacción IA KDP y copywriting — 29€ pago único\n• 💳 NeuralBill — Facturación autónomos/freelancers — 19€ pago único\n• 🃏 PokerBot — Análisis de manos de póker GTO — 39€ pago único\n\nProductos de terceros (verificados):\n• ⚡ ClawBot Automation Suite — Automatización Linux — 29€\n• 🤖 NeuralAgent Framework — Agentes IA personalizados — 49€\n• 🛡️ BlackArch Security Toolkit — Pentesting Linux — 39€\n• 🌐 DataScraper Pro — Scraping web avanzado — 19€\n• 📊 AnalyticsAI Dashboard — Dashboards con IA — 59€\n• 🐧 Linux Hardener — Hardening automático — 15€\n\nVer el catálogo completo en /marketplace.html"
+      "response": "📦 Productos disponibles en neuralgpt.store:\n\nProductos propios (neuralgpt.store):\n• 📝 GhostWriter — Redacción IA KDP y copywriting — 29€ pago único\n• 💳 NeuralBill — Facturación autónomos/freelancers — 19€ pago único\n• 🃏 PokerBot — Análisis de manos de póker GTO — 39€ pago único\n\nProductos de terceros (verificados):\n• ⚡ ClawBot Automation Suite — Automatización Linux — 29€\n• 🤖 NeuralAgent Framework — Agentes IA personalizados — 49€\n• 🛡️ BlackArch Security Toolkit — Pentesting Linux — 39€\n• 🌐 DataScraper Pro — Scraping web avanzado — 19€\n• 📊 AnalyticsAI Dashboard — Dashboards con IA — 59€\n• 🐧 Linux Hardener — Hardening automático — 15€\n• ✈️ TelegramBot Builder — Bots de Telegram sin código — 24€\n• 🔍 PenTest Toolkit — Herramientas de pentesting — 79€\n• ✍️ AI Copywriter API — API de generación de copies — 29€/mes\n\nVer el catálogo completo en /marketplace.html"
     },
     {
       "id": "secure_delivery",
