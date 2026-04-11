@@ -480,12 +480,21 @@
   }
 
   function handleBuy(){
-    // Placeholder Stripe — conectar al backend cuando esté disponible
-    var p = PRODUCTS[productId];
-    if(!p) return;
-    var msg = '¿Deseas comprar ' + p.name + ' por ' + p.price + '€' + (p.period||'') + '?\n\nSe procesará el pago mediante Stripe de forma segura.';
-    if(confirm(msg)){
-      alert('Redirigiendo a Stripe Checkout…\n\n(Funcionalidad de pago en integración. Contacta a support@neuralgpt.store para adquirir el producto.)');
+    // Usar NeuralStripe si está disponible (stripe-checkout.js cargado)
+    if(window.NeuralStripe){
+      window.NeuralStripe.loadProducts().then(function(products){
+        var stripeProduct = products.find(function(p){ return p.id === productId; });
+        if(stripeProduct){
+          var btn = document.getElementById('buy-btn');
+          window.NeuralStripe.checkout(stripeProduct, btn);
+        } else {
+          // Producto no tiene Stripe configurado, contacto directo
+          window.location.href = 'mailto:support@neuralgpt.store?subject=Compra%3A%20' + encodeURIComponent(productId);
+        }
+      });
+    } else {
+      // Fallback: redirigir a contacto
+      window.location.href = 'mailto:support@neuralgpt.store?subject=Compra%3A%20' + encodeURIComponent(productId);
     }
   }
 
@@ -501,6 +510,8 @@
   function starsStr(r){ var f=Math.floor(r),h=(r%1>=0.5?1:0),e=5-f-h; return '★'.repeat(f)+(h?'½':'')+'☆'.repeat(e); }
   function escapeHtml(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
   </script>
+  <script src="https://js.stripe.com/v3/" async></script>
+  <script src="/js/stripe-checkout.js" defer></script>
   <script src="/js/agent-chat.js" defer></script>
 </body>
 </html>

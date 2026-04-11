@@ -111,7 +111,13 @@
           </div>
         </div>
 
-        <p style="margin-top:16px;font-size:0.78rem;color:var(--muted)">¿Dudas? Escríbenos a <a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a></p>
+        <!-- Modelo de hosting -->
+        <div style="padding:16px;background:rgba(0,234,255,0.04);border:1.5px solid rgba(0,234,255,0.12);border-radius:var(--radius);margin-top:20px">
+          <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px">🗄️ MODELO DE HOSTING</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.65;margin-bottom:6px"><strong>Tú alojas tu software</strong> en tu propia infraestructura — GitHub Releases, Cloudflare R2, servidor propio u otro servicio estable con URL pública. Proporcionas la URL al registrarte. Nosotros verificamos el archivo y, tras cada pago confirmado, redirigimos al comprador a tu URL de descarga automáticamente.</p>
+          <a href="/vendor-onboarding.html" style="font-size:0.75rem;color:var(--accent)">Ver guía completa de onboarding →</a>
+        </div>
+        <p style="margin-top:14px;font-size:0.78rem;color:var(--muted)">¿Dudas? Escríbenos a <a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a></p>
       </div>
 
       <!-- ── FORMULARIO ── -->
@@ -193,6 +199,17 @@
             <div class="form-group">
               <label for="prov-description">DESCRIPCIÓN DEL PRODUCTO</label>
               <textarea id="prov-description" name="description" class="form-control" rows="4" placeholder="Describe qué hace tu software, para quién es y qué lo hace especial…" required maxlength="1000"></textarea>
+            </div>
+
+            <!-- URL Descarga — MODELO HOSTING -->
+            <div style="padding:14px;background:rgba(0,234,255,0.04);border:1px solid rgba(0,234,255,0.15);border-radius:10px;margin-bottom:14px">
+              <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:1px;color:var(--accent);margin-bottom:6px">🗄️ MODELO DE HOSTING</div>
+              <p style="font-size:0.78rem;color:var(--muted);line-height:1.6;margin-bottom:0">Tú alojas tu software en tu propia infraestructura (GitHub Releases, Cloudflare R2, servidor propio, etc.). Proporciona aquí la URL de descarga pública y estable. Verificaremos el archivo antes de publicar. Tras cada pago confirmado, redirigimos al comprador a esta URL automáticamente.</p>
+            </div>
+            <div class="form-group">
+              <label for="prov-download-url">URL DE DESCARGA DEL SOFTWARE</label>
+              <input type="url" id="prov-download-url" name="download_url" class="form-control" placeholder="https://github.com/tu-usuario/tu-repo/releases/download/v1.0/software.zip" required />
+              <div style="font-size:0.72rem;color:var(--muted);margin-top:4px">URL pública, HTTPS, sin autenticación. Puede ser GitHub Releases, Cloudflare R2, servidor propio, etc.</div>
             </div>
 
             <!-- Acepto comisiones -->

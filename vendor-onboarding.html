@@ -1,137 +1,243 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  
-  <!-- Security: CSP, Referrer and Permissions (static-site-safe defaults) -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://js.stripe.com https://www.paypal.com https://www.paypalobjects.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.stripe.com https://js.stripe.com https://www.paypal.com https://www.paypalobjects.com https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="theme-color" content="#00040D" />
+  <title>Guía de Onboarding para Vendedores — neuralgpt.store</title>
+  <meta name="description" content="Guía completa para vender software en neuralgpt.store. Modelo de hosting, proceso de verificación, comisiones y pagos Stripe Connect." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Permissions-Policy" content="geolocation=(), camera=(), microphone=(), payment=()">
   <meta http-equiv="X-Frame-Options" content="DENY">
-  <title>Onboarding de Proveedores — neuralgpt.store</title>
-  <meta name="description" content="Solicite incorporarse como proveedor verificado en neuralgpt.store. Acceda a clientes enterprise, gestione listings y benefíciese de un modelo de comisiones claro." />
-  <meta property="og:title" content="Onboarding de Proveedores — neuralgpt.store" />
-  <meta property="og:description" content="Solicite incorporarse como proveedor verificado en neuralgpt.store. Acceda a clientes enterprise, gestione listings y benefíciese de un modelo de comisiones claro." />
-  <meta property="og:site_name" content="neuralgpt.store" />
-  <meta property="og:url" content="https://neuralgpt.store/vendor-onboarding.html" />
-  <meta property="og:image" content="/assets/img/vision-pro.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
 </head>
-<body class="site-root">
+<body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
   <header class="site-header" role="banner">
-    <div class="wrap header-inner"><a class="brand" href="/">neuralgpt.store</a>
-      <nav class="main-nav" aria-label="Principal">
-        <ul>
-          <li><a href="/">Inicio</a></li>
-          <li><a href="/marketplace.html">Marketplace</a></li>
-          <li><a href="/providers.html">Proveedores</a></li>
-          <li><a href="/pricing.html">Precios</a></li>
-            <li><a href="/contact.html">Contacto</a></li>
-            <li><a class="btn btn-primary" href="/vendor-onboarding.html">Onboarding de Proveedores</a></li>
-        </ul>
-      </nav>
+    <a class="brand" href="/">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/marketplace.html">Marketplace</a></li>
+        <li><a href="/providers.html">Proveedores</a></li>
+        <li><a href="/pricing.html">Precios</a></li>
+        <li><a href="/contact.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="/marketplace.html" class="btn">Explorar</a>
+      <a href="/provider-register.html" class="btn btn-primary">Registrarse</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
+  <div class="rgb-divider"></div>
 
-  <main id="main-content" class="wrap">
-    <section class="hero hero-section">
-      <div class="hero-card">
-        <h1>Onboarding de Proveedores</h1>
-        <p class="subtle">Únase a neuralgpt.store como proveedor verificado — acceda a clientes enterprise y desarrolladores con fulfilment fiable y facturación segura.</p>
-        <a class="btn btn-primary" href="#onboard-form" data-track="cta:vendor_onboarding">Solicitar incorporación — Revisión manual</a>
-        <a class="btn" href="/contact.html">Iniciar conversación comercial</a>
-      </div>
-    </section>
-
-    <section class="sections trust-strip">
-      <div class="card">
-        <h3 class="section-title">Confiado por partners iniciales</h3>
-        <p class="muted">Confiado por partners iniciales, fabricantes y startups impulsadas por IA</p>
-        <ul class="muted">
-          <li>Robotics</li>
-          <li>AI Modules</li>
-          <li>Hardware Vendors</li>
-          <li>Enterprise Security</li>
-        </ul>
-        <p class="muted"><strong>Acceso temprano · Plazas de incorporación limitadas</strong></p>
-        <p class="muted">Ventana de incorporación actual: <strong>ABIERTA</strong> · Próxima revisión pronto · Prioridad para partners enterprise</p>
-        <ul>
-          <li>Built with AI-assisted workflows</li>
-          <li>Designed for scalable marketplaces</li>
-          <li>Security-first architecture</li>
-        </ul>
-        <p><a class="btn btn-primary" href="/vendor-onboarding.html" data-track="cta:vendor_onboarding">Solicitar incorporación</a> <a class="btn" href="/contact.html">Iniciar conversación comercial</a></p>
-      </div>
-    </section>
-    <section class="sections">
-      <h3 class="section-title">Legal</h3>
-      <p class="muted"><a href="/terms.html">Terms</a> • <a href="/privacy.html">Privacy</a> • <a href="/commercial-terms.html">Commercial terms</a></p>
-    </section>
-
-    <section class="sections">
-      <h2 class="section-title">Qué es neuralgpt.store</h2>
-      <p class="muted">neuralgpt.store es un marketplace curado para hardware IA, sensores y soluciones embebidas. Conectamos fabricantes y proveedores especializados con compradores enterprise, integradores y desarrolladores en busca de hardware de calidad y proveedores fiables.</p>
-    </section>
-
-    <section class="sections">
-      <h2 class="section-title">Beneficios para Proveedores</h2>
-      <ul>
-        <li>Acceso a una audiencia técnica y enterprise comprometida.</li>
-        <li>Listings integrados y panel analítico (portal de proveedor).</li>
-        <li>Pagos seguros y flujos estándar de facturación.</li>
-        <li>Prioridad para proveedores verificados y de alta calidad.</li>
-      </ul>
-    </section>
-
-    <section class="sections">
-      <h2 class="section-title">Modelo de Comisiones</h2>
-      <p class="muted">Comisión de lanzamiento reducida al 10 %. Nuestro modelo es transparente: tarifa aplicada sobre ventas completadas. Vigente para Standard, Pro y Enterprise durante el periodo de lanzamiento. Condiciones especiales para proveedores early.</p>
-      <p class="muted">Procesos apoyados por IA para filtrar y priorizar leads de alto valor y optimizar la conversión desde el primer contacto.</p>
-    </section>
-
-    <section class="sections">
-      <h2 class="section-title">Proceso de incorporación</h2>
-      <ol>
-        <li>Solicite usando el formulario corto abajo.</li>
-        <li>Revisamos documentación y verificamos identidad de la empresa.</li>
-        <li>Firme el acuerdo de proveedor y configure detalles de pago.</li>
-        <li>Publique los primeros listings y active la tienda.</li>
-      </ol>
-    </section>
-
-    <section class="sections">
-      <h2 class="section-title">Compliance &amp; Security</h2>
-      <p class="muted">We treat vendor data and customer information with strict controls. Payment transactions are handled via secure, PCI-compliant processors. Our operational infrastructure follows common cloud best-practices and is designed for enterprise-grade availability. We do not make warranties beyond our documented terms; all providers must comply with applicable laws and supply chain requirements.</p>
-      <p style="margin-top:10px"><a class="btn" href="/pricing.html">Ver Precios y Planes</a></p>
-      <div class="card" style="margin-top:12px">
-        <strong>Pago</strong>
-        <p class="muted">El cierre comercial se realiza primero. El enlace de pago se envía posteriormente por Stripe, Google Pay o PayPal.</p>
-        <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
-          <img src="/assets/payments/stripe-logo.svg" alt="Stripe" width="120" height="32">
-          <img src="/assets/payments/google-pay-logo.svg" alt="Google Pay" width="120" height="32">
-          <img src="/assets/payments/paypal-logo.svg" alt="PayPal" width="120" height="32">
+  <main id="main-content">
+    <!-- Hero -->
+    <section style="padding:72px 0 48px;text-align:center;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,255,153,0.06) 0%,transparent 60%),var(--bg);border-bottom:1px solid var(--border)">
+      <div class="wrap">
+        <div class="hero-badge" style="display:inline-flex;margin-bottom:20px">
+          <span class="dot"></span>GUÍA PARA VENDEDORES
+        </div>
+        <h1 class="section-title" style="font-size:clamp(2rem,5vw,3.2rem)">Vende tu software en neuralgpt.store</h1>
+        <p style="color:var(--muted);max-width:620px;margin:0 auto 32px;font-size:0.95rem;line-height:1.8">Todo lo que necesitas saber para publicar y vender tu software digital. Desde el hosting hasta los pagos automáticos, aquí está la guía completa.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          <a href="/provider-register.html" class="btn btn-primary btn-lg">Registrarme como vendedor →</a>
+          <a href="/pricing.html" class="btn btn-lg">Ver comisiones</a>
         </div>
       </div>
     </section>
 
-    <section id="onboard-form" class="sections">
-      <h2 class="section-title">Solicitar incorporación como proveedor verificado</h2>
-      <div class="card">
-        <form action="/provider-register.html" method="get">
-          <label>Nombre de la empresa<input name="company" required></label>
-          <label>Sitio web<input name="website" type="url" required></label>
-          <label>Correo de contacto<input name="email" type="email" required></label>
-          <label>Categoría de producto<input name="category" required></label>
-          <div style="margin-top:12px"><button class="btn btn-primary" type="submit">Solicitar incorporación</button></div>
-        </form>
-      </div>
-    </section>
+    <div class="wrap section">
 
+      <!-- Qué es neuralgpt.store -->
+      <section style="margin-bottom:64px">
+        <h2 class="section-title">¿Qué es neuralgpt.store?</h2>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;max-width:780px">neuralgpt.store es un <strong>marketplace exclusivo de software digital</strong>: apps, automatizaciones, herramientas de IA, scripts y soluciones técnicas. No vendemos hardware ni productos físicos. Conectamos desarrolladores y creadores de software con compradores técnicos hispanohablantes que buscan herramientas verificadas y de calidad.</p>
+      </section>
+
+      <!-- MODELO DE HOSTING -->
+      <section style="margin-bottom:64px">
+        <h2 class="section-title">🗄️ Modelo de hosting — tú alojas tu software</h2>
+        <div style="padding:24px;background:rgba(0,255,153,0.04);border:1.5px solid rgba(0,255,153,0.2);border-radius:var(--radius);margin-bottom:24px">
+          <p style="color:var(--text);font-size:0.9rem;line-height:1.7;margin:0"><strong>neuralgpt.store no almacena tu software.</strong> Tú alojas tu software en tu propia infraestructura y nos proporcionas una URL de descarga pública y estable. Nosotros validamos la URL, verificamos el software y gestionamos los pagos. Tras cada pago confirmado, redirigimos automáticamente al comprador a tu URL.</p>
+        </div>
+
+        <div class="auto-grid-3" style="margin-bottom:24px">
+          <div class="card" style="text-align:center">
+            <div style="font-size:2rem;margin-bottom:10px">🐙</div>
+            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:6px">GITHUB RELEASES</div>
+            <p style="font-size:0.78rem;color:var(--muted)">La opción más popular. Sube tu .zip, .exe, .AppImage o APK a GitHub Releases. URL pública, gratuito, con versionado incluido.</p>
+          </div>
+          <div class="card" style="text-align:center">
+            <div style="font-size:2rem;margin-bottom:10px">☁️</div>
+            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:6px">CLOUDFLARE R2</div>
+            <p style="font-size:0.78rem;color:var(--muted)">Almacenamiento de objetos rápido y económico. Perfecto para archivos grandes. URL directa, sin egress costs.</p>
+          </div>
+          <div class="card" style="text-align:center">
+            <div style="font-size:2rem;margin-bottom:10px">🌐</div>
+            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:6px">SERVIDOR PROPIO</div>
+            <p style="font-size:0.78rem;color:var(--muted)">Si tienes servidor propio o VPS, aloja los archivos directamente. Control total sobre el hosting.</p>
+          </div>
+        </div>
+
+        <div style="padding:16px 20px;background:rgba(0,234,255,0.04);border:1.5px solid rgba(0,234,255,0.15);border-radius:10px">
+          <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px">REQUISITOS DE LA URL DE DESCARGA</div>
+          <ul style="display:flex;flex-direction:column;gap:6px">
+            <li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px"><span style="color:var(--accent4)">✓</span> URL pública, accesible sin autenticación adicional</li>
+            <li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px"><span style="color:var(--accent4)">✓</span> URL estable — no puede cambiar sin notificarnos con antelación</li>
+            <li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px"><span style="color:var(--accent4)">✓</span> El archivo debe ser el exactamente descrito en la ficha del producto</li>
+            <li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px"><span style="color:var(--accent4)">✓</span> HTTPS obligatorio</li>
+            <li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px"><span style="color:var(--accent3)">✗</span> No se permiten URLs de servicios que expiren (WeTransfer, etc.)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PROCESO DE VERIFICACIÓN -->
+      <section style="margin-bottom:64px">
+        <h2 class="section-title">🛡️ Proceso de verificación del software</h2>
+        <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;margin-bottom:28px">Antes de publicar tu producto, lo verificamos para garantizar la seguridad de los compradores. El proceso tarda <strong>24-48h laborables</strong>.</p>
+        <div class="dev-steps">
+          <div class="dev-step">
+            <div class="dev-step-num">1</div>
+            <div>
+              <div class="dev-step-title">Análisis anti-malware</div>
+              <p class="dev-step-desc">Ejecutamos tu archivo a través de VirusTotal y análisis interno adicional. Si detectamos cualquier comportamiento sospechoso, te notificamos y pausamos el proceso hasta resolverlo.</p>
+            </div>
+          </div>
+          <div class="dev-step">
+            <div class="dev-step-num">2</div>
+            <div>
+              <div class="dev-step-title">Verificación de la URL</div>
+              <p class="dev-step-desc">Comprobamos que la URL de descarga es estable, accesible, el archivo se descarga correctamente y corresponde al producto descrito.</p>
+            </div>
+          </div>
+          <div class="dev-step">
+            <div class="dev-step-num">3</div>
+            <div>
+              <div class="dev-step-title">Revisión de la ficha</div>
+              <p class="dev-step-desc">Verificamos que la descripción del producto, las plataformas compatibles y las funcionalidades declaradas son precisas y no engañosas.</p>
+            </div>
+          </div>
+          <div class="dev-step">
+            <div class="dev-step-num">4</div>
+            <div>
+              <div class="dev-step-title">Aprobación y publicación</div>
+              <p class="dev-step-desc">Tras la aprobación, tu producto aparece en el marketplace con el badge "Software Verificado". Los pagos se activan automáticamente.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMISIONES -->
+      <section style="margin-bottom:64px">
+        <h2 class="section-title">💰 Comisiones y pagos</h2>
+        <div class="grid-2" style="gap:20px;max-width:640px;margin-bottom:24px">
+          <div class="pricing-card featured" style="position:relative">
+            <div class="pricing-badge-top">AHORA</div>
+            <div class="pricing-plan-name">LANZAMIENTO</div>
+            <div><span class="pricing-price" style="color:var(--accent4)">15%</span><span class="pricing-period"> por venta</span></div>
+            <div style="font-size:0.78rem;color:var(--muted)">Hasta el 1 de septiembre de 2025</div>
+          </div>
+          <div class="pricing-card">
+            <div class="pricing-plan-name">ESTÁNDAR</div>
+            <div><span class="pricing-price">20%</span><span class="pricing-period"> por venta</span></div>
+            <div style="font-size:0.78rem;color:var(--muted)">A partir del 1 de septiembre de 2025</div>
+          </div>
+        </div>
+        <div style="padding:16px 20px;background:rgba(0,234,255,0.04);border:1.5px solid rgba(0,234,255,0.15);border-radius:10px;max-width:640px">
+          <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent);margin-bottom:10px">CÓMO FUNCIONA EL PAGO</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:0.82rem;color:var(--muted)">
+            <div>💳 Stripe gestiona el cobro al comprador</div>
+            <div>📊 neuralgpt.store descuenta la comisión automáticamente</div>
+            <div>💸 El importe neto se acumula en tu cuenta Stripe Connect</div>
+            <div>📅 Pago mensual a tu cuenta bancaria · Mínimo 10€</div>
+            <div>📋 Sin cuota mensual fija — solo pagas si vendes</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FORMATOS ACEPTADOS -->
+      <section style="margin-bottom:64px">
+        <h2 class="section-title">📦 Tipos de software aceptados</h2>
+        <div class="auto-grid-3">
+          <div class="cat-card">
+            <span class="cat-icon">⚡</span>
+            <span class="cat-name">AUTOMATIZACIONES</span>
+            <span class="cat-desc">Scripts, bots, workflows automáticos, herramientas de productividad.</span>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">🤖</span>
+            <span class="cat-name">HERRAMIENTAS IA</span>
+            <span class="cat-desc">Modelos locales, agentes IA, asistentes, procesamiento de lenguaje.</span>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">🛡️</span>
+            <span class="cat-name">SEGURIDAD</span>
+            <span class="cat-desc">Auditoría, análisis de vulnerabilidades, pentesting (uso legal).</span>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">🌐</span>
+            <span class="cat-name">WEB & APIS</span>
+            <span class="cat-desc">Scrapers, APIs propias, dashboards, herramientas web.</span>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">📊</span>
+            <span class="cat-name">DATOS & ANALYTICS</span>
+            <span class="cat-desc">Análisis de datos, visualización, ETL, procesamiento.</span>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">🐧</span>
+            <span class="cat-name">LINUX & SISTEMAS</span>
+            <span class="cat-desc">Herramientas CLI, scripts de sistema, utilidades Linux.</span>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:14px 18px;background:rgba(255,0,128,0.04);border:1.5px solid rgba(255,0,128,0.2);border-radius:10px">
+          <strong style="color:var(--accent3);font-family:var(--font-title);font-size:0.72rem">NO SE ACEPTAN:</strong>
+          <span style="font-size:0.82rem;color:var(--muted);margin-left:8px">malware, software espía, crackers de contraseñas para uso malicioso, software que infrinja derechos de autor, ni copias de software comercial.</span>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section style="text-align:center;padding:48px 0;border-top:1px solid var(--border)">
+        <h2 class="section-title">¿Todo claro? Empieza ahora</h2>
+        <p style="color:var(--muted);font-size:0.9rem;max-width:500px;margin:0 auto 28px">El registro tarda 5 minutos. La verificación 24-48h. Después, tu software llega a miles de compradores técnicos.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          <a href="/provider-register.html" class="btn btn-primary btn-lg">Registrarme como vendedor →</a>
+          <a href="mailto:support@neuralgpt.store" class="btn btn-lg">¿Dudas? Escríbenos</a>
+        </div>
+        <p style="color:var(--muted);font-size:0.78rem;margin-top:16px">¿Tienes preguntas antes de registrarte? <a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a> · Respuesta en &lt;24h</p>
+      </section>
+
+    </div>
   </main>
-  <footer class="site-footer"><div class="wrap muted">© neuralgpt.store</div></footer>
-  <script src="/assets/js/launch-signals.js" defer></script>
+
+  <div class="rgb-divider"></div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a class="brand" href="/">neural<span>GPT</span>.store</a>
+        <p>Marketplace premium de software digital creado con IA.</p>
+      </div>
+      <div class="footer-col"><h4>NEURALGPT</h4><ul><li><a href="/about.html">Sobre nosotros</a></li><li><a href="/contact.html">Contacto</a></li></ul></div>
+      <div class="footer-col"><h4>MARKETPLACE</h4><ul><li><a href="/marketplace.html">Productos</a></li><li><a href="/pricing.html">Precios</a></li></ul></div>
+      <div class="footer-col"><h4>VENDEDORES</h4><ul><li><a href="/provider-register.html">Registrarse</a></li><li><a href="/vendor-onboarding.html" aria-current="page">Guía de inicio</a></li><li><a href="/pricing.html">Comisiones</a></li></ul></div>
+      <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li><li><a href="/commercial-terms.html">Términos comerciales</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025–2026 neuralgpt.store · Todos los derechos reservados</span>
+      <span>Pagos por <strong>Stripe</strong> · <a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a></span>
+    </div>
+  </footer>
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+  </script>
+  <script src="/js/agent-chat.js" defer></script>
 </body>
 </html>
