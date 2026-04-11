@@ -1,54 +1,135 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  
-  <title>Commercial Terms — neuralgpt.store</title>
-  <meta name="description" content="Commercial terms for vendors, sponsors and enterprise deals. Manual approval and pre-payment validation policies." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>Términos Comerciales — neuralgpt.store</title>
+  <meta name="description" content="Términos comerciales para vendedores de neuralgpt.store. Comisiones, pagos Stripe Connect y proceso de verificación." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
+  <style>
+    .legal-wrap { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+    .legal-wrap h1 { font-family: var(--font-title); font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 900; margin-bottom: 8px; }
+    .legal-wrap .meta { font-size: 0.82rem; color: var(--muted); margin-bottom: 40px; }
+    .legal-wrap h2 { font-family: var(--font-title); font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; color: var(--accent); margin: 36px 0 12px; text-transform: uppercase; }
+    .legal-wrap p, .legal-wrap li { font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin-bottom: 10px; }
+    .legal-wrap ul { padding-left: 20px; }
+    .legal-wrap ul li { list-style: disc; }
+    .legal-wrap a { color: var(--accent); }
+    .legal-wrap .highlight { padding: 16px 20px; background: rgba(0,234,255,0.04); border: 1.5px solid rgba(0,234,255,0.15); border-radius: 10px; margin: 20px 0; }
+  </style>
 </head>
-<body class="site-root">
-  <header class="site-header">
-    <div class="wrap header-inner"><a class="brand" href="/">neuralgpt.store</a>
-      <nav class="main-nav" aria-label="Principal">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/pricing.html">Pricing</a></li>
-          <li><a href="/contact.html">Contact</a></li>
-          <li><a class="btn" href="/vendor-onboarding.html">Vendor Onboarding</a></li>
-        </ul>
-      </nav>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/marketplace.html">Marketplace</a></li>
+        <li><a href="/providers.html">Proveedores</a></li>
+        <li><a href="/pricing.html">Precios</a></li>
+        <li><a href="/contact.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="/marketplace.html" class="btn">Explorar</a>
+      <a href="/provider-register.html" class="btn btn-primary">Vender</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
+  <div class="rgb-divider"></div>
 
-  <main class="wrap">
-    <section class="sections">
-      <h1>Commercial Terms</h1>
-      <p class="muted">Clear, practical terms for vendors, sponsors and enterprise partners. Our commercial flows are manual and designed to ensure quality and trust.</p>
+  <main id="main-content">
+    <div class="legal-wrap">
+      <h1>Términos Comerciales para Vendedores</h1>
+      <p class="meta">Última actualización: 1 de junio de 2025 · <a href="/terms.html">Términos de Servicio</a> · <a href="/pricing.html">Precios y Comisiones</a></p>
 
-      <h2>Vendor agreements</h2>
-      <p>Vendor agreements outline listing responsibilities, fulfillment expectations and basic quality standards. Agreements are negotiated manually and documented prior to any payment or marketplace activation for the specific vendor relationship.</p>
+      <div class="highlight">
+        <strong>Resumen:</strong> Comisión 15% hasta 01/09/2025, 20% desde entonces. Sin cuota fija. Pagos automáticos vía Stripe Connect. Tú alojas tu software, nosotros gestionamos el pago y la distribución del acceso.
+      </div>
 
-      <h2>Sponsor agreements</h2>
-      <p>Sponsor agreements cover placement, creative assets, and campaign duration. Proposals and pricing are provided after an initial manual review and mutual sign-off.</p>
+      <h2>1. Comisiones</h2>
+      <p>neuralgpt.store aplica las siguientes comisiones sobre el precio de venta neto (sin IVA):</p>
+      <ul>
+        <li><strong>Periodo de lanzamiento:</strong> 15% — aplica desde el inicio hasta el 1 de septiembre de 2025</li>
+        <li><strong>Tarifa estándar:</strong> 20% — aplica a partir del 1 de septiembre de 2025</li>
+      </ul>
+      <p>No existen cuotas mensuales fijas ni costes de registro. Solo pagas comisión cuando realizas una venta.</p>
 
-      <h2>Manual deal approval and pre-payment validation</h2>
-      <p>All commercial deals are reviewed by our partnerships team. Pre-payment validation includes identity checks and agreement on terms. Payments are only activated after both parties agree and the commercial approval process is complete.</p>
+      <h2>2. Proceso de pagos — Stripe Connect</h2>
+      <p>Todos los pagos en neuralgpt.store son procesados automáticamente por Stripe. El flujo es:</p>
+      <ul>
+        <li>El comprador paga a través de Stripe Checkout en la ficha del producto</li>
+        <li>Stripe confirma el pago en tiempo real</li>
+        <li>neuralgpt.store descuenta la comisión correspondiente</li>
+        <li>El comprador recibe automáticamente acceso a la URL de descarga del vendedor</li>
+        <li>El importe neto (precio - comisión) se acumula en tu cuenta Stripe Connect</li>
+        <li>Stripe transfiere el importe acumulado a tu cuenta bancaria mensualmente</li>
+      </ul>
+      <p>Mínimo de payout: 10€. El ciclo de pago es mensual.</p>
 
-      <h2>Payments activation</h2>
-      <p>Payments are activated after commercial approval. Until then, any financial arrangements are handled offline and confirmed manually. Once payments go live, we'll provide concise guidance for vendors and sponsors on the onboarding steps.</p>
-      <p class="muted">Los pagos serán procesados por proveedores externos (Stripe, Google Pay, PayPal) una vez activados.</p>
-    </section>
+      <h2>3. Modelo de hosting — el vendedor aloja su software</h2>
+      <p>neuralgpt.store no almacena el software en sus servidores. El modelo funciona así:</p>
+      <ul>
+        <li>El vendedor aloja su software en su propia infraestructura: servidor propio, GitHub Releases, Cloudflare R2, Google Drive, Dropbox Business u otro servicio con URL pública estable</li>
+        <li>El vendedor proporciona a neuralgpt.store una URL de descarga directa y verificada al registrarse</li>
+        <li>neuralgpt.store valida la URL, verifica el software (anti-malware) y aprueba la ficha</li>
+        <li>Tras cada pago confirmado por Stripe, neuralgpt.store redirige automáticamente al comprador a la URL de descarga</li>
+        <li>El vendedor es responsable de mantener la URL activa y el software actualizado</li>
+      </ul>
+
+      <h2>4. Verificación del software</h2>
+      <p>Antes de publicar cualquier producto, neuralgpt.store realiza:</p>
+      <ul>
+        <li>Análisis anti-malware del archivo descargable (VirusTotal + análisis interno)</li>
+        <li>Verificación de que la URL es estable, accesible y el archivo es el correcto</li>
+        <li>Revisión de que la descripción del producto es precisa y no engañosa</li>
+        <li>Comprobación de cumplimiento de las políticas del marketplace</li>
+      </ul>
+      <p>El proceso de verificación tarda 24-48h laborables. Tras la aprobación, el producto aparece en el marketplace con el badge "Software Verificado".</p>
+
+      <h2>5. Obligaciones del vendedor</h2>
+      <ul>
+        <li>Mantener la URL de descarga activa y funcional en todo momento</li>
+        <li>Actualizar el software ante bugs críticos en un plazo razonable</li>
+        <li>Describir el producto con precisión — no publicar funcionalidades que el software no tenga</li>
+        <li>Cumplir la legislación aplicable (derechos de autor, GDPR si aplica, licencias de terceros)</li>
+        <li>Proporcionar soporte técnico básico a los compradores</li>
+        <li>Notificar a neuralgpt.store de cualquier cambio en la URL de descarga con antelación</li>
+      </ul>
+
+      <h2>6. Terminación</h2>
+      <p>Cualquiera de las partes puede terminar la relación comercial con 30 días de preaviso por escrito. Las ventas realizadas antes de la terminación se abonan normalmente. neuralgpt.store puede retirar un producto del marketplace de forma inmediata si se detecta incumplimiento grave de estas políticas.</p>
+
+      <h2>7. Contacto</h2>
+      <p>Para dudas sobre términos comerciales, comisiones o el proceso de onboarding: <a href="mailto:support@neuralgpt.store">support@neuralgpt.store</a></p>
+      <p>Para partnerships estratégicos: <a href="mailto:partners@neuralgpt.store">partners@neuralgpt.store</a></p>
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap muted"> 
-      <nav><a href="/terms.html">Terms</a> • <a href="/privacy.html">Privacy</a> • <a href="/commercial-terms.html">Commercial terms</a>
-      </nav>
-      <div>© neuralgpt.store</div>
+  <div class="rgb-divider"></div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand-col"><a class="brand" href="/">neural<span>GPT</span>.store</a><p>Marketplace premium de software digital.</p></div>
+      <div class="footer-col"><h4>NEURALGPT</h4><ul><li><a href="/about.html">Sobre nosotros</a></li><li><a href="/contact.html">Contacto</a></li></ul></div>
+      <div class="footer-col"><h4>VENDEDORES</h4><ul><li><a href="/provider-register.html">Registrarse</a></li><li><a href="/pricing.html">Comisiones</a></li></ul></div>
+      <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/terms.html">Términos</a></li><li><a href="/privacy.html">Privacidad</a></li><li><a href="/legal.html">Aviso legal</a></li></ul></div>
     </div>
+    <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a></span></div>
   </footer>
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+  </script>
+  <script src="/js/agent-chat.js" defer></script>
 </body>
 </html>
