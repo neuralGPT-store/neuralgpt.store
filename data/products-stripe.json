@@ -1,0 +1,47 @@
+[
+  {
+    "id": "ghostwriter",
+    "name": "GhostWriter",
+    "description": "Asistente de redacción con IA para autores KDP y content creators. Licencia vitalicia.",
+    "price_id": "price_ghostwriter_29eur",
+    "price_eur": 29,
+    "currency": "eur",
+    "download_url": "https://downloads.neuralgpt.store/ghostwriter/v1.0",
+    "vendor_url": "https://neuralgpt.store/product.html?id=ghostwriter",
+    "verified": true,
+    "own": true,
+    "commission_rate": 0,
+    "category": "ia",
+    "platforms": ["Linux", "Windows", "Android"]
+  },
+  {
+    "id": "neuralbill",
+    "name": "NeuralBill",
+    "description": "Facturador inteligente para autónomos y freelancers. Licencia vitalicia.",
+    "price_id": "price_neuralbill_19eur",
+    "price_eur": 19,
+    "currency": "eur",
+    "download_url": "https://downloads.neuralgpt.store/neuralbill/v1.0",
+    "vendor_url": "https://neuralgpt.store/product.html?id=neuralbill",
+    "verified": true,
+    "own": true,
+    "commission_rate": 0,
+    "category": "automatizacion",
+    "platforms": ["Linux", "Windows", "Web"]
+  },
+  {
+    "id": "pokerbot",
+    "name": "PokerBot",
+    "description": "Analizador de manos de póker con IA para jugadores y equipos de seguridad. Licencia vitalicia.",
+    "price_id": "price_pokerbot_39eur",
+    "price_eur": 39,
+    "currency": "eur",
+    "download_url": "https://downloads.neuralgpt.store/pokerbot/v1.0",
+    "vendor_url": "https://neuralgpt.store/product.html?id=pokerbot",
+    "verified": true,
+    "own": true,
+    "commission_rate": 0,
+    "category": "seguridad",
+    "platforms": ["Linux", "Windows", "Android"]
+  }
+]
