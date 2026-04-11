@@ -1,7 +1,7 @@
 /**
  * neuralgpt.store — Stripe Checkout Integration
  * Modelo: vendedor aloja su propio software (URL externa verificada).
- * neuralgpt.store gestiona el pago, descuenta 15% de comisión (20% desde 01/09/2025),
+ * neuralgpt.store gestiona el pago, descuenta 20% de comisión estándar,
  * y redirige al comprador a la URL de descarga del vendedor tras pago confirmado.
  *
  * Publishable key: pk_live_51TKPzPFVnpodYhTUtPyC5tj6Z1G4KGxSUJAeUDnRboLrXC8esbM4dWw9KAlmiuGMZ7muaCTXSp9rVKrlfBK5fnUu00S71dcQCV

@@ -1,26 +1,10 @@
 {
-  "launchRate": 0.15,
-  "fullRate": 0.20,
-  "launchUntil": "2025-09-01",
+  "rate": 0.20,
+  "label": "20%",
   "currency": "EUR",
   "paymentProcessor": "Stripe",
   "minimumPayout": 10,
   "payoutCycle": "monthly",
-  "tiers": [
-    {
-      "name": "Lanzamiento",
-      "rate": 0.15,
-      "label": "15%",
-      "until": "2025-09-01",
-      "description": "Tarifa reducida para early sellers. Aplica hasta el 1 de septiembre de 2025."
-    },
-    {
-      "name": "Estándar",
-      "rate": 0.20,
-      "label": "20%",
-      "from": "2025-09-01",
-      "description": "Tarifa estándar del marketplace a partir de septiembre 2025."
-    }
-  ],
+  "description": "Tarifa estándar del marketplace. Sin cuota mensual fija — solo pagas si vendes.",
   "notes": "La comisión se aplica sobre el precio de venta neto (sin IVA). El pago al vendedor se realiza mensualmente vía Stripe Connect. Contacto: support@neuralgpt.store"
 }

@@ -33,12 +33,12 @@
     {
       "id": "commission",
       "keywords": ["comisión", "comision", "vender", "vendedor", "proveedor", "seller", "porcentaje", "15%", "20%"],
-      "response": "📊 Modelo de comisiones de neuralgpt.store:\n• Periodo de lanzamiento: 15% sobre ventas (hasta el 1 de septiembre de 2025)\n• Tarifa estándar: 20% a partir del 1 de septiembre de 2025\n\nSin cuota mensual fija — solo pagas si vendes. Pago mensual vía Stripe Connect. ¿Quieres registrarte como vendedor?"
+      "response": "📊 Modelo de comisiones de neuralgpt.store:\n• Tarifa estándar: 20% sobre cada venta confirmada\n\nSin cuota mensual fija — solo pagas si vendes. Pago mensual vía Stripe Connect. ¿Quieres registrarte como vendedor?"
     },
     {
       "id": "sell",
       "keywords": ["quiero vender", "publicar", "subir software", "mi producto", "como vender", "cómo vendo", "registro", "registrar", "alta de vendedor", "vender aquí"],
-      "response": "🚀 ¡Genial! Para vender en neuralgpt.store:\n1. Regístrate en /provider-register.html\n2. Aloja tu software en tu servidor, GitHub, R2 o cualquier URL pública\n3. Proporciona la URL de descarga verificada\n4. Nuestro equipo verifica el software (anti-malware, seguridad)\n5. Aprobamos tu ficha y gestionamos los pagos vía Stripe\n6. Tras cada pago confirmado, el comprador recibe acceso a tu URL de descarga\n\nComisión: 15% en lanzamiento, 20% estándar desde sep. 2025. ¿Tienes alguna duda?"
+      "response": "🚀 ¡Genial! Para vender en neuralgpt.store:\n1. Regístrate en /provider-register.html\n2. Aloja tu software en tu servidor, GitHub, R2 o cualquier URL pública\n3. Proporciona la URL de descarga verificada\n4. Nuestro equipo verifica el software (anti-malware, seguridad)\n5. Aprobamos tu ficha y gestionamos los pagos vía Stripe\n6. Tras cada pago confirmado, el comprador recibe acceso a tu URL de descarga\n\nComisión estándar: 20%. Sin cuota mensual fija. ¿Tienes alguna duda?"
     },
     {
       "id": "hosting_model",
