@@ -15,6 +15,15 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
+  <meta property="og:title" content="Producto — neuralgpt.store" id="og-title" />
+  <meta property="og:description" content="Software verificado con pago Stripe seguro y descarga inmediata." id="og-desc" />
+  <meta property="og:image" content="https://neuralgpt.store/assets/img/og-home.png" id="og-image" />
+  <meta property="og:type" content="product" />
+  <meta property="og:site_name" content="neuralgpt.store" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Producto — neuralgpt.store" id="twitter-title" />
+  <meta name="twitter:description" content="Software verificado con pago Stripe seguro y descarga inmediata." id="twitter-desc" />
+  <meta name="twitter:image" content="https://neuralgpt.store/assets/img/og-home.png" />
   <script type="application/ld+json" id="product-schema">{}</script>
 </head>
 <body>
@@ -350,6 +359,7 @@
     loadReviews(productId);
     renderRelated(product.relatedIds || []);
     updateSchema(product);
+    updateMeta(product);
   }
 
   // Mobile nav
@@ -509,9 +519,35 @@
       "name":p.name,
       "description":p.shortDesc,
       "applicationCategory":"BusinessApplication",
-      "offers":{"@type":"Offer","price":p.price,"priceCurrency":"EUR","availability":"https://schema.org/InStock"},
+      "operatingSystem": (p.platforms||[]).join(', '),
+      "offers":{"@type":"Offer","price":p.price,"priceCurrency":"EUR","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"neuralgpt.store"}},
       "aggregateRating":{"@type":"AggregateRating","ratingValue":p.rating,"reviewCount":p.reviews}
     });
+  }
+
+  function updateMeta(p){
+    var title = p.name + ' — ' + p.price + '€ · neuralgpt.store';
+    var desc = p.shortDesc + ' Descarga inmediata. Pago seguro Stripe.';
+    var url = 'https://neuralgpt.store/product.html?id=' + p.id;
+    // <title>
+    document.title = title;
+    // meta description
+    var metaDesc = document.getElementById('page-desc');
+    if(metaDesc) metaDesc.setAttribute('content', desc);
+    // OG
+    var ogTitle = document.getElementById('og-title');
+    if(ogTitle) ogTitle.setAttribute('content', title);
+    var ogDesc = document.getElementById('og-desc');
+    if(ogDesc) ogDesc.setAttribute('content', desc);
+    // Twitter
+    var twTitle = document.getElementById('twitter-title');
+    if(twTitle) twTitle.setAttribute('content', title);
+    var twDesc = document.getElementById('twitter-desc');
+    if(twDesc) twDesc.setAttribute('content', desc);
+    // canonical URL
+    var canon = document.querySelector('link[rel="canonical"]');
+    if(!canon){ canon = document.createElement('link'); canon.rel='canonical'; document.head.appendChild(canon); }
+    canon.href = url;
   }
 
   function handleBuy(){
