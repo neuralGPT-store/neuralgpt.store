@@ -123,7 +123,7 @@
       <button class="filter-pill" data-cat="ia" onclick="quickFilter(this,'ia')">IA</button>
       <button class="filter-pill" data-cat="seguridad" onclick="quickFilter(this,'seguridad')">Seguridad</button>
       <button class="filter-pill" data-cat="linux" onclick="quickFilter(this,'linux')">Linux</button>
-      <button class="filter-pill" data-cat="movil" onclick="quickFilter(this,'movil')">📱 Apps Móviles</button>
+      <button class="filter-pill" data-cat="gaming" onclick="quickFilter(this,'gaming')">🎮 Gaming</button>
 
       <!-- Vista toggle -->
       <div class="view-toggle" style="margin-left:auto">
@@ -257,9 +257,11 @@
   function initMarketplace(){
     // Leer URL params
     var params = new URLSearchParams(location.search);
-    var urlCat    = params.get('cat') || '';
-    var urlSearch = params.get('search') || '';
+    var urlCat      = params.get('cat') || '';
+    var urlPlatform = params.get('platform') || '';
+    var urlSearch   = params.get('search') || '';
     if(urlCat) document.getElementById('filter-cat').value = urlCat;
+    if(urlPlatform) document.getElementById('filter-platform').value = urlPlatform;
     if(urlSearch) document.getElementById('mp-search').value = urlSearch;
     applyFilters();
     bindFilters();
