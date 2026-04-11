@@ -86,7 +86,7 @@
           </div>
         </div>
 
-        <div style="padding:16px 20px;background:rgba(0,234,255,0.04);border:1.5px solid rgba(0,234,255,0.15);border-radius:10px">
+        <div style="padding:16px 20px;background:rgba(0,234,255,0.04);border:1.5px solid rgba(0,234,255,0.15);border-radius:10px;margin-bottom:20px">
           <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px">REQUISITOS DE LA URL DE DESCARGA</div>
           <ul style="display:flex;flex-direction:column;gap:6px">
             <li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px"><span style="color:var(--accent4)">✓</span> URL pública, accesible sin autenticación adicional</li>
@@ -95,6 +95,48 @@
             <li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px"><span style="color:var(--accent4)">✓</span> HTTPS obligatorio</li>
             <li style="font-size:0.82rem;color:var(--muted);display:flex;gap:8px"><span style="color:var(--accent3)">✗</span> No se permiten URLs de servicios que expiren (WeTransfer, etc.)</li>
           </ul>
+        </div>
+
+        <!-- Entrega segura al comprador -->
+        <div style="padding:20px 24px;background:rgba(0,255,153,0.04);border:1.5px solid rgba(0,255,153,0.2);border-radius:var(--radius)">
+          <div style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;color:var(--accent4);margin-bottom:14px">🔐 FLUJO DE ENTREGA SEGURA AL COMPRADOR</div>
+          <div class="dev-steps" style="margin:0">
+            <div class="dev-step">
+              <div class="dev-step-num">1</div>
+              <div>
+                <div class="dev-step-title">Comprador realiza el pago</div>
+                <p class="dev-step-desc">El comprador paga en la ficha del producto mediante Stripe Checkout (tarjeta, Apple Pay, Google Pay). neuralgpt.store nunca ve ni almacena datos bancarios.</p>
+              </div>
+            </div>
+            <div class="dev-step">
+              <div class="dev-step-num">2</div>
+              <div>
+                <div class="dev-step-title">Stripe confirma el pago en tiempo real</div>
+                <p class="dev-step-desc">Stripe envía el webhook de confirmación de pago a neuralgpt.store. El proceso es instantáneo — menos de 2 segundos desde el clic.</p>
+              </div>
+            </div>
+            <div class="dev-step">
+              <div class="dev-step-num">3</div>
+              <div>
+                <div class="dev-step-title">Redirección automática a tu URL de descarga</div>
+                <p class="dev-step-desc">neuralgpt.store redirige al comprador directamente a la URL de descarga que proporcionaste al registrar tu producto. El acceso es inmediato.</p>
+              </div>
+            </div>
+            <div class="dev-step">
+              <div class="dev-step-num">4</div>
+              <div>
+                <div class="dev-step-title">Email de confirmación con enlace de descarga</div>
+                <p class="dev-step-desc">Stripe envía automáticamente un email de confirmación al comprador con el enlace de descarga y el número de pedido. Válido para recuperar la descarga si hay problemas.</p>
+              </div>
+            </div>
+            <div class="dev-step">
+              <div class="dev-step-num">5</div>
+              <div>
+                <div class="dev-step-title">Pago neto a tu cuenta — mensualmente</div>
+                <p class="dev-step-desc">Stripe descuenta la comisión del 20% automáticamente y acumula el importe neto en tu cuenta Stripe Connect. Transferencia mensual a tu cuenta bancaria (mínimo 10€).</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
