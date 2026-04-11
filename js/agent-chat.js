@@ -1,12 +1,64 @@
 /**
  * Chany — Agente IA flotante para neuralgpt.store
  * Sin API externa. Lee /data/agent-kb.json y usa keyword matching.
+ * Detecta idioma desde window.NeuralI18n (i18n-global.js).
  */
 (function () {
   'use strict';
 
   const KB_URL = '/data/agent-kb.json';
   let kb = null;
+
+  // ── Detección de idioma ─────────────────────────────────────────────
+  function getLang() {
+    try {
+      if (window.NeuralI18n && typeof window.NeuralI18n.detectLang === 'function') {
+        return window.NeuralI18n.detectLang();
+      }
+    } catch (e) { /* ignore */ }
+    const stored = localStorage.getItem('neural_lang');
+    if (stored) return stored;
+    const nav = (navigator.language || '').toLowerCase().split('-')[0];
+    return nav || 'es';
+  }
+
+  // ── Textos localizados mínimos ──────────────────────────────────────
+  const L10N = {
+    es: {
+      placeholder: 'Escribe tu pregunta…',
+      sub: 'Asistente de neuralgpt.store',
+      greeting_prefix: null, // usa KB greeting
+      fallback: 'No encontré una respuesta exacta. Escríbenos a support@neuralgpt.store',
+      suggestions: ['¿Qué productos tenéis?', '¿Cómo compro?', 'Quiero vender', '¿Cuánto cuesta?'],
+    },
+    en: {
+      placeholder: 'Type your question…',
+      sub: 'neuralgpt.store assistant',
+      greeting_prefix: '👋 Hi! I\'m Chany, neuralgpt.store\'s AI assistant. Our platform is in Spanish, but I\'ll help you in English!\n\n🛒 Products: GhostWriter €29 · NeuralBill €19 · PokerBot €39 (lifetime license)\n💼 Sell your software: 20% commission, no monthly fee\n\nHow can I help you?',
+      fallback: 'I couldn\'t find an exact answer. Email us at support@neuralgpt.store',
+      suggestions: ['Our products', 'How to buy', 'Sell my software', 'Pricing'],
+    },
+    fr: {
+      placeholder: 'Tapez votre question…',
+      sub: 'Assistant neuralgpt.store',
+      greeting_prefix: '👋 Bonjour! Je suis Chany, l\'assistant IA de neuralgpt.store. Notre plateforme est en espagnol, mais je vais vous aider en français!\n\n🛒 Produits: GhostWriter 29€ · NeuralBill 19€ · PokerBot 39€ (licence à vie)\n💼 Vendre votre logiciel: commission 20%, sans abonnement mensuel\n\nComment puis-je vous aider?',
+      fallback: 'Pas de réponse exacte. Écrivez-nous à support@neuralgpt.store',
+      suggestions: ['Nos produits', 'Comment acheter', 'Vendre mon logiciel', 'Tarifs'],
+    },
+    de: {
+      placeholder: 'Ihre Frage eingeben…',
+      sub: 'neuralgpt.store Assistent',
+      greeting_prefix: '👋 Hallo! Ich bin Chany, der KI-Assistent von neuralgpt.store. Unsere Plattform ist auf Spanisch, aber ich helfe Ihnen auf Deutsch!\n\n🛒 Produkte: GhostWriter 29€ · NeuralBill 19€ · PokerBot 39€ (lebenslange Lizenz)\n💼 Software verkaufen: 20% Provision, keine monatliche Gebühr\n\nWie kann ich helfen?',
+      fallback: 'Keine genaue Antwort gefunden. Schreiben Sie an support@neuralgpt.store',
+      suggestions: ['Unsere Produkte', 'Wie kaufen', 'Software verkaufen', 'Preise'],
+    },
+  };
+
+  function t(key) {
+    const lang = getLang();
+    const map = L10N[lang] || L10N['es'];
+    return map[key] !== undefined ? map[key] : (L10N['es'][key] || '');
+  }
 
   // ── Insertar widget HTML ────────────────────────────────────────────
   function injectWidget() {
@@ -64,7 +116,7 @@
       <div class="chat-header-avatar">${ghostSVG(36)}</div>
       <div class="chat-header-info">
         <div class="chat-header-title">CHANY</div>
-        <div class="chat-header-sub">Asistente de neuralgpt.store</div>
+        <div class="chat-header-sub" id="chat-header-sub">Asistente de neuralgpt.store</div>
       </div>
       <button class="chat-close" id="chat-close-btn" aria-label="Cerrar chat" title="Cerrar">✕</button>
     </div>
@@ -81,6 +133,12 @@
     el.innerHTML = html;
     document.body.appendChild(el.firstElementChild);
 
+    // Adapt placeholder and sub-title to detected lang
+    const input = document.getElementById('chat-input');
+    if (input) input.placeholder = t('placeholder');
+    const sub = document.getElementById('chat-header-sub');
+    if (sub) sub.textContent = t('sub');
+
     bindEvents();
     loadKB();
   }
@@ -91,14 +149,15 @@
       .then(r => r.json())
       .then(data => {
         kb = data;
-        addBotMsg(data.greeting);
-        renderSuggestions(['¿Qué productos tenéis?', '¿Cómo compro?', 'Quiero vender', '¿Cuánto cuesta?']);
+        // Greeting: use lang-specific override for non-ES, else use KB greeting
+        const langGreeting = t('greeting_prefix');
+        addBotMsg(langGreeting !== null ? langGreeting : data.greeting);
+        renderSuggestions(t('suggestions'));
       })
       .catch(() => {
-        // Fallback inline si fetch falla
-        kb = { fallback: 'Escríbenos a support@neuralgpt.store', intents: [] };
-        addBotMsg('¡Hola! Soy Chany. ¿En qué puedo ayudarte?');
-        renderSuggestions(['Productos', 'Precios', 'Vender']);
+        kb = { fallback: t('fallback'), intents: [] };
+        addBotMsg(t('greeting_prefix') || '¡Hola! Soy Chany. ¿En qué puedo ayudarte?');
+        renderSuggestions(t('suggestions'));
       });
   }
 
@@ -160,7 +219,7 @@
       if (score > bestScore) { bestScore = score; bestMatch = intent; }
     }
 
-    const reply = bestMatch ? bestMatch.response : kb.fallback;
+    const reply = bestMatch ? bestMatch.response : (t('fallback') || kb.fallback);
     addBotMsg(reply);
 
     // Sugerencias contextuales post-respuesta
@@ -170,22 +229,34 @@
 
   function getSuggestions(intentId) {
     const map = {
-      'greeting':     ['Ver productos', '¿Cómo funciona Stripe?', 'Quiero vender'],
-      'ghostwriter':  ['Ver GhostWriter', 'Precio de GhostWriter', 'Otras herramientas IA'],
-      'neuralbill':   ['Probar NeuralBill', 'Integración Stripe', 'Precio NeuralBill'],
-      'pokerbot':     ['Ver PokerBot', '¿Es legal?', 'Otros bots'],
-      'prices':       ['Ver marketplace', 'Plan mensual', 'Comparar planes'],
-      'commission':   ['Registrarme como vendedor', '¿Cómo funciona el pago?', 'Contactar'],
-      'sell':         ['Ir a registro de vendedor', '¿Qué software puedo vender?', 'Comisiones'],
-      'security':     ['Ver política de seguridad', 'Badge verificado', 'Preguntar por un producto'],
-      'payment':      ['Ver marketplace', 'Preguntas sobre descarga', 'Política de devoluciones'],
-      'platforms':    ['Software para Linux', 'Software para Windows', 'Software Android'],
-      'download':     ['Ir al marketplace', 'Política de devoluciones', 'Soporte'],
-      'contact':      ['Enviar email', 'Ver marketplace', 'Registrarme como vendedor'],
-      'categories':   ['Automatización', 'Seguridad', 'Inteligencia Artificial'],
-      'refund':       ['Ver términos', 'Contactar soporte', 'Ver marketplace'],
+      'greeting':              ['Ver productos', '¿Cómo compro?', 'Quiero vender'],
+      'ghostwriter':           ['Comprar GhostWriter', 'Ver NeuralBill', 'Ver PokerBot'],
+      'neuralbill':            ['Comprar NeuralBill', 'Ver GhostWriter', '¿Hay más productos?'],
+      'pokerbot':              ['Comprar PokerBot', '¿Es legal usar PokerBot?', 'Ver GhostWriter'],
+      'prices':                ['Ver marketplace', '¿Cómo pago?', 'Quiero vender'],
+      'commission':            ['Registrarme como vendedor', '¿Cómo funciona el pago?', 'Ver comisiones'],
+      'sell':                  ['Ir a registro de vendedor', '¿Qué software puedo vender?', 'Categorías legales'],
+      'sell_my_app':           ['Ir a registro de vendedor', 'Proceso de verificación', 'Categorías legales'],
+      'hosting_model':         ['Registro de vendedor', 'Proceso de verificación', 'Comisiones'],
+      'security':              ['Ver política de seguridad', 'Badge verificado', 'Es seguro comprar'],
+      'safe_to_buy':           ['Ver marketplace', '¿Cómo compro?', 'Proceso de verificación'],
+      'payment':               ['Ver marketplace', '¿Cómo descargo?', 'Política de devoluciones'],
+      'download_after_payment':['Ir al marketplace', 'Política de devoluciones', 'Soporte'],
+      'secure_delivery':       ['Ver marketplace', '¿Cómo pago?', 'Soporte'],
+      'platforms':             ['Software para Linux', 'Software para Windows', 'Software Android'],
+      'contact':               ['Ver marketplace', 'Registrarme como vendedor', 'Política de seguridad'],
+      'about':                 ['Ver marketplace', 'Quiero vender', '¿Qué productos hay?'],
+      'what_is_neuralgpt':     ['Ver marketplace', 'Quiero vender', 'Precios y comisiones'],
+      'categories':            ['IA y automatización', 'Seguridad y pentesting', 'Ver marketplace'],
+      'all_products':          ['Comprar GhostWriter', 'Comprar NeuralBill', 'Ver marketplace'],
+      'refund':                ['Ver términos', 'Contactar soporte', 'Ver marketplace'],
+      'technical_support':     ['Contactar soporte', 'Política de devoluciones', 'Ver marketplace'],
+      'verification':          ['Badge verificado', '¿Es seguro comprar?', 'Quiero vender'],
+      'verification_process':  ['Registrarme como vendedor', 'Categorías legales', 'Soporte'],
+      'verification_failure':  ['Contactar soporte', 'Ver guía de verificación', 'Registro vendedor'],
+      'legal_categories':      ['Registrarme como vendedor', 'Proceso de verificación', 'Comisiones'],
     };
-    return (map[intentId] || ['Ir al marketplace', '¿Tienes más preguntas?', 'Contactar']).slice(0, 3);
+    return (map[intentId] || ['Ir al marketplace', 'Ver precios', 'Contactar']).slice(0, 3);
   }
 
   // ── DOM helpers ──────────────────────────────────────────────────────

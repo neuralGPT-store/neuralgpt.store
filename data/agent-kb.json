@@ -124,6 +124,21 @@
       "id": "verification_failure",
       "keywords": ["falla verificación", "rechazado", "no aprobado", "qué pasa si falla", "resultado negativo", "malware detectado"],
       "response": "❌ Si el software falla la verificación:\n\n1. Recibirás un email a support@neuralgpt.store con el detalle específico del problema detectado\n2. Tienes 14 días para corregir el problema y reenviar el archivo\n3. Si en el nuevo análisis el software no supera la verificación, el registro queda suspendido temporalmente\n4. En caso de malware confirmado o comportamiento malicioso deliberado, la cuenta es inhabilitada permanentemente\n\nLas causas más frecuentes de fallo: dependencias con comportamiento sospechoso, scripts de instalación que modifican el sistema sin consentimiento, o URL de descarga inestable.\n\nPara dudas: support@neuralgpt.store"
+    },
+    {
+      "id": "legal_categories",
+      "keywords": ["categoría legal", "categoria legal", "licencia", "titular", "open source", "saas", "distribuidor", "categoría a", "categoría b", "categoría c", "categoría d", "categoría e", "licencia perpetua", "lpi", "copyright", "derechos de autor"],
+      "response": "⚖️ Categorías jurídicas de proveedores en neuralgpt.store:\n\n• Categoría A — Titular originario (LPI art. 5): desarrollador que creó el software original\n• Categoría B — Distribuidor autorizado: tiene acuerdo escrito con el titular para revender\n• Categoría C — Open Source redistribuible: licencia MIT, Apache 2.0 o BSD que permite redistribución comercial\n• Categoría D — Licencias perpetuas UE (UsedSoft TJUE C-128/11): venta de licencias perpetuas de segunda mano bajo jurisprudencia europea (excepcional)\n• Categoría E — SaaS autorizado (Directiva UE 2019/770): servicio digital con acceso a contenido bajo contrato\n\nCada categoría requiere documentación específica. Ver guía completa en /vendor-onboarding.html#marco-legal-proveedores"
+    },
+    {
+      "id": "all_products",
+      "keywords": ["qué productos hay", "todos los productos", "ver productos", "catálogo", "catalogo", "lista de productos", "qué vendéis", "qué software", "que software hay"],
+      "response": "📦 Productos disponibles en neuralgpt.store:\n\nProductos propios (neuralgpt.store):\n• 📝 GhostWriter — Redacción IA KDP y copywriting — 29€ pago único\n• 💳 NeuralBill — Facturación autónomos/freelancers — 19€ pago único\n• 🃏 PokerBot — Análisis de manos de póker GTO — 39€ pago único\n\nProductos de terceros (verificados):\n• ⚡ ClawBot Automation Suite — Automatización Linux — 29€\n• 🤖 NeuralAgent Framework — Agentes IA personalizados — 49€\n• 🛡️ BlackArch Security Toolkit — Pentesting Linux — 39€\n• 🌐 DataScraper Pro — Scraping web avanzado — 19€\n• 📊 AnalyticsAI Dashboard — Dashboards con IA — 59€\n• 🐧 Linux Hardener — Hardening automático — 15€\n\nVer el catálogo completo en /marketplace.html"
+    },
+    {
+      "id": "secure_delivery",
+      "keywords": ["entrega segura", "cómo llega mi compra", "como llega", "donde descargo", "acceso inmediato", "cuándo recibo", "cuando recibo", "proceso de compra"],
+      "response": "🔐 Proceso de entrega segura en neuralgpt.store:\n\n1. Pagas con Stripe Checkout en la ficha del producto\n2. Stripe confirma el pago al instante (sin almacenar tus datos bancarios)\n3. neuralgpt.store redirige automáticamente a la URL de descarga del vendedor\n4. Recibes el enlace de descarga en el email de confirmación de Stripe\n5. Si no recibes el acceso en 5 minutos → support@neuralgpt.store con tu número de pedido\n\n🛡️ El vendedor aloja su software en su propia infraestructura. neuralgpt.store verifica el hash SHA-256 del archivo antes de publicarlo y gestiona los pagos de forma segura vía Stripe (PCI-DSS nivel 1)."
     }
   ]
 }
