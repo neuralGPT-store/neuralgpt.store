@@ -796,87 +796,8 @@
     e.target.reset();
   }
 
-  // ── i18n básico ─────────────────────────────────────────────────
-  var translations = {
-    en: {
-      hero_badge:'ACTIVE MARKETPLACE · VERIFIED SOFTWARE + AI',
-      hero_title:'The future of<br>software is here',
-      hero_subtitle:'Discover, buy and download professional software built with artificial intelligence. Verified and secure.',
-      btn_explore:'Explore',btn_sell:'Sell',btn_search:'SEARCH',
-      btn_marketplace:'View Marketplace',btn_about:'What is neuralgpt?',
-      stat_products:'PRODUCTS',stat_devs:'DEVELOPERS',stat_downloads:'DOWNLOADS',
-      stat_verified:'VERIFIED SOFTWARE',stat_rating:'AVG RATING',
-      own_products_title:'Our Products',own_products_sub:'Premium software by the neuralgpt team. Verified, supported and with included updates.',
-      cat_title:'Explore the Marketplace',cat_sub:'Third-party professional software organized by category. All products verified and secure.',
-      why_title:'Why neuralgpt.store?',why_sub:'A platform built for developers, by developers. Secure, fast and transparent.',
-      dev_title:'Sell your software<br>on neuralgpt.store',dev_sub:'Publish your tools and reach thousands of technical buyers.',
-      testimonials_title:'What our users say',testimonials_sub:'Over 120 developers and companies trust neuralgpt.store',
-      cta_title:'Ready to start?',cta_sub:'Explore the marketplace or join as a provider.',
-      btn_explore_mp:'Explore marketplace',btn_register_seller:'Register as seller',
-      footer_tagline:'Premium software marketplace built with AI. Verified, secure and Stripe payments.',
-      footer_copy:'© 2025–2026 neuralgpt.store · All rights reserved',
-      nav_home:'Home',nav_marketplace:'Marketplace',nav_providers:'Providers',
-      nav_pricing:'Pricing',nav_blog:'Blog',nav_contact:'Contact',
-    },
-    ar: {
-      hero_title:'مستقبل البرمجيات<br>هنا الآن',
-      hero_subtitle:'اكتشف وأشترِ برامج احترافية مبنية بالذكاء الاصطناعي. موثقة وآمنة.',
-    },
-    ja: {
-      hero_title:'ソフトウェアの<br>未来はここに',
-      hero_subtitle:'AIで構築されたプロフェッショナルソフトウェアを発見、購入、ダウンロードできます。',
-    },
-    zh: {
-      hero_title:'软件的未来<br>就在这里',
-      hero_subtitle:'发现、购买和下载由人工智能构建的专业软件。已验证，安全可靠。',
-    },
-    ru: {
-      hero_title:'Будущее<br>программного обеспечения здесь',
-      hero_subtitle:'Открывайте, покупайте и скачивайте профессиональное ПО, созданное с ИИ. Проверено и безопасно.',
-    },
-    fr: {
-      hero_title:'Le futur du<br>logiciel est là',
-      hero_subtitle:'Découvrez, achetez et téléchargez des logiciels professionnels créés avec IA. Vérifiés et sécurisés.',
-      btn_explore:'Explorer',btn_sell:'Vendre',btn_search:'CHERCHER',
-    },
-    de: {
-      hero_title:'Die Zukunft der<br>Software ist hier',
-      hero_subtitle:'Entdecken, kaufen und laden Sie professionelle KI-Software herunter. Geprüft und sicher.',
-      btn_explore:'Erkunden',btn_sell:'Verkaufen',btn_search:'SUCHEN',
-    }
-  };
-
-  function applyI18n(lang){
-    var t = translations[lang];
-    if(!t) return;
-    document.querySelectorAll('[data-i18n]').forEach(function(el){
-      var key = el.getAttribute('data-i18n');
-      if(t[key]) el.innerHTML = t[key];
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
-      var key = el.getAttribute('data-i18n-placeholder');
-      if(t[key]) el.placeholder = t[key];
-    });
-  }
-
-  // Detect browser language
-  var browserLang = (navigator.language||'es').substring(0,2);
-  if(browserLang !== 'es') applyI18n(browserLang);
-
-  // Lang toggle button
-  var langBtn = document.getElementById('lang-btn');
-  var langs = ['es','en','fr','de','ru','zh','ja','ar'];
-  var langIdx = 0;
-  if(langBtn){
-    langBtn.addEventListener('click', function(){
-      langIdx = (langIdx+1)%langs.length;
-      var l = langs[langIdx];
-      document.documentElement.setAttribute('lang', l);
-      applyI18n(l);
-      langBtn.title = 'Idioma: '+l.toUpperCase();
-    });
-  }
   </script>
+  <script src="/js/i18n-global.js" defer></script>
   <script src="/js/agent-chat.js" defer></script>
 </body>
 </html>
