@@ -1,14 +1,92 @@
-<!doctype html>
-<html lang='es'>
-<head><meta charset='utf-8'><title>404</title>
-<link rel='stylesheet' href='/css/main.css'></head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>404 — Página no encontrada · neuralgpt.store</title>
+  <meta name="robots" content="noindex,follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
+</head>
 <body>
-<section class='active' style='min-height:100vh;display:flex;align-items:center;justify-content:center'>
-  <div>
-    <h1>404</h1>
-    <p>Página no encontrada</p>
-    <a href='/'>Volver al inicio</a>
-  </div>
-</section>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/marketplace.html">Marketplace</a></li>
+        <li><a href="/providers.html">Proveedores</a></li>
+        <li><a href="/pricing.html">Precios</a></li>
+        <li><a href="/contact.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="/marketplace.html" class="btn">Explorar</a>
+      <a href="/provider-register.html" class="btn btn-primary">Vender</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="rgb-divider"></div>
+
+  <main id="main-content" style="min-height:calc(100vh - 140px);display:flex;align-items:center;justify-content:center;padding:48px 24px">
+    <div style="text-align:center;max-width:560px">
+      <!-- Número 404 animado -->
+      <div style="font-family:var(--font-title);font-size:clamp(5rem,20vw,9rem);font-weight:900;line-height:1;background:var(--rgb-diag);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;letter-spacing:-4px">404</div>
+
+      <h1 style="font-family:var(--font-title);font-size:clamp(1.1rem,3vw,1.5rem);font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:1px">PÁGINA NO ENCONTRADA</h1>
+      <p style="color:var(--muted);font-size:0.92rem;line-height:1.7;margin-bottom:36px">La URL que buscas no existe o ha sido movida. Es posible que la página haya cambiado de dirección.</p>
+
+      <!-- Acciones principales -->
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px">
+        <a href="/" class="btn btn-primary btn-lg">← Volver al inicio</a>
+        <a href="/marketplace.html" class="btn btn-lg">Ver marketplace</a>
+      </div>
+
+      <!-- Links útiles -->
+      <div style="padding:20px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius)">
+        <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:2px;color:var(--muted);margin-bottom:14px">PÁGINAS ÚTILES</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          <a href="/marketplace.html" style="color:var(--accent);font-size:0.82rem;padding:6px 12px;border:1px solid rgba(0,234,255,0.2);border-radius:8px">Marketplace</a>
+          <a href="/product.html?id=ghostwriter" style="color:var(--accent);font-size:0.82rem;padding:6px 12px;border:1px solid rgba(0,234,255,0.2);border-radius:8px">GhostWriter</a>
+          <a href="/product.html?id=neuralbill" style="color:var(--accent);font-size:0.82rem;padding:6px 12px;border:1px solid rgba(0,234,255,0.2);border-radius:8px">NeuralBill</a>
+          <a href="/product.html?id=pokerbot" style="color:var(--accent);font-size:0.82rem;padding:6px 12px;border:1px solid rgba(0,234,255,0.2);border-radius:8px">PokerBot</a>
+          <a href="/pricing.html" style="color:var(--muted);font-size:0.82rem;padding:6px 12px;border:1px solid var(--border);border-radius:8px">Precios</a>
+          <a href="/provider-register.html" style="color:var(--muted);font-size:0.82rem;padding:6px 12px;border:1px solid var(--border);border-radius:8px">Vender</a>
+          <a href="/contact.html" style="color:var(--muted);font-size:0.82rem;padding:6px 12px;border:1px solid var(--border);border-radius:8px">Contacto</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="rgb-divider"></div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a class="brand" href="/">neural<span>GPT</span>.store</a>
+        <p>Marketplace premium de software creado con IA. Verificado, seguro y con pago Stripe.</p>
+      </div>
+      <div class="footer-col"><h4>NEURALGPT</h4><ul><li><a href="/about.html">Sobre nosotros</a></li><li><a href="/contact.html">Contacto</a></li></ul></div>
+      <div class="footer-col"><h4>MARKETPLACE</h4><ul><li><a href="/marketplace.html">Productos</a></li><li><a href="/pricing.html">Precios</a></li></ul></div>
+      <div class="footer-col"><h4>VENDEDORES</h4><ul><li><a href="/provider-register.html">Registrarse</a></li><li><a href="/providers.html">Directorio</a></li></ul></div>
+      <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025–2026 neuralgpt.store</span>
+      <span><a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a></span>
+    </div>
+  </footer>
+
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+  </script>
   <script src="/js/i18n-global.js" defer></script>
-</body></html>
+  <script src="/js/agent-chat.js" defer></script>
+</body>
+</html>
