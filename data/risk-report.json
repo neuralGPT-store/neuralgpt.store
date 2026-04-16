@@ -1,0 +1,256 @@
+{
+  "generated_at": "2026-04-16T18:09:03.913Z",
+  "engine_version": "v1.0.0",
+  "moderation_workflow_version": "v1.0.0",
+  "source_files": {
+    "listings": "/data/listings.json",
+    "fraud_rules": "/data/fraud-rules.json",
+    "moderation_rules": "/data/moderation-rules.json",
+    "risk_engine": "/js/real-estate-risk-engine.js"
+  },
+  "totals": {
+    "listings": 7,
+    "outcomes": {
+      "allow": 7,
+      "allow_with_monitoring": 0,
+      "pending_review": 0,
+      "quarantine": 0,
+      "suspend_candidate": 0
+    }
+  },
+  "items": [
+    {
+      "listing_id": "re-sale-madrid-salamanca-001",
+      "slug": "piso-senorial-reformado-barrio-salamanca-madrid",
+      "duplicate_score": 2,
+      "fraud_score": 0,
+      "total_score": 2,
+      "outcome": "allow",
+      "duplicate_signals": {
+        "own_flags": [
+          "missing_contact_identity"
+        ],
+        "peer_signal_codes": [],
+        "strong_match_count": 0,
+        "top_peer_id": null,
+        "top_peer_score": 0
+      },
+      "fraud_signals": [],
+      "summary": "band=low outcome=allow dup=2 fraud=0 Sin peer dominante.",
+      "generated_at": "2026-04-16T18:09:03.913Z",
+      "engine_version": "v1.0.0",
+      "review_priority": null,
+      "moderation_snapshot": {
+        "risk_band": "low",
+        "duplicate_strong_count": 0,
+        "critical_signal_count": 0,
+        "summary_ref": {
+          "listing_id": "re-sale-madrid-salamanca-001",
+          "outcome": "allow",
+          "top_peer_id": null
+        }
+      }
+    },
+    {
+      "listing_id": "re-rent-lisbon-estrela-002",
+      "slug": "apartamento-ejecutivo-larga-duracion-estrela-lisboa",
+      "duplicate_score": 2,
+      "fraud_score": 7,
+      "total_score": 9,
+      "outcome": "allow",
+      "duplicate_signals": {
+        "own_flags": [
+          "missing_contact_identity"
+        ],
+        "peer_signal_codes": [],
+        "strong_match_count": 0,
+        "top_peer_id": null,
+        "top_peer_score": 0
+      },
+      "fraud_signals": [
+        "price_per_m2_outlier"
+      ],
+      "summary": "band=low outcome=allow dup=2 fraud=7 Sin peer dominante.",
+      "generated_at": "2026-04-16T18:09:03.913Z",
+      "engine_version": "v1.0.0",
+      "review_priority": null,
+      "moderation_snapshot": {
+        "risk_band": "low",
+        "duplicate_strong_count": 0,
+        "critical_signal_count": 0,
+        "summary_ref": {
+          "listing_id": "re-rent-lisbon-estrela-002",
+          "outcome": "allow",
+          "top_peer_id": null
+        }
+      }
+    },
+    {
+      "listing_id": "re-room-berlin-charlottenburg-003",
+      "slug": "suite-amueblada-larga-estancia-charlottenburg-berlin",
+      "duplicate_score": 2,
+      "fraud_score": 7,
+      "total_score": 9,
+      "outcome": "allow",
+      "duplicate_signals": {
+        "own_flags": [
+          "missing_contact_identity"
+        ],
+        "peer_signal_codes": [],
+        "strong_match_count": 0,
+        "top_peer_id": null,
+        "top_peer_score": 0
+      },
+      "fraud_signals": [
+        "price_per_m2_outlier"
+      ],
+      "summary": "band=low outcome=allow dup=2 fraud=7 Sin peer dominante.",
+      "generated_at": "2026-04-16T18:09:03.913Z",
+      "engine_version": "v1.0.0",
+      "review_priority": null,
+      "moderation_snapshot": {
+        "risk_band": "low",
+        "duplicate_strong_count": 0,
+        "critical_signal_count": 0,
+        "summary_ref": {
+          "listing_id": "re-room-berlin-charlottenburg-003",
+          "outcome": "allow",
+          "top_peer_id": null
+        }
+      }
+    },
+    {
+      "listing_id": "re-commercial-milan-brera-004",
+      "slug": "local-prime-esquina-brera-milan",
+      "duplicate_score": 2,
+      "fraud_score": 0,
+      "total_score": 2,
+      "outcome": "allow",
+      "duplicate_signals": {
+        "own_flags": [
+          "missing_contact_identity"
+        ],
+        "peer_signal_codes": [],
+        "strong_match_count": 0,
+        "top_peer_id": null,
+        "top_peer_score": 0
+      },
+      "fraud_signals": [],
+      "summary": "band=low outcome=allow dup=2 fraud=0 Sin peer dominante.",
+      "generated_at": "2026-04-16T18:09:03.913Z",
+      "engine_version": "v1.0.0",
+      "review_priority": null,
+      "moderation_snapshot": {
+        "risk_band": "low",
+        "duplicate_strong_count": 0,
+        "critical_signal_count": 0,
+        "summary_ref": {
+          "listing_id": "re-commercial-milan-brera-004",
+          "outcome": "allow",
+          "top_peer_id": null
+        }
+      }
+    },
+    {
+      "listing_id": "re-industrial-rotterdam-port-005",
+      "slug": "nave-logistica-ultima-milla-rotterdam-port",
+      "duplicate_score": 2,
+      "fraud_score": 7,
+      "total_score": 9,
+      "outcome": "allow",
+      "duplicate_signals": {
+        "own_flags": [
+          "missing_contact_identity"
+        ],
+        "peer_signal_codes": [],
+        "strong_match_count": 0,
+        "top_peer_id": null,
+        "top_peer_score": 0
+      },
+      "fraud_signals": [
+        "price_per_m2_outlier"
+      ],
+      "summary": "band=low outcome=allow dup=2 fraud=7 Sin peer dominante.",
+      "generated_at": "2026-04-16T18:09:03.913Z",
+      "engine_version": "v1.0.0",
+      "review_priority": null,
+      "moderation_snapshot": {
+        "risk_band": "low",
+        "duplicate_strong_count": 0,
+        "critical_signal_count": 0,
+        "summary_ref": {
+          "listing_id": "re-industrial-rotterdam-port-005",
+          "outcome": "allow",
+          "top_peer_id": null
+        }
+      }
+    },
+    {
+      "listing_id": "re-land-valencia-technological-006",
+      "slug": "suelo-finalista-uso-terciario-corredor-tecnologico-valencia",
+      "duplicate_score": 2,
+      "fraud_score": 13,
+      "total_score": 15,
+      "outcome": "allow",
+      "duplicate_signals": {
+        "own_flags": [
+          "missing_contact_identity"
+        ],
+        "peer_signal_codes": [],
+        "strong_match_count": 0,
+        "top_peer_id": null,
+        "top_peer_score": 0
+      },
+      "fraud_signals": [
+        "identity_unverified",
+        "price_per_m2_outlier"
+      ],
+      "summary": "band=low outcome=allow dup=2 fraud=13 Sin peer dominante.",
+      "generated_at": "2026-04-16T18:09:03.913Z",
+      "engine_version": "v1.0.0",
+      "review_priority": null,
+      "moderation_snapshot": {
+        "risk_band": "low",
+        "duplicate_strong_count": 0,
+        "critical_signal_count": 0,
+        "summary_ref": {
+          "listing_id": "re-land-valencia-technological-006",
+          "outcome": "allow",
+          "top_peer_id": null
+        }
+      }
+    },
+    {
+      "listing_id": "re-singular-lyon-heritage-007",
+      "slug": "activo-singular-rehabilitado-quartier-ainay-lyon",
+      "duplicate_score": 2,
+      "fraud_score": 0,
+      "total_score": 2,
+      "outcome": "allow",
+      "duplicate_signals": {
+        "own_flags": [
+          "missing_contact_identity"
+        ],
+        "peer_signal_codes": [],
+        "strong_match_count": 0,
+        "top_peer_id": null,
+        "top_peer_score": 0
+      },
+      "fraud_signals": [],
+      "summary": "band=low outcome=allow dup=2 fraud=0 Sin peer dominante.",
+      "generated_at": "2026-04-16T18:09:03.913Z",
+      "engine_version": "v1.0.0",
+      "review_priority": null,
+      "moderation_snapshot": {
+        "risk_band": "low",
+        "duplicate_strong_count": 0,
+        "critical_signal_count": 0,
+        "summary_ref": {
+          "listing_id": "re-singular-lyon-heritage-007",
+          "outcome": "allow",
+          "top_peer_id": null
+        }
+      }
+    }
+  ]
+}

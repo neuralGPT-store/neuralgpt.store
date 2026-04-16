@@ -1,0 +1,235 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const rootDir = path.resolve(__dirname, '..');
+const inputPath = path.join(rootDir, 'data', 'risk-report.json');
+const outputPath = path.join(rootDir, 'reports', 'risk-report-summary.md');
+
+const OUTCOMES = [
+  'allow',
+  'allow_with_monitoring',
+  'pending_review',
+  'quarantine',
+  'suspend_candidate'
+];
+
+function ensure(condition, message) {
+  if (!condition) {
+    throw new Error(message);
+  }
+}
+
+function readJson(filePath) {
+  ensure(fs.existsSync(filePath), 'No existe archivo requerido: ' + filePath);
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch (error) {
+    throw new Error('JSON invalido en ' + filePath + ': ' + error.message);
+  }
+}
+
+function pad(value) {
+  return String(value).padStart(2, '0');
+}
+
+function formatDateForHumans(isoString) {
+  const date = new Date(isoString);
+  if (Number.isNaN(date.getTime())) {
+    return isoString;
+  }
+
+  return [
+    date.getUTCFullYear() + '-' + pad(date.getUTCMonth() + 1) + '-' + pad(date.getUTCDate()),
+    pad(date.getUTCHours()) + ':' + pad(date.getUTCMinutes()) + ':' + pad(date.getUTCSeconds()) + ' UTC'
+  ].join(' ');
+}
+
+function addCounts(target, values) {
+  values.forEach((value) => {
+    if (!value) {
+      return;
+    }
+    target[value] = (target[value] || 0) + 1;
+  });
+}
+
+function toSortedTopEntries(counter, limit) {
+  return Object.keys(counter)
+    .map((key) => ({ key, count: counter[key] }))
+    .sort((a, b) => {
+      if (b.count !== a.count) {
+        return b.count - a.count;
+      }
+      return a.key.localeCompare(b.key, 'es');
+    })
+    .slice(0, limit);
+}
+
+function buildOutcomeCounts(items, totalsOutcomes) {
+  const counts = {};
+  OUTCOMES.forEach((outcome) => {
+    counts[outcome] = 0;
+  });
+
+  items.forEach((item) => {
+    if (!item || typeof item !== 'object') {
+      return;
+    }
+    if (Object.prototype.hasOwnProperty.call(counts, item.outcome)) {
+      counts[item.outcome] += 1;
+    }
+  });
+
+  if (totalsOutcomes && typeof totalsOutcomes === 'object') {
+    OUTCOMES.forEach((outcome) => {
+      if (typeof totalsOutcomes[outcome] === 'number') {
+        counts[outcome] = totalsOutcomes[outcome];
+      }
+    });
+  }
+
+  return counts;
+}
+
+function buildMarkdown(report) {
+  const items = Array.isArray(report.items) ? report.items : [];
+  const outcomeCounts = buildOutcomeCounts(items, report.totals && report.totals.outcomes);
+  const duplicateSignalCounter = {};
+  const fraudSignalCounter = {};
+
+  const topListings = items
+    .slice()
+    .sort((a, b) => {
+      const scoreDiff = (b.total_score || 0) - (a.total_score || 0);
+      if (scoreDiff !== 0) {
+        return scoreDiff;
+      }
+      return String(a.listing_id || '').localeCompare(String(b.listing_id || ''), 'es');
+    })
+    .slice(0, 5);
+
+  items.forEach((item) => {
+    const duplicateSignals = item && item.duplicate_signals ? item.duplicate_signals : {};
+    const ownFlags = Array.isArray(duplicateSignals.own_flags) ? duplicateSignals.own_flags : [];
+    const peerCodes = Array.isArray(duplicateSignals.peer_signal_codes) ? duplicateSignals.peer_signal_codes : [];
+    const fraudFlags = Array.isArray(item && item.fraud_signals) ? item.fraud_signals : [];
+
+    addCounts(duplicateSignalCounter, ownFlags.concat(peerCodes));
+    addCounts(fraudSignalCounter, fraudFlags);
+  });
+
+  const topDuplicateSignals = toSortedTopEntries(duplicateSignalCounter, 8);
+  const topFraudSignals = toSortedTopEntries(fraudSignalCounter, 8);
+  const reviewRequired = items.filter((item) => {
+    return item && (item.outcome === 'pending_review' || item.outcome === 'quarantine' || item.outcome === 'suspend_candidate');
+  });
+
+  const lines = [];
+  lines.push('# Risk Report Summary (Editorial Interno)');
+  lines.push('');
+  lines.push('- Fecha de generacion: ' + formatDateForHumans(report.generated_at || new Date().toISOString()));
+  lines.push('- Engine version: `' + (report.engine_version || 'unknown') + '`');
+  lines.push('- Moderation workflow version: `' + (report.moderation_workflow_version || 'unknown') + '`');
+  lines.push('- Total de listings: **' + items.length + '**');
+  lines.push('');
+
+  lines.push('## Distribucion por outcome');
+  lines.push('');
+  OUTCOMES.forEach((outcome) => {
+    lines.push('- `' + outcome + '`: ' + (outcomeCounts[outcome] || 0));
+  });
+  lines.push('');
+
+  lines.push('## Top senales duplicado');
+  lines.push('');
+  if (topDuplicateSignals.length === 0) {
+    lines.push('- No se detectaron senales de duplicado en el reporte actual.');
+  } else {
+    topDuplicateSignals.forEach((entry) => {
+      lines.push('- `' + entry.key + '`: ' + entry.count + ' apariciones');
+    });
+  }
+  lines.push('');
+
+  lines.push('## Top senales fraude');
+  lines.push('');
+  if (topFraudSignals.length === 0) {
+    lines.push('- No se detectaron senales de fraude en el reporte actual.');
+  } else {
+    topFraudSignals.forEach((entry) => {
+      lines.push('- `' + entry.key + '`: ' + entry.count + ' apariciones');
+    });
+  }
+  lines.push('');
+
+  lines.push('## Top listings por score total');
+  lines.push('');
+  if (topListings.length === 0) {
+    lines.push('- No hay listings en `data/risk-report.json`.');
+  } else {
+    topListings.forEach((item, index) => {
+      lines.push(index + 1 + '. `' + (item.listing_id || 'sin-id') + '` (' + (item.slug || 'sin-slug') + ') | total=' + (item.total_score || 0) + ' | dup=' + (item.duplicate_score || 0) + ' | fraud=' + (item.fraud_score || 0) + ' | outcome=`' + (item.outcome || 'unknown') + '`');
+    });
+  }
+  lines.push('');
+
+  lines.push('## Casos que requieren revision humana');
+  lines.push('');
+  if (reviewRequired.length === 0) {
+    lines.push('- No hay casos en `pending_review`, `quarantine` ni `suspend_candidate` en este corte.');
+    lines.push('- Explicacion operativa: el dataset actual no dispara umbrales altos de duplicado/fraude (scores totales maximos <= 15 y sin critical signals).');
+    lines.push('- Accion recomendada: mantener monitorizacion activa sobre `allow_with_monitoring` cuando aparezca, y re-ejecutar este reporte en cada alta o lote de ingesta.');
+  } else {
+    reviewRequired
+      .sort((a, b) => (b.total_score || 0) - (a.total_score || 0))
+      .forEach((item) => {
+        lines.push('- `' + (item.listing_id || 'sin-id') + '` | outcome=`' + item.outcome + '` | total=' + (item.total_score || 0) + ' | prioridad=' + (item.review_priority || 'n/a') + ' | resumen: ' + (item.summary || 'sin resumen'));
+      });
+  }
+  lines.push('');
+
+  lines.push('## Observaciones operativas');
+  lines.push('');
+  lines.push('- El reporte es **read-only** y auditable: deriva directamente de `data/risk-report.json` sin mutar capa publica.');
+  lines.push('- La senal de mayor presencia en este corte es `missing_contact_identity`; conviene priorizar verificacion de identidad de contacto en fases siguientes.');
+  lines.push('- El estado actual (todos `allow`) no invalida el sistema: refleja un dataset controlado y pequeno; para stress test, incorporar muestras sinteticas de abuso en entorno interno.');
+
+  return lines.join('\n') + '\n';
+}
+
+function printConsoleSummary(report, markdownPath) {
+  const totals = report.totals && report.totals.outcomes ? report.totals.outcomes : {};
+  const items = Array.isArray(report.items) ? report.items : [];
+
+  console.log('RISK SUMMARY BUILD: OK');
+  console.log('input=' + inputPath);
+  console.log('output=' + markdownPath);
+  console.log('generated_at=' + (report.generated_at || 'unknown'));
+  console.log('total_listings=' + items.length);
+  OUTCOMES.forEach((outcome) => {
+    console.log(outcome + '=' + (typeof totals[outcome] === 'number' ? totals[outcome] : 0));
+  });
+}
+
+function main() {
+  const report = readJson(inputPath);
+  ensure(report && typeof report === 'object' && !Array.isArray(report), 'data/risk-report.json debe ser objeto');
+  ensure(Array.isArray(report.items), 'data/risk-report.json debe contener items[]');
+
+  const markdown = buildMarkdown(report);
+  fs.writeFileSync(outputPath, markdown, 'utf8');
+
+  printConsoleSummary(report, outputPath);
+}
+
+try {
+  main();
+} catch (error) {
+  console.error('RISK SUMMARY BUILD: ERROR');
+  console.error(error.message);
+  process.exit(1);
+}
