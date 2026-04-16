@@ -1,0 +1,316 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const ROOT = path.resolve(__dirname, '..');
+const DEFAULT_LEDGER_PATH = path.join(ROOT, 'data', 'moderation-events.log.jsonl');
+const LEGACY_EXCEPTIONS_PATH = path.join(ROOT, 'data', 'moderation-legacy-exceptions.json');
+
+const core = require(path.join(__dirname, 'lib', 'moderation-ledger-core.js'));
+
+function analyzeLedger(ledgerPath) {
+  const result = {
+    ledger_path: ledgerPath,
+    total_events: 0,
+    valid_events: 0,
+    integrity_ok: true,
+    integrity_fail: false,
+    violations_count: 0,
+    violations: [],
+    warnings_count: 0,
+    warnings: [],
+    events: [],
+    chain_tail_hash: null,
+    latest_hashes: []
+  };
+
+  if (!fs.existsSync(ledgerPath)) {
+    result.integrity_ok = false;
+    result.integrity_fail = true;
+    result.violations.push({ code: 'ledger_missing', message: 'No existe ledger: ' + ledgerPath, line_no: null });
+    result.violations_count = 1;
+    return result;
+  }
+
+  const raw = fs.readFileSync(ledgerPath, 'utf8');
+  if (!raw.trim()) {
+    return result;
+  }
+
+  let rows;
+  try {
+    rows = core.parseJsonl(raw);
+  } catch (error) {
+    result.integrity_ok = false;
+    result.integrity_fail = true;
+    result.violations.push({ code: 'jsonl_parse_error', message: error.message, line_no: null });
+    result.violations_count = 1;
+    return result;
+  }
+
+  result.total_events = rows.length;
+
+  const ids = new Set();
+  const listingLatest = Object.create(null);
+  let previousEffectiveHash = null;
+  let lastTimestamp = null;
+  let acceptedSensitiveExceptionIds = new Set();
+
+  if (fs.existsSync(LEGACY_EXCEPTIONS_PATH)) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(LEGACY_EXCEPTIONS_PATH, 'utf8'));
+      acceptedSensitiveExceptionIds = new Set(
+        (Array.isArray(parsed.accepted_sensitive_transition_exceptions)
+          ? parsed.accepted_sensitive_transition_exceptions
+          : []
+        )
+          .filter((item) => item && item.status === 'accepted_legacy_exception' && item.code === 'sensitive_without_override')
+          .map((item) => core.normalizeNullableString(item.moderation_event_id))
+          .filter(Boolean)
+      );
+    } catch (error) {
+      result.violations.push({
+        code: 'legacy_exceptions_invalid_json',
+        message: 'No se pudo parsear ' + LEGACY_EXCEPTIONS_PATH + ': ' + error.message,
+        line_no: null
+      });
+    }
+  }
+
+  rows.forEach((row) => {
+    const event = row.parsed;
+    const lineNo = row.line_no;
+    const schemaVersion = core.inferSchemaVersion(event);
+    const normalized = core.canonicalEventPayload(event, schemaVersion);
+    const eventViolations = [];
+
+    function addViolation(code, message) {
+      eventViolations.push({ code, message, line_no: lineNo, event_id: normalized.moderation_event_id || null });
+    }
+
+    if (!core.isNonEmptyString(normalized.moderation_event_id)) {
+      addViolation('missing_event_id', '`moderation_event_id` requerido.');
+    } else if (ids.has(normalized.moderation_event_id)) {
+      addViolation('duplicate_event_id', '`moderation_event_id` duplicado: ' + normalized.moderation_event_id);
+    } else {
+      ids.add(normalized.moderation_event_id);
+    }
+
+    if (!core.isNonEmptyString(normalized.listing_id)) {
+      addViolation('missing_listing_id', '`listing_id` requerido.');
+    }
+    if (!core.isNonEmptyString(normalized.slug)) {
+      addViolation('missing_slug', '`slug` requerido.');
+    }
+    if (!core.ACTOR_TYPES.includes(normalized.actor_type)) {
+      addViolation('invalid_actor_type', '`actor_type` invalido: ' + String(normalized.actor_type));
+    }
+    if (normalized.actor_id !== null && !core.isNonEmptyString(normalized.actor_id)) {
+      addViolation('invalid_actor_id', '`actor_id` debe ser null o string no vacio.');
+    }
+    if (normalized.previous_outcome !== null && !core.OUTCOMES.includes(normalized.previous_outcome)) {
+      addViolation('invalid_previous_outcome', '`previous_outcome` invalido: ' + String(normalized.previous_outcome));
+    }
+    if (!core.OUTCOMES.includes(normalized.new_outcome)) {
+      addViolation('invalid_new_outcome', '`new_outcome` invalido: ' + String(normalized.new_outcome));
+    }
+    if (!core.TRIGGER_TYPES.includes(normalized.trigger_type)) {
+      addViolation('invalid_trigger_type', '`trigger_type` invalido: ' + String(normalized.trigger_type));
+    }
+    if (!core.isIsoUtc(normalized.created_at)) {
+      addViolation('invalid_created_at', '`created_at` debe ser ISO UTC con Z.');
+    }
+
+    const currentTimestamp = Date.parse(normalized.created_at || '');
+    if (!Number.isNaN(currentTimestamp)) {
+      if (lastTimestamp !== null && currentTimestamp < lastTimestamp) {
+        addViolation('chronology_regression', 'Orden cronologico no monotono.');
+      }
+      lastTimestamp = currentTimestamp;
+    }
+
+    if (schemaVersion >= 2 && !Number.isInteger(event.schema_version)) {
+      addViolation('missing_schema_version', 'Eventos v2+ deben incluir schema_version entero.');
+    }
+
+    const expectedHash = core.computeEventHash(event, schemaVersion);
+    const storedPrevHash = core.normalizeNullableString(event.prev_hash);
+    const storedEventHash = core.normalizeNullableString(event.event_hash);
+
+    if (schemaVersion >= 2) {
+      if (!storedPrevHash) {
+        addViolation('missing_prev_hash', 'Falta `prev_hash` en evento con schema_version >= 2.');
+      } else if (storedPrevHash !== previousEffectiveHash) {
+        addViolation('broken_prev_hash', '`prev_hash` no coincide con hash anterior.');
+      }
+
+      if (!storedEventHash) {
+        addViolation('missing_event_hash', 'Falta `event_hash` en evento con schema_version >= 2.');
+      } else if (storedEventHash !== expectedHash) {
+        addViolation('broken_event_hash', '`event_hash` no coincide con hash esperado.');
+      }
+    }
+
+    const expectedPreviousOutcome = normalized.listing_id && listingLatest[normalized.listing_id]
+      ? listingLatest[normalized.listing_id]
+      : null;
+
+    if (normalized.previous_outcome !== expectedPreviousOutcome) {
+      if (schemaVersion >= 2) {
+        addViolation('listing_outcome_mismatch', '`previous_outcome` no coincide con historial del listing. esperado=' + String(expectedPreviousOutcome) + ', recibido=' + String(normalized.previous_outcome));
+      } else {
+        result.warnings.push({
+          code: 'legacy_listing_outcome_mismatch',
+          message: '`previous_outcome` legacy no alineado con historial del listing. esperado=' + String(expectedPreviousOutcome) + ', recibido=' + String(normalized.previous_outcome),
+          line_no: lineNo,
+          event_id: normalized.moderation_event_id || null
+        });
+      }
+    }
+
+    const transitionAllowed = core.isTransitionAllowed(normalized.previous_outcome, normalized.new_outcome);
+    const hasOverride = Boolean(event.override_transition);
+    const overrideReasonCode = core.normalizeNullableString(event.override_reason_code);
+    const overrideJustification = core.normalizeNullableString(event.override_justification);
+    const overrideActorAllowed = core.OVERRIDE_POLICY.allowed_actor_types.includes(normalized.actor_type);
+    const overrideActorIdValid = !core.OVERRIDE_POLICY.require_actor_id || core.isNonEmptyString(normalized.actor_id);
+    const overrideReasonValid = overrideReasonCode && core.OVERRIDE_REASON_CODES.includes(overrideReasonCode);
+    const overrideJustificationValid = overrideJustification && overrideJustification.length >= core.OVERRIDE_POLICY.required_justification_min_length;
+
+    if (!transitionAllowed) {
+      if (!hasOverride) {
+        addViolation('invalid_transition', 'Transicion no permitida: ' + String(normalized.previous_outcome) + ' -> ' + String(normalized.new_outcome));
+      } else {
+        if (core.OVERRIDE_POLICY.disallow_actor_type_system && normalized.actor_type === 'system') {
+          addViolation('override_actor_forbidden', 'Override no permitido para actor_type=system.');
+        }
+        if (!overrideActorAllowed) {
+          addViolation('override_actor_invalid', 'Override con actor_type no permitido: ' + String(normalized.actor_type));
+        }
+        if (!overrideActorIdValid) {
+          addViolation('override_actor_id_missing', 'Override requiere actor_id no vacío.');
+        }
+        if (!overrideReasonValid) {
+          addViolation('override_reason_invalid', 'Override requiere override_reason_code válido.');
+        }
+        if (!overrideJustificationValid) {
+          addViolation('override_justification_invalid', 'Override requiere override_justification suficiente.');
+        }
+      }
+    } else if (core.isSensitiveTransition(normalized.previous_outcome, normalized.new_outcome)) {
+      if (!hasOverride) {
+        const eventId = core.normalizeNullableString(event.moderation_event_id);
+        if (eventId && acceptedSensitiveExceptionIds.has(eventId)) {
+          result.warnings.push({
+            code: 'legacy_sensitive_exception_accepted',
+            message: 'Transicion sensible sin override aceptada por excepción legacy: ' + eventId,
+            line_no: lineNo,
+            event_id: eventId
+          });
+        } else {
+          addViolation('sensitive_without_override', 'Transicion sensible sin override: ' + String(normalized.previous_outcome) + ' -> ' + String(normalized.new_outcome));
+        }
+      } else {
+        if (!overrideReasonValid) {
+          addViolation('override_reason_invalid', 'Override en transición sensible requiere override_reason_code válido.');
+        }
+        if (!overrideJustificationValid) {
+          addViolation('override_justification_invalid', 'Override en transición sensible requiere override_justification suficiente.');
+        }
+        if (!overrideActorAllowed) {
+          addViolation('override_actor_invalid', 'Override en transición sensible con actor_type no permitido.');
+        }
+      }
+    }
+
+    if (normalized.listing_id) {
+      listingLatest[normalized.listing_id] = normalized.new_outcome;
+    }
+
+    const effectiveHash = schemaVersion >= 2 && storedEventHash ? storedEventHash : expectedHash;
+    previousEffectiveHash = effectiveHash;
+
+    result.events.push({
+      line_no: lineNo,
+      schema_version: schemaVersion,
+      moderation_event_id: normalized.moderation_event_id,
+      listing_id: normalized.listing_id,
+      previous_outcome: normalized.previous_outcome,
+      new_outcome: normalized.new_outcome,
+      created_at: normalized.created_at,
+      expected_hash: expectedHash,
+      stored_event_hash: storedEventHash,
+      effective_hash: effectiveHash,
+      violations: eventViolations
+    });
+
+    if (eventViolations.length === 0) {
+      result.valid_events += 1;
+    } else {
+      result.violations = result.violations.concat(eventViolations);
+    }
+  });
+
+  result.chain_tail_hash = previousEffectiveHash;
+  result.latest_hashes = result.events.slice(-5).map((event) => ({
+    line_no: event.line_no,
+    moderation_event_id: event.moderation_event_id,
+    effective_hash: event.effective_hash
+  }));
+
+  result.violations_count = result.violations.length;
+  result.warnings_count = result.warnings.length;
+  result.integrity_ok = result.violations_count === 0;
+  result.integrity_fail = !result.integrity_ok;
+
+  return result;
+}
+
+function printSummary(result) {
+  console.log('MODERATION LEDGER VALIDATION');
+  console.log('ledger=' + result.ledger_path);
+  console.log('total_events=' + result.total_events);
+  console.log('valid_events=' + result.valid_events);
+  console.log('integrity_ok=' + String(result.integrity_ok));
+  console.log('integrity_fail=' + String(result.integrity_fail));
+  console.log('violations_count=' + result.violations_count);
+  console.log('warnings_count=' + result.warnings_count);
+
+  if (result.violations_count > 0) {
+    console.log('violations_preview=');
+    result.violations.slice(0, 20).forEach((violation) => {
+      console.log('- line=' + String(violation.line_no) + ' code=' + violation.code + ' message=' + violation.message);
+    });
+  }
+
+  if (result.warnings_count > 0) {
+    console.log('warnings_preview=');
+    result.warnings.slice(0, 20).forEach((warning) => {
+      console.log('- line=' + String(warning.line_no) + ' code=' + warning.code + ' message=' + warning.message);
+    });
+  }
+}
+
+function main() {
+  const ledgerPath = process.argv[2]
+    ? path.resolve(process.cwd(), process.argv[2])
+    : DEFAULT_LEDGER_PATH;
+
+  const result = analyzeLedger(ledgerPath);
+  printSummary(result);
+
+  if (!result.integrity_ok) {
+    process.exit(1);
+  }
+}
+
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  analyzeLedger
+};

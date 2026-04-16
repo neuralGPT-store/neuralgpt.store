@@ -1,0 +1,222 @@
+'use strict';
+
+const crypto = require('crypto');
+
+const OUTCOMES = [
+  'allow',
+  'allow_with_monitoring',
+  'pending_review',
+  'quarantine',
+  'suspend_candidate'
+];
+
+const ACTOR_TYPES = ['system', 'moderator', 'ops', 'compliance'];
+const TRIGGER_TYPES = ['risk_engine', 'manual_review', 'appeal_resolution', 'policy_update'];
+
+const STATE_MACHINE = {
+  null: {
+    allowed: ['allow', 'allow_with_monitoring', 'pending_review'],
+    rationale: 'Alta inicial controlada; escalados severos requieren al menos una revisión previa.'
+  },
+  allow: {
+    allowed: ['allow', 'allow_with_monitoring', 'pending_review'],
+    rationale: 'Desde estado limpio solo se permite mantener, vigilar o escalar a revisión.'
+  },
+  allow_with_monitoring: {
+    allowed: ['allow_with_monitoring', 'allow', 'pending_review', 'quarantine'],
+    rationale: 'Permite normalizar, sostener vigilancia o escalar si aumenta riesgo.'
+  },
+  pending_review: {
+    allowed: ['pending_review', 'allow_with_monitoring', 'quarantine', 'suspend_candidate'],
+    rationale: 'Tras revisión se decide vigilancia reforzada, cuarentena o suspensión candidata.'
+  },
+  quarantine: {
+    allowed: ['quarantine', 'pending_review', 'suspend_candidate'],
+    rationale: 'Cuarentena exige revisión adicional; no retorno directo a allow sin override.'
+  },
+  suspend_candidate: {
+    allowed: ['suspend_candidate', 'quarantine'],
+    rationale: 'Suspensión candidata solo puede mantenerse o bajar a cuarentena para revisión controlada.'
+  }
+};
+
+const SENSITIVE_TRANSITIONS = [
+  { from: 'allow_with_monitoring', to: 'allow', reason: 'De-escalado a allow requiere evidencia explícita.' },
+  { from: 'pending_review', to: 'allow_with_monitoring', reason: 'Cierre de revisión requiere justificación trazable.' },
+  { from: 'pending_review', to: 'allow', reason: 'Liberación directa tras revisión es altamente sensible.' },
+  { from: 'quarantine', to: 'pending_review', reason: 'Salida de cuarentena exige rationale auditable.' },
+  { from: 'suspend_candidate', to: 'quarantine', reason: 'Descenso desde estado severo requiere control reforzado.' }
+];
+
+const OVERRIDE_REASON_CODES = [
+  'evidence_verified',
+  'false_positive',
+  'policy_exception',
+  'appeal_upheld',
+  'data_correction'
+];
+
+const OVERRIDE_POLICY = {
+  flag: '--override-transition',
+  allowed_actor_types: ['moderator', 'ops', 'compliance'],
+  required_justification_min_length: 24,
+  require_actor_id: true,
+  disallow_actor_type_system: true
+};
+
+function isNonEmptyString(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function normalizeNullableString(value) {
+  if (value == null) {
+    return null;
+  }
+  const normalized = String(value).trim();
+  return normalized.length ? normalized : null;
+}
+
+function normalizeSignalArray(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((signal) => (signal == null ? '' : String(signal).trim()))
+    .filter(Boolean);
+}
+
+function isIsoUtc(value) {
+  if (!isNonEmptyString(value)) {
+    return false;
+  }
+  const date = new Date(value);
+  return !Number.isNaN(date.getTime()) && value.endsWith('Z') && value.includes('T');
+}
+
+function inferSchemaVersion(event) {
+  if (event && Number.isInteger(event.schema_version) && event.schema_version > 0) {
+    return event.schema_version;
+  }
+  return 1;
+}
+
+function canonicalEventPayload(event, schemaVersionOverride) {
+  const schemaVersion = Number.isInteger(schemaVersionOverride) && schemaVersionOverride > 0
+    ? schemaVersionOverride
+    : inferSchemaVersion(event);
+
+  return {
+    schema_version: schemaVersion,
+    moderation_event_id: normalizeNullableString(event.moderation_event_id),
+    listing_id: normalizeNullableString(event.listing_id),
+    slug: normalizeNullableString(event.slug),
+    actor_type: normalizeNullableString(event.actor_type),
+    actor_id: normalizeNullableString(event.actor_id),
+    previous_outcome: normalizeNullableString(event.previous_outcome),
+    new_outcome: normalizeNullableString(event.new_outcome),
+    trigger_type: normalizeNullableString(event.trigger_type),
+    trigger_signals: normalizeSignalArray(event.trigger_signals),
+    notes: normalizeNullableString(event.notes),
+    created_at: normalizeNullableString(event.created_at)
+  };
+}
+
+function stableStringify(value) {
+  if (value === null || typeof value !== 'object') {
+    return JSON.stringify(value);
+  }
+
+  if (Array.isArray(value)) {
+    return '[' + value.map((item) => stableStringify(item)).join(',') + ']';
+  }
+
+  const keys = Object.keys(value).sort();
+  const parts = keys.map((key) => JSON.stringify(key) + ':' + stableStringify(value[key]));
+  return '{' + parts.join(',') + '}';
+}
+
+function computeEventHash(event, schemaVersionOverride) {
+  const payload = canonicalEventPayload(event, schemaVersionOverride);
+  const digest = crypto
+    .createHash('sha256')
+    .update(stableStringify(payload))
+    .digest('hex');
+  return 'sha256:' + digest;
+}
+
+function computeStableHash(payload) {
+  const digest = crypto
+    .createHash('sha256')
+    .update(stableStringify(payload))
+    .digest('hex');
+  return 'sha256:' + digest;
+}
+
+function parseJsonl(rawText) {
+  const lines = String(rawText || '').split(/\r?\n/);
+  const rows = [];
+
+  lines.forEach((line, index) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      return;
+    }
+
+    rows.push({
+      line_no: index + 1,
+      raw: trimmed,
+      parsed: JSON.parse(trimmed)
+    });
+  });
+
+  return rows;
+}
+
+function isTransitionAllowed(previousOutcome, newOutcome) {
+  const key = previousOutcome == null ? 'null' : previousOutcome;
+  const rule = STATE_MACHINE[key];
+  if (!rule) {
+    return false;
+  }
+  return rule.allowed.includes(newOutcome);
+}
+
+function getTransitionRationale(previousOutcome) {
+  const key = previousOutcome == null ? 'null' : previousOutcome;
+  return STATE_MACHINE[key] ? STATE_MACHINE[key].rationale : 'Estado previo desconocido.';
+}
+
+function isSensitiveTransition(previousOutcome, newOutcome) {
+  const from = previousOutcome == null ? null : previousOutcome;
+  return SENSITIVE_TRANSITIONS.some((rule) => rule.from === from && rule.to === newOutcome);
+}
+
+function getSensitiveTransitionRule(previousOutcome, newOutcome) {
+  const from = previousOutcome == null ? null : previousOutcome;
+  return SENSITIVE_TRANSITIONS.find((rule) => rule.from === from && rule.to === newOutcome) || null;
+}
+
+module.exports = {
+  OUTCOMES,
+  ACTOR_TYPES,
+  TRIGGER_TYPES,
+  STATE_MACHINE,
+  SENSITIVE_TRANSITIONS,
+  OVERRIDE_REASON_CODES,
+  OVERRIDE_POLICY,
+  isNonEmptyString,
+  normalizeNullableString,
+  normalizeSignalArray,
+  isIsoUtc,
+  inferSchemaVersion,
+  canonicalEventPayload,
+  stableStringify,
+  computeEventHash,
+  computeStableHash,
+  parseJsonl,
+  isTransitionAllowed,
+  getTransitionRationale,
+  isSensitiveTransition,
+  getSensitiveTransitionRule
+};
