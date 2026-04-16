@@ -1,6 +1,6 @@
 # Risk Report Summary (Editorial Interno)
 
-- Fecha de generacion: 2026-04-16 18:09:03 UTC
+- Fecha de generacion: 2026-04-16 18:12:07 UTC
 - Engine version: `v1.0.0`
 - Moderation workflow version: `v1.0.0`
 - Total de listings: **7**

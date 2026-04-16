@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-16T18:09:03.913Z",
+  "generated_at": "2026-04-16T18:12:07.335Z",
   "engine_version": "v1.0.0",
   "moderation_workflow_version": "v1.0.0",
   "source_files": {
@@ -37,7 +37,7 @@
       },
       "fraud_signals": [],
       "summary": "band=low outcome=allow dup=2 fraud=0 Sin peer dominante.",
-      "generated_at": "2026-04-16T18:09:03.913Z",
+      "generated_at": "2026-04-16T18:12:07.335Z",
       "engine_version": "v1.0.0",
       "review_priority": null,
       "moderation_snapshot": {
@@ -71,7 +71,7 @@
         "price_per_m2_outlier"
       ],
       "summary": "band=low outcome=allow dup=2 fraud=7 Sin peer dominante.",
-      "generated_at": "2026-04-16T18:09:03.913Z",
+      "generated_at": "2026-04-16T18:12:07.335Z",
       "engine_version": "v1.0.0",
       "review_priority": null,
       "moderation_snapshot": {
@@ -105,7 +105,7 @@
         "price_per_m2_outlier"
       ],
       "summary": "band=low outcome=allow dup=2 fraud=7 Sin peer dominante.",
-      "generated_at": "2026-04-16T18:09:03.913Z",
+      "generated_at": "2026-04-16T18:12:07.335Z",
       "engine_version": "v1.0.0",
       "review_priority": null,
       "moderation_snapshot": {
@@ -137,7 +137,7 @@
       },
       "fraud_signals": [],
       "summary": "band=low outcome=allow dup=2 fraud=0 Sin peer dominante.",
-      "generated_at": "2026-04-16T18:09:03.913Z",
+      "generated_at": "2026-04-16T18:12:07.335Z",
       "engine_version": "v1.0.0",
       "review_priority": null,
       "moderation_snapshot": {
@@ -171,7 +171,7 @@
         "price_per_m2_outlier"
       ],
       "summary": "band=low outcome=allow dup=2 fraud=7 Sin peer dominante.",
-      "generated_at": "2026-04-16T18:09:03.913Z",
+      "generated_at": "2026-04-16T18:12:07.335Z",
       "engine_version": "v1.0.0",
       "review_priority": null,
       "moderation_snapshot": {
@@ -206,7 +206,7 @@
         "price_per_m2_outlier"
       ],
       "summary": "band=low outcome=allow dup=2 fraud=13 Sin peer dominante.",
-      "generated_at": "2026-04-16T18:09:03.913Z",
+      "generated_at": "2026-04-16T18:12:07.335Z",
       "engine_version": "v1.0.0",
       "review_priority": null,
       "moderation_snapshot": {
@@ -238,7 +238,7 @@
       },
       "fraud_signals": [],
       "summary": "band=low outcome=allow dup=2 fraud=0 Sin peer dominante.",
-      "generated_at": "2026-04-16T18:09:03.913Z",
+      "generated_at": "2026-04-16T18:12:07.335Z",
       "engine_version": "v1.0.0",
       "review_priority": null,
       "moderation_snapshot": {

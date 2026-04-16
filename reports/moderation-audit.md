@@ -1,6 +1,6 @@
 # Moderation Audit View (Internal)
 
-- Generated at: 2026-04-16T18:09:03.973Z
+- Generated at: 2026-04-16T18:12:07.367Z
 - Ledger source: `data/moderation-events.log.jsonl`
 - Total de eventos: **7**
 
