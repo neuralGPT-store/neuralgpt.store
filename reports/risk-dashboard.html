@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Risk Dashboard Interno | neuralgpt.store</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    :root {
+      --bg-a: #050912;
+      --bg-b: #0d1424;
+      --panel: rgba(10, 16, 30, 0.78);
+      --panel-strong: rgba(8, 12, 24, 0.92);
+      --line: rgba(114, 138, 179, 0.35);
+      --text: #eef4ff;
+      --muted: #95a4c4;
+      --accent: #6af2ff;
+      --accent-2: #7cffb7;
+      --warn: #f7d774;
+      --danger: #ff8d9f;
+      --radius: 14px;
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Inter", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1100px 540px at 8% -10%, rgba(106, 242, 255, 0.18), transparent 56%),
+        radial-gradient(900px 520px at 92% 0%, rgba(124, 255, 183, 0.12), transparent 60%),
+        linear-gradient(145deg, var(--bg-a), var(--bg-b));
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 20px 44px;
+    }
+    .panel {
+      background: linear-gradient(175deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+    }
+    .header {
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.45rem;
+      letter-spacing: 0.2px;
+    }
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .stat {
+      padding: 14px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .stat .k {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.77rem;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+    }
+    .stat .v {
+      margin: 7px 0 0;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .side,
+    .table-panel {
+      padding: 14px;
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    h2 {
+      margin: 2px 0 12px;
+      font-size: 0.88rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    li {
+      margin-bottom: 6px;
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .muted {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      padding: 8px 6px;
+    }
+    th {
+      font-size: 0.74rem;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 0.73rem;
+      margin: 0 4px 4px 0;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .outcome-allow { color: var(--accent-2); }
+    .outcome-allow_with_monitoring { color: var(--warn); }
+    .outcome-pending_review,
+    .outcome-quarantine,
+    .outcome-suspend_candidate { color: var(--danger); }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    select {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 7px 9px;
+      min-width: 180px;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      padding: 1px 5px;
+      border-radius: 6px;
+    }
+    .event-chip {
+      display: inline-block;
+      margin: 0 6px 6px 0;
+      padding: 4px 8px;
+      border-radius: 9px;
+      font-size: 0.72rem;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    @media (max-width: 1040px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="panel header">
+      <h1>Panel Editorial Interno de Riesgo</h1>
+      <p class="sub">Capa interna read-only para revision humana de duplicados y fraude. No modifica rutas publicas ni legacy.</p>
+      <p class="sub" id="meta-line">Cargando reporte...</p>
+    </section>
+
+    <section class="stats" id="outcome-stats"></section>
+
+    <section class="grid">
+      <aside class="side">
+        <h2>Top senales duplicado</h2>
+        <ul id="dup-signals"></ul>
+
+        <h2 style="margin-top:16px">Top senales fraude</h2>
+        <ul id="fraud-signals"></ul>
+
+        <h2 style="margin-top:16px">Notas operativas</h2>
+        <p class="muted" id="notes"></p>
+
+        <h2 style="margin-top:16px">Moderation ledger</h2>
+        <p class="muted" id="ledger-summary">Cargando ledger...</p>
+        <ul id="recent-events"></ul>
+      </aside>
+
+      <section class="table-panel">
+        <div class="toolbar">
+          <h2 style="margin:0">Listings</h2>
+          <label class="muted" for="outcome-filter">Filtro outcome:
+            <select id="outcome-filter">
+              <option value="all">Todos</option>
+              <option value="allow">allow</option>
+              <option value="allow_with_monitoring">allow_with_monitoring</option>
+              <option value="pending_review">pending_review</option>
+              <option value="quarantine">quarantine</option>
+              <option value="suspend_candidate">suspend_candidate</option>
+            </select>
+          </label>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Listing</th>
+              <th>Score</th>
+              <th>Outcome</th>
+              <th>Senales principales</th>
+              <th>Prioridad</th>
+              <th>Eventos</th>
+            </tr>
+          </thead>
+          <tbody id="listing-rows"></tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var report = null;
+      var items = [];
+      var moderationEvents = [];
+      var eventsByListing = Object.create(null);
+      var outcomeFilter = document.getElementById('outcome-filter');
+
+      function escapeHtml(value) {
+        var div = document.createElement('div');
+        div.textContent = value == null ? '' : String(value);
+        return div.innerHTML;
+      }
+
+      function buildCounter() {
+        return Object.create(null);
+      }
+
+      function addCount(counter, code) {
+        if (!code) return;
+        counter[code] = (counter[code] || 0) + 1;
+      }
+
+      function topEntries(counter, limit) {
+        return Object.keys(counter)
+          .map(function (key) { return { key: key, count: counter[key] }; })
+          .sort(function (a, b) {
+            if (b.count !== a.count) return b.count - a.count;
+            return a.key.localeCompare(b.key, 'es');
+          })
+          .slice(0, limit);
+      }
+
+      function renderStats(totals) {
+        var outcomes = ['allow', 'allow_with_monitoring', 'pending_review', 'quarantine', 'suspend_candidate'];
+        var container = document.getElementById('outcome-stats');
+        container.innerHTML = outcomes.map(function (outcome) {
+          var value = totals && typeof totals[outcome] === 'number' ? totals[outcome] : 0;
+          return '<article class="stat">' +
+            '<p class="k">' + outcome + '</p>' +
+            '<p class="v">' + value + '</p>' +
+          '</article>';
+        }).join('');
+      }
+
+      function renderTopSignals() {
+        var dupCounter = buildCounter();
+        var fraudCounter = buildCounter();
+
+        items.forEach(function (item) {
+          var duplicateSignals = item && item.duplicate_signals ? item.duplicate_signals : {};
+          var ownFlags = Array.isArray(duplicateSignals.own_flags) ? duplicateSignals.own_flags : [];
+          var peerCodes = Array.isArray(duplicateSignals.peer_signal_codes) ? duplicateSignals.peer_signal_codes : [];
+          var fraudSignals = Array.isArray(item.fraud_signals) ? item.fraud_signals : [];
+
+          ownFlags.concat(peerCodes).forEach(function (code) { addCount(dupCounter, code); });
+          fraudSignals.forEach(function (code) { addCount(fraudCounter, code); });
+        });
+
+        var dupList = topEntries(dupCounter, 8);
+        var fraudList = topEntries(fraudCounter, 8);
+
+        document.getElementById('dup-signals').innerHTML = dupList.length
+          ? dupList.map(function (entry) { return '<li><code>' + escapeHtml(entry.key) + '</code> x' + entry.count + '</li>'; }).join('')
+          : '<li>Sin senales de duplicado en este corte.</li>';
+
+        document.getElementById('fraud-signals').innerHTML = fraudList.length
+          ? fraudList.map(function (entry) { return '<li><code>' + escapeHtml(entry.key) + '</code> x' + entry.count + '</li>'; }).join('')
+          : '<li>Sin senales de fraude en este corte.</li>';
+
+        var reviewCount = items.filter(function (item) {
+          return item.outcome === 'pending_review' || item.outcome === 'quarantine' || item.outcome === 'suspend_candidate';
+        }).length;
+
+        document.getElementById('notes').innerHTML =
+          'Total listings: <strong>' + items.length + '</strong>. ' +
+          'Casos de revision humana inmediata (`pending_review+`): <strong>' + reviewCount + '</strong>. ' +
+          'Eventos en ledger: <strong>' + moderationEvents.length + '</strong>. ' +
+          'Este panel es interno y read-only.';
+      }
+
+      function parseJsonlLines(text) {
+        var lines = String(text || '').split(/\r?\n/);
+        var parsed = [];
+
+        lines.forEach(function (line, index) {
+          var trimmed = line.trim();
+          if (!trimmed) {
+            return;
+          }
+          try {
+            parsed.push(JSON.parse(trimmed));
+          } catch (error) {
+            throw new Error('JSONL invalido en linea ' + (index + 1) + ': ' + error.message);
+          }
+        });
+
+        return parsed;
+      }
+
+      function indexEvents() {
+        eventsByListing = Object.create(null);
+        moderationEvents.forEach(function (event) {
+          var listingId = event && event.listing_id ? event.listing_id : null;
+          if (!listingId) {
+            return;
+          }
+          if (!eventsByListing[listingId]) {
+            eventsByListing[listingId] = [];
+          }
+          eventsByListing[listingId].push(event);
+        });
+      }
+
+      function renderLedgerWidgets() {
+        var sorted = moderationEvents
+          .slice()
+          .sort(function (a, b) {
+            var aTs = Date.parse(a.created_at || '');
+            var bTs = Date.parse(b.created_at || '');
+            if (!Number.isNaN(bTs) && !Number.isNaN(aTs) && bTs !== aTs) {
+              return bTs - aTs;
+            }
+            return String(b.moderation_event_id || '').localeCompare(String(a.moderation_event_id || ''), 'es');
+          });
+
+        var recent = sorted.slice(0, 5);
+        document.getElementById('ledger-summary').innerHTML =
+          'Eventos totales: <strong>' + moderationEvents.length + '</strong>. ' +
+          'Ultimo evento: <strong>' + (recent[0] && recent[0].moderation_event_id ? escapeHtml(recent[0].moderation_event_id) : 'n/a') + '</strong>.';
+
+        document.getElementById('recent-events').innerHTML = recent.length
+          ? recent.map(function (event) {
+            var eventId = event.moderation_event_id || 'unknown';
+            var listingId = event.listing_id || 'unknown';
+            var transition = (event.previous_outcome || 'null') + ' -> ' + (event.new_outcome || 'unknown');
+            return '<li><code>' + escapeHtml(eventId) + '</code><br><span class="muted">' + escapeHtml(listingId) + ' | ' + escapeHtml(transition) + '</span></li>';
+          }).join('')
+          : '<li class="muted">Sin eventos registrados.</li>';
+      }
+
+      function formatTags(item) {
+        var duplicateSignals = item && item.duplicate_signals ? item.duplicate_signals : {};
+        var signals = [];
+        var ownFlags = Array.isArray(duplicateSignals.own_flags) ? duplicateSignals.own_flags : [];
+        var fraudSignals = Array.isArray(item.fraud_signals) ? item.fraud_signals : [];
+        ownFlags.forEach(function (code) { signals.push(code); });
+        fraudSignals.forEach(function (code) { signals.push(code); });
+
+        if (!signals.length) {
+          return '<span class="tag">sin_senales</span>';
+        }
+
+        return signals.slice(0, 6).map(function (code) {
+          return '<span class="tag">' + escapeHtml(code) + '</span>';
+        }).join('');
+      }
+
+      function renderTable() {
+        var selected = outcomeFilter.value;
+        var rows = items
+          .filter(function (item) {
+            return selected === 'all' ? true : item.outcome === selected;
+          })
+          .sort(function (a, b) {
+            var diff = (b.total_score || 0) - (a.total_score || 0);
+            if (diff !== 0) return diff;
+            return String(a.listing_id || '').localeCompare(String(b.listing_id || ''), 'es');
+          })
+          .map(function (item) {
+            var id = item.listing_id || 'sin-id';
+            var slug = item.slug || 'sin-slug';
+            return '<tr>' +
+              '<td><strong>' + escapeHtml(id) + '</strong><br><span class="muted">' + escapeHtml(slug) + '</span></td>' +
+              '<td>total=' + (item.total_score || 0) + '<br><span class="muted">dup=' + (item.duplicate_score || 0) + ' | fraud=' + (item.fraud_score || 0) + '</span></td>' +
+              '<td class="outcome-' + escapeHtml(item.outcome || 'unknown') + '">' + escapeHtml(item.outcome || 'unknown') + '</td>' +
+              '<td>' + formatTags(item) + '</td>' +
+              '<td>' + escapeHtml(item.review_priority || '-') + '</td>' +
+              '<td>' + (eventsByListing[id] && eventsByListing[id].length ? ('<span class="event-chip">' + eventsByListing[id].length + ' eventos</span>') : '<span class="event-chip">0 eventos</span>') + '</td>' +
+            '</tr>';
+          })
+          .join('');
+
+        document.getElementById('listing-rows').innerHTML = rows || '<tr><td colspan="6" class="muted">No hay resultados para el filtro seleccionado.</td></tr>';
+      }
+
+      function renderMetaLine() {
+        var gen = report.generated_at || 'unknown';
+        var engine = report.engine_version || 'unknown';
+        var workflow = report.moderation_workflow_version || 'unknown';
+        document.getElementById('meta-line').innerHTML =
+          'generated_at=<code>' + escapeHtml(gen) + '</code> | engine=<code>' + escapeHtml(engine) + '</code> | moderation_workflow=<code>' + escapeHtml(workflow) + '</code>';
+      }
+
+      outcomeFilter.addEventListener('change', renderTable);
+
+      Promise.all([
+        fetch('../data/risk-report.json', { cache: 'no-store' }).then(function (response) {
+          if (!response.ok) {
+            throw new Error('No se pudo cargar ../data/risk-report.json (' + response.status + ')');
+          }
+          return response.json();
+        }),
+        fetch('../data/moderation-events.log.jsonl', { cache: 'no-store' }).then(function (response) {
+          if (!response.ok) {
+            return [];
+          }
+          return response.text().then(parseJsonlLines);
+        })
+      ])
+        .then(function (payloads) {
+          var riskPayload = payloads[0];
+          var ledgerPayload = payloads[1];
+          report = riskPayload;
+          items = Array.isArray(riskPayload.items) ? riskPayload.items : [];
+          moderationEvents = Array.isArray(ledgerPayload) ? ledgerPayload : [];
+          indexEvents();
+          renderMetaLine();
+          renderStats(riskPayload.totals && riskPayload.totals.outcomes ? riskPayload.totals.outcomes : {});
+          renderLedgerWidgets();
+          renderTopSignals();
+          renderTable();
+        })
+        .catch(function (error) {
+          document.getElementById('meta-line').textContent = 'Error cargando datasets internos: ' + error.message;
+          document.getElementById('ledger-summary').textContent = 'No fue posible cargar el ledger.';
+          document.getElementById('listing-rows').innerHTML = '<tr><td colspan="6" class="muted">No fue posible cargar el dataset.</td></tr>';
+        });
+    })();
+  </script>
+</body>
+</html>
