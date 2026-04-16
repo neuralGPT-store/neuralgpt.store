@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder inmobiliario Lisboa Estrela terraza</title>
+  <desc id="desc">Terraza sobria con vistas urbanas y vegetación contenida.</desc>
+  <rect width="1200" height="800" fill="#f6f1ea"/>
+  <rect x="0" y="420" width="1200" height="380" fill="#d8cfc2"/>
+  <rect x="110" y="190" width="980" height="260" fill="#dbe6ea"/>
+  <polygon points="0,420 1200,420 1200,500 0,560" fill="#e9dfd3"/>
+  <rect x="120" y="460" width="960" height="180" fill="#efe5da"/>
+  <rect x="170" y="520" width="220" height="50" rx="12" fill="#b5967e"/>
+  <rect x="820" y="520" width="220" height="50" rx="12" fill="#b5967e"/>
+  <circle cx="525" cy="550" r="55" fill="#cab39a"/>
+  <rect x="485" y="510" width="80" height="80" rx="12" fill="#f8f4ef"/>
+  <g fill="#718764">
+    <circle cx="220" cy="475" r="26"/>
+    <circle cx="980" cy="470" r="24"/>
+  </g>
+  <text x="80" y="110" fill="#65594f" font-family="Georgia, serif" font-size="44">Terraza privada</text>
+  <text x="80" y="165" fill="#877a6f" font-family="Arial, sans-serif" font-size="24">Estancia estable · exterior cuidado</text>
+</svg>

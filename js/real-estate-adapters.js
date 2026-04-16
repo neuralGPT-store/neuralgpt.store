@@ -1,0 +1,230 @@
+(function (root, factory) {
+  'use strict';
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = factory();
+    return;
+  }
+
+  root.RealEstateAdapters = factory();
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+
+  function getQueryParams(search) {
+    var source = typeof search === 'string'
+      ? search
+      : (typeof window !== 'undefined' && window.location ? window.location.search : '');
+
+    var params = new URLSearchParams(source);
+    var result = {};
+
+    params.forEach(function (value, key) {
+      result[key] = value;
+    });
+
+    return result;
+  }
+
+  function getRealEstateFeatureFlags(settings) {
+    var flags = settings && settings.feature_flags ? settings.feature_flags : {};
+
+    return {
+      activationQueryParam: flags.activation_query_param || 're_bridge',
+      marketplace: flags.real_estate_marketplace === true,
+      product: flags.real_estate_product === true,
+      home: flags.real_estate_home === true
+    };
+  }
+
+  function resolveListingFromQuery(listings, query) {
+    if (!Array.isArray(listings) || !query) {
+      return null;
+    }
+
+    var wantedSlug = query.slug ? String(query.slug).trim().toLowerCase() : '';
+    var wantedId = query.id ? String(query.id).trim().toLowerCase() : '';
+
+    for (var i = 0; i < listings.length; i += 1) {
+      var listing = listings[i];
+      var listingSlug = String(listing.slug || '').toLowerCase();
+      var listingId = String(listing.id || '').toLowerCase();
+
+      if (wantedSlug && listingSlug === wantedSlug) {
+        return listing;
+      }
+
+      if (wantedId && (listingId === wantedId || listingSlug === wantedId)) {
+        return listing;
+      }
+    }
+
+    return null;
+  }
+
+  function shouldUseRealEstateMode(target, settings, search) {
+    var flags = getRealEstateFeatureFlags(settings);
+    var query = getQueryParams(search);
+    var activationKey = flags.activationQueryParam;
+    var queryEnabled = query[activationKey] === '1';
+
+    if (!queryEnabled) {
+      return false;
+    }
+
+    if (target === 'marketplace') {
+      return flags.marketplace;
+    }
+
+    if (target === 'product') {
+      return flags.product;
+    }
+
+    if (target === 'home') {
+      return flags.home;
+    }
+
+    return false;
+  }
+
+  function buildMarketplaceBridgeModel(listings, taxonomy, settings) {
+    var safeListings = Array.isArray(listings) ? listings.slice() : [];
+    var safeTaxonomy = taxonomy && typeof taxonomy === 'object' ? taxonomy : {};
+    var safeSettings = settings && typeof settings === 'object' ? settings : {};
+    var countries = Array.isArray(safeTaxonomy.countries) ? safeTaxonomy.countries.slice() : [];
+    var countryNameByCode = {};
+    var cityMap = {};
+    var zoneMap = {};
+
+    countries.forEach(function (country) {
+      if (!country || !country.code) {
+        return;
+      }
+
+      countryNameByCode[String(country.code)] = country.name || country.code;
+    });
+
+    var operationLabels = {
+      sale: 'VENTA',
+      long_term_rent: 'ALQUILER ESTABLE',
+      room_rent: 'HABITACIÓN LARGA ESTANCIA'
+    };
+
+    var assetLabels = {
+      apartment: 'Residencial',
+      room: 'Habitación',
+      commercial_unit: 'Local',
+      warehouse: 'Nave',
+      land: 'Suelo',
+      singular_asset: 'Activo singular'
+    };
+
+    var icons = {
+      apartment: '🏛️',
+      room: '🛏️',
+      commercial_unit: '🏬',
+      warehouse: '🏭',
+      land: '📐',
+      singular_asset: '✨'
+    };
+
+    var catalog = safeListings.map(function (listing) {
+      var detailHref = '/listing.html?slug=' + encodeURIComponent(listing.slug);
+
+      if (listing && listing.city) {
+        cityMap[String(listing.city)] = true;
+      }
+
+      if (listing && listing.zone) {
+        zoneMap[String(listing.zone)] = true;
+      }
+
+      return {
+        id: listing.id,
+        slug: listing.slug,
+        name: listing.title,
+        tag: (operationLabels[listing.operation] || String(listing.operation || '')).toUpperCase() + ' · ' + (assetLabels[listing.asset_type] || listing.asset_type),
+        desc: listing.summary,
+        price: listing.price,
+        period: listing.operation === 'long_term_rent' || listing.operation === 'room_rent' ? ' / mes' : '',
+        icon: icons[listing.asset_type] || '📍',
+        cat: listing.operation,
+        assetType: listing.asset_type,
+        countryCode: listing.country,
+        countryName: countryNameByCode[String(listing.country || '')] || listing.country,
+        city: listing.city,
+        zone: listing.zone,
+        detailHref: detailHref,
+        locationText: [listing.zone, listing.city, listing.region].filter(Boolean).join(', '),
+        verificationState: listing.verification_state,
+        featured: listing.featured === true,
+        image: Array.isArray(listing.images) && listing.images.length ? listing.images[0] : null,
+        badges: Array.isArray(listing.badges) ? listing.badges.slice() : [],
+        publishedAt: listing.published_at,
+        bridgeMeta: {
+          realEstate: true,
+          contactCta: listing.contact_cta,
+          status: listing.status,
+          country: listing.country,
+          currency: listing.currency,
+          surfaceM2: listing.surface_m2,
+          rooms: listing.rooms,
+          bathrooms: listing.bathrooms
+        }
+      };
+    });
+
+    return {
+      title: 'Activos inmobiliarios',
+      subtitle: safeSettings.tagline || 'Base inmobiliaria preparada',
+      catalog: catalog,
+      operations: Array.isArray(safeTaxonomy.operations) ? safeTaxonomy.operations.slice() : [],
+      assetTypes: Array.isArray(safeTaxonomy.asset_types) ? safeTaxonomy.asset_types.slice() : [],
+      countries: countries,
+      cities: Object.keys(cityMap).sort(),
+      zones: Object.keys(zoneMap).sort(),
+      queryParamName: getRealEstateFeatureFlags(settings).activationQueryParam
+    };
+  }
+
+  function buildHomepageBridgeModel(listings, settings) {
+    var safeListings = Array.isArray(listings) ? listings.slice() : [];
+    var featured = safeListings.filter(function (listing) {
+      return listing && listing.featured === true;
+    }).slice(0, 3);
+
+    var counters = settings && settings.counters_placeholder ? settings.counters_placeholder : {};
+
+    return {
+      featuredListings: featured.map(function (listing) {
+        return {
+          id: listing.id,
+          slug: listing.slug,
+          title: listing.title,
+          summary: listing.summary,
+          price: listing.price,
+          currency: listing.currency,
+          operation: listing.operation,
+          assetType: listing.asset_type,
+          image: Array.isArray(listing.images) && listing.images.length ? listing.images[0] : null,
+          badges: Array.isArray(listing.badges) ? listing.badges.slice(0, 2) : [],
+          link: '/listing.html?slug=' + encodeURIComponent(listing.slug)
+        };
+      }),
+      metrics: {
+        featuredListings: typeof counters.featured_listings === 'number' ? counters.featured_listings : featured.length,
+        europeanCities: typeof counters.european_cities === 'number' ? counters.european_cities : 0,
+        verifiedAssets: typeof counters.verified_assets === 'number' ? counters.verified_assets : 0,
+        activeAdvertisers: typeof counters.active_advertisers === 'number' ? counters.active_advertisers : 0
+      }
+    };
+  }
+
+  return {
+    getQueryParams: getQueryParams,
+    getRealEstateFeatureFlags: getRealEstateFeatureFlags,
+    resolveListingFromQuery: resolveListingFromQuery,
+    shouldUseRealEstateMode: shouldUseRealEstateMode,
+    buildMarketplaceBridgeModel: buildMarketplaceBridgeModel,
+    buildHomepageBridgeModel: buildHomepageBridgeModel
+  };
+});

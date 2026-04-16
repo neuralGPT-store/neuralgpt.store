@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder inmobiliario Lisboa Estrela fachada residencial</title>
+  <desc id="desc">Edificio residencial claro con terrazas y vegetación urbana sobria.</desc>
+  <rect width="1200" height="800" fill="#f7f3ee"/>
+  <rect x="0" y="575" width="1200" height="225" fill="#d8d0c4"/>
+  <rect x="250" y="180" width="700" height="400" rx="12" fill="#d8c8b6"/>
+  <rect x="300" y="220" width="600" height="320" fill="#fbf7f2"/>
+  <g fill="#c5b39f">
+    <rect x="340" y="260" width="150" height="110"/>
+    <rect x="525" y="260" width="150" height="110"/>
+    <rect x="710" y="260" width="150" height="110"/>
+    <rect x="340" y="400" width="150" height="90"/>
+    <rect x="525" y="400" width="150" height="90"/>
+    <rect x="710" y="400" width="150" height="90"/>
+  </g>
+  <g fill="#9fc0c4">
+    <rect x="360" y="280" width="110" height="70"/>
+    <rect x="545" y="280" width="110" height="70"/>
+    <rect x="730" y="280" width="110" height="70"/>
+  </g>
+  <g fill="#6f8f67">
+    <circle cx="250" cy="610" r="40"/>
+    <circle cx="940" cy="610" r="42"/>
+  </g>
+  <text x="80" y="105" fill="#5d5349" font-family="Georgia, serif" font-size="46">Lisboa · Estrela</text>
+  <text x="80" y="160" fill="#86796e" font-family="Arial, sans-serif" font-size="24">Larga duración · terraza · entorno consolidado</text>
+</svg>

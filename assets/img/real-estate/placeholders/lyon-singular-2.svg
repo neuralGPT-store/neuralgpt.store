@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder inmobiliario Lyon activo singular interior</title>
+  <desc id="desc">Salón patrimonial rehabilitado con escalera y techos altos.</desc>
+  <rect width="1200" height="800" fill="#f6f1ea"/>
+  <rect x="0" y="565" width="1200" height="235" fill="#d8cfc2"/>
+  <rect x="140" y="120" width="920" height="430" fill="#efe5d8" stroke="#cebfae" stroke-width="12"/>
+  <rect x="210" y="180" width="190" height="270" fill="#d7c2aa"/>
+  <rect x="450" y="180" width="300" height="120" fill="#d7c2aa"/>
+  <rect x="450" y="330" width="300" height="120" fill="#d7c2aa"/>
+  <path d="M860 500 L980 500 L980 320 L930 320 L930 450 L860 450 Z" fill="#8d755f"/>
+  <rect x="300" y="510" width="420" height="18" fill="#816a58"/>
+  <text x="80" y="105" fill="#64574b" font-family="Georgia, serif" font-size="44">Interior patrimonial</text>
+  <text x="80" y="160" fill="#87796d" font-family="Arial, sans-serif" font-size="24">Techos altos · rehabilitación cuidada</text>
+</svg>

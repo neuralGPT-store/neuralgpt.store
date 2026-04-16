@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder inmobiliario Valencia suelo finalista</title>
+  <desc id="desc">Parcela urbanizable con acceso rodado y entorno terciario.</desc>
+  <rect width="1200" height="800" fill="#f3f0e8"/>
+  <rect x="0" y="430" width="1200" height="370" fill="#d7cfbf"/>
+  <polygon points="0,500 360,390 840,420 1200,320 1200,800 0,800" fill="#c1b08d"/>
+  <polygon points="140,520 500,410 790,440 1010,375 1010,700 140,700" fill="#dbcda9" stroke="#9b8a62" stroke-width="8"/>
+  <line x1="140" y1="520" x2="1010" y2="375" stroke="#8a7c58" stroke-width="5" stroke-dasharray="16 12"/>
+  <line x1="140" y1="700" x2="1010" y2="555" stroke="#8a7c58" stroke-width="5" stroke-dasharray="16 12"/>
+  <rect x="70" y="610" width="1060" height="30" fill="#a8afb5"/>
+  <text x="80" y="105" fill="#5f584b" font-family="Georgia, serif" font-size="46">Valencia · suelo finalista</text>
+  <text x="80" y="160" fill="#81786b" font-family="Arial, sans-serif" font-size="24">Uso terciario · acceso rodado · desarrollo futuro</text>
+</svg>

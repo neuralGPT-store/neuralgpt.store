@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder inmobiliario Lyon activo singular fachada</title>
+  <desc id="desc">Edificio patrimonial rehabilitado con presencia institucional y composición clásica.</desc>
+  <rect width="1200" height="800" fill="#f4eee7"/>
+  <rect x="0" y="575" width="1200" height="225" fill="#d8cdbf"/>
+  <rect x="310" y="170" width="580" height="410" fill="#d8c5ae"/>
+  <polygon points="290,190 600,95 910,190" fill="#bca48d"/>
+  <rect x="365" y="230" width="470" height="290" fill="#f7f3ed"/>
+  <g fill="#cbb79f">
+    <rect x="400" y="265" width="90" height="100"/>
+    <rect x="510" y="265" width="90" height="100"/>
+    <rect x="620" y="265" width="90" height="100"/>
+    <rect x="730" y="265" width="70" height="100"/>
+  </g>
+  <g fill="#8fa1ad">
+    <rect x="415" y="280" width="60" height="70"/>
+    <rect x="525" y="280" width="60" height="70"/>
+    <rect x="635" y="280" width="60" height="70"/>
+    <rect x="740" y="280" width="45" height="70"/>
+  </g>
+  <rect x="540" y="420" width="120" height="100" fill="#705d4d"/>
+  <text x="80" y="105" fill="#615548" font-family="Georgia, serif" font-size="46">Lyon · activo singular</text>
+  <text x="80" y="160" fill="#85776b" font-family="Arial, sans-serif" font-size="24">Valor patrimonial · representación · uso institucional</text>
+</svg>

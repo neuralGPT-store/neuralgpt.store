@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder inmobiliario Milán Brera local prime</title>
+  <desc id="desc">Local comercial en esquina con grandes escaparates y presencia urbana.</desc>
+  <rect width="1200" height="800" fill="#f7f2eb"/>
+  <rect x="0" y="590" width="1200" height="210" fill="#d7cdbf"/>
+  <polygon points="180,220 760,220 900,320 900,590 180,590" fill="#dcc9b5"/>
+  <polygon points="230,270 720,270 830,350 830,540 230,540" fill="#faf7f3"/>
+  <polygon points="720,270 830,350 830,540 720,460" fill="#d5c0aa"/>
+  <rect x="280" y="320" width="180" height="170" fill="#aec0ca"/>
+  <rect x="500" y="320" width="180" height="170" fill="#aec0ca"/>
+  <polygon points="720,320 790,370 790,500 720,450" fill="#9ab1be"/>
+  <rect x="300" y="505" width="360" height="18" fill="#705a49"/>
+  <text x="80" y="110" fill="#63574b" font-family="Georgia, serif" font-size="46">Milán · Brera</text>
+  <text x="80" y="165" fill="#87786d" font-family="Arial, sans-serif" font-size="24">Retail prime · esquina · alta visibilidad</text>
+</svg>

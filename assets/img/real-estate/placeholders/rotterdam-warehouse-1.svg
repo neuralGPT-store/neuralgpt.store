@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder inmobiliario Róterdam nave logística</title>
+  <desc id="desc">Nave logística moderna con muelles de carga y patio de maniobra.</desc>
+  <rect width="1200" height="800" fill="#eef1f3"/>
+  <rect x="0" y="540" width="1200" height="260" fill="#cfd6dc"/>
+  <rect x="150" y="260" width="900" height="280" fill="#bfc9d1"/>
+  <polygon points="150,260 240,200 1140,200 1050,260" fill="#9eaab4"/>
+  <g fill="#8c98a3">
+    <rect x="230" y="360" width="120" height="140"/>
+    <rect x="390" y="360" width="120" height="140"/>
+    <rect x="550" y="360" width="120" height="140"/>
+    <rect x="710" y="360" width="120" height="140"/>
+    <rect x="870" y="360" width="120" height="140"/>
+  </g>
+  <rect x="80" y="520" width="1040" height="22" fill="#7a858f"/>
+  <text x="80" y="105" fill="#4f5962" font-family="Georgia, serif" font-size="46">Róterdam · logística</text>
+  <text x="80" y="160" fill="#6d7780" font-family="Arial, sans-serif" font-size="24">Última milla · muelles · patio de maniobra</text>
+</svg>

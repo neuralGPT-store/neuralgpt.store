@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>Wrapper temporal del índice inmobiliario | neuralgpt.store</title>
+  <meta name="description" content="Wrapper temporal y reversible para la futura ruta limpia del índice inmobiliario de neuralgpt.store." />
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href="https://neuralgpt.store/inmobiliario.html" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/theme-override.css" />
+  <!-- Wrapper técnico temporal. No activar todavía como ruta limpia final ni enlazar masivamente. -->
+</head>
+<body>
+  <main class="wrap" style="padding-top:64px;padding-bottom:64px;max-width:760px">
+    <section style="padding:28px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
+      <span class="badge badge-verified">WRAPPER TEMPORAL</span>
+      <h1 class="section-title" style="text-align:left;margin:14px 0 12px">Preparando acceso al índice inmobiliario actual</h1>
+      <p id="wrapper-status" style="color:var(--muted);line-height:1.8;margin:0 0 18px">Redirigiendo a la ruta actual equivalente del vertical inmobiliario.</p>
+      <p style="margin:0">Si la redirección automática no se completa, continúa desde <a id="fallback-link" href="/real-estate-index.html">la ruta actual del índice inmobiliario</a>.</p>
+    </section>
+    <noscript>
+      <section style="margin-top:16px;padding:18px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
+        <p style="margin:0">JavaScript está desactivado. Abre directamente <a href="/real-estate-index.html">/real-estate-index.html</a>.</p>
+      </section>
+    </noscript>
+  </main>
+  <script src="/js/clean-route-wrappers.js"></script>
+  <script>
+  (function () {
+    var type = 'inmobiliario';
+    var wrappers = window.CleanRouteWrappers;
+    var status = document.getElementById('wrapper-status');
+    var fallbackLink = document.getElementById('fallback-link');
+
+    if (!wrappers) {
+      status.textContent = 'No se ha podido cargar el helper del wrapper. Usa el enlace directo disponible.';
+      return;
+    }
+
+    var params = wrappers.getWrapperParams();
+    var target = wrappers.resolveCleanWrapperTarget(type, params);
+    fallbackLink.href = wrappers.buildFallbackHref(type, params);
+
+    if (!wrappers.isValidWrapperTarget(type, params)) {
+      status.textContent = 'La redirección automática no es necesaria en este wrapper. Usa el enlace directo disponible.';
+      return;
+    }
+
+    window.location.replace(target);
+  })();
+  </script>
+</body>
+</html>

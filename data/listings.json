@@ -1,0 +1,255 @@
+[
+  {
+    "id": "re-sale-madrid-salamanca-001",
+    "slug": "piso-senorial-reformado-barrio-salamanca-madrid",
+    "title": "Piso señorial reformado en Barrio de Salamanca",
+    "summary": "Vivienda exterior de alta representación con balcones a calle principal y reforma integral de nivel prime.",
+    "description": "Activo residencial premium situado en el eje más consolidado del Barrio de Salamanca. La propiedad se presenta con una reforma integral reciente, distribución equilibrada para uso familiar o patrimonial y acabados nobles. Dispone de amplias estancias de recepción, buena entrada de luz natural y una posición idónea para comprador nacional o internacional que busca una localización prime estable dentro de Madrid.",
+    "operation": "sale",
+    "asset_type": "apartment",
+    "country": "ES",
+    "region": "Comunidad de Madrid",
+    "city": "Madrid",
+    "zone": "Barrio de Salamanca",
+    "price": 2450000,
+    "currency": "EUR",
+    "surface_m2": 214,
+    "rooms": 4,
+    "bathrooms": 4,
+    "status": "published",
+    "verification_state": "verified",
+    "featured": true,
+    "published_at": "2026-04-10T09:00:00Z",
+    "expiration_at": "2026-10-10T09:00:00Z",
+    "images": [
+      "/assets/img/real-estate/placeholders/madrid-salamanca-1.svg",
+      "/assets/img/real-estate/placeholders/madrid-salamanca-2.svg"
+    ],
+    "coordinates": {
+      "lat": 40.4303,
+      "lng": -3.6883
+    },
+    "badges": [
+      "destacado",
+      "verificado",
+      "prime"
+    ],
+    "contact_cta": "Solicitar dossier confidencial"
+  },
+  {
+    "id": "re-rent-lisbon-estrela-002",
+    "slug": "apartamento-ejecutivo-larga-duracion-estrela-lisboa",
+    "title": "Apartamento ejecutivo de larga duración en Estrela",
+    "summary": "Residencia urbana de alta calidad para estancia estable, con terraza y servicios próximos al eje corporativo de Lisboa.",
+    "description": "Activo orientado a alquiler de larga duración para perfil ejecutivo, internacional o relocalización corporativa. El inmueble combina una implantación cómoda en el distrito de Estrela con una planta eficiente, acabados contemporáneos y espacios exteriores que refuerzan el uso residencial estable. La ubicación ofrece buena conexión con zonas de oficinas, oferta cultural y servicios de proximidad.",
+    "operation": "long_term_rent",
+    "asset_type": "apartment",
+    "country": "PT",
+    "region": "Lisboa",
+    "city": "Lisboa",
+    "zone": "Estrela",
+    "price": 4200,
+    "currency": "EUR",
+    "surface_m2": 162,
+    "rooms": 3,
+    "bathrooms": 3,
+    "status": "published",
+    "verification_state": "verified",
+    "featured": true,
+    "published_at": "2026-04-11T08:30:00Z",
+    "expiration_at": "2026-09-11T08:30:00Z",
+    "images": [
+      "/assets/img/real-estate/placeholders/lisbon-estrela-1.svg",
+      "/assets/img/real-estate/placeholders/lisbon-estrela-2.svg"
+    ],
+    "coordinates": {
+      "lat": 38.7145,
+      "lng": -9.1604
+    },
+    "badges": [
+      "destacado",
+      "verificado",
+      "larga-estancia"
+    ],
+    "contact_cta": "Solicitar condiciones de arrendamiento"
+  },
+  {
+    "id": "re-room-berlin-charlottenburg-003",
+    "slug": "suite-amueblada-larga-estancia-charlottenburg-berlin",
+    "title": "Suite amueblada para larga estancia en Charlottenburg",
+    "summary": "Habitación premium con zonas comunes de alta calidad, pensada para estancia estable de profesional o investigador desplazado.",
+    "description": "Unidad en régimen de habitación de larga estancia dentro de inmueble rehabilitado con gestión profesional. El activo ofrece una solución estable, no turística, con privacidad elevada, buen estándar de amueblamiento y zonas comunes funcionales. Está orientado a ocupaciones prolongadas en un entorno bien conectado dentro de Berlín occidental.",
+    "operation": "room_rent",
+    "asset_type": "room",
+    "country": "DE",
+    "region": "Berlín",
+    "city": "Berlín",
+    "zone": "Charlottenburg",
+    "price": 1650,
+    "currency": "EUR",
+    "surface_m2": 28,
+    "rooms": 1,
+    "bathrooms": 1,
+    "status": "published",
+    "verification_state": "verified",
+    "featured": false,
+    "published_at": "2026-04-08T07:45:00Z",
+    "expiration_at": "2026-08-08T07:45:00Z",
+    "images": [
+      "/assets/img/real-estate/placeholders/berlin-room-1.svg"
+    ],
+    "coordinates": {
+      "lat": 52.5048,
+      "lng": 13.3051
+    },
+    "badges": [
+      "verificado",
+      "larga-estancia"
+    ],
+    "contact_cta": "Solicitar visita y criterios de admisión"
+  },
+  {
+    "id": "re-commercial-milan-brera-004",
+    "slug": "local-prime-esquina-brera-milan",
+    "title": "Local prime en esquina comercial de Brera",
+    "summary": "Activo comercial con fachada representativa y alta visibilidad peatonal en uno de los entornos más sólidos de Milán.",
+    "description": "Local comercial orientado a operador premium, marca consolidada o family office patrimonialista. La unidad disfruta de ubicación en esquina, buena exposición, fachada apta para imagen de marca y una implantación adecuada para retail selectivo, showroom o usos compatibles de alto valor. Se trata de una pieza urbana muy escasa dentro del tejido prime de Brera.",
+    "operation": "sale",
+    "asset_type": "commercial_unit",
+    "country": "IT",
+    "region": "Lombardía",
+    "city": "Milán",
+    "zone": "Brera",
+    "price": 3180000,
+    "currency": "EUR",
+    "surface_m2": 186,
+    "rooms": null,
+    "bathrooms": 2,
+    "status": "published",
+    "verification_state": "verified",
+    "featured": true,
+    "published_at": "2026-04-09T10:15:00Z",
+    "expiration_at": "2026-10-09T10:15:00Z",
+    "images": [
+      "/assets/img/real-estate/placeholders/milan-brera-1.svg",
+      "/assets/img/real-estate/placeholders/milan-brera-2.svg"
+    ],
+    "coordinates": {
+      "lat": 45.4719,
+      "lng": 9.1851
+    },
+    "badges": [
+      "destacado",
+      "verificado",
+      "rentabilidad"
+    ],
+    "contact_cta": "Solicitar rent roll y documentación"
+  },
+  {
+    "id": "re-industrial-rotterdam-port-005",
+    "slug": "nave-logistica-ultima-milla-rotterdam-port",
+    "title": "Nave logística de última milla en corredor Rotterdam Port",
+    "summary": "Activo logístico funcional con patio, buena maniobra y conexión directa con ejes portuarios y metropolitanos.",
+    "description": "Nave pensada para operador logístico, distribución regional o implantación industrial ligera. El activo ofrece una configuración operativa clara, altura libre competitiva, zonas de carga y maniobra suficientes para actividad de última milla o almacenaje técnico. La localización aprovecha la proximidad al gran nodo portuario y a las principales conexiones metropolitanas de Rotterdam.",
+    "operation": "long_term_rent",
+    "asset_type": "warehouse",
+    "country": "NL",
+    "region": "Holanda Meridional",
+    "city": "Róterdam",
+    "zone": "Waalhaven Corridor",
+    "price": 28500,
+    "currency": "EUR",
+    "surface_m2": 4120,
+    "rooms": null,
+    "bathrooms": 4,
+    "status": "published",
+    "verification_state": "verified",
+    "featured": false,
+    "published_at": "2026-04-07T11:00:00Z",
+    "expiration_at": "2026-09-07T11:00:00Z",
+    "images": [
+      "/assets/img/real-estate/placeholders/rotterdam-warehouse-1.svg"
+    ],
+    "coordinates": {
+      "lat": 51.8821,
+      "lng": 4.4471
+    },
+    "badges": [
+      "verificado",
+      "logistica"
+    ],
+    "contact_cta": "Solicitar memoria técnica"
+  },
+  {
+    "id": "re-land-valencia-technological-006",
+    "slug": "suelo-finalista-uso-terciario-corredor-tecnologico-valencia",
+    "title": "Suelo finalista para uso terciario en corredor tecnológico de Valencia",
+    "summary": "Parcela preparada para desarrollo terciario con buen acceso rodado y perfil adecuado para proyecto corporativo o mixto.",
+    "description": "Activo de suelo finalista orientado a promotor, inversor o usuario final que busque implantación terciaria en un entorno de expansión empresarial. La parcela presenta condiciones favorables para proyecto contemporáneo, visibilidad suficiente y cercanía a infraestructuras regionales clave. El enfoque óptimo es corporativo, terciario avanzado o uso mixto compatible con planeamiento.",
+    "operation": "sale",
+    "asset_type": "land",
+    "country": "ES",
+    "region": "Comunitat Valenciana",
+    "city": "Valencia",
+    "zone": "Corredor Tecnológico Noroeste",
+    "price": 1950000,
+    "currency": "EUR",
+    "surface_m2": 6840,
+    "rooms": null,
+    "bathrooms": null,
+    "status": "published",
+    "verification_state": "in_review",
+    "featured": false,
+    "published_at": "2026-04-12T12:00:00Z",
+    "expiration_at": "2026-10-12T12:00:00Z",
+    "images": [
+      "/assets/img/real-estate/placeholders/valencia-land-1.svg"
+    ],
+    "coordinates": {
+      "lat": 39.5159,
+      "lng": -0.4466
+    },
+    "badges": [
+      "suelo",
+      "oportunidad"
+    ],
+    "contact_cta": "Solicitar planeamiento y cargas"
+  },
+  {
+    "id": "re-singular-lyon-heritage-007",
+    "slug": "activo-singular-rehabilitado-quartier-ainay-lyon",
+    "title": "Activo singular rehabilitado en Quartier d'Ainay",
+    "summary": "Inmueble singular de valor patrimonial, adaptado a uso representativo, institucional o corporativo selectivo.",
+    "description": "Activo singular en edificio de alto carácter arquitectónico, con rehabilitación cuidada y posicionamiento orientado a uso representativo. La propiedad resulta adecuada para sede institucional, despacho de primer nivel, residencia corporativa o inversión patrimonial de conservación. Combina presencia histórica, estado técnico actualizado y una localización prestigiosa dentro de Lyon.",
+    "operation": "sale",
+    "asset_type": "singular_asset",
+    "country": "FR",
+    "region": "Auvernia-Ródano-Alpes",
+    "city": "Lyon",
+    "zone": "Quartier d'Ainay",
+    "price": 4870000,
+    "currency": "EUR",
+    "surface_m2": 438,
+    "rooms": 8,
+    "bathrooms": 5,
+    "status": "published",
+    "verification_state": "verified",
+    "featured": true,
+    "published_at": "2026-04-06T09:20:00Z",
+    "expiration_at": "2026-11-06T09:20:00Z",
+    "images": [
+      "/assets/img/real-estate/placeholders/lyon-singular-1.svg",
+      "/assets/img/real-estate/placeholders/lyon-singular-2.svg"
+    ],
+    "coordinates": {
+      "lat": 45.7536,
+      "lng": 4.8280
+    },
+    "badges": [
+      "destacado",
+      "verificado",
+      "activo-singular"
+    ],
+    "contact_cta": "Solicitar cuaderno de inversión"
+  }
+]

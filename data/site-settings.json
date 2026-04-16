@@ -1,0 +1,61 @@
+{
+  "site_name": "neuralgpt.store",
+  "tagline": "Portal premium europeo de anuncios de activos inmobiliarios",
+  "default_locale": "es",
+  "supported_locales": [
+    "es",
+    "en",
+    "fr",
+    "de",
+    "it",
+    "pt"
+  ],
+  "default_currency": "EUR",
+  "public_contact_email": "support@neuralgpt.store",
+  "legal_entity_name": "NeuralGPT Store Real Assets Division",
+  "development_banner_text": "Plataforma en desarrollo",
+  "feature_flags": {
+    "activation_query_param": "re_bridge",
+    "real_estate_marketplace": false,
+    "real_estate_product": false,
+    "real_estate_home": false
+  },
+  "featured_pricing": {
+    "mas_visibilidad": {
+      "label": "Más visibilidad",
+      "amount": 29.95,
+      "currency": "EUR"
+    },
+    "sensacional_24h": {
+      "label": "Sensacional 24h",
+      "amount": 9.95,
+      "currency": "EUR"
+    }
+  },
+  "seo_defaults": {
+    "title": "neuralgpt.store | Portal premium europeo de anuncios de activos inmobiliarios",
+    "description": "Selección cuidada de activos inmobiliarios en Europa para compraventa, alquiler estable, locales, naves, suelo y activos singulares.",
+    "og_image": "/assets/img/og-real-estate-default.png",
+    "robots": "index,follow"
+  },
+  "seo_routes": {
+    "listing_detail_fallback_template": "/listing.html?slug={slug}",
+    "listing_detail_future_template": "/listing/{slug}",
+    "collection_fallback_path": "/marketplace.html",
+    "home_to_collection_path": "/marketplace.html?re_bridge=1"
+  },
+  "seo_collections": {
+    "marketplace": {
+      "title": "Activos inmobiliarios premium en Europa | neuralgpt.store",
+      "description": "Portal premium europeo de anuncios de activos inmobiliarios con foco en compraventa, alquiler estable, locales, naves, suelo y activos singulares.",
+      "canonical_path": "/marketplace.html",
+      "intro": "Colección editorial de activos inmobiliarios pensada para exposición cualificada, posicionamiento orgánico y monetización progresiva."
+    }
+  },
+  "counters_placeholder": {
+    "featured_listings": 24,
+    "european_cities": 12,
+    "verified_assets": 18,
+    "active_advertisers": 9
+  }
+}

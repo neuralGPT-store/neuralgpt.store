@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder inmobiliario Milán Brera interior comercial</title>
+  <desc id="desc">Interior de local premium con exposición limpia y circulación diáfana.</desc>
+  <rect width="1200" height="800" fill="#f8f4ee"/>
+  <rect x="0" y="580" width="1200" height="220" fill="#ddd4c8"/>
+  <rect x="150" y="130" width="900" height="430" fill="#fcfaf7" stroke="#d3c3b0" stroke-width="10"/>
+  <rect x="220" y="210" width="180" height="270" fill="#e6dacb"/>
+  <rect x="450" y="210" width="180" height="270" fill="#e6dacb"/>
+  <rect x="680" y="210" width="180" height="270" fill="#e6dacb"/>
+  <rect x="910" y="210" width="70" height="270" fill="#d4c3b0"/>
+  <rect x="280" y="505" width="640" height="16" fill="#836c59"/>
+  <text x="80" y="110" fill="#65584d" font-family="Georgia, serif" font-size="44">Interior comercial</text>
+  <text x="80" y="165" fill="#88796f" font-family="Arial, sans-serif" font-size="24">Implantación diáfana · representación premium</text>
+</svg>
