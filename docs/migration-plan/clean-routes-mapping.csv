@@ -1,0 +1,9 @@
+current_route,future_route,content_type,canonical_current,canonical_future,wrapper_exists,public_status,migration_priority,notes
+/real-estate-index.html,/inmobiliario,index_master,https://neuralgpt.store/real-estate-index.html,https://neuralgpt.store/inmobiliario,yes,public_seo,5,"Ruta maestra actual del vertical. Wrapper temporal: /inmobiliario.html."
+/venta.html,/venta,collection_sale,https://neuralgpt.store/venta.html,https://neuralgpt.store/venta,yes,public_seo,2,"Colección principal de compraventa. Wrapper temporal: /venta-clean.html."
+/alquiler.html,/alquiler,collection_rent,https://neuralgpt.store/alquiler.html,https://neuralgpt.store/alquiler,yes,public_seo,3,"Colección principal de alquiler estable. Wrapper temporal: /alquiler-clean.html."
+/pais.html?country={slug},/pais/{slug},collection_country,https://neuralgpt.store/pais.html?country={slug},https://neuralgpt.store/pais/{slug},yes,public_seo,4,"Colección geográfica por país. Wrapper temporal: /pais-clean.html."
+/ciudad.html?city={slug},/ciudad/{slug},collection_city,https://neuralgpt.store/ciudad.html?city={slug},https://neuralgpt.store/ciudad/{slug},yes,public_seo,4,"Colección geográfica por ciudad. Wrapper temporal: /ciudad-clean.html."
+/hub-pais.html?country={slug},/hub/pais/{slug},editorial_hub_country,https://neuralgpt.store/hub-pais.html?country={slug},https://neuralgpt.store/hub/pais/{slug},yes,public_seo,6,"Hub editorial por país. Wrapper temporal: /hub-pais-clean.html."
+/hub-ciudad.html?city={slug},/hub/ciudad/{slug},editorial_hub_city,https://neuralgpt.store/hub-ciudad.html?city={slug},https://neuralgpt.store/hub/ciudad/{slug},yes,public_seo,6,"Hub editorial por ciudad. Wrapper temporal: /hub-ciudad-clean.html."
+/listing.html?slug={slug},/listing/{slug},listing_detail,https://neuralgpt.store/listing.html?slug={slug},https://neuralgpt.store/listing/{slug},yes,public_seo,1,"Detalle transaccional principal. Wrapper temporal: /listing-clean.html."

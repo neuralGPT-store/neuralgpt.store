@@ -1,0 +1,38 @@
+{
+  "pilot_phase": "phase-15",
+  "generated_at": "2026-04-16",
+  "routes": [
+    {
+      "clean_route": "/inmobiliario/",
+      "legacy_equivalent": "/real-estate-index.html",
+      "content_type": "index_master",
+      "canonical_pilot": "https://neuralgpt.store/inmobiliario/",
+      "status": "published_pilot",
+      "notes": "Ruta limpia real publicada en subset controlado."
+    },
+    {
+      "clean_route": "/venta/",
+      "legacy_equivalent": "/venta.html",
+      "content_type": "collection_sale",
+      "canonical_pilot": "https://neuralgpt.store/venta/",
+      "status": "published_pilot",
+      "notes": "Coleccion limpia de venta en convivencia con venta.html."
+    },
+    {
+      "clean_route": "/alquiler/",
+      "legacy_equivalent": "/alquiler.html",
+      "content_type": "collection_rent",
+      "canonical_pilot": "https://neuralgpt.store/alquiler/",
+      "status": "published_pilot",
+      "notes": "Coleccion limpia de alquiler en convivencia con alquiler.html."
+    },
+    {
+      "clean_route": "/listing/piso-senorial-reformado-barrio-salamanca-madrid/",
+      "legacy_equivalent": "/listing.html?slug=piso-senorial-reformado-barrio-salamanca-madrid",
+      "content_type": "listing_detail",
+      "canonical_pilot": "https://neuralgpt.store/listing/piso-senorial-reformado-barrio-salamanca-madrid/",
+      "status": "published_pilot",
+      "notes": "Detalle limpio piloto en coexistencia con listing.html por query param."
+    }
+  ]
+}

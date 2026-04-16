@@ -34,10 +34,23 @@ dist/
 build/
 *.bak
 *.bak-*
-docs/
 *.bak
 *.bak-*
-docs/
+
+# Documentation policy: versionar solo migración/auditoría
+docs/*
+!docs/migration-plan/
+!docs/migration-plan/**
 
 _backup/
 *.bak*
+
+# Local/LAB artifacts to keep out of push
+_lab_clean_routes/
+alquiler-clean.html
+ciudad-clean.html
+hub-ciudad-clean.html
+hub-pais-clean.html
+listing-clean.html
+pais-clean.html
+venta-clean.html

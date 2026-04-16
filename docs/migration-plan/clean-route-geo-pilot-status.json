@@ -1,0 +1,81 @@
+{
+  "phase": "phase-18",
+  "generated_at": "2026-04-16",
+  "policy": "controlled_geo_discovery_without_301",
+  "routes": [
+    {
+      "route": "/pais/es/",
+      "status": "pilot_live",
+      "discoverable": true,
+      "canonical_mode": "self_canonical_clean",
+      "linked_from": [
+        "/real-estate-index.html",
+        "/sitemap-real-estate.html",
+        "/sitemap-real-estate.xml",
+        "/pais.html?country=es"
+      ],
+      "legacy_equivalent": "/pais.html?country=es",
+      "notes": "Piloto país limpio activo en convivencia controlada con legacy."
+    },
+    {
+      "route": "/ciudad/madrid/",
+      "status": "pilot_live",
+      "discoverable": true,
+      "canonical_mode": "self_canonical_clean",
+      "linked_from": [
+        "/real-estate-index.html",
+        "/sitemap-real-estate.html",
+        "/sitemap-real-estate.xml",
+        "/ciudad.html?city=madrid"
+      ],
+      "legacy_equivalent": "/ciudad.html?city=madrid",
+      "notes": "Piloto ciudad limpia activo en convivencia controlada con legacy."
+    },
+    {
+      "route": "/pais/pt/",
+      "status": "pilot_live",
+      "discoverable": true,
+      "canonical_mode": "self_canonical_clean",
+      "linked_from": [
+        "/real-estate-index.html",
+        "/sitemap-real-estate.html",
+        "/sitemap-real-estate.xml",
+        "/pais.html?country=pt"
+      ],
+      "legacy_equivalent": "/pais.html?country=pt",
+      "notes": "Segundo piloto país limpio para validar escalabilidad del patrón geo."
+    },
+    {
+      "route": "/ciudad/lisboa/",
+      "status": "pilot_live",
+      "discoverable": true,
+      "canonical_mode": "self_canonical_clean",
+      "linked_from": [
+        "/real-estate-index.html",
+        "/sitemap-real-estate.html",
+        "/sitemap-real-estate.xml",
+        "/ciudad.html?city=lisboa"
+      ],
+      "legacy_equivalent": "/ciudad.html?city=lisboa",
+      "notes": "Segundo piloto ciudad limpia para validar patrón urbano sin activar 301."
+    },
+    {
+      "route": "/hub/pais/{slug}",
+      "status": "not_published_outside_lab",
+      "discoverable": false,
+      "canonical_mode": "n_a",
+      "linked_from": [],
+      "legacy_equivalent": "/hub-pais.html?country={slug}",
+      "notes": "Mantener fuera de publicación limpia en fase 18."
+    },
+    {
+      "route": "/hub/ciudad/{slug}",
+      "status": "not_published_outside_lab",
+      "discoverable": false,
+      "canonical_mode": "n_a",
+      "linked_from": [],
+      "legacy_equivalent": "/hub-ciudad.html?city={slug}",
+      "notes": "Mantener fuera de publicación limpia en fase 18."
+    }
+  ]
+}
