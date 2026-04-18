@@ -22,14 +22,14 @@
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
-  <header class="site-header" role="banner"><a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a><nav class="main-nav" id="main-nav" aria-label="Principal"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Activos</a></li><li><a href="/provider-register.html">Publicar</a></li><li><a href="/contact.html">Contacto</a></li></ul></nav><div class="header-actions"><a href="/sitemap-real-estate.html" class="btn">Sitemap</a><a href="/provider-register.html" class="btn btn-primary">Publicar activo</a><button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+  <header class="site-header" role="banner"><a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a><nav class="main-nav" id="main-nav" aria-label="Principal"><ul><li><a href="/">Inicio</a></li><li><a href="/real-estate-index.html">Inmuebles</a></li><li><a href="/contact.html">Publicar</a></li><li><a href="/contact.html">Contacto</a></li></ul></nav><div class="header-actions"><a href="/sitemap-real-estate.html" class="btn">Sitemap</a><a href="/contact.html" class="btn btn-primary">Publicar activo</a><button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
   <div class="rgb-divider"></div>
-  <nav aria-label="Ruta de navegación" style="padding:12px 0;border-bottom:1px solid var(--border)"><div class="wrap" style="font-size:0.78rem;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a href="/" style="color:var(--muted)">Inicio</a><span>›</span><a href="/marketplace.html" style="color:var(--muted)">Activos</a><span>›</span><span style="color:var(--text)">Índice maestro</span></div></nav>
+  <nav aria-label="Ruta de navegación" style="padding:12px 0;border-bottom:1px solid var(--border)"><div class="wrap" style="font-size:0.78rem;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a href="/" style="color:var(--muted)">Inicio</a><span>›</span><a href="/real-estate-index.html" style="color:var(--muted)">Inmuebles</a><span>›</span><span style="color:var(--text)">Índice maestro</span></div></nav>
   <main id="main-content" class="wrap" style="padding-top:36px;padding-bottom:80px">
     <section style="margin-bottom:28px;padding:28px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">RUTA PÚBLICA SEO</span><span class="badge badge-hot">VERTICAL INMOBILIARIO</span></div>
       <h1 class="section-title" style="text-align:left;margin-bottom:12px">Índice maestro del vertical inmobiliario</h1>
-      <p id="index-intro" style="color:var(--muted);max-width:940px;line-height:1.8;margin:0">Puerta de entrada editorial y comercial del vertical inmobiliario. Desde aquí se accede a colecciones públicas, geografías activas, hubs y activos destacados sin depender de rutas transicionales.</p>
+      <p id="index-intro" style="color:var(--muted);max-width:940px;line-height:1.8;margin:0">Puerta de entrada editorial y comercial del vertical inmobiliario. Cobertura fase 1: Europa completa, Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
         <a href="/venta.html" class="btn">Venta</a>
         <a href="/alquiler.html" class="btn">Alquiler</a>
@@ -69,8 +69,8 @@
           <div style="display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:0.84rem;line-height:1.7">
             <p style="margin:0"><strong style="color:var(--text)">Rutas públicas SEO:</strong> `real-estate-index.html`, colecciones, hubs, sitemap y `listing.html`.</p>
             <p style="margin:0"><strong style="color:var(--text)">Subset limpio piloto descubrible:</strong> `/inmobiliario/`, `/venta/`, `/alquiler/`, `/listing/piso-senorial-reformado-barrio-salamanca-madrid/`, `/pais/es/`, `/ciudad/madrid/`, `/pais/pt/` y `/ciudad/lisboa/`.</p>
-            <p style="margin:0"><strong style="color:var(--text)">Rutas bridge:</strong> `marketplace.html?re_bridge=1` y el modo inmobiliario transicional de `product.html` siguen existiendo, pero no deben ser la entrada pública principal.</p>
-            <p style="margin:0"><strong style="color:var(--text)">Rutas legacy:</strong> `product.html` y el catálogo histórico continúan operativos como capa de compatibilidad.</p>
+            <p style="margin:0"><strong style="color:var(--text)">Rutas bridge:</strong> La entrada principal es /real-estate-index.html.</p>
+            <p style="margin:0"><strong style="color:var(--text)">Rutas activas:</strong> toda la navegación pública del índice se centra en colecciones, hubs, países, ciudades y fichas inmobiliarias vigentes.</p>
           </div>
         </div>
       </div>
@@ -85,8 +85,22 @@
     var taxonomy = await window.RealEstateData.loadTaxonomy();
     var listings = await window.RealEstateData.loadListings();
     var image = location.origin + ((settings.seo_defaults && settings.seo_defaults.og_image) || '/assets/img/og-real-estate-default.png');
-    var countries = Array.isArray(taxonomy.countries) ? taxonomy.countries.slice(0, 4) : [];
-    var cities = uniqueCities(listings).slice(0, 4);
+    var countries = Array.isArray(taxonomy.countries) ? taxonomy.countries.slice() : [];
+    var countryPriority = ['ES', 'PT', 'GB', 'IE', 'TR', 'IS', 'GL', 'DE', 'FR', 'IT', 'NL'];
+    countries.sort(function(a, b){
+      var aCode = String(a && a.code || '');
+      var bCode = String(b && b.code || '');
+      var ai = countryPriority.indexOf(aCode);
+      var bi = countryPriority.indexOf(bCode);
+      if (ai < 0 && bi < 0) return aCode.localeCompare(bCode, 'es');
+      if (ai < 0) return 1;
+      if (bi < 0) return -1;
+      return ai - bi;
+    });
+    countries = countries.slice(0, 10);
+    var cities = uniqueCities(listings);
+    if (cities.indexOf('Edimburgo') < 0) cities.unshift('Edimburgo');
+    cities = cities.slice(0, 10);
     var featured = listings.filter(function(listing){ return listing.featured === true; }).slice(0, 4);
 
     document.title = 'Índice maestro del vertical inmobiliario | neuralgpt.store';

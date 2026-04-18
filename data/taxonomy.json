@@ -36,6 +36,26 @@
     {
       "code": "FR",
       "name": "Francia"
+    },
+    {
+      "code": "GB",
+      "name": "Reino Unido"
+    },
+    {
+      "code": "IE",
+      "name": "Irlanda"
+    },
+    {
+      "code": "TR",
+      "name": "Turquía"
+    },
+    {
+      "code": "IS",
+      "name": "Islandia"
+    },
+    {
+      "code": "GL",
+      "name": "Groenlandia"
     }
   ],
   "languages": [
@@ -117,6 +137,26 @@
     "FR": {
       "title": "Activos en Francia",
       "description": "Selección de activos en Francia con orientación a valor patrimonial, uso institucional y demanda cualificada."
+    },
+    "GB": {
+      "title": "Activos en Reino Unido",
+      "description": "Cobertura para Reino Unido con foco en demanda residencial y corporativa de largo recorrido."
+    },
+    "IE": {
+      "title": "Activos en Irlanda",
+      "description": "Cobertura inicial para Irlanda con foco en residencial urbano y activos de larga duración."
+    },
+    "TR": {
+      "title": "Activos en Turquía",
+      "description": "Oferta en Turquía para inversión inmobiliaria urbana, residencial y comercial con alcance europeo."
+    },
+    "IS": {
+      "title": "Activos en Islandia",
+      "description": "Selección para Islandia orientada a activos singulares, residenciales y patrimoniales."
+    },
+    "GL": {
+      "title": "Activos en Groenlandia",
+      "description": "Base editorial para Groenlandia con activos diferenciales y posicionamiento de largo plazo."
     }
   },
   "city_seo": {
@@ -147,6 +187,10 @@
     "Lyon": {
       "title": "Activos en Lyon",
       "description": "Oferta patrimonial en Lyon para uso representativo, institucional y conservación de valor."
+    },
+    "Edimburgo": {
+      "title": "Activos en Edimburgo",
+      "description": "Cobertura para Escocia con foco en Edimburgo y activos residenciales de demanda estable."
     }
   },
   "breadcrumb_labels": {
@@ -169,7 +213,12 @@
     "DE": "Base editorial orientada a ocupación profesional, larga estancia y gestión contenida del riesgo operativo.",
     "IT": "Entorno apto para retail prime, presencia de marca y activos representativos en núcleos consolidados.",
     "NL": "Mercado especialmente útil para lectura logística, distribución y conectividad metropolitana europea.",
-    "FR": "Cobertura enfocada a valor patrimonial, uso institucional y activos singulares con narrativa sólida."
+    "FR": "Cobertura enfocada a valor patrimonial, uso institucional y activos singulares con narrativa sólida.",
+    "GB": "Reino Unido amplía la cobertura premium europea para perfiles internacionales y demanda estable.",
+    "IE": "Irlanda se integra en fase 1 con enfoque prudente y trazabilidad de calidad de anuncio.",
+    "TR": "Turquía añade un mercado estratégico para inversión y reposicionamiento en activo urbano y comercial.",
+    "IS": "Islandia ofrece un enfoque de activo singular con narrativa patrimonial y escasez diferencial.",
+    "GL": "Groenlandia consolida la cobertura extendida europea con oportunidades de carácter excepcional."
   },
   "city_editorial": {
     "Madrid": "Madrid funciona como nodo prime para capital patrimonial, reposicionamiento residencial y visibilidad internacional.",
@@ -179,5 +228,7 @@
     "Róterdam": "Róterdam permite una narrativa sólida para logística, maniobra y distribución próxima a corredor portuario.",
     "Valencia": "Valencia aporta recorrido para suelo y crecimiento terciario en entornos empresariales emergentes.",
     "Lyon": "Lyon encaja en un discurso de conservación de valor, uso representativo y activo singular bien posicionado."
+    ,
+    "Edimburgo": "Edimburgo representa la cobertura explícita de Escocia en la fase 1 del portal."
   }
 }

@@ -35,14 +35,14 @@
     <nav class="main-nav" id="main-nav" aria-label="Principal">
       <ul>
         <li><a href="/">Inicio</a></li>
-        <li><a href="/marketplace.html">Activos</a></li>
-        <li><a href="/provider-register.html">Publicar</a></li>
+        <li><a href="/real-estate-index.html">Inmuebles</a></li>
+        <li><a href="/contact.html">Publicar</a></li>
         <li><a href="/contact.html">Contacto</a></li>
       </ul>
     </nav>
     <div class="header-actions">
-      <a href="/marketplace.html" class="btn">Colección</a>
-      <a href="/provider-register.html" class="btn btn-primary">Publicar activo</a>
+      <a href="/real-estate-index.html" class="btn">Índice</a>
+      <a href="/contact.html" class="btn btn-primary">Publicar activo</a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -54,7 +54,7 @@
     <div class="wrap" style="font-size:0.78rem;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <a href="/" style="color:var(--muted)">Inicio</a>
       <span>›</span>
-      <a href="/marketplace.html" id="breadcrumb-collection" style="color:var(--muted)">Activos</a>
+      <a href="/real-estate-index.html" id="breadcrumb-collection" style="color:var(--muted)">Inmuebles</a>
       <span>›</span>
       <span id="breadcrumb-name" style="color:var(--text)">Cargando…</span>
     </div>
@@ -89,7 +89,7 @@
             <div id="listing-location" style="color:var(--text);font-size:0.88rem;margin-bottom:14px"></div>
             <div style="display:flex;flex-direction:column;gap:10px">
               <button id="listing-contact" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">Solicitar información</button>
-              <a id="listing-collection-link" href="/marketplace.html" class="btn btn-lg" style="width:100%;justify-content:center;text-decoration:none">Volver a la colección</a>
+              <a id="listing-collection-link" href="/real-estate-index.html" class="btn btn-lg" style="width:100%;justify-content:center;text-decoration:none">Volver al índice</a>
             </div>
             <div style="margin-top:14px;padding:12px 14px;background:rgba(0,234,255,0.05);border:1.5px solid rgba(0,234,255,0.18);border-radius:10px">
               <div style="font-family:var(--font-title);font-size:0.62rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px">DETALLE INMOBILIARIO PÚBLICO</div>
@@ -121,8 +121,8 @@
         <h4>Portal</h4>
         <ul>
           <li><a href="/">Inicio</a></li>
-          <li><a href="/marketplace.html">Activos</a></li>
-          <li><a href="/provider-register.html">Publicar activo</a></li>
+          <li><a href="/real-estate-index.html">Inmuebles</a></li>
+          <li><a href="/contact.html">Publicar activo</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -135,7 +135,8 @@
     </div>
     <div class="footer-bottom">
       <span>© 2025–2026 neuralgpt.store</span>
-      <span>Contacto: <a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a></span>
+      <span>Atención usuario: <a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a></span>
+      <span>Negocio: <a href="mailto:wilfreyera@gmail.com" style="color:var(--accent2)">wilfreyera@gmail.com</a></span>
     </div>
   </footer>
 
@@ -148,7 +149,7 @@
     if(toggle&&nav) toggle.addEventListener('click',function(){ var o=nav.classList.toggle('open'); toggle.setAttribute('aria-expanded',o); });
     initListingPage().catch(function(error){
       console.warn('[ListingPage]', error);
-      renderState('No se ha podido cargar la ficha inmobiliaria.', 'Comprueba el slug o vuelve al marketplace para seguir navegando.');
+      renderState('No se ha podido cargar la ficha inmobiliaria.', 'Comprueba el slug o vuelve al portal inmobiliario para seguir navegando.');
     });
   })();
 
@@ -187,7 +188,7 @@
       '<h1 style="font-family:var(--font-title);font-size:1.2rem;margin-bottom:10px">'+escapeHtml(title)+'</h1>'
       +'<p style="color:var(--muted);line-height:1.7;margin-bottom:18px">'+escapeHtml(description)+'</p>'
       +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
-      +'<a href="/marketplace.html" class="btn btn-primary">Volver al marketplace</a>'
+      +'<a href="/real-estate-index.html" class="btn btn-primary">Volver al índice</a>'
       +'<a href="/" class="btn">Ir al inicio</a>'
       +'</div>';
   }
@@ -195,14 +196,8 @@
   function renderListing(listing, detail, seo, settings, taxonomy){
     var currentPath = '/listing.html?slug=' + encodeURIComponent(detail.slug);
     var canonicalUrl = location.origin + currentPath;
-    var cleanPilotDetailPath = detail.slug === 'piso-senorial-reformado-barrio-salamanca-madrid'
-      ? '/listing/piso-senorial-reformado-barrio-salamanca-madrid/'
-      : '';
-    var cleanPilotCollectionPath = detail.operation === 'sale'
-      ? '/venta/'
-      : ((detail.operation === 'long_term_rent' || detail.operation === 'room_rent') ? '/alquiler/' : '');
     var ogImage = seo.ogImage && seo.ogImage.indexOf('http') === 0 ? seo.ogImage : location.origin + (seo.ogImage || '');
-    var collectionHref = buildCollectionHref();
+    var collectionHref = operationHref(detail.operation);
     var citySeo = taxonomy && taxonomy.city_seo ? taxonomy.city_seo[detail.city] : null;
     var countrySeo = taxonomy && taxonomy.country_seo ? taxonomy.country_seo[detail.country] : null;
     var operationSeo = taxonomy && taxonomy.operation_seo ? taxonomy.operation_seo[detail.operation] : null;
@@ -261,12 +256,9 @@
     ].join('');
     document.getElementById('listing-contact').textContent = detail.contactCta;
     document.getElementById('listing-contact').onclick = function(){
-      window.location.href = 'mailto:' + ((settings && settings.public_contact_email) || 'support@neuralgpt.store') + '?subject=' + encodeURIComponent('Consulta activo: ' + detail.title);
+      window.location.href = 'mailto:' + ((settings && settings.public_contact_email) || 'neuralgpt.store@protonmail.com') + '?subject=' + encodeURIComponent('Consulta activo: ' + detail.title);
     };
-    document.getElementById('listing-seo-note').innerHTML =
-      '<span>Ruta pública actual: <strong>/listing.html?slug='+escapeHtml(detail.slug)+'</strong></span><br>'
-      +'<span>Ruta futura prevista: <strong>/listing/'+escapeHtml(detail.slug)+'</strong></span>'
-      +(cleanPilotDetailPath ? '<br><span>Piloto limpio activo: <a href="'+escapeHtml(cleanPilotDetailPath)+'" style="color:var(--accent)">abrir versión limpia</a></span>' : '');
+    document.getElementById('listing-seo-note').innerHTML = '<span style="color:var(--muted);font-size:0.75rem">/listing.html?slug='+escapeHtml(detail.slug)+'</span>';
     document.getElementById('listing-seo-copy').innerHTML = [
       operationSeo ? '<p style="margin-bottom:12px">'+escapeHtml(operationSeo.description)+'</p>' : '',
       citySeo ? '<p style="margin-bottom:12px">'+escapeHtml(citySeo.description)+'</p>' : '',
@@ -275,11 +267,8 @@
     document.getElementById('listing-collection-links').innerHTML =
       '<a href="/real-estate-index.html" class="platform-pill">Índice maestro</a>'
       +'<a href="'+escapeHtml(operationHref(detail.operation))+'" class="platform-pill">'+escapeHtml(humanOperation(detail.operation))+'</a>'
-      +(cleanPilotCollectionPath ? '<a href="'+escapeHtml(cleanPilotCollectionPath)+'" class="platform-pill">Colección limpia piloto</a>' : '')
       +'<a href="/pais.html?country='+encodeURIComponent(String(detail.country || '').toLowerCase())+'" class="platform-pill">'+escapeHtml(detail.country)+'</a>'
-      +'<a href="/ciudad.html?city='+encodeURIComponent(normalizeSlug(detail.city))+'" class="platform-pill">'+escapeHtml(detail.city)+'</a>'
-      +'<a href="/sitemap-real-estate.html" class="platform-pill">Sitemap</a>'
-      +(cleanPilotDetailPath ? '<a href="'+escapeHtml(cleanPilotDetailPath)+'" class="platform-pill">Detalle limpio piloto</a>' : '');
+      +'<a href="/ciudad.html?city='+encodeURIComponent(normalizeSlug(detail.city))+'" class="platform-pill">'+escapeHtml(detail.city)+'</a>';
 
     document.getElementById('listing-schema').textContent = JSON.stringify({
       "@context":"https://schema.org",
@@ -310,11 +299,6 @@
     });
   }
 
-  function buildCollectionHref(){
-    var query = window.RealEstateAdapters.getQueryParams();
-    return query.re_bridge === '1' ? '/marketplace.html?re_bridge=1' : '/marketplace.html';
-  }
-
   function factRow(label, value){
     return '<div style="display:flex;justify-content:space-between;gap:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.06)"><span style="color:var(--muted)">'+escapeHtml(label)+'</span><strong style="text-align:right">'+escapeHtml(value)+'</strong></div>';
   }
@@ -322,7 +306,7 @@
   function operationHref(operation){
     if(operation === 'sale') return '/venta.html';
     if(operation === 'long_term_rent' || operation === 'room_rent') return '/alquiler.html';
-    return '/marketplace.html';
+    return '/real-estate-index.html';
   }
 
   function setListingImage(image, title){

@@ -27,24 +27,160 @@
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
-  <header class="site-header" role="banner"><a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a><nav class="main-nav" id="main-nav" aria-label="Principal"><ul><li><a href="/">Inicio</a></li><li><a href="/marketplace.html">Activos</a></li><li><a href="/provider-register.html">Publicar</a></li><li><a href="/contact.html">Contacto</a></li></ul></nav><div class="header-actions"><a href="/marketplace.html" class="btn">Marketplace</a><a href="/provider-register.html" class="btn btn-primary">Publicar activo</a><button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+  <header class="site-header" role="banner"><a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a><nav class="main-nav" id="main-nav" aria-label="Principal"><ul><li><a href="/">Inicio</a></li><li><a href="/real-estate-index.html">Inmuebles</a></li><li><a href="/contact.html">Publicar</a></li><li><a href="/contact.html">Contacto</a></li></ul></nav><div class="header-actions"><a href="/real-estate-index.html" class="btn">Ver inmuebles</a><a href="/contact.html" class="btn btn-primary">Publicar activo</a><button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
   <div class="rgb-divider"></div>
-  <nav aria-label="Ruta de navegación" style="padding:12px 0;border-bottom:1px solid var(--border)"><div class="wrap" style="font-size:0.78rem;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a href="/" style="color:var(--muted)">Inicio</a><span>›</span><a href="/marketplace.html" style="color:var(--muted)">Activos</a><span>›</span><span id="breadcrumb-current" style="color:var(--text)">Alquiler</span></div></nav>
+  <nav aria-label="Ruta de navegación" style="padding:12px 0;border-bottom:1px solid var(--border)"><div class="wrap" style="font-size:0.78rem;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a href="/" style="color:var(--muted)">Inicio</a><span>›</span><a href="/real-estate-index.html" style="color:var(--muted)">Inmuebles</a><span>›</span><span id="breadcrumb-current" style="color:var(--text)">Alquiler</span></div></nav>
   <main id="main-content" class="wrap" style="padding-top:36px;padding-bottom:80px">
-    <section style="margin-bottom:28px;padding:26px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)"><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">COLECCIÓN PÚBLICA</span><span class="badge badge-hot">ALQUILER</span></div><h1 id="collection-title" class="section-title" style="text-align:left;margin-bottom:12px">Activos en alquiler estable</h1><p id="collection-intro" style="color:var(--muted);max-width:880px;line-height:1.8;margin:0">Cargando colección.</p><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><a href="/real-estate-index.html" class="btn">Índice maestro</a><a href="/venta.html" class="btn">Ver venta</a><a href="/sitemap-real-estate.html" class="btn">Sitemap</a><a href="/alquiler/" class="btn">Versión limpia piloto</a><a href="/marketplace.html" class="btn">Volver al marketplace</a></div></section>
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px"><span id="results-count" style="font-size:0.82rem;color:var(--muted)">Cargando activos…</span><div style="display:flex;gap:8px;flex-wrap:wrap"><a href="/pais.html?country=pt" class="platform-pill">Portugal</a><a href="/ciudad.html?city=berlin" class="platform-pill">Berlín</a></div></div>
+    <section style="margin-bottom:28px;padding:26px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">COLECCIÓN PÚBLICA</span><span class="badge badge-hot">ALQUILER</span></div>
+      <h1 id="collection-title" class="section-title" style="text-align:left;margin-bottom:12px">Activos en alquiler</h1>
+      <p id="collection-intro" style="color:var(--muted);max-width:880px;line-height:1.8;margin:0">Cargando colección.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+        <a href="/real-estate-index.html" class="btn">Índice inmobiliario</a>
+        <a href="/venta.html" class="btn">Ver venta</a>
+        <a href="/contact.html" class="btn">Publicar activo</a>
+      </div>
+    </section>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+      <span id="results-count" style="font-size:0.82rem;color:var(--muted)">Cargando activos…</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <select id="filter-subtype" class="form-control" style="min-width:160px;height:34px;font-size:0.78rem;padding:0 10px">
+          <option value="">Todos los tipos</option>
+          <option value="long_term_rent">Alquiler estable</option>
+          <option value="room_rent">Habitación</option>
+        </select>
+        <select id="filter-city" class="form-control" style="min-width:130px;height:34px;font-size:0.78rem;padding:0 10px">
+          <option value="">Todas las ciudades</option>
+        </select>
+      </div>
+    </div>
     <div id="collection-grid" class="market-grid" role="list" aria-live="polite"></div>
     <div id="empty-state" style="display:none;padding:42px 24px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg);text-align:center"><div style="font-size:2.5rem;margin-bottom:12px">🏠</div><h2 style="font-family:var(--font-title);font-size:1rem;margin-bottom:8px">No hay activos disponibles</h2><p style="color:var(--muted);line-height:1.7;margin:0">Esta colección de alquiler todavía no tiene continuidad suficiente.</p></div>
   </main>
-  <footer class="site-footer"><div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="/marketplace.html" style="color:var(--accent)">Activos</a></span></div></footer>
+  <footer class="site-footer"><div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="/real-estate-index.html" style="color:var(--accent)">Inmuebles</a></span></div></footer>
   <script src="/js/real-estate-data.js"></script><script src="/js/real-estate-presenters.js"></script><script src="/js/real-estate-adapters.js"></script>
   <script>
-  (function(){ var toggle=document.getElementById('nav-toggle'), nav=document.getElementById('main-nav'); if(toggle&&nav) toggle.addEventListener('click',function(){ var o=nav.classList.toggle('open'); toggle.setAttribute('aria-expanded',o); }); initRentCollection().catch(function(error){ console.warn('[RentCollection]', error); showEmpty('No se ha podido cargar la colección de alquiler.'); }); })();
-  async function initRentCollection(){ var settings=await window.RealEstateData.loadSiteSettings(); var taxonomy=await window.RealEstateData.loadTaxonomy(); var listings=await window.RealEstateData.loadListings(); var items=listings.filter(function(listing){ return listing.operation==='long_term_rent' || listing.operation==='room_rent'; }); var seo=taxonomy.operation_seo && taxonomy.operation_seo.rent_collection ? taxonomy.operation_seo.rent_collection : null; renderCollection({ title:(seo&&seo.title)||'Activos en alquiler estable', description:(seo&&seo.description)||'Colección de alquiler estable.', canonicalPath:'/alquiler.html', items:items }, settings); }
-  function renderCollection(model, settings){ document.title=model.title+' | neuralgpt.store'; document.getElementById('page-title').textContent=model.title+' | neuralgpt.store'; document.getElementById('page-desc').setAttribute('content',model.description); document.getElementById('og-title').setAttribute('content',model.title+' | neuralgpt.store'); document.getElementById('og-desc').setAttribute('content',model.description); document.getElementById('twitter-title').setAttribute('content',model.title+' | neuralgpt.store'); document.getElementById('twitter-desc').setAttribute('content',model.description); document.getElementById('og-url').setAttribute('content',location.origin+model.canonicalPath); var image=location.origin+((settings.seo_defaults&&settings.seo_defaults.og_image)||'/assets/img/og-real-estate-default.png'); document.getElementById('og-image').setAttribute('content',image); document.getElementById('twitter-image').setAttribute('content',image); var canon=document.querySelector('link[rel=\"canonical\"]'); if(!canon){ canon=document.createElement('link'); canon.rel='canonical'; document.head.appendChild(canon); } canon.href=location.origin+model.canonicalPath; document.getElementById('collection-title').textContent=model.title; document.getElementById('collection-intro').textContent=model.description; document.getElementById('breadcrumb-current').textContent='Alquiler'; document.getElementById('results-count').textContent=model.items.length+' activo'+(model.items.length!==1?'s':'')+' en alquiler'; renderGrid(model.items); document.getElementById('collection-schema').textContent=JSON.stringify({ "@context":"https://schema.org", "@type":"CollectionPage", "name":model.title, "description":model.description, "url":location.origin+model.canonicalPath, "mainEntity":{ "@type":"ItemList", "numberOfItems":model.items.length } }); }
-  function renderGrid(items){ if(!items.length){ showEmpty('No hay activos de alquiler publicados actualmente.'); return; } document.getElementById('empty-state').style.display='none'; document.getElementById('collection-grid').innerHTML=items.map(function(listing){ return renderCard(window.RealEstatePresenters.toListingCardViewModel(listing)); }).join(''); }
-  function showEmpty(message){ document.getElementById('collection-grid').innerHTML=''; document.getElementById('empty-state').style.display='block'; document.querySelector('#empty-state p').textContent=message; }
-  function renderCard(vm){ return '<article class="product-card" role="listitem"><div class="product-thumb" style="position:relative;background:linear-gradient(135deg,rgba(233,226,214,0.7),rgba(205,193,175,0.7))">'+(vm.image?'<img src=\"'+escapeHtml(vm.image)+'\" alt=\"'+escapeHtml(vm.title)+'\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.94\">':'<span>🏠</span>')+'<div style=\"position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:4px;align-items:flex-end\"><span class=\"badge badge-verified\" style=\"font-size:0.58rem\">ACTIVO</span>'+(vm.featured?'<span class=\"badge badge-hot\" style=\"font-size:0.58rem\">DESTACADO</span>':'')+'</div></div><div class="product-body"><span class="product-tag">'+escapeHtml((vm.operation||'').replace(/_/g,' ').toUpperCase())+'</span><span class="product-name">'+escapeHtml(vm.title)+'</span><p class="product-desc">'+escapeHtml(vm.summary)+'</p><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'+(vm.surfaceLabel?'<span class="platform-pill">'+escapeHtml(vm.surfaceLabel)+'</span>':'')+(vm.roomsLabel?'<span class="platform-pill">'+escapeHtml(vm.roomsLabel)+'</span>':'')+(vm.locationLabel?'<span class="platform-pill">'+escapeHtml(vm.locationLabel)+'</span>':'')+'</div><div class="product-footer"><span class="product-price">'+escapeHtml(vm.priceLabel)+' / mes</span><a href="/listing.html?slug='+encodeURIComponent(vm.slug)+'" class="btn btn-primary btn-sm">Ver activo</a></div></div></article>'; }
+  (function(){
+    var toggle=document.getElementById('nav-toggle'), nav=document.getElementById('main-nav');
+    if(toggle&&nav) toggle.addEventListener('click',function(){ var o=nav.classList.toggle('open'); toggle.setAttribute('aria-expanded',o); });
+    initRentCollection().catch(function(error){
+      console.warn('[RentCollection]', error);
+      showEmpty('No se ha podido cargar la colección de alquiler.');
+    });
+  })();
+
+  var _rentAllItems = [];
+
+  async function initRentCollection(){
+    var settings = await window.RealEstateData.loadSiteSettings();
+    var taxonomy = await window.RealEstateData.loadTaxonomy();
+    var listings = await window.RealEstateData.loadListings();
+    var items = listings.filter(function(l){
+      return (l.operation === 'long_term_rent' || l.operation === 'room_rent') && l.status === 'published';
+    });
+    var seo = taxonomy.operation_seo && taxonomy.operation_seo.rent_collection ? taxonomy.operation_seo.rent_collection : null;
+    var title = (seo && seo.title) || 'Activos en alquiler';
+    var description = (seo && seo.description) || 'Colección de alquiler estable y habitaciones de larga estancia en Europa.';
+
+    document.title = title + ' | neuralgpt.store';
+    document.getElementById('page-title').textContent = title + ' | neuralgpt.store';
+    document.getElementById('page-desc').setAttribute('content', description);
+    document.getElementById('og-title').setAttribute('content', title + ' | neuralgpt.store');
+    document.getElementById('og-desc').setAttribute('content', description);
+    document.getElementById('twitter-title').setAttribute('content', title + ' | neuralgpt.store');
+    document.getElementById('twitter-desc').setAttribute('content', description);
+    document.getElementById('og-url').setAttribute('content', location.origin + '/alquiler.html');
+    var ogImg = location.origin + ((settings.seo_defaults && settings.seo_defaults.og_image) || '/assets/img/og-real-estate-default.png');
+    document.getElementById('og-image').setAttribute('content', ogImg);
+    document.getElementById('twitter-image').setAttribute('content', ogImg);
+    var canon = document.querySelector('link[rel="canonical"]');
+    if(!canon){ canon = document.createElement('link'); canon.rel='canonical'; document.head.appendChild(canon); }
+    canon.href = location.origin + '/alquiler.html';
+    document.getElementById('collection-title').textContent = title;
+    document.getElementById('collection-intro').textContent = description;
+    document.getElementById('breadcrumb-current').textContent = 'Alquiler';
+    document.getElementById('collection-schema').textContent = JSON.stringify({
+      "@context":"https://schema.org","@type":"CollectionPage","name":title,"description":description,
+      "url":location.origin+'/alquiler.html',"mainEntity":{"@type":"ItemList","numberOfItems":items.length}
+    });
+
+    _rentAllItems = items;
+    populateCityFilter(items);
+    applyFilters();
+    document.getElementById('filter-subtype').addEventListener('change', applyFilters);
+    document.getElementById('filter-city').addEventListener('change', applyFilters);
+  }
+
+  function populateCityFilter(items){
+    var seen = {};
+    items.forEach(function(l){ if(l.city) seen[l.city] = true; });
+    var sel = document.getElementById('filter-city');
+    Object.keys(seen).sort().forEach(function(city){
+      var o = document.createElement('option'); o.value = city; o.textContent = city; sel.appendChild(o);
+    });
+  }
+
+  function applyFilters(){
+    var subtype = document.getElementById('filter-subtype').value;
+    var city = document.getElementById('filter-city').value;
+    var items = _rentAllItems.filter(function(l){
+      return (!subtype || l.operation === subtype) && (!city || l.city === city);
+    });
+    var label = items.length + ' activo' + (items.length !== 1 ? 's' : '') + ' en alquiler';
+    if(subtype || city) label += ' · filtrado';
+    document.getElementById('results-count').textContent = label;
+    renderGrid(items);
+  }
+
+  function renderGrid(items){
+    if(!items.length){ showEmpty('No hay activos de alquiler con los filtros aplicados.'); return; }
+    document.getElementById('empty-state').style.display='none';
+    document.getElementById('collection-grid').innerHTML = items.map(function(listing){
+      var vm = window.RealEstatePresenters.toListingCardViewModel(listing);
+      vm.publishedAt = listing.published_at;
+      return renderCard(vm);
+    }).join('');
+  }
+
+  function showEmpty(message){
+    document.getElementById('collection-grid').innerHTML = '';
+    document.getElementById('empty-state').style.display='block';
+    document.querySelector('#empty-state p').textContent = message;
+  }
+
+  function isFresh(publishedAt){
+    if(!publishedAt) return false;
+    var d = new Date(publishedAt);
+    return !isNaN(d.getTime()) && (Date.now() - d.getTime()) < (30 * 86400000);
+  }
+
+  function renderCard(vm){
+    var fresh = isFresh(vm.publishedAt);
+    var isRoom = vm.operation === 'room_rent';
+    var icon = isRoom ? '🛏️' : '🏠';
+    var opLabel = isRoom ? 'Habitación' : 'Alquiler estable';
+    return '<article class="product-card" role="listitem">'
+      +'<div class="product-thumb" style="position:relative;background:linear-gradient(135deg,rgba(233,226,214,0.7),rgba(205,193,175,0.7))">'
+      +(vm.image ? '<img src="'+escapeHtml(vm.image)+'" alt="'+escapeHtml(vm.title)+'" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.94">' : '<span style="font-size:2rem">'+icon+'</span>')
+      +'<div style="position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:4px;align-items:flex-end">'
+      +(vm.verificationState === 'verified' ? '<span class="badge badge-verified" style="font-size:0.58rem">VERIFICADO</span>' : '')
+      +(vm.featured ? '<span class="badge badge-hot" style="font-size:0.58rem">DESTACADO</span>' : '')
+      +(fresh ? '<span class="badge" style="font-size:0.58rem;background:rgba(0,255,153,0.12);color:var(--accent4);border:1px solid rgba(0,255,153,0.25)">NUEVO</span>' : '')
+      +'</div></div>'
+      +'<div class="product-body">'
+      +'<span class="product-tag">'+escapeHtml(opLabel)+'</span>'
+      +'<span class="product-name">'+escapeHtml(vm.title)+'</span>'
+      +'<p class="product-desc">'+escapeHtml(vm.summary)+'</p>'
+      +'<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">'
+      +(vm.surfaceLabel ? '<span class="platform-pill">'+escapeHtml(vm.surfaceLabel)+'</span>' : '')
+      +(vm.roomsLabel ? '<span class="platform-pill">'+escapeHtml(vm.roomsLabel)+'</span>' : '')
+      +(vm.locationLabel ? '<span class="platform-pill">'+escapeHtml(vm.locationLabel)+'</span>' : '')
+      +'</div>'
+      +'<div class="product-footer"><span class="product-price">'+escapeHtml(vm.priceLabel)+' / mes</span>'
+      +'<a href="/listing.html?slug='+encodeURIComponent(vm.slug)+'" class="btn btn-primary btn-sm">Ver activo</a>'
+      +'</div></div></article>';
+  }
+
   function escapeHtml(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
   </script>
 </body>

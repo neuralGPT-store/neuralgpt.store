@@ -1,0 +1,234 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const SCHEMA_VERSION = 1;
+const ALLOWED_REVIEW_STATUS = ['accepted', 'rejected', 'deferred'];
+const LOG_FILE = path.join('data', 'chany', 'batch-item-review-log.jsonl');
+const CONFLICT_LOG_FILE = path.join('data', 'chany', 'batch-item-review-conflicts.log.jsonl');
+
+function ensureDirForFile(filePath) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+}
+
+function appendJsonl(filePath, payload) {
+  ensureDirForFile(filePath);
+  fs.appendFileSync(filePath, JSON.stringify(payload) + '\n', { encoding: 'utf8', flag: 'a' });
+}
+
+function readJsonl(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const raw = fs.readFileSync(filePath, 'utf8');
+  if (!raw.trim()) return [];
+  const lines = raw.split(/\r?\n/).filter(Boolean);
+  const out = [];
+  lines.forEach((line) => {
+    try {
+      out.push(JSON.parse(line));
+    } catch (_error) {
+      /* preserve append-only log even with malformed lines */
+    }
+  });
+  return out;
+}
+
+function normalizeString(value) {
+  if (value == null) return null;
+  const text = String(value).trim();
+  return text ? text : null;
+}
+
+function validateRole(role) {
+  const normalized = normalizeString(role) || 'viewer';
+  if (normalized === 'viewer') {
+    throw new Error('batch_item_review_role_forbidden');
+  }
+  return normalized;
+}
+
+function buildLogPath(root) {
+  return path.join(root, LOG_FILE);
+}
+
+function buildConflictLogPath(root) {
+  return path.join(root, CONFLICT_LOG_FILE);
+}
+
+function buildItemKey(batchId, itemId, listingId) {
+  return String(batchId || '') + '::' + String(itemId || '') + '::' + String(listingId || '');
+}
+
+function findLatestReviewForItem(rows, batchId, itemId, listingId) {
+  const key = buildItemKey(batchId, itemId, listingId);
+  const sorted = (Array.isArray(rows) ? rows : [])
+    .slice()
+    .sort((a, b) => String((a && a.reviewed_at) || '').localeCompare(String((b && b.reviewed_at) || '')));
+  let latest = null;
+  sorted.forEach((row) => {
+    if (!row) return;
+    const rowKey = buildItemKey(
+      row.batch_id || '',
+      row.item_id || '',
+      row.listing_id || ''
+    );
+    if (rowKey === key) latest = row;
+  });
+  return latest;
+}
+
+function appendConflict(root, payload) {
+  const now = new Date().toISOString();
+  const entry = {
+    schema_version: SCHEMA_VERSION,
+    conflict_id: 'batch_item_conflict_' + now.replace(/[:.]/g, '-') + '_' + String(payload && payload.batch_id || 'batch').slice(-12),
+    conflict_at: now,
+    batch_id: payload && payload.batch_id ? payload.batch_id : null,
+    item_id: payload && payload.item_id ? payload.item_id : null,
+    listing_id: payload && payload.listing_id ? payload.listing_id : null,
+    reviewed_by: payload && payload.reviewed_by ? payload.reviewed_by : null,
+    reviewed_role: payload && payload.reviewed_role ? payload.reviewed_role : null,
+    expected_last_review_id: payload && payload.expected_last_review_id ? payload.expected_last_review_id : null,
+    current_last_review_id: payload && payload.current_last_review_id ? payload.current_last_review_id : null,
+    reason: payload && payload.reason ? payload.reason : 'concurrency_conflict'
+  };
+  appendJsonl(buildConflictLogPath(root), entry);
+  return entry;
+}
+
+function submitItemReview(payload, context) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    throw new Error('invalid_payload');
+  }
+  const role = validateRole(context && context.role);
+  const batchId = normalizeString(payload.batch_id);
+  const itemId = normalizeString(payload.item_id);
+  const listingId = normalizeString(payload.listing_id);
+  const reviewedBy = normalizeString(payload.reviewed_by) || normalizeString(context && context.actor) || 'ops_user';
+  const reviewStatus = normalizeString(payload.review_status);
+  const reviewReason = normalizeString(payload.review_reason);
+  const notes = normalizeString(payload.notes);
+  const expectedLastReviewIdRaw = normalizeString(payload.expected_last_review_id);
+  const expectedLastReviewId = expectedLastReviewIdRaw || null;
+
+  if (!batchId) throw new Error('batch_id_required');
+  if (!itemId && !listingId) throw new Error('item_or_listing_id_required');
+  if (!reviewStatus || ALLOWED_REVIEW_STATUS.indexOf(reviewStatus) < 0) {
+    throw new Error('invalid_review_status');
+  }
+  if (!reviewReason || reviewReason.length < 8) {
+    throw new Error('review_reason_required_min_8');
+  }
+
+  const root = (context && context.root) || process.cwd();
+  const logPath = buildLogPath(root);
+  const existingRows = readJsonl(logPath);
+  const latestReview = findLatestReviewForItem(existingRows, batchId, itemId, listingId);
+  const latestReviewId = latestReview && latestReview.review_id ? String(latestReview.review_id) : null;
+
+  if (latestReviewId) {
+    if (!expectedLastReviewId) {
+      appendConflict(root, {
+        batch_id: batchId,
+        item_id: itemId,
+        listing_id: listingId,
+        reviewed_by: reviewedBy,
+        reviewed_role: role,
+        expected_last_review_id: null,
+        current_last_review_id: latestReviewId,
+        reason: 'expected_last_review_id_required'
+      });
+      const conflict = new Error('concurrency_conflict_expected_last_review_id_required');
+      conflict.statusCode = 409;
+      conflict.error_code = 'concurrency_conflict_expected_last_review_id_required';
+      conflict.details = {
+        current_last_review_id: latestReviewId,
+        expected_last_review_id: expectedLastReviewId
+      };
+      throw conflict;
+    }
+    if (expectedLastReviewId !== latestReviewId) {
+      appendConflict(root, {
+        batch_id: batchId,
+        item_id: itemId,
+        listing_id: listingId,
+        reviewed_by: reviewedBy,
+        reviewed_role: role,
+        expected_last_review_id: expectedLastReviewId,
+        current_last_review_id: latestReviewId,
+        reason: 'expected_last_review_id_mismatch'
+      });
+      const conflict = new Error('concurrency_conflict_expected_last_review_id_mismatch');
+      conflict.statusCode = 409;
+      conflict.error_code = 'concurrency_conflict_expected_last_review_id_mismatch';
+      conflict.details = {
+        current_last_review_id: latestReviewId,
+        expected_last_review_id: expectedLastReviewId
+      };
+      throw conflict;
+    }
+  } else if (expectedLastReviewId && expectedLastReviewId !== 'none') {
+    appendConflict(root, {
+      batch_id: batchId,
+      item_id: itemId,
+      listing_id: listingId,
+      reviewed_by: reviewedBy,
+      reviewed_role: role,
+      expected_last_review_id: expectedLastReviewId,
+      current_last_review_id: null,
+      reason: 'unexpected_expected_last_review_id_without_previous_review'
+    });
+    const conflict = new Error('concurrency_conflict_unexpected_expected_last_review_id');
+    conflict.statusCode = 409;
+    conflict.error_code = 'concurrency_conflict_unexpected_expected_last_review_id';
+    conflict.details = {
+      current_last_review_id: null,
+      expected_last_review_id: expectedLastReviewId
+    };
+    throw conflict;
+  }
+
+  const now = new Date().toISOString();
+  const keySuffix = (itemId || listingId || batchId).slice(-24).replace(/[^a-z0-9_-]/gi, '_');
+  const entry = {
+    schema_version: SCHEMA_VERSION,
+    review_id: 'batch_item_rev_' + now.replace(/[:.]/g, '-') + '_' + keySuffix,
+    batch_id: batchId,
+    item_id: itemId || null,
+    listing_id: listingId || null,
+    reviewed_at: now,
+    reviewed_by: reviewedBy,
+    reviewed_role: role,
+    expected_last_review_id: expectedLastReviewId || null,
+    previous_review_id: latestReviewId,
+    review_status: reviewStatus,
+    review_reason: reviewReason,
+    notes: notes || null
+  };
+
+  appendJsonl(logPath, entry);
+  return {
+    ok: true,
+    review: entry,
+    current_last_review_id: entry.review_id,
+    log_path: logPath
+  };
+}
+
+function listRecentItemReviews(params) {
+  const root = (params && params.root) || process.cwd();
+  const limitRaw = Number(params && params.limit);
+  const limit = Number.isFinite(limitRaw) && limitRaw > 0 ? Math.min(Math.floor(limitRaw), 200) : 40;
+  const logPath = buildLogPath(root);
+  const rows = readJsonl(logPath)
+    .sort((a, b) => String((b && b.reviewed_at) || '').localeCompare(String((a && a.reviewed_at) || '')))
+    .slice(0, limit);
+  return rows;
+}
+
+module.exports = {
+  submitItemReview,
+  listRecentItemReviews
+};

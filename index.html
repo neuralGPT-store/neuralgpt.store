@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="es" data-lang="es">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
-  <title>neuralgpt.store — Marketplace de Software e IA</title>
-  <meta name="description" content="neuralgpt.store — Marketplace premium de software, herramientas de IA, automatizaciones y soluciones tecnológicas. Verificado, seguro y con pago Stripe." />
-  <meta property="og:title" content="neuralgpt.store — Marketplace de Software e IA" />
-  <meta property="og:description" content="Descubre y compra software profesional creado con inteligencia artificial." />
+  <title>neuralgpt.store — Portal Inmobiliario Premium</title>
+  <meta name="description" content="neuralgpt.store — Portal inmobiliario premium con cobertura en toda Europa, Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia. Anuncios revisados manualmente." />
+  <meta property="og:title" content="neuralgpt.store — Portal Inmobiliario Premium" />
+  <meta property="og:description" content="Encuentra inmuebles en venta y alquiler verificados. Anuncios revisados manualmente por el equipo neuralgpt." />
   <meta property="og:site_name" content="neuralgpt.store" />
   <meta property="og:url" content="https://neuralgpt.store/" />
-  <meta property="og:image" content="https://neuralgpt.store/assets/img/og-home.png" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta property="og:image" content="https://neuralgpt.store/assets/img/og-real-estate-default.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="neuralgpt.store — Portal Inmobiliario Premium" />
+  <meta name="twitter:description" content="Encuentra inmuebles en venta y alquiler verificados." />
+  <meta name="twitter:image" content="https://neuralgpt.store/assets/img/og-real-estate-default.png" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,111 +25,8 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
-  <style>
-  /* ── PROMO REEL — Spot publicitario animado ── */
-  @keyframes promo-ring-spin { to { transform: rotate(360deg); } }
-  @keyframes promo-svg-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
-  @keyframes promo-svg-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-  @keyframes promo-slide-in  { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
-  @keyframes promo-slide-out { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-40px)} }
-
-  .promo-reel-wrap {
-    position:relative;padding:0 0 8px;background:transparent;overflow:hidden;
-  }
-  .promo-reel-inner {
-    position:relative;max-width:900px;margin:0 auto;
-    border-radius:18px;overflow:hidden;
-    background:linear-gradient(135deg,rgba(0,10,30,0.85),rgba(0,20,50,0.9));
-    border:2px solid transparent;
-    background-clip:padding-box;
-  }
-  /* RGB border via pseudo */
-  .promo-reel-inner::before {
-    content:'';position:absolute;inset:-2px;border-radius:20px;z-index:0;
-    background:conic-gradient(from var(--rgb-angle,0deg),
-      #00eaff,#7f00ff,#ff0080,#00ff99,#00eaff);
-    animation:rgb-rotate 4s linear infinite;
-  }
-  .promo-reel-inner::after {
-    content:'';position:absolute;inset:2px;border-radius:16px;
-    background:linear-gradient(135deg,#00040D,#000814);z-index:1;
-  }
-  .promo-slide {
-    display:none;position:relative;z-index:2;
-    padding:28px 40px 24px;
-    align-items:center;gap:36px;
-    animation:promo-slide-in .35s ease forwards;
-  }
-  .promo-slide.active {
-    display:flex;
-  }
-  .promo-slide-icon {
-    flex:0 0 120px;display:flex;align-items:center;justify-content:center;
-  }
-  .promo-svg {
-    width:96px;height:96px;filter:drop-shadow(0 0 16px rgba(0,234,255,0.3));
-  }
-  .promo-svg-spin-slow { animation:promo-ring-spin 12s linear infinite; }
-  .promo-svg-pulse     { animation:promo-svg-pulse 2.5s ease-in-out infinite; }
-  .promo-svg-bounce    { animation:promo-svg-bounce 2s ease-in-out infinite; }
-  .promo-ring { transform-origin:50% 50%; animation:promo-ring-spin 8s linear infinite; }
-  .promo-slide-content { flex:1;min-width:0; }
-  .promo-slide-tag {
-    display:inline-block;font-family:var(--font-title);font-size:0.6rem;
-    letter-spacing:2px;color:var(--accent);margin-bottom:6px;opacity:.8;
-  }
-  .promo-slide-name {
-    font-family:var(--font-title);font-size:clamp(1.4rem,3vw,2rem);
-    font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    margin:0 0 8px;line-height:1.15;
-  }
-  .promo-slide-tagline {
-    color:var(--muted);font-size:0.9rem;line-height:1.6;
-    margin:0 0 16px;max-width:480px;
-  }
-  .promo-slide-meta {
-    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
-  }
-  .promo-slide-price {
-    font-family:var(--font-title);font-size:1.5rem;font-weight:900;
-    color:var(--accent);
-  }
-  .promo-slide-price small { font-size:0.7rem;color:var(--muted);font-weight:400; }
-  .promo-cta {
-    white-space:nowrap;
-  }
-  .promo-dots {
-    position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-    display:flex;gap:8px;z-index:10;
-  }
-  .promo-dot {
-    width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;
-    background:rgba(0,234,255,0.25);transition:all .25s;padding:0;
-  }
-  .promo-dot.active {
-    background:var(--accent);width:22px;border-radius:4px;
-  }
-  .promo-arrow {
-    position:absolute;top:50%;transform:translateY(-50%);
-    width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(0,234,255,0.3);
-    background:rgba(0,10,30,0.7);color:var(--accent);font-size:1.4rem;
-    cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;
-    transition:all .2s;line-height:1;padding-bottom:2px;
-  }
-  .promo-arrow:hover { background:rgba(0,234,255,0.15);border-color:var(--accent); }
-  .promo-arrow-left  { left:12px; }
-  .promo-arrow-right { right:12px; }
-  @media(max-width:680px){
-    .promo-slide { flex-direction:column;padding:24px 20px 36px;gap:16px; }
-    .promo-slide-icon { flex:none; }
-    .promo-svg { width:72px;height:72px; }
-    .promo-slide-name { font-size:1.3rem; }
-    .promo-arrow { display:none; }
-  }
-  </style>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebSite","name":"neuralgpt.store","url":"https://neuralgpt.store","potentialAction":{"@type":"SearchAction","target":"https://neuralgpt.store/marketplace.html?search={search_term_string}","query-input":"required name=search_term_string"}}
+  {"@context":"https://schema.org","@type":"WebSite","name":"neuralgpt.store","url":"https://neuralgpt.store","potentialAction":{"@type":"SearchAction","target":"https://neuralgpt.store/real-estate-index.html?search={search_term_string}","query-input":"required name=search_term_string"}}
   </script>
 </head>
 <body>
@@ -135,17 +37,15 @@
     <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
     <nav class="main-nav" id="main-nav" aria-label="Principal">
       <ul>
-        <li><a href="/" aria-current="page" data-i18n="nav_home">Inicio</a></li>
-        <li><a href="/marketplace.html" data-i18n="nav_marketplace">Marketplace</a></li>
-        <li><a href="/providers.html" data-i18n="nav_providers">Proveedores</a></li>
-        <li><a href="/pricing.html" data-i18n="nav_pricing">Precios</a></li>
-        <li><a href="/contact.html" data-i18n="nav_contact">Contacto</a></li>
+        <li><a href="/" aria-current="page">Inicio</a></li>
+        <li><a href="/venta.html">Venta</a></li>
+        <li><a href="/alquiler.html">Alquiler</a></li>
+        <li><a href="/contact.html">Contacto</a></li>
       </ul>
     </nav>
     <div class="header-actions">
-      <button class="btn btn-sm" id="lang-btn" aria-label="Cambiar idioma" title="Idioma" style="font-size:1rem;padding:6px 10px">🌐</button>
-      <a href="/marketplace.html" class="btn" data-i18n="btn_explore">Explorar</a>
-      <a href="/provider-register.html" class="btn btn-primary" data-i18n="btn_sell">Vender</a>
+      <a href="/real-estate-index.html" class="btn">Ver inmuebles</a>
+      <a href="/contact.html" class="btn btn-primary">Publicar anuncio</a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
       </button>
@@ -157,699 +57,122 @@
   <section class="hero" role="main" id="main-content">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="particles-wrap" id="particles" aria-hidden="true"></div>
-    <div class="hero-content">
+    <div class="hero-content wrap">
       <div class="hero-badge">
-        <span class="dot"></span>
-        <span data-i18n="hero_badge">MARKETPLACE ACTIVO · SOFTWARE + IA VERIFICADO</span>
+        <span class="dot"></span>PORTAL INMOBILIARIO VERIFICADO
       </div>
-      <h1 data-i18n="hero_title">El futuro del<br>software está aquí</h1>
-      <p data-i18n="hero_subtitle">Descubre, compra y descarga software profesional creado con inteligencia artificial. Automatizaciones, herramientas IA y soluciones para empresas y particulares. 100% verificado.</p>
-
-      <!-- Search bar con sugerencias -->
-      <div class="search-wrap" style="max-width:560px;width:100%;margin:0 auto 32px">
-        <div class="search-bar" role="search">
-          <input id="hero-search" type="search" placeholder="Busca software, herramientas, automatizaciones…" aria-label="Buscar productos" autocomplete="off" data-i18n-placeholder="search_placeholder" />
-          <button type="button" onclick="doSearch()" data-i18n="btn_search">BUSCAR</button>
-        </div>
-        <div id="hero-suggestions" class="search-suggestions" role="listbox" aria-label="Sugerencias" hidden></div>
-      </div>
-
-      <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
-        <a href="/marketplace.html" class="btn btn-primary btn-lg" data-i18n="btn_marketplace">Ver Marketplace</a>
-        <a href="/about.html" class="btn btn-lg" data-i18n="btn_about">¿Qué es neuralgpt?</a>
+      <h1>Tu próximo inmueble<br>está aquí</h1>
+      <p class="hero-sub">Anuncios de venta y alquiler verificados manualmente en toda Europa, incluyendo Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia.</p>
+      <div class="hero-ctas">
+        <a href="/venta.html" class="btn btn-primary btn-lg">Ver en venta</a>
+        <a href="/alquiler.html" class="btn btn-lg">Ver en alquiler</a>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════
-       SPOT PUBLICITARIO — CARRUSEL PREMIUM DE PRODUCTOS
-  ══════════════════════════════════════════════════════ -->
-  <section class="promo-reel-wrap" aria-label="Productos destacados" id="promo-reel">
-    <div class="promo-reel-inner">
-      <!-- Slide 1: GhostWriter -->
-      <div class="promo-slide active" data-href="/product.html?id=ghostwriter">
-        <div class="promo-slide-icon">
-          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="promo-svg promo-svg-spin-slow" aria-hidden="true">
-            <defs>
-              <radialGradient id="gw-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00eaff" stop-opacity=".3"/><stop offset="100%" stop-color="#7f00ff" stop-opacity="0"/></radialGradient>
-              <linearGradient id="gw-pen" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00eaff"/><stop offset="100%" stop-color="#7f00ff"/></linearGradient>
-            </defs>
-            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#gw-glow)"/>
-            <rect x="24" y="14" width="32" height="44" rx="4" fill="rgba(0,234,255,0.08)" stroke="#00eaff" stroke-width="1.5"/>
-            <line x1="30" y1="26" x2="50" y2="26" stroke="#00eaff" stroke-width="2" stroke-linecap="round"/>
-            <line x1="30" y1="34" x2="50" y2="34" stroke="#00eaff" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
-            <line x1="30" y1="42" x2="44" y2="42" stroke="#00eaff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
-            <g transform="translate(42,44) rotate(-40)">
-              <rect x="-3" y="-18" width="6" height="18" rx="1" fill="url(#gw-pen)"/>
-              <polygon points="-3,0 3,0 0,7" fill="#00eaff"/>
-            </g>
-            <circle cx="40" cy="40" r="38" fill="none" stroke="url(#gw-pen)" stroke-width="1" stroke-dasharray="8 4" opacity=".4" class="promo-ring"/>
-          </svg>
-        </div>
-        <div class="promo-slide-content">
-          <span class="promo-slide-tag">INTELIGENCIA ARTIFICIAL</span>
-          <h3 class="promo-slide-name">GhostWriter</h3>
-          <p class="promo-slide-tagline">Redacción IA para autores KDP. Libros completos por capítulos, SEO y copies profesionales en segundos.</p>
-          <div class="promo-slide-meta">
-            <span class="promo-slide-price">29€ <small>pago único</small></span>
-            <a href="/product.html?id=ghostwriter" class="btn btn-primary btn-sm promo-cta">Ver producto →</a>
-          </div>
-        </div>
-      </div>
+  <!-- ── ACCESO RÁPIDO ── -->
+  <section class="section" id="acceso-rapido" style="padding-top:48px">
+    <div class="wrap">
+      <h2 class="section-title">Explora por tipo de operación</h2>
+      <p class="section-sub">Encuentra el inmueble que buscas según tus necesidades.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:32px">
 
-      <!-- Slide 2: NeuralBill -->
-      <div class="promo-slide" data-href="/product.html?id=neuralbill">
-        <div class="promo-slide-icon">
-          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="promo-svg" aria-hidden="true">
-            <defs>
-              <radialGradient id="nb-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00ff99" stop-opacity=".35"/><stop offset="100%" stop-color="#00eaff" stop-opacity="0"/></radialGradient>
-              <linearGradient id="nb-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00ff99"/><stop offset="100%" stop-color="#00eaff"/></linearGradient>
-            </defs>
-            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#nb-glow)"/>
-            <rect x="18" y="20" width="44" height="32" rx="4" fill="rgba(0,255,153,0.08)" stroke="#00ff99" stroke-width="1.5"/>
-            <rect x="18" y="20" width="44" height="10" rx="4" fill="rgba(0,255,153,0.15)" stroke="none"/>
-            <line x1="24" y1="40" x2="38" y2="40" stroke="#00ff99" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="24" y1="46" x2="34" y2="46" stroke="#00ff99" stroke-width="1" stroke-linecap="round" opacity=".6"/>
-            <rect x="42" y="38" width="14" height="10" rx="2" fill="rgba(0,255,153,0.2)" stroke="#00ff99" stroke-width="1"/>
-            <text x="49" y="46" text-anchor="middle" font-size="6" fill="#00ff99" font-weight="bold">€</text>
-            <circle cx="40" cy="40" r="38" fill="none" stroke="url(#nb-grad)" stroke-width="1" stroke-dasharray="6 3" opacity=".4" class="promo-ring"/>
-          </svg>
-        </div>
-        <div class="promo-slide-content">
-          <span class="promo-slide-tag">AUTOMATIZACIÓN · FINTECH</span>
-          <h3 class="promo-slide-name">NeuralBill</h3>
-          <p class="promo-slide-tagline">Facturación inteligente para autónomos. Genera facturas legales, controla gastos e informes fiscales automáticamente.</p>
-          <div class="promo-slide-meta">
-            <span class="promo-slide-price" style="background:linear-gradient(90deg,#00ff99,#00eaff);-webkit-background-clip:text;background-clip:text;color:transparent">19€ <small style="color:var(--muted)">pago único</small></span>
-            <a href="/product.html?id=neuralbill" class="btn btn-primary btn-sm promo-cta">Ver producto →</a>
-          </div>
-        </div>
-      </div>
+        <!-- Venta -->
+        <a href="/venta.html" class="card" style="text-decoration:none;display:flex;flex-direction:column;gap:14px;border-color:rgba(0,234,255,0.3);transition:border-color .2s" aria-label="Ver inmuebles en venta">
+          <div style="font-size:2.4rem">🏡</div>
+          <div style="font-family:var(--font-title);font-size:0.75rem;letter-spacing:2px;color:var(--accent)">VENTA</div>
+          <div style="font-family:var(--font-title);font-size:1.2rem;font-weight:700;color:var(--text)">Inmuebles en venta</div>
+          <p style="color:var(--muted);font-size:0.87rem;line-height:1.7;margin:0">Pisos, casas, áticos, locales y terrenos disponibles para compra. Verificados y con toda la información.</p>
+          <span style="color:var(--accent);font-size:0.82rem;margin-top:auto">Ver anuncios →</span>
+        </a>
 
-      <!-- Slide 3: PokerBot -->
-      <div class="promo-slide" data-href="/product.html?id=pokerbot">
-        <div class="promo-slide-icon">
-          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="promo-svg promo-svg-pulse" aria-hidden="true">
-            <defs>
-              <radialGradient id="pk-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff0080" stop-opacity=".3"/><stop offset="100%" stop-color="#7f00ff" stop-opacity="0"/></radialGradient>
-              <linearGradient id="pk-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff0080"/><stop offset="100%" stop-color="#7f00ff"/></linearGradient>
-            </defs>
-            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#pk-glow)"/>
-            <rect x="22" y="18" width="18" height="26" rx="3" fill="rgba(255,0,128,0.1)" stroke="#ff0080" stroke-width="1.5" transform="rotate(-8,31,31)"/>
-            <rect x="40" y="22" width="18" height="26" rx="3" fill="rgba(127,0,255,0.12)" stroke="#7f00ff" stroke-width="1.5" transform="rotate(8,49,35)"/>
-            <text x="27" y="33" text-anchor="middle" font-size="9" fill="#ff0080" font-weight="bold">♠</text>
-            <text x="54" y="37" text-anchor="middle" font-size="9" fill="#7f00ff" font-weight="bold">♥</text>
-            <circle cx="40" cy="40" r="38" fill="none" stroke="url(#pk-grad)" stroke-width="1" stroke-dasharray="5 3" opacity=".5" class="promo-ring"/>
-          </svg>
-        </div>
-        <div class="promo-slide-content">
-          <span class="promo-slide-tag">SEGURIDAD · ANÁLISIS GTO</span>
-          <h3 class="promo-slide-name">PokerBot</h3>
-          <p class="promo-slide-tagline">Análisis de manos con IA y detección de bots para equipos de seguridad empresarial. Linux, Windows y Android.</p>
-          <div class="promo-slide-meta">
-            <span class="promo-slide-price" style="background:linear-gradient(90deg,#ff0080,#7f00ff);-webkit-background-clip:text;background-clip:text;color:transparent">39€ <small style="color:var(--muted)">pago único</small></span>
-            <a href="/product.html?id=pokerbot" class="btn btn-primary btn-sm promo-cta">Ver producto →</a>
-          </div>
-        </div>
-      </div>
+        <!-- Alquiler -->
+        <a href="/alquiler.html" class="card" style="text-decoration:none;display:flex;flex-direction:column;gap:14px;border-color:rgba(127,0,255,0.3);transition:border-color .2s" aria-label="Ver inmuebles en alquiler">
+          <div style="font-size:2.4rem">🔑</div>
+          <div style="font-family:var(--font-title);font-size:0.75rem;letter-spacing:2px;color:var(--accent2)">ALQUILER</div>
+          <div style="font-family:var(--font-title);font-size:1.2rem;font-weight:700;color:var(--text)">Inmuebles en alquiler</div>
+          <p style="color:var(--muted);font-size:0.87rem;line-height:1.7;margin:0">Pisos, apartamentos y casas en alquiler. Larga y corta estancia. Precios claros sin sorpresas.</p>
+          <span style="color:var(--accent2);font-size:0.82rem;margin-top:auto">Ver anuncios →</span>
+        </a>
 
-      <!-- Slide 4: Apps Móviles -->
-      <div class="promo-slide" data-href="/marketplace.html?cat=mobile">
-        <div class="promo-slide-icon">
-          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="promo-svg promo-svg-bounce" aria-hidden="true">
-            <defs>
-              <radialGradient id="mob-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#b400ff" stop-opacity=".3"/><stop offset="100%" stop-color="#00eaff" stop-opacity="0"/></radialGradient>
-              <linearGradient id="mob-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b400ff"/><stop offset="100%" stop-color="#00eaff"/></linearGradient>
-            </defs>
-            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#mob-glow)"/>
-            <rect x="27" y="12" width="26" height="46" rx="5" fill="rgba(180,0,255,0.1)" stroke="url(#mob-grad)" stroke-width="1.5"/>
-            <rect x="31" y="17" width="18" height="32" rx="2" fill="rgba(0,234,255,0.06)" stroke="#00eaff" stroke-width=".8"/>
-            <circle cx="40" cy="54" r="2.5" fill="#b400ff" opacity=".8"/>
-            <line x1="36" y1="14" x2="44" y2="14" stroke="url(#mob-grad)" stroke-width="2" stroke-linecap="round"/>
-            <text x="40" y="36" text-anchor="middle" font-size="10" fill="url(#mob-grad)">📲</text>
-            <circle cx="40" cy="40" r="38" fill="none" stroke="url(#mob-grad)" stroke-width="1" stroke-dasharray="7 4" opacity=".4" class="promo-ring"/>
-          </svg>
-        </div>
-        <div class="promo-slide-content">
-          <span class="promo-slide-tag">APPS MÓVILES · ANDROID & iOS</span>
-          <h3 class="promo-slide-name">Apps Móviles</h3>
-          <p class="promo-slide-tagline">Marketplace de aplicaciones móviles para desarrolladores indie. Android e iOS nativas verificadas. +40 apps disponibles.</p>
-          <div class="promo-slide-meta">
-            <span class="promo-slide-price">Desde 9€ <small>pago único</small></span>
-            <a href="/marketplace.html?cat=mobile" class="btn btn-primary btn-sm promo-cta">Ver apps →</a>
-          </div>
-        </div>
-      </div>
+        <!-- Publicar -->
+        <a href="/contact.html" class="card" style="text-decoration:none;display:flex;flex-direction:column;gap:14px;border-color:rgba(0,255,153,0.3);transition:border-color .2s" aria-label="Publicar un anuncio inmobiliario">
+          <div style="font-size:2.4rem">📋</div>
+          <div style="font-family:var(--font-title);font-size:0.75rem;letter-spacing:2px;color:var(--accent4)">PUBLICA</div>
+          <div style="font-family:var(--font-title);font-size:1.2rem;font-weight:700;color:var(--text)">Publica tu inmueble</div>
+          <p style="color:var(--muted);font-size:0.87rem;line-height:1.7;margin:0">¿Tienes un inmueble que vender o alquilar? Contacta con nuestro equipo y lo publicamos con verificación.</p>
+          <span style="color:var(--accent4);font-size:0.82rem;margin-top:auto">Contactar →</span>
+        </a>
 
-      <!-- Indicadores de posición -->
-      <div class="promo-dots" aria-label="Indicadores de diapositiva">
-        <button class="promo-dot active" data-idx="0" aria-label="Slide 1" aria-current="true"></button>
-        <button class="promo-dot" data-idx="1" aria-label="Slide 2"></button>
-        <button class="promo-dot" data-idx="2" aria-label="Slide 3"></button>
-        <button class="promo-dot" data-idx="3" aria-label="Slide 4"></button>
       </div>
-
-      <!-- Flechas de navegación -->
-      <button class="promo-arrow promo-arrow-left" id="promo-prev" aria-label="Anterior">‹</button>
-      <button class="promo-arrow promo-arrow-right" id="promo-next" aria-label="Siguiente">›</button>
     </div>
   </section>
 
-  <!-- ── STATS (contadores animados) ── -->
-  <div class="stats-bar" aria-label="Estadísticas de la plataforma" id="stats-bar">
-    <div class="stat-item">
-      <span class="stat-num" data-count="50" id="stat-products">50+</span>
-      <span class="stat-label" data-i18n="stat_products">PRODUCTOS</span>
+  <!-- ── GEOGRAFÍAS ── -->
+  <section class="section" style="padding-top:40px">
+    <div class="wrap">
+      <h2 class="section-title">Explora por ubicación</h2>
+      <p class="section-sub">Cobertura inmobiliaria europea completa: UE, Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px">
+        <a href="/pais/es/" class="btn">🇪🇸 España</a>
+        <a href="/pais/pt/" class="btn">🇵🇹 Portugal</a>
+        <a href="/pais.html?country=gb" class="btn">🇬🇧 Reino Unido</a>
+        <a href="/pais.html?country=ie" class="btn">🇮🇪 Irlanda</a>
+        <a href="/ciudad.html?city=edinburgh" class="btn">🏴 Escocia</a>
+        <a href="/pais.html?country=tr" class="btn">🇹🇷 Turquía</a>
+        <a href="/pais.html?country=is" class="btn">🇮🇸 Islandia</a>
+        <a href="/pais.html?country=gl" class="btn">🇬🇱 Groenlandia</a>
+        <a href="/ciudad/madrid/" class="btn">Madrid</a>
+        <a href="/ciudad/lisboa/" class="btn">Lisboa</a>
+        <a href="/real-estate-index.html" class="btn btn-primary">Ver todas las ubicaciones →</a>
+      </div>
     </div>
-    <div class="stat-item">
-      <span class="stat-num" data-count="120" id="stat-devs">120+</span>
-      <span class="stat-label" data-i18n="stat_devs">DESARROLLADORES</span>
+  </section>
+
+  <!-- ── SPONSORS CORPORATIVOS ── -->
+  <section class="section" style="padding-top:40px">
+    <div class="wrap">
+      <h2 class="section-title">Sponsors corporativos del sector</h2>
+      <p class="section-sub">Rotación activa para inmobiliarias, arquitectura, banca e hipotecas, construcción, reformas y restauración de inmuebles.</p>
+      <div id="sponsors-rotator" style="position:relative;margin-top:28px;min-height:170px"></div>
+      <div style="display:flex;justify-content:center;margin-top:18px">
+        <a href="/sponsors.html" class="btn">Ver tablón completo de sponsors</a>
+      </div>
     </div>
-    <div class="stat-item">
-      <span class="stat-num" data-count="2400" id="stat-downloads">2.4K+</span>
-      <span class="stat-label" data-i18n="stat_downloads">DESCARGAS</span>
+  </section>
+
+  <!-- ── CÓMO FUNCIONA ── -->
+  <section class="section" style="padding-top:40px">
+    <div class="wrap">
+      <h2 class="section-title">¿Cómo funciona?</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:32px">
+        <div class="card" style="text-align:center">
+          <div style="font-family:var(--font-title);font-size:2rem;color:var(--accent);margin-bottom:12px">01</div>
+          <div style="font-family:var(--font-title);font-size:0.75rem;letter-spacing:2px;color:var(--accent);margin-bottom:10px">BUSCA</div>
+          <p style="color:var(--muted);font-size:0.87rem;line-height:1.7;margin:0">Explora los anuncios por operación, ubicación y características.</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-family:var(--font-title);font-size:2rem;color:var(--accent2);margin-bottom:12px">02</div>
+          <div style="font-family:var(--font-title);font-size:0.75rem;letter-spacing:2px;color:var(--accent2);margin-bottom:10px">VERIFICA</div>
+          <p style="color:var(--muted);font-size:0.87rem;line-height:1.7;margin:0">Cada anuncio tiene el badge de verificación manual de nuestro equipo.</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-family:var(--font-title);font-size:2rem;color:var(--accent4);margin-bottom:12px">03</div>
+          <div style="font-family:var(--font-title);font-size:0.75rem;letter-spacing:2px;color:var(--accent4);margin-bottom:10px">CONTACTA</div>
+          <p style="color:var(--muted);font-size:0.87rem;line-height:1.7;margin:0">Contacta directamente con el anunciante usando los datos de cada ficha.</p>
+        </div>
+      </div>
     </div>
-    <div class="stat-item">
-      <span class="stat-num">100%</span>
-      <span class="stat-label" data-i18n="stat_verified">SOFTWARE VERIFICADO</span>
+  </section>
+
+  <!-- ── CTA PUBLICAR ── -->
+  <section class="section" style="padding-top:40px;padding-bottom:64px">
+    <div class="wrap" style="text-align:center">
+      <h2 class="section-title">¿Tienes un inmueble?</h2>
+      <p class="section-sub" style="max-width:520px;margin:0 auto 28px">Publica tu anuncio en neuralgpt.store. Nuestro equipo lo revisa, verifica y lo publica con el badge de calidad.</p>
+      <a href="/contact.html" class="btn btn-primary btn-lg">Publicar mi inmueble</a>
     </div>
-    <div class="stat-item">
-      <span class="stat-num">4.8 ★</span>
-      <span class="stat-label" data-i18n="stat_rating">VALORACIÓN MEDIA</span>
-    </div>
-  </div>
-  <div class="rgb-divider"></div>
-
-  <main>
-    <!-- ── PRODUCTOS PROPIOS ── -->
-    <section class="section" id="own-products">
-      <div class="wrap">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
-          <h2 class="section-title" style="margin-bottom:0" data-i18n="own_products_title">Nuestros Productos</h2>
-          <span class="badge badge-own" style="font-size:0.65rem">EXCLUSIVO</span>
-        </div>
-        <p class="section-sub" data-i18n="own_products_sub">Software premium creado por el equipo neuralgpt. Verificado, soportado y con actualizaciones incluidas.</p>
-
-        <div class="auto-grid-3">
-          <!-- GhostWriter -->
-          <div class="hero-product-card rgb-card">
-            <div class="hero-product-thumb" style="background:linear-gradient(135deg,rgba(0,234,255,0.12),rgba(127,0,255,0.18))">
-              <span class="hero-product-thumb-icon hero-icon-glow-cyan" aria-hidden="true">📝</span>
-              <div class="hero-product-badges">
-                <span class="badge badge-verified">VERIFICADO</span>
-                <span class="badge badge-own hero-badge-pulse" style="color:#00eaff">OFICIAL</span>
-              </div>
-            </div>
-            <div class="hero-product-body">
-              <span class="hero-product-tag">INTELIGENCIA ARTIFICIAL</span>
-              <span class="hero-product-name">GhostWriter</span>
-              <p class="hero-product-desc">Asistente de redacción con IA. Genera artículos, copies y contenido SEO optimizado en segundos.</p>
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <span class="platform-pill">🐧 Linux</span>
-                <span class="platform-pill">🪟 Windows</span>
-                <span class="platform-pill">🍎 Mac</span>
-              </div>
-              <div><span class="stars">★★★★★</span> <span class="rating-count">(48 reseñas)</span></div>
-              <div class="hero-product-footer">
-                <div>
-                  <div class="hero-product-price">29€ <span class="hero-product-price-period">pago único</span></div>
-                </div>
-                <a href="/product.html?id=ghostwriter" class="btn btn-primary btn-sm">Comprar →</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- NeuralBill -->
-          <div class="hero-product-card rgb-card">
-            <div class="hero-product-thumb" style="background:linear-gradient(135deg,rgba(0,255,153,0.12),rgba(0,234,255,0.14))">
-              <span class="hero-product-thumb-icon hero-icon-glow-green" aria-hidden="true">💳</span>
-              <div class="hero-product-badges">
-                <span class="badge badge-verified">VERIFICADO</span>
-                <span class="badge badge-hot hero-badge-pulse" style="color:#ff0080">POPULAR</span>
-              </div>
-            </div>
-            <div class="hero-product-body">
-              <span class="hero-product-tag">AUTOMATIZACIÓN · FINTECH</span>
-              <span class="hero-product-name">NeuralBill</span>
-              <p class="hero-product-desc">Facturación automatizada con IA. Genera facturas, controla gastos e informes fiscales. Integra con Stripe.</p>
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <span class="platform-pill">🐧 Linux</span>
-                <span class="platform-pill">🪟 Windows</span>
-                <span class="platform-pill">🌐 Web</span>
-              </div>
-              <div><span class="stars">★★★★★</span> <span class="rating-count">(31 reseñas)</span></div>
-              <div class="hero-product-footer">
-                <div>
-                  <div class="hero-product-price" style="background:linear-gradient(90deg,#00ff99,#00eaff);-webkit-background-clip:text;background-clip:text">19€ <span class="hero-product-price-period">pago único</span></div>
-                </div>
-                <a href="/product.html?id=neuralbill" class="btn btn-primary btn-sm">Comprar →</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- PokerBot -->
-          <div class="hero-product-card rgb-card">
-            <div class="hero-product-thumb" style="background:linear-gradient(135deg,rgba(255,0,128,0.12),rgba(127,0,255,0.16))">
-              <span class="hero-product-thumb-icon hero-icon-glow-pink" aria-hidden="true">🃏</span>
-              <div class="hero-product-badges">
-                <span class="badge badge-verified">VERIFICADO</span>
-                <span class="badge badge-new hero-badge-pulse" style="color:#00ff99">NUEVO</span>
-              </div>
-            </div>
-            <div class="hero-product-body">
-              <span class="hero-product-tag">IA · ANÁLISIS</span>
-              <span class="hero-product-name">PokerBot</span>
-              <p class="hero-product-desc">Analizador de manos de póker con IA. Aprende estrategias ganadoras y mejora tu juego en tiempo real.</p>
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <span class="platform-pill">🐧 Linux</span>
-                <span class="platform-pill">🪟 Windows</span>
-                <span class="platform-pill">🤖 Android</span>
-              </div>
-              <div><span class="stars">★★★★☆</span> <span class="rating-count">(17 reseñas)</span></div>
-              <div class="hero-product-footer">
-                <div>
-                  <div class="hero-product-price" style="background:linear-gradient(90deg,#ff0080,#7f00ff);-webkit-background-clip:text;background-clip:text">39€ <span class="hero-product-price-period">pago único</span></div>
-                </div>
-                <a href="/product.html?id=pokerbot" class="btn btn-primary btn-sm">Comprar →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="rgb-divider"></div>
-
-    <!-- ── CATEGORÍAS ── -->
-    <section class="section" style="padding-top:56px">
-      <div class="wrap">
-        <h2 class="section-title" data-i18n="cat_title">Explora el Marketplace</h2>
-        <p class="section-sub" data-i18n="cat_sub">Software profesional de terceros organizado por categorías. Todos los productos verificados y seguros.</p>
-        <div class="auto-grid-4" style="margin-bottom:40px">
-          <a href="/marketplace.html?cat=automatizacion" class="cat-card">
-            <span class="cat-icon">
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path class="cat-icon-lightning" d="M18 3L7 18h8l-1 11 13-16h-9l2-10z" fill="#00eaff" stroke="#00eaff" stroke-width="0.5" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span class="cat-name">AUTOMATIZACIÓN</span>
-            <span class="cat-desc">Scripts, bots y flujos de trabajo automáticos.</span>
-            <span class="cat-count">VER PRODUCTOS →</span>
-          </a>
-          <a href="/marketplace.html?cat=ia" class="cat-card">
-            <span class="cat-icon">
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <!-- Robot head -->
-                <rect x="7" y="9" width="18" height="14" rx="3" fill="#7f00ff" opacity="0.8"/>
-                <rect x="13" y="5" width="6" height="4" rx="1" fill="#7f00ff" opacity="0.6"/>
-                <line x1="16" y1="5" x2="16" y2="9" stroke="#7f00ff" stroke-width="1.5"/>
-                <!-- Antenna dot -->
-                <circle cx="16" cy="4" r="1.5" fill="#00eaff"/>
-                <!-- Eyes -->
-                <g class="cat-icon-bot-eye">
-                  <rect x="10" y="14" width="4" height="4" rx="1" fill="#00eaff"/>
-                  <rect x="11" y="15" width="2" height="2" rx="0.5" fill="white" opacity="0.9"/>
-                </g>
-                <g class="cat-icon-bot-eye cat-icon-bot-eye-r">
-                  <rect x="18" y="14" width="4" height="4" rx="1" fill="#00eaff"/>
-                  <rect x="19" y="15" width="2" height="2" rx="0.5" fill="white" opacity="0.9"/>
-                </g>
-                <!-- Mouth grid -->
-                <rect x="11" y="20" width="10" height="2" rx="1" fill="#00eaff" opacity="0.4"/>
-                <!-- Side ears -->
-                <rect x="4" y="13" width="3" height="5" rx="1" fill="#7f00ff" opacity="0.5"/>
-                <rect x="25" y="13" width="3" height="5" rx="1" fill="#7f00ff" opacity="0.5"/>
-              </svg>
-            </span>
-            <span class="cat-name">INTELIGENCIA ARTIFICIAL</span>
-            <span class="cat-desc">Modelos, agentes y herramientas de IA.</span>
-            <span class="cat-count">VER PRODUCTOS →</span>
-          </a>
-          <a href="/marketplace.html?cat=seguridad" class="cat-card">
-            <span class="cat-icon">
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <clipPath id="shield-clip">
-                    <path d="M16 3L5 7v8c0 6.5 4.8 12.6 11 14 6.2-1.4 11-7.5 11-14V7z"/>
-                  </clipPath>
-                </defs>
-                <path d="M16 3L5 7v8c0 6.5 4.8 12.6 11 14 6.2-1.4 11-7.5 11-14V7z" fill="#00ff99" opacity="0.15" stroke="#00ff99" stroke-width="1.5"/>
-                <!-- Scan line -->
-                <rect class="cat-icon-shield-scan" x="5" y="14" width="22" height="1.5" rx="0.75" fill="#00ff99" opacity="0.8" clip-path="url(#shield-clip)"/>
-                <!-- Check mark -->
-                <path d="M11 16l3.5 3.5L21 12" stroke="#00ff99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span class="cat-name">SEGURIDAD</span>
-            <span class="cat-desc">Auditoría, pentesting y protección de sistemas.</span>
-            <span class="cat-count">VER PRODUCTOS →</span>
-          </a>
-          <a href="/marketplace.html?cat=web" class="cat-card">
-            <span class="cat-icon">
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <!-- Globe -->
-                <circle cx="16" cy="16" r="11" stroke="#00eaff" stroke-width="1.5" opacity="0.7"/>
-                <!-- Latitude lines -->
-                <ellipse cx="16" cy="16" rx="5" ry="11" stroke="#00eaff" stroke-width="1" opacity="0.4"/>
-                <line x1="5" y1="16" x2="27" y2="16" stroke="#00eaff" stroke-width="1" opacity="0.4"/>
-                <path d="M7 10 Q16 13 25 10" stroke="#00eaff" stroke-width="1" opacity="0.3" fill="none"/>
-                <path d="M7 22 Q16 19 25 22" stroke="#00eaff" stroke-width="1" opacity="0.3" fill="none"/>
-                <!-- Orbit ring -->
-                <ellipse class="cat-icon-globe-ring" cx="16" cy="16" rx="15" ry="5" stroke="#ff0080" stroke-width="1.2" opacity="0.6" stroke-dasharray="4 3"/>
-                <!-- Satellite dot -->
-                <circle cx="31" cy="16" r="2" fill="#ff0080" opacity="0.9"/>
-              </svg>
-            </span>
-            <span class="cat-name">WEB & APIs</span>
-            <span class="cat-desc">Scrapers, APIs, dashboards y herramientas web.</span>
-            <span class="cat-count">VER PRODUCTOS →</span>
-          </a>
-          <a href="/marketplace.html?cat=datos" class="cat-card">
-            <span class="cat-icon">
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <!-- Bar chart -->
-                <rect class="cat-icon-bar-1" x="5" y="18" width="6" height="10" rx="1.5" fill="#00eaff" opacity="0.8"/>
-                <rect class="cat-icon-bar-2" x="13" y="12" width="6" height="16" rx="1.5" fill="#7f00ff" opacity="0.9"/>
-                <rect class="cat-icon-bar-3" x="21" y="15" width="6" height="13" rx="1.5" fill="#ff0080" opacity="0.8"/>
-                <!-- Baseline -->
-                <line x1="3" y1="28" x2="29" y2="28" stroke="#7a8ba0" stroke-width="1.2" stroke-linecap="round"/>
-                <!-- Trend line -->
-                <path d="M8 20 L16 14 L24 17" stroke="#00ff99" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.8"/>
-                <circle cx="8" cy="20" r="1.5" fill="#00ff99"/>
-                <circle cx="16" cy="14" r="1.5" fill="#00ff99"/>
-                <circle cx="24" cy="17" r="1.5" fill="#00ff99"/>
-              </svg>
-            </span>
-            <span class="cat-name">DATOS & ANALYTICS</span>
-            <span class="cat-desc">Análisis, visualización y procesamiento de datos.</span>
-            <span class="cat-count">VER PRODUCTOS →</span>
-          </a>
-          <a href="/marketplace.html?cat=linux" class="cat-card">
-            <span class="cat-icon">
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <!-- Tux penguin simplified -->
-                <g class="cat-icon-penguin">
-                  <!-- Body -->
-                  <ellipse cx="16" cy="20" rx="8" ry="9" fill="#1a1a2e" stroke="#7a8ba0" stroke-width="1"/>
-                  <!-- White belly -->
-                  <ellipse cx="16" cy="21" rx="5" ry="6.5" fill="white" opacity="0.9"/>
-                  <!-- Head -->
-                  <circle cx="16" cy="10" r="6.5" fill="#1a1a2e" stroke="#7a8ba0" stroke-width="1"/>
-                  <!-- Face white patch -->
-                  <ellipse cx="16" cy="11" rx="4" ry="3.5" fill="white" opacity="0.9"/>
-                  <!-- Eyes -->
-                  <circle cx="13.5" cy="9.5" r="1.5" fill="#0a0a0a"/>
-                  <circle cx="18.5" cy="9.5" r="1.5" fill="#0a0a0a"/>
-                  <circle cx="14" cy="9" r="0.5" fill="white"/>
-                  <circle cx="19" cy="9" r="0.5" fill="white"/>
-                  <!-- Beak -->
-                  <path d="M14 12 L16 13.5 L18 12 L16 14.5z" fill="#ffa500"/>
-                  <!-- Feet -->
-                  <ellipse cx="12" cy="29" rx="3.5" ry="1.5" fill="#ffa500"/>
-                  <ellipse cx="20" cy="29" rx="3.5" ry="1.5" fill="#ffa500"/>
-                </g>
-              </svg>
-            </span>
-            <span class="cat-name">LINUX & SISTEMAS</span>
-            <span class="cat-desc">Herramientas para Linux, BlackArch y sistemas.</span>
-            <span class="cat-count">VER PRODUCTOS →</span>
-          </a>
-        </div>
-        <div style="text-align:center">
-          <a href="/marketplace.html" class="btn btn-primary btn-lg" data-i18n="btn_marketplace">Ver todos los productos</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── APPS MÓVILES ── -->
-    <section class="section" id="apps-moviles" style="padding-top:0">
-      <div class="wrap">
-        <div class="mobile-apps-banner">
-          <div class="mobile-apps-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48" aria-hidden="true">
-              <rect x="10" y="4" width="28" height="40" rx="5" fill="rgba(127,0,255,0.15)" stroke="#7f00ff" stroke-width="1.5"/>
-              <rect x="14" y="8" width="20" height="28" rx="2" fill="rgba(0,234,255,0.08)" stroke="#00eaff" stroke-width="1"/>
-              <circle cx="24" cy="41" r="1.8" fill="#7f00ff" opacity="0.7"/>
-              <!-- Screen content -->
-              <rect x="16" y="11" width="14" height="3" rx="1" fill="#00eaff" opacity="0.4"/>
-              <rect x="16" y="16" width="10" height="2" rx="1" fill="#7a8ba0" opacity="0.5"/>
-              <rect x="16" y="20" width="12" height="2" rx="1" fill="#7a8ba0" opacity="0.4"/>
-              <!-- App grid -->
-              <rect x="16" y="25" width="5" height="5" rx="1.5" fill="#00eaff" opacity="0.5"/>
-              <rect x="23" y="25" width="5" height="5" rx="1.5" fill="#ff0080" opacity="0.5"/>
-            </svg>
-          </div>
-          <div class="mobile-apps-content">
-            <div class="mobile-apps-badge">NUEVO</div>
-            <h3 class="mobile-apps-title">Apps Móviles — Android & iOS</h3>
-            <p class="mobile-apps-desc">Descubre apps nativas verificadas para Android e iOS. Automatización, IA y herramientas profesionales en tu bolsillo.</p>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <a href="/marketplace.html?plataforma=android" class="btn btn-sm">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.523 15.341l.002-.003 2.21-3.826a.446.446 0 0 0-.163-.61l-.003-.002a.446.446 0 0 0-.61.163l-2.24 3.877a13.86 13.86 0 0 1-5.716 1.198c-2.046 0-3.98-.438-5.72-1.198l-2.237-3.877a.446.446 0 0 0-.61-.163.446.446 0 0 0-.163.61l2.209 3.826-.003.003C2.154 16.752 1 19.166 1 21.844h22c0-2.678-1.154-5.092-2.977-6.503zM8.045 5.483a.9.9 0 1 1 1.8 0 .9.9 0 0 1-1.8 0zm6.11 0a.9.9 0 1 1 1.8 0 .9.9 0 0 1-1.8 0zM5.5 3.818C6.866 2.067 9.294 1 12 1s5.134 1.067 6.5 2.818L20.5 2l-1.5 4h-14L3.5 2l2 1.818z"/></svg>
-                Android
-              </a>
-              <a href="/marketplace.html?plataforma=ios" class="btn btn-sm">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                iOS
-              </a>
-            </div>
-          </div>
-          <div class="mobile-apps-stats">
-            <div class="mobile-stat"><span class="mobile-stat-num">+40</span><span class="mobile-stat-label">Apps móviles</span></div>
-            <div class="mobile-stat"><span class="mobile-stat-num">Android</span><span class="mobile-stat-label">& iOS nativas</span></div>
-            <div class="mobile-stat"><span class="mobile-stat-num">100%</span><span class="mobile-stat-label">Verificadas</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="rgb-divider"></div>
-
-    <!-- ── POR QUÉ NEURALGPT ── -->
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title text-center" data-i18n="why_title">¿Por qué neuralgpt.store?</h2>
-        <p class="section-sub text-center" style="margin:0 auto 48px" data-i18n="why_sub">Una plataforma construida para desarrolladores, por desarrolladores. Segura, rápida y transparente.</p>
-        <div class="auto-grid-3">
-          <div class="feature-card">
-            <div class="feature-icon">🚀</div>
-            <div class="feature-title" data-i18n="feat1_title">DESCARGA INMEDIATA</div>
-            <p class="feature-desc" data-i18n="feat1_desc">Tras el pago accedes al producto al instante. Sin esperas, sin procesos manuales.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🛡️</div>
-            <div class="feature-title" data-i18n="feat2_title">SOFTWARE VERIFICADO</div>
-            <p class="feature-desc" data-i18n="feat2_desc">Todo el software pasa por análisis anti-malware y revisión manual antes de publicarse. Badge verificado visible.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">💳</div>
-            <div class="feature-title" data-i18n="feat3_title">PAGO SEGURO STRIPE</div>
-            <p class="feature-desc" data-i18n="feat3_desc">Pagos procesados 100% por Stripe (PCI-DSS). Tarjeta, Google Pay y más. Sin datos bancarios en nuestros servidores.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🤖</div>
-            <div class="feature-title" data-i18n="feat4_title">CREADO CON IA</div>
-            <p class="feature-desc" data-i18n="feat4_desc">Todo el software está desarrollado y optimizado con inteligencia artificial de última generación.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🐧</div>
-            <div class="feature-title" data-i18n="feat5_title">NATIVO EN LINUX</div>
-            <p class="feature-desc" data-i18n="feat5_desc">Optimizado para Linux, BlackArch y sistemas Unix. Compatibilidad total con entornos profesionales.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">📦</div>
-            <div class="feature-title" data-i18n="feat6_title">ACTUALIZACIONES INCLUIDAS</div>
-            <p class="feature-desc" data-i18n="feat6_desc">Compra una vez, recibe todas las actualizaciones del producto sin coste adicional.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="rgb-divider"></div>
-
-    <!-- ── TESTIMONIOS ── -->
-    <section class="section" style="overflow:hidden">
-      <div class="wrap" style="padding-bottom:0">
-        <h2 class="section-title text-center" data-i18n="testimonials_title">Lo que dicen nuestros usuarios</h2>
-        <p class="section-sub text-center" style="margin:0 auto 40px" data-i18n="testimonials_sub">Más de 120 desarrolladores y empresas confían en neuralgpt.store</p>
-      </div>
-      <div class="testimonials-wrap">
-        <div class="testimonials-track" id="testimonials-track">
-          <!-- Set 1 -->
-          <div class="testimonial-card">
-            <p class="testimonial-text">"GhostWriter me ahorra 6 horas a la semana en redacción. El mejor ROI que he hecho en software."</p>
-            <div class="testimonial-author">Carlos M.</div>
-            <div class="testimonial-role">Consultor de Marketing Digital</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"NeuralBill me automatizó toda la facturación. Cero errores en los informes fiscales de este año."</p>
-            <div class="testimonial-author">Laura S.</div>
-            <div class="testimonial-role">Freelance Diseñadora Web</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"El badge de software verificado me dio confianza. El ClawBot Automation Suite funciona perfecto en mi BlackArch."</p>
-            <div class="testimonial-author">Alejandro R.</div>
-            <div class="testimonial-role">Sysadmin Senior</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"El proceso de venta como proveedor fue muy limpio. En 48h tuve mi software publicado y verificado."</p>
-            <div class="testimonial-author">Priya K.</div>
-            <div class="testimonial-role">Desarrolladora Indie</div>
-            <div style="margin-top:6px"><span class="stars">★★★★☆</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"El soporte en español marca la diferencia. No encontré otro marketplace técnico con documentación tan buena en castellano."</p>
-            <div class="testimonial-author">Miguel Á. T.</div>
-            <div class="testimonial-role">CTO Startup Madrid</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"Descarga inmediata tras el pago Stripe. Compré PokerBot y en 2 minutos ya lo tenía funcionando en Kali."</p>
-            <div class="testimonial-author">David F.</div>
-            <div class="testimonial-role">Security Researcher</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <!-- Set 2 (duplicado para bucle infinito) -->
-          <div class="testimonial-card">
-            <p class="testimonial-text">"GhostWriter me ahorra 6 horas a la semana en redacción. El mejor ROI que he hecho en software."</p>
-            <div class="testimonial-author">Carlos M.</div>
-            <div class="testimonial-role">Consultor de Marketing Digital</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"NeuralBill me automatizó toda la facturación. Cero errores en los informes fiscales de este año."</p>
-            <div class="testimonial-author">Laura S.</div>
-            <div class="testimonial-role">Freelance Diseñadora Web</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"El badge de software verificado me dio confianza. El ClawBot Automation Suite funciona perfecto en mi BlackArch."</p>
-            <div class="testimonial-author">Alejandro R.</div>
-            <div class="testimonial-role">Sysadmin Senior</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"El proceso de venta como proveedor fue muy limpio. En 48h tuve mi software publicado y verificado."</p>
-            <div class="testimonial-author">Priya K.</div>
-            <div class="testimonial-role">Desarrolladora Indie</div>
-            <div style="margin-top:6px"><span class="stars">★★★★☆</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"El soporte en español marca la diferencia. No encontré otro marketplace técnico con documentación tan buena en castellano."</p>
-            <div class="testimonial-author">Miguel Á. T.</div>
-            <div class="testimonial-role">CTO Startup Madrid</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">"Descarga inmediata tras el pago Stripe. Compré PokerBot y en 2 minutos ya lo tenía funcionando en Kali."</p>
-            <div class="testimonial-author">David F.</div>
-            <div class="testimonial-role">Security Researcher</div>
-            <div style="margin-top:6px"><span class="stars">★★★★★</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="rgb-divider"></div>
-
-    <!-- ── CÓMO FUNCIONA LA COMPRA ── -->
-    <section class="section" id="como-funciona">
-      <div class="wrap">
-        <h2 class="section-title text-center">¿Cómo funciona la compra?</h2>
-        <p class="section-sub text-center" style="margin:0 auto 48px">Descarga inmediata y segura. Sin cuentas, sin suscripciones, sin complicaciones.</p>
-        <div class="auto-grid-3" style="max-width:900px;margin:0 auto 36px">
-          <div class="card" style="text-align:center;padding:32px 24px">
-            <div style="font-size:2.8rem;margin-bottom:16px">🔍</div>
-            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:900;color:var(--accent);letter-spacing:2px;margin-bottom:10px">1. ELIGE Y VERIFICA</div>
-            <p style="font-size:0.85rem;color:var(--muted);line-height:1.7">Navega el marketplace, filtra por categoría o plataforma. Cada producto muestra el badge <strong style="color:var(--text)">Verificado por Chany ✓</strong> con hash SHA-256 comprobado.</p>
-          </div>
-          <div class="card" style="text-align:center;padding:32px 24px;border-color:rgba(0,234,255,0.25);background:rgba(0,234,255,0.03)">
-            <div style="font-size:2.8rem;margin-bottom:16px">💳</div>
-            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:900;color:var(--accent);letter-spacing:2px;margin-bottom:10px">2. PAGA CON STRIPE</div>
-            <p style="font-size:0.85rem;color:var(--muted);line-height:1.7">Pago único vía Stripe Checkout. Acepta tarjeta, Apple Pay y Google Pay. <strong style="color:var(--text)">neuralgpt.store nunca almacena tus datos bancarios.</strong> PCI-DSS nivel 1.</p>
-          </div>
-          <div class="card" style="text-align:center;padding:32px 24px">
-            <div style="font-size:2.8rem;margin-bottom:16px">⬇️</div>
-            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:900;color:var(--accent4);letter-spacing:2px;margin-bottom:10px">3. DESCARGA INMEDIATA</div>
-            <p style="font-size:0.85rem;color:var(--muted);line-height:1.7">Tras confirmar el pago, acceso inmediato al archivo del vendedor. El enlace también llega a tu email de confirmación. Si hay cualquier problema: <strong style="color:var(--text)">support@neuralgpt.store</strong>.</p>
-          </div>
-        </div>
-        <div style="text-align:center">
-          <a href="/marketplace.html" class="btn btn-primary btn-lg">Explorar productos →</a>
-        </div>
-      </div>
-    </section>
-
-    <div class="rgb-divider"></div>
-
-    <!-- ── PARA DESARROLLADORES ── -->
-    <section class="section" id="para-desarrolladores">
-      <div class="wrap">
-        <div class="dev-layout">
-          <div>
-            <span class="badge badge-own" style="margin-bottom:16px">PARA DESARROLLADORES</span>
-            <h2 class="section-title" data-i18n="dev_title">Vende tu software<br>en neuralgpt.store</h2>
-            <p style="color:var(--muted);font-size:0.95rem;line-height:1.7;margin-bottom:32px" data-i18n="dev_sub">Publica tus herramientas y llega a miles de compradores técnicos. Proceso simple, verificación rápida y comisiones transparentes.</p>
-            <div style="padding:16px;border-radius:12px;background:rgba(0,255,153,0.05);border:1.5px solid rgba(0,255,153,0.2);margin-bottom:24px">
-              <div style="font-family:var(--font-title);font-size:0.72rem;letter-spacing:1px;color:var(--accent4);margin-bottom:8px">COMISIONES</div>
-              <div style="font-family:var(--font-title);font-size:1.5rem;font-weight:900;color:var(--accent4)"><span data-i18n="commission_standard">Comisión estándar</span> 20%</div>
-              <div style="font-size:0.8rem;color:var(--muted);margin-top:4px" data-i18n="commission_note">Sin cuota mensual. Solo pagas cuando vendes.</div>
-            </div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap">
-              <a href="/provider-register.html" class="btn btn-primary btn-lg" data-i18n="btn_sell_now">Registrarme como vendedor</a>
-              <a href="/pricing.html" class="btn btn-lg" data-i18n="btn_more_info">Ver comisiones</a>
-            </div>
-          </div>
-
-          <div class="dev-steps">
-            <div class="dev-step">
-              <div class="dev-step-num">1</div>
-              <div>
-                <div class="dev-step-title" data-i18n="step1_title">Regístrate como proveedor</div>
-                <p class="dev-step-desc" data-i18n="step1_desc">Completa el formulario de alta con los datos de tu software y empresa. Proceso de 5 minutos.</p>
-              </div>
-            </div>
-            <div class="dev-step">
-              <div class="dev-step-num">2</div>
-              <div>
-                <div class="dev-step-title" data-i18n="step2_title">Verificación de seguridad</div>
-                <p class="dev-step-desc" data-i18n="step2_desc">Nuestro equipo analiza el software contra malware y revisa la funcionalidad descrita. 24-48h.</p>
-              </div>
-            </div>
-            <div class="dev-step">
-              <div class="dev-step-num">3</div>
-              <div>
-                <div class="dev-step-title" data-i18n="step3_title">Publica y vende</div>
-                <p class="dev-step-desc" data-i18n="step3_desc">Tu producto aparece con el badge "Verificado" en el marketplace. Cobra mensualmente vía Stripe.</p>
-              </div>
-            </div>
-            <div class="dev-step">
-              <div class="dev-step-num">4</div>
-              <div>
-                <div class="dev-step-title" data-i18n="step4_title">Cobra cada mes</div>
-                <p class="dev-step-desc" data-i18n="step4_desc">Pago automático vía Stripe Connect. Mínimo 10€ de payout. Informes detallados de ventas.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="rgb-divider"></div>
-
-    <!-- ── CTA ── -->
-    <section class="cta-section">
-      <h2 data-i18n="cta_title">¿Listo para empezar?</h2>
-      <p data-i18n="cta_sub">Explora el marketplace o únete como proveedor. La plataforma de software IA más grande en español.</p>
-      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-        <a href="/marketplace.html" class="btn btn-primary btn-lg" data-i18n="btn_explore_mp">Explorar marketplace</a>
-        <a href="/provider-register.html" class="btn btn-lg" data-i18n="btn_register_seller">Registrarme como vendedor</a>
-      </div>
-    </section>
-  </main>
+  </section>
 
   <div class="rgb-divider"></div>
 
@@ -858,194 +181,90 @@
     <div class="footer-grid">
       <div class="footer-brand-col">
         <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
-        <p data-i18n="footer_tagline">Marketplace premium de software creado con IA. Verificado, seguro y con pago Stripe.</p>
+        <p>Portal inmobiliario premium. Anuncios verificados en venta y alquiler.</p>
         <div class="footer-social">
-          <!-- GitHub -->
-          <a href="https://github.com/neuralgpt-store" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" class="footer-social-link">
+          <a href="https://github.com/neuralgpt-store" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="footer-social-link">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
           </a>
-          <!-- X / Twitter -->
-          <a href="https://twitter.com/neuralgptstore" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" title="X" class="footer-social-link">
+          <a href="https://twitter.com/neuralgptstore" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="footer-social-link">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <!-- LinkedIn -->
-          <a href="https://linkedin.com/company/neuralgpt-store" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="footer-social-link">
+          <a href="https://linkedin.com/company/neuralgpt-store" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="footer-social-link">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </a>
-          <!-- Discord -->
-          <a href="https://discord.gg/neuralgpt" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord" class="footer-social-link">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.077.11 18.097.128 18.11a19.905 19.905 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-          </a>
-          <!-- YouTube -->
-          <a href="https://youtube.com/@neuralgptstore" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="footer-social-link">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-          </a>
-        </div>
-        <!-- Newsletter -->
-        <div style="margin-top:20px">
-          <div style="font-family:var(--font-title);font-size:0.65rem;letter-spacing:2px;color:var(--accent);margin-bottom:10px" data-i18n="newsletter_label">NEWSLETTER</div>
-          <form class="newsletter-form" id="newsletter-form" onsubmit="subscribeNewsletter(event)">
-            <input type="email" name="email" placeholder="tu@email.com" required aria-label="Tu email para el newsletter" data-i18n-placeholder="newsletter_placeholder" />
-            <button type="submit" class="btn btn-primary btn-sm" data-i18n="btn_subscribe">Suscribirse</button>
-          </form>
-          <div id="newsletter-msg" style="font-size:0.75rem;color:var(--accent4);margin-top:6px" role="status"></div>
         </div>
       </div>
 
       <div class="footer-col">
-        <h4 data-i18n="footer_company">NEURALGPT</h4>
+        <h4>INMOBILIARIO</h4>
         <ul>
-          <li><a href="/about.html" data-i18n="footer_about">Sobre nosotros</a></li>
-          <li><a href="/blog.html" data-i18n="footer_blog">Blog</a></li>
-          <li><a href="/contact.html" data-i18n="footer_contact">Contacto</a></li>
-          <li><a href="/sponsors.html" data-i18n="footer_sponsors">Sponsors</a></li>
+          <li><a href="/venta.html">Inmuebles en venta</a></li>
+          <li><a href="/alquiler.html">Inmuebles en alquiler</a></li>
+          <li><a href="/real-estate-index.html">Índice inmobiliario</a></li>
+          <li><a href="/sitemap-real-estate.html">Sitemap</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4 data-i18n="footer_marketplace_label">MARKETPLACE</h4>
+        <h4>UBICACIONES</h4>
         <ul>
-          <li><a href="/marketplace.html" data-i18n="footer_all_products">Todos los productos</a></li>
-          <li><a href="/category.html" data-i18n="footer_categories">Categorías</a></li>
-          <li><a href="/pricing.html" data-i18n="footer_pricing">Precios</a></li>
-          <li><a href="/trends.html" data-i18n="footer_trends">Tendencias</a></li>
+          <li><a href="/pais/es/">España</a></li>
+          <li><a href="/pais/pt/">Portugal</a></li>
+          <li><a href="/ciudad/madrid/">Madrid</a></li>
+          <li><a href="/ciudad/lisboa/">Lisboa</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4 data-i18n="footer_sellers">VENDEDORES</h4>
+        <h4>PORTAL</h4>
         <ul>
-          <li><a href="/provider-register.html" data-i18n="footer_register">Registrarse</a></li>
-          <li><a href="/providers.html" data-i18n="footer_directory">Directorio</a></li>
-          <li><a href="/vendor-onboarding.html" data-i18n="footer_guide">Guía de inicio</a></li>
-          <li><a href="mailto:support@neuralgpt.store" data-i18n="footer_seller_contact">Contactar equipo</a></li>
+          <li><a href="/about.html">Sobre nosotros</a></li>
+          <li><a href="/contact.html">Contacto</a></li>
+          <li><a href="/contact.html">Publicar anuncio</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4 data-i18n="footer_legal">LEGAL & SEGURIDAD</h4>
+        <h4>LEGAL & SEGURIDAD</h4>
         <ul>
-          <li><a href="/privacy.html" data-i18n="footer_privacy">Privacidad</a></li>
-          <li><a href="/terms.html" data-i18n="footer_terms">Términos</a></li>
-          <li><a href="/legal.html" data-i18n="footer_legal_notice">Aviso legal</a></li>
-          <li><a href="/security.html" data-i18n="footer_security">Centro de seguridad</a></li>
-          <li><a href="mailto:security@neuralgpt.store" data-i18n="footer_vuln">Reportar vulnerabilidad</a></li>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Términos</a></li>
+          <li><a href="/legal.html">Aviso legal</a></li>
+          <li><a href="/security.html">Seguridad</a></li>
+          <li><a href="mailto:security@neuralgpt.store">Reportar vulnerabilidad</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <span data-i18n="footer_copy">© 2025–2026 neuralgpt.store · Todos los derechos reservados</span>
-      <span>Pagos procesados por <strong>Stripe</strong> · <a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a></span>
+      <span>© 2025–2026 neuralgpt.store · Todos los derechos reservados</span>
+      <span><a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a></span>
+      <span><a href="mailto:wilfreyera@gmail.com" style="color:var(--accent2)">wilfreyera@gmail.com</a></span>
       <span>
-        <a href="/privacy.html" style="color:var(--muted)" data-i18n="footer_privacy">Privacidad</a> ·
-        <a href="/terms.html" style="color:var(--muted)" data-i18n="footer_terms">Términos</a>
+        <a href="/privacy.html" style="color:var(--muted)">Privacidad</a> ·
+        <a href="/terms.html" style="color:var(--muted)">Términos</a>
       </span>
     </div>
   </footer>
 
   <!-- ── SCRIPTS ── -->
   <script>
-  // ── Partículas CSS ────────────────────────────────────────────
   (function(){
     var wrap = document.getElementById('particles');
     if(!wrap) return;
-    // Colores RGB del ecosistema
-    var colors = [
-      '#00eaff','#00eaff','#00eaff', // cian (más frecuente)
-      '#7f00ff','#7f00ff',            // púrpura
-      '#ff0080','#ff0080',            // rosa
-      '#00ff99','#00ff99',            // verde
-      '#b400ff',                      // violeta
-      '#00ffee',                      // cian-verde
-      '#ffffff'                       // blanco
-    ];
-    for(var i=0;i<60;i++){
+    var colors = ['#00eaff','#00eaff','#7f00ff','#ff0080','#00ff99','#ffffff'];
+    for(var i=0;i<40;i++){
       var p = document.createElement('span');
       p.className = 'particle';
-      var size  = Math.random()*4.5 + 1;   // 1 – 5.5 px
-      var left  = Math.random()*100;
-      var dur   = Math.random()*14 + 6;    // 6 – 20 s
-      // delay negativo: las partículas arrancan en distintos puntos del ciclo
-      var delay = -(Math.random()*20);
-      var color = colors[Math.floor(Math.random()*colors.length)];
-
-      // 45% de las partículas llevan glow
-      var glow = '';
-      if(Math.random() > 0.55){
-        var glowR = Math.round(size * 2.5 + 2);
-        glow = 'box-shadow:0 0 '+glowR+'px '+Math.round(glowR*0.6)+'px '+color+';';
-      }
-
-      p.style.cssText =
-        'width:'+size+'px;'+
-        'height:'+size+'px;'+
-        'left:'+left+'%;'+
-        'bottom:-8px;'+
-        'background:'+color+';'+
-        'animation-duration:'+dur+'s;'+
-        'animation-delay:'+delay+'s;'+
-        glow;
+      var size = Math.random()*4 + 1;
+      var left = Math.random()*100;
+      var dur  = Math.random()*12 + 6;
+      var del  = -(Math.random()*dur);
+      p.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+left+'%;animation-duration:'+dur+'s;animation-delay:'+del+'s;background:'+colors[Math.floor(Math.random()*colors.length)];
       wrap.appendChild(p);
     }
   })();
 
-  // ── Search ──────────────────────────────────────────────────────
-  var suggestions = ['GhostWriter','NeuralBill','PokerBot','ClawBot','NeuralAgent','automatización Linux','pentesting tools','facturación IA','bot Telegram','scraper Python'];
-  var inp = document.getElementById('hero-search');
-  var box = document.getElementById('hero-suggestions');
-  if(inp && box){
-    inp.addEventListener('input', function(){
-      var v = this.value.trim().toLowerCase();
-      if(!v){ box.hidden=true; return; }
-      var matches = suggestions.filter(s=>s.toLowerCase().includes(v)).slice(0,5);
-      if(!matches.length){ box.hidden=true; return; }
-      box.innerHTML='';
-      matches.forEach(function(m){
-        var d=document.createElement('div');
-        d.className='suggestion-item'; d.textContent=m;
-        d.addEventListener('click',function(){ inp.value=m; box.hidden=true; doSearch(); });
-        box.appendChild(d);
-      });
-      box.hidden=false;
-    });
-    inp.addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch(); if(e.key==='Escape') box.hidden=true; });
-    document.addEventListener('click',function(e){ if(!inp.contains(e.target)&&!box.contains(e.target)) box.hidden=true; });
-  }
-  function doSearch(){
-    var q=(document.getElementById('hero-search')||{}).value||'';
-    q=q.trim();
-    location.href='/marketplace.html'+(q?'?search='+encodeURIComponent(q):'');
-  }
-
-  // ── Contadores animados ─────────────────────────────────────────
-  function animateCounter(el, target, suffix){
-    var start=0, duration=1800, step=16;
-    var inc = target/(duration/step);
-    var t = setInterval(function(){
-      start+=inc;
-      if(start>=target){ start=target; clearInterval(t); }
-      var val = Math.floor(start);
-      el.textContent = (target>=1000 ? (val/1000).toFixed(1)+'K' : val) + (suffix||'') + '+';
-    }, step);
-  }
-  var statsObserver = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        var el = document.getElementById('stat-products');
-        var el2 = document.getElementById('stat-devs');
-        var el3 = document.getElementById('stat-downloads');
-        if(el) animateCounter(el, 50, '');
-        if(el2) animateCounter(el2, 120, '');
-        if(el3) animateCounter(el3, 2400, '');
-        statsObserver.disconnect();
-      }
-    });
-  }, {threshold:0.3});
-  var statsBar = document.getElementById('stats-bar');
-  if(statsBar) statsObserver.observe(statsBar);
-
-  // ── Mobile nav toggle ───────────────────────────────────────────
   var navToggle = document.getElementById('nav-toggle');
   var mainNav   = document.getElementById('main-nav');
   if(navToggle && mainNav){
@@ -1055,81 +274,34 @@
     });
   }
 
-  // ── Newsletter ──────────────────────────────────────────────────
-  function subscribeNewsletter(e){
-    e.preventDefault();
-    var msg = document.getElementById('newsletter-msg');
-    if(msg) msg.textContent = '✓ Suscripción registrada. ¡Gracias!';
-    e.target.reset();
-  }
-
-  // ── PROMO REEL ──────────────────────────────────────────────────
   (function(){
-    var slides   = document.querySelectorAll('.promo-slide');
-    var dots     = document.querySelectorAll('.promo-dot');
-    var prevBtn  = document.getElementById('promo-prev');
-    var nextBtn  = document.getElementById('promo-next');
-    var wrap     = document.getElementById('promo-reel');
-    if(!slides.length) return;
-
-    var current  = 0;
-    var total    = slides.length;
-    var timer    = null;
-    var paused   = false;
-
-    function goTo(idx){
-      slides[current].classList.remove('active');
-      dots[current].classList.remove('active');
-      dots[current].removeAttribute('aria-current');
-      current = (idx + total) % total;
-      slides[current].classList.add('active');
-      dots[current].classList.add('active');
-      dots[current].setAttribute('aria-current','true');
+    var node = document.getElementById('sponsors-rotator');
+    if(!node) return;
+    var cards = [
+      { sector:'INMOBILIARIAS', title:'Red Premium Europea', desc:'Campañas de captación y posicionamiento para agencias y redes inmobiliarias.', cta:'Solicitar plaza', href:'mailto:wilfreyera@gmail.com?subject=Sponsor%20Inmobiliarias' },
+      { sector:'ARQUITECTURA', title:'Estudios de Arquitectura', desc:'Visibilidad para estudios de diseño, interiorismo y reforma integral.', cta:'Propuesta corporativa', href:'mailto:wilfreyera@gmail.com?subject=Sponsor%20Arquitectura' },
+      { sector:'BANCA E HIPOTECAS', title:'Financiación y brokers', desc:'Presencia destacada frente a usuarios en fase activa de compra.', cta:'Activar convenio', href:'mailto:wilfreyera@gmail.com?subject=Sponsor%20Hipotecas' },
+      { sector:'CONSTRUCCIÓN', title:'Constructoras y promotoras', desc:'Promoción de marca para obra nueva, rehabilitación y servicios técnicos.', cta:'Hablar con negocio', href:'mailto:wilfreyera@gmail.com?subject=Sponsor%20Construccion' },
+      { sector:'REFORMAS', title:'Reformas llave en mano', desc:'Leads cualificados para renovación integral y mejora de activos.', cta:'Reservar espacio', href:'mailto:wilfreyera@gmail.com?subject=Sponsor%20Reformas' },
+      { sector:'RESTAURACIÓN', title:'Restauración patrimonial', desc:'Empresas especialistas en recuperación y puesta en valor de inmuebles.', cta:'Solicitar dossier', href:'mailto:wilfreyera@gmail.com?subject=Sponsor%20Restauracion' }
+    ];
+    var index = 0;
+    function renderCard(item){
+      node.innerHTML =
+        '<article class="card" style="border-color:rgba(0,234,255,0.35);background:linear-gradient(135deg,rgba(0,234,255,0.08),rgba(127,0,255,0.06));padding:24px">'
+        +'<div style="font-family:var(--font-title);font-size:0.7rem;letter-spacing:2px;color:var(--accent);margin-bottom:8px">'+item.sector+'</div>'
+        +'<h3 style="font-family:var(--font-title);font-size:1.1rem;margin:0 0 8px;color:var(--text)">'+item.title+'</h3>'
+        +'<p style="color:var(--muted);font-size:0.86rem;line-height:1.7;margin:0 0 16px">'+item.desc+'</p>'
+        +'<a class="btn btn-primary" href="'+item.href+'">'+item.cta+'</a>'
+        +'</article>';
     }
-
-    function startTimer(){
-      clearInterval(timer);
-      timer = setInterval(function(){ if(!paused) goTo(current+1); }, 4000);
-    }
-
-    // Dots
-    dots.forEach(function(d){
-      d.addEventListener('click', function(){
-        goTo(+d.dataset.idx);
-        startTimer();
-      });
-    });
-
-    // Arrows
-    if(prevBtn) prevBtn.addEventListener('click',function(){ goTo(current-1); startTimer(); });
-    if(nextBtn) nextBtn.addEventListener('click',function(){ goTo(current+1); startTimer(); });
-
-    // Pause on hover
-    if(wrap){
-      wrap.addEventListener('mouseenter', function(){ paused=true; });
-      wrap.addEventListener('mouseleave', function(){ paused=false; });
-    }
-
-    // Touch swipe
-    var touchX = null;
-    document.getElementById('promo-reel').addEventListener('touchstart',function(e){
-      touchX = e.touches[0].clientX;
-    }, {passive:true});
-    document.getElementById('promo-reel').addEventListener('touchend',function(e){
-      if(touchX === null) return;
-      var dx = e.changedTouches[0].clientX - touchX;
-      if(Math.abs(dx) > 40){
-        goTo(dx < 0 ? current+1 : current-1);
-        startTimer();
-      }
-      touchX = null;
-    }, {passive:true});
-
-    startTimer();
+    renderCard(cards[index]);
+    setInterval(function(){
+      index = (index + 1) % cards.length;
+      renderCard(cards[index]);
+    }, 4800);
   })();
-
   </script>
-  <script src="/js/i18n-global.js" defer></script>
   <script src="/js/agent-chat.js" defer></script>
 </body>
 </html>

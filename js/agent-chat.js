@@ -26,31 +26,31 @@
   const L10N = {
     es: {
       placeholder: 'Escribe tu pregunta…',
-      sub: 'Asistente de neuralgpt.store',
+      sub: 'Asistente inmobiliaria de neuralgpt.store',
       greeting_prefix: null, // usa KB greeting
-      fallback: 'No encontré una respuesta exacta. Escríbenos a support@neuralgpt.store',
-      suggestions: ['¿Qué productos tenéis?', '¿Cómo compro?', 'Quiero vender', '¿Cuánto cuesta?'],
+      fallback: 'No encontré una respuesta exacta. Escríbenos a neuralgpt.store@protonmail.com',
+      suggestions: ['Publicar inmueble', 'Editar anuncio', 'Ver venta', 'Ver alquiler'],
     },
     en: {
       placeholder: 'Type your question…',
       sub: 'neuralgpt.store assistant',
-      greeting_prefix: '👋 Hi! I\'m Chany, neuralgpt.store\'s AI assistant. Our platform is in Spanish, but I\'ll help you in English!\n\n🛒 Products: GhostWriter €29 · NeuralBill €19 · PokerBot €39 (lifetime license)\n💼 Sell your software: 20% commission, no monthly fee\n\nHow can I help you?',
-      fallback: 'I couldn\'t find an exact answer. Email us at support@neuralgpt.store',
-      suggestions: ['Our products', 'How to buy', 'Sell my software', 'Pricing'],
+      greeting_prefix: '👋 Hi! I\'m Chany, neuralgpt.store\'s real estate assistant. Our platform is in Spanish, but I\'ll help you in English!\n\n🏠 Browse properties for sale or rent on our portal.\n\nHow can I help you?',
+      fallback: 'I couldn\'t find an exact answer. Email us at neuralgpt.store@protonmail.com',
+      suggestions: ['Properties for sale', 'Properties for rent', 'Post a listing', 'Contact'],
     },
     fr: {
       placeholder: 'Tapez votre question…',
       sub: 'Assistant neuralgpt.store',
-      greeting_prefix: '👋 Bonjour! Je suis Chany, l\'assistant IA de neuralgpt.store. Notre plateforme est en espagnol, mais je vais vous aider en français!\n\n🛒 Produits: GhostWriter 29€ · NeuralBill 19€ · PokerBot 39€ (licence à vie)\n💼 Vendre votre logiciel: commission 20%, sans abonnement mensuel\n\nComment puis-je vous aider?',
-      fallback: 'Pas de réponse exacte. Écrivez-nous à support@neuralgpt.store',
-      suggestions: ['Nos produits', 'Comment acheter', 'Vendre mon logiciel', 'Tarifs'],
+      greeting_prefix: '👋 Bonjour! Je suis Chany, l\'assistant immobilier de neuralgpt.store. Notre plateforme est en espagnol, mais je vais vous aider en français!\n\n🏠 Parcourez les biens à vendre ou à louer sur notre portail.\n\nComment puis-je vous aider?',
+      fallback: 'Pas de réponse exacte. Écrivez-nous à neuralgpt.store@protonmail.com',
+      suggestions: ['Biens à vendre', 'Biens à louer', 'Publier une annonce', 'Contact'],
     },
     de: {
       placeholder: 'Ihre Frage eingeben…',
       sub: 'neuralgpt.store Assistent',
-      greeting_prefix: '👋 Hallo! Ich bin Chany, der KI-Assistent von neuralgpt.store. Unsere Plattform ist auf Spanisch, aber ich helfe Ihnen auf Deutsch!\n\n🛒 Produkte: GhostWriter 29€ · NeuralBill 19€ · PokerBot 39€ (lebenslange Lizenz)\n💼 Software verkaufen: 20% Provision, keine monatliche Gebühr\n\nWie kann ich helfen?',
-      fallback: 'Keine genaue Antwort gefunden. Schreiben Sie an support@neuralgpt.store',
-      suggestions: ['Unsere Produkte', 'Wie kaufen', 'Software verkaufen', 'Preise'],
+      greeting_prefix: '👋 Hallo! Ich bin Chany, der Immobilien-Assistent von neuralgpt.store. Unsere Plattform ist auf Spanisch, aber ich helfe Ihnen auf Deutsch!\n\n🏠 Entdecken Sie Immobilien zum Kauf oder zur Miete.\n\nWie kann ich helfen?',
+      fallback: 'Keine genaue Antwort gefunden. Schreiben Sie an neuralgpt.store@protonmail.com',
+      suggestions: ['Immobilien kaufen', 'Immobilien mieten', 'Anzeige aufgeben', 'Kontakt'],
     },
   };
 
@@ -146,48 +146,41 @@
   // ── Contexto de página ────────────────────────────────────────────────
   function getPageContext() {
     const path = location.pathname;
-    const params = new URLSearchParams(location.search);
-    const productId = params.get('id') || '';
-
     if (path === '/' || path.endsWith('/index.html')) return 'home';
-    if (path.includes('marketplace'))   return 'marketplace';
-    if (path.includes('product'))       return productId ? 'product:' + productId : 'product';
-    if (path.includes('provider-register') || path.includes('vendor-onboarding')) return 'seller';
-    if (path.includes('pricing'))       return 'pricing';
-    if (path.includes('contact'))       return 'contact';
-    if (path.includes('providers'))     return 'providers';
+    if (path.includes('venta'))       return 'venta';
+    if (path.includes('alquiler'))    return 'alquiler';
+    if (path.includes('listing'))     return 'listing';
+    if (path.includes('edit'))        return 'edit';
+    if (path.includes('confirm'))     return 'confirm';
+    if (path.includes('contact'))     return 'contact';
     return 'other';
   }
 
   function getContextGreeting(ctx, kbGreeting) {
     const lang = getLang();
     if (lang !== 'es') {
-      // Non-Spanish: use pre-built L10N prefix
       const prefix = t('greeting_prefix');
       if (prefix !== null) return prefix;
     }
-    // Spanish — page-aware greeting
-    if (ctx === 'home')        return kbGreeting;
-    if (ctx.startsWith('product:')) {
-      const id = ctx.split(':')[1];
-      const names = { ghostwriter:'GhostWriter', neuralbill:'NeuralBill', pokerbot:'PokerBot' };
-      const name = names[id] || id;
-      return `¡Hola! Soy Chany. Veo que estás mirando ${name}. ¿Tienes alguna pregunta sobre este producto, el proceso de compra o la descarga?`;
-    }
-    if (ctx === 'marketplace')  return '¡Hola! Soy Chany. Puedo ayudarte a encontrar el software que buscas. ¿Qué tipo de herramienta necesitas?';
-    if (ctx === 'seller')       return '¡Hola! Soy Chany. Estoy aquí para responder tus dudas sobre cómo vender en neuralgpt.store: hosting, verificación, comisiones y pagos.';
-    if (ctx === 'pricing')      return '¡Hola! Soy Chany. ¿Tienes dudas sobre precios, comisiones o formas de pago? Pregúntame lo que necesites.';
+    if (ctx === 'home')     return kbGreeting;
+    if (ctx === 'venta')    return '¡Hola! Soy Chany. Estás explorando inmuebles en venta. ¿Tienes alguna pregunta sobre los anuncios o el proceso?';
+    if (ctx === 'alquiler') return '¡Hola! Soy Chany. Estás explorando inmuebles en alquiler. ¿Necesitas ayuda para encontrar lo que buscas?';
+    if (ctx === 'listing')  return '¡Hola! Soy Chany. ¿Tienes alguna duda sobre este inmueble o quieres más información?';
+    if (ctx === 'edit')     return '¡Hola! Soy Chany. Aquí puedes editar tu anuncio con listing_id y edit_key.';
+    if (ctx === 'confirm')  return '¡Hola! Soy Chany. Esta pantalla confirma el estado de tu publicación.';
+    if (ctx === 'contact')  return '¡Hola! Soy Chany. ¿Tienes alguna pregunta antes de contactar con el equipo?';
     return kbGreeting;
   }
 
   function getContextSuggestions(ctx) {
     const lang = getLang();
     if (lang !== 'es') return t('suggestions');
-    if (ctx === 'home')        return ['¿Qué productos tenéis?', '¿Cómo funciona la compra?', 'Quiero vender', '¿Es seguro?'];
-    if (ctx.startsWith('product:')) return ['¿Cómo descargo tras pagar?', '¿Es seguro comprar?', '¿Hay devoluciones?', '¿Qué incluye la licencia?'];
-    if (ctx === 'marketplace')  return ['¿Qué categorías hay?', '¿Cómo filtro productos?', '¿Hay productos gratis?', '¿Cómo pago?'];
-    if (ctx === 'seller')       return ['¿Qué es el modelo de hosting?', '¿Cuánto tarda la verificación?', '¿Cuándo cobro?', 'Categorías legales'];
-    if (ctx === 'pricing')      return ['¿Hay IVA?', '¿Cómo funciona la descarga?', '¿Cuánto tarda el payout?', 'Registrarme como vendedor'];
+    if (ctx === 'home')     return ['Ver inmuebles en venta', 'Ver inmuebles en alquiler', 'Publicar inmueble', 'Cobertura fase 1'];
+    if (ctx === 'venta')    return ['Ver todos los inmuebles en venta', 'Caducidad de anuncios', '¿Cómo contacto al anunciante?'];
+    if (ctx === 'alquiler') return ['Ver todos los inmuebles en alquiler', 'Habitaciones larga estancia', 'Publicar inmueble'];
+    if (ctx === 'listing')  return ['¿Cómo contacto al anunciante?', '¿Tiene revisión humana?', 'Ver más inmuebles'];
+    if (ctx === 'edit')     return ['Editar con listing_id + edit_key', 'Revisión humana', 'Volver al inicio'];
+    if (ctx === 'confirm')  return ['¿Qué significa review_required?', 'Publicar otro inmueble', 'Volver al inicio'];
     return t('suggestions');
   }
 
@@ -276,34 +269,21 @@
 
   function getSuggestions(intentId) {
     const map = {
-      'greeting':              ['Ver productos', '¿Cómo compro?', 'Quiero vender'],
-      'ghostwriter':           ['Comprar GhostWriter', 'Ver NeuralBill', 'Ver PokerBot'],
-      'neuralbill':            ['Comprar NeuralBill', 'Ver GhostWriter', '¿Hay más productos?'],
-      'pokerbot':              ['Comprar PokerBot', '¿Es legal usar PokerBot?', 'Ver GhostWriter'],
-      'prices':                ['Ver marketplace', '¿Cómo pago?', 'Quiero vender'],
-      'commission':            ['Registrarme como vendedor', '¿Cómo funciona el pago?', 'Ver comisiones'],
-      'sell':                  ['Ir a registro de vendedor', '¿Qué software puedo vender?', 'Categorías legales'],
-      'sell_my_app':           ['Ir a registro de vendedor', 'Proceso de verificación', 'Categorías legales'],
-      'hosting_model':         ['Registro de vendedor', 'Proceso de verificación', 'Comisiones'],
-      'security':              ['Ver política de seguridad', 'Badge verificado', 'Es seguro comprar'],
-      'safe_to_buy':           ['Ver marketplace', '¿Cómo compro?', 'Proceso de verificación'],
-      'payment':               ['Ver marketplace', '¿Cómo descargo?', 'Política de devoluciones'],
-      'download_after_payment':['Ir al marketplace', 'Política de devoluciones', 'Soporte'],
-      'secure_delivery':       ['Ver marketplace', '¿Cómo pago?', 'Soporte'],
-      'platforms':             ['Software para Linux', 'Software para Windows', 'Software Android'],
-      'contact':               ['Ver marketplace', 'Registrarme como vendedor', 'Política de seguridad'],
-      'about':                 ['Ver marketplace', 'Quiero vender', '¿Qué productos hay?'],
-      'what_is_neuralgpt':     ['Ver marketplace', 'Quiero vender', 'Precios y comisiones'],
-      'categories':            ['IA y automatización', 'Seguridad y pentesting', 'Ver marketplace'],
-      'all_products':          ['Comprar GhostWriter', 'Comprar NeuralBill', 'Ver marketplace'],
-      'refund':                ['Ver términos', 'Contactar soporte', 'Ver marketplace'],
-      'technical_support':     ['Contactar soporte', 'Política de devoluciones', 'Ver marketplace'],
-      'verification':          ['Badge verificado', '¿Es seguro comprar?', 'Quiero vender'],
-      'verification_process':  ['Registrarme como vendedor', 'Categorías legales', 'Soporte'],
-      'verification_failure':  ['Contactar soporte', 'Ver guía de verificación', 'Registro vendedor'],
-      'legal_categories':      ['Registrarme como vendedor', 'Proceso de verificación', 'Comisiones'],
+      'greeting':              ['Ver inmuebles en venta', 'Ver inmuebles en alquiler', 'Publicar inmueble'],
+      'publicar_inmueble':     ['Ir a publicar', 'Editar anuncio', 'Contacto del portal'],
+      'editar_anuncio':        ['Abrir edición', '¿Qué es review_required?', 'Contacto del portal'],
+      'tipos_fase1':           ['Venta', 'Alquiler larga duración', 'Locales y naves'],
+      'cobertura_fase1':       ['Ver índice inmobiliario', 'Ver por país', 'Ver por ciudad'],
+      'revision_humana':       ['Duplicados', 'Moderación anti-spam', 'Estado del anuncio'],
+      'duplicados':            ['Cómo editar anuncio', 'Revisión humana', 'Contacto del portal'],
+      'frescura_caducidad':    ['Venta 90 días', 'Ver anuncios en venta', 'Ver anuncios en alquiler'],
+      'contacto_anunciante':   ['Qué datos se desbloquean', 'Publicar inmueble', 'Contacto del portal'],
+      'monetizacion_fase1':    ['Más visibilidad', 'Sensacional 24h', 'Sponsors sectoriales'],
+      'sponsors_sectoriales':  ['Sponsors en portada', 'Contacto de negocio', 'Ver inmuebles'],
+      'seguridad_contenido':   ['Reportar incidencia', 'Revisión humana', 'Normas del portal'],
+      'contacto_portal':       ['Atención al usuario', 'Negocio', 'Volver al inicio']
     };
-    return (map[intentId] || ['Ir al marketplace', 'Ver precios', 'Contactar']).slice(0, 3);
+    return (map[intentId] || ['Ver inmuebles', 'Publicar inmueble', 'Contacto del portal']).slice(0, 3);
   }
 
   // ── DOM helpers ──────────────────────────────────────────────────────

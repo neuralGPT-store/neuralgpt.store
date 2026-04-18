@@ -1,0 +1,613 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const opsActionEngine = require('./ops-action-engine.js');
+const batchPreflightEngine = require('./ops-batch-preflight-engine.js');
+
+const SCHEMA_VERSION = 1;
+
+const RESULT_STATUS = {
+  DRY_RUN_OK: 'dry_run_ok',
+  COMPLETED: 'completed',
+  PARTIAL: 'partial',
+  BLOCKED_PREFLIGHT: 'blocked_preflight',
+  BLOCKED_DUPLICATE: 'blocked_duplicate',
+  ERROR: 'error'
+};
+
+// --- helpers I/O ---
+
+function ensureDirForFile(filePath) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+}
+
+function appendJsonl(filePath, payload) {
+  ensureDirForFile(filePath);
+  fs.appendFileSync(filePath, JSON.stringify(payload) + '\n', { encoding: 'utf8', flag: 'a' });
+}
+
+function readJsonl(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const raw = fs.readFileSync(filePath, 'utf8');
+  if (!raw.trim()) return [];
+  const out = [];
+  raw.split(/\r?\n/).forEach((line) => {
+    const text = line.trim();
+    if (!text) return;
+    try { out.push(JSON.parse(text)); } catch (_) { /* skip malformed */ }
+  });
+  return out;
+}
+
+function readJsonArray(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  try {
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_) { return []; }
+}
+
+function readJsonlSources(root) {
+  return {
+    batchReviews: readJsonl(path.join(root, 'data', 'chany', 'batch-review-log.jsonl')),
+    itemReviews: readJsonl(path.join(root, 'data', 'chany', 'batch-item-review-log.jsonl')),
+    conflicts: readJsonl(path.join(root, 'data', 'chany', 'batch-item-review-conflicts.log.jsonl')),
+    listings: readJsonArray(path.join(root, 'data', 'listings.json'))
+  };
+}
+
+function buildPaths(root) {
+  return {
+    executionLog: path.join(root, 'data', 'chany', 'batch-execution-log.jsonl'),
+    itemExecutionLog: path.join(root, 'data', 'chany', 'batch-item-execution-log.jsonl'),
+    snapshot: path.join(root, 'data', 'chany', 'ops-snapshot.json')
+  };
+}
+
+function normalizeString(value) {
+  if (value == null) return null;
+  const text = String(value).trim();
+  return text ? text : null;
+}
+
+function nowIso() {
+  return new Date().toISOString();
+}
+
+function parseIsoMs(value) {
+  if (!value) return null;
+  const ms = Date.parse(String(value));
+  return Number.isFinite(ms) ? ms : null;
+}
+
+function evaluateManualContract(payload, batchPf, nowMs) {
+  const missing = [];
+  const details = [];
+  const expectedPreflightId = normalizeString(payload && payload.preflight_id);
+  const expectedPreflightHash = normalizeString(payload && payload.preflight_hash);
+  const expectedPreflightGeneratedAt = normalizeString(payload && payload.preflight_generated_at);
+
+  if (!expectedPreflightId || !expectedPreflightHash || !expectedPreflightGeneratedAt) {
+    missing.push('preflight_reference_required');
+    details.push('Debes enviar preflight_id, preflight_hash y preflight_generated_at.');
+  } else {
+    if (expectedPreflightId !== normalizeString(batchPf && batchPf.preflight_id)) {
+      missing.push('preflight_id_mismatch');
+      details.push('preflight_id no coincide con el preflight vigente.');
+    }
+    if (expectedPreflightHash !== normalizeString(batchPf && batchPf.preflight_hash)) {
+      missing.push('preflight_hash_mismatch');
+      details.push('preflight_hash no coincide con el preflight vigente.');
+    }
+    const expectedMs = parseIsoMs(expectedPreflightGeneratedAt);
+    const ttlSeconds = Number(batchPf && batchPf.preflight_ttl_seconds) || 0;
+    if (!expectedMs) {
+      missing.push('preflight_generated_at_invalid');
+      details.push('preflight_generated_at inválido.');
+    } else if (ttlSeconds > 0 && (nowMs - expectedMs) > (ttlSeconds * 1000)) {
+      missing.push('preflight_expired');
+      details.push('El preflight aportado está caducado para ejecutar.');
+    }
+  }
+
+  if (normalizeString(batchPf && batchPf.preflight_validity_status) !== 'vigente') {
+    missing.push('preflight_not_vigente');
+    details.push('El preflight actual no está vigente para ejecución manual.');
+  }
+
+  if (!batchPf || batchPf.batch_ready_for_manual_execution !== true) {
+    missing.push('batch_not_ready_for_manual_execution');
+    const extra = Array.isArray(batchPf && batchPf.missing_requirements) ? batchPf.missing_requirements : [];
+    if (extra.length) {
+      extra.forEach((code) => missing.push(code));
+      details.push('Missing requirements: ' + extra.join(', '));
+    }
+  }
+
+  return {
+    ok: missing.length === 0,
+    missing_requirements: Array.from(new Set(missing)),
+    details
+  };
+}
+
+// --- validación de payload de ejecución ---
+
+function validateExecutionPayload(payload, context) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    throw new Error('invalid_payload');
+  }
+  const role = normalizeString(context && context.role) || 'viewer';
+  if (role === 'viewer') throw new Error('execution_role_forbidden:viewer');
+
+  const executionId = normalizeString(payload.execution_id);
+  if (!executionId) throw new Error('execution_id_required');
+  if (executionId.length < 8) throw new Error('execution_id_too_short:min_8');
+  if (executionId.length > 128) throw new Error('execution_id_too_long:max_128');
+  if (!/^[a-z0-9_\-:.]+$/i.test(executionId)) throw new Error('execution_id_invalid_chars');
+
+  const batchId = normalizeString(payload.batch_id);
+  if (!batchId) throw new Error('batch_id_required');
+  if (batchId.length > 128) throw new Error('batch_id_too_long:max_128');
+
+  const actor = normalizeString(payload.actor);
+  if (!actor) throw new Error('actor_required:explicit_payload_actor');
+
+  const reason = normalizeString(payload.reason);
+  if (!reason || reason.length < 12) throw new Error('reason_required:min_chars=12');
+  if (reason.length > 1024) throw new Error('reason_too_long:max_1024');
+
+  const dryRun = payload.dry_run === true;
+
+  if (!dryRun && payload.confirmed !== true) {
+    throw new Error('confirmation_required:set_confirmed=true_for_real_execution');
+  }
+
+  return { executionId, batchId, actor, role, reason, dryRun };
+}
+
+// --- plan de ejecución por ítem ---
+
+function buildItemPlan(item, executionId, itemReviews) {
+  const itemId = normalizeString(item && item.item_id) || '';
+  const listingId = normalizeString(item && item.listing_id) || '';
+  const suggestedAction = normalizeString(item && item.suggested_action) || '';
+
+  // buscar review_id del ítem para trazabilidad
+  const matchingReviews = itemReviews.filter((r) =>
+    r && normalizeString(r.item_id) === itemId && normalizeString(r.listing_id) === listingId
+  );
+  const latestReview = matchingReviews.length
+    ? matchingReviews.slice().sort((a, b) =>
+      String((b && b.reviewed_at) || '').localeCompare(String((a && a.reviewed_at) || ''))
+    )[0]
+    : null;
+
+  return {
+    item_execution_id: 'iexec_' + executionId.slice(-12) + '_' + itemId.slice(-16).replace(/[^a-z0-9_-]/gi, '_'),
+    item_id: itemId,
+    listing_id: listingId,
+    city: (item && item.city) || null,
+    operation: (item && item.operation) || null,
+    action_type: suggestedAction,
+    idempotency_key: executionId + '::' + itemId,
+    source_review_id: latestReview ? (latestReview.review_id || null) : null
+  };
+}
+
+// --- ejecución de un ítem ---
+
+function executeItem(plan, request, root, dryRun) {
+  const actionPayload = {
+    action_type: plan.action_type,
+    target_id: plan.listing_id,
+    action_id: plan.idempotency_key,
+    reason: request.reason,
+    confirmed: true,
+    dry_run: dryRun,
+    source_proposal_id: plan.item_execution_id
+  };
+
+  const now = nowIso();
+  try {
+    const result = opsActionEngine.applyAction(actionPayload, {
+      root,
+      actor: request.actor,
+      role: request.role
+    });
+
+    const itemResult = {
+      schema_version: SCHEMA_VERSION,
+      item_execution_id: plan.item_execution_id,
+      execution_id: request.executionId,
+      batch_id: request.batchId,
+      item_id: plan.item_id,
+      listing_id: plan.listing_id,
+      city: plan.city,
+      operation: plan.operation,
+      action_type: plan.action_type,
+      idempotency_key: plan.idempotency_key,
+      source_review_id: plan.source_review_id,
+      dry_run: dryRun,
+      result: result.action.idempotency_status || (dryRun ? 'dry_run' : 'applied'),
+      before: result.action.before || null,
+      after: result.action.after || null,
+      error: null,
+      executed_at: now
+    };
+    return { ok: true, item: itemResult, idempotent: !!result.idempotent };
+  } catch (err) {
+    const itemError = {
+      schema_version: SCHEMA_VERSION,
+      item_execution_id: plan.item_execution_id,
+      execution_id: request.executionId,
+      batch_id: request.batchId,
+      item_id: plan.item_id,
+      listing_id: plan.listing_id,
+      city: plan.city,
+      operation: plan.operation,
+      action_type: plan.action_type,
+      idempotency_key: plan.idempotency_key,
+      source_review_id: plan.source_review_id,
+      dry_run: dryRun,
+      result: 'error',
+      before: null,
+      after: null,
+      error: err.message || 'unknown_error',
+      executed_at: now
+    };
+    return { ok: false, item: itemError, idempotent: false };
+  }
+}
+
+// --- punto de entrada principal ---
+
+function executeBatch(payload, options) {
+  const root = (options && options.root) ? options.root : process.cwd();
+  const context = {
+    actor: normalizeString(options && options.actor),
+    role: normalizeString(options && options.role) || 'viewer'
+  };
+
+  const request = validateExecutionPayload(payload, context);
+  const paths = buildPaths(root);
+  const sources = readJsonlSources(root);
+
+  // idempotencia a nivel de ejecución de lote.
+  // CONTRATO: dry-run y ejecución real deben usar execution_id distintos.
+  // Una entrada dry_run con el mismo execution_id bloquea la ejecución real por diseño:
+  // garantiza que el operador elija conscientemente un nuevo ID para la ejecución real.
+  const existingExecutions = readJsonl(paths.executionLog);
+  const duplicate = existingExecutions.find((e) => e && e.execution_id === request.executionId);
+  if (duplicate) {
+    return {
+      ok: true,
+      idempotent: true,
+      already_executed: true,
+      execution: duplicate,
+      message: 'Ejecución ya registrada con este execution_id. Sin mutación adicional.'
+    };
+  }
+
+  // cargar lotes desde snapshot
+  let batches = [];
+  let validations = [];
+  if (fs.existsSync(paths.snapshot)) {
+    try {
+      const snap = JSON.parse(fs.readFileSync(paths.snapshot, 'utf8'));
+      batches = Array.isArray(snap.operational_batches) ? snap.operational_batches : [];
+      validations = Array.isArray(snap.operational_batch_validations) ? snap.operational_batch_validations : [];
+    } catch (_) { /* snapshot no disponible, preflight usará datos vacíos */ }
+  }
+
+  // ejecutar preflight
+  const preflightResult = batchPreflightEngine.runBatchPreflight({
+    batches,
+    validations,
+    batchReviews: sources.batchReviews,
+    itemReviews: sources.itemReviews,
+    conflicts: sources.conflicts,
+    executionLogs: existingExecutions,
+    listingsData: sources.listings
+  });
+
+  const batchPf = preflightResult.batch_preflight.find((p) => p.batch_id === request.batchId) || null;
+
+  if (!batchPf) {
+    throw new Error('batch_not_found_in_preflight:' + request.batchId);
+  }
+
+  const startedAt = nowIso();
+
+  if (!request.dryRun && !batchPf.batch_executable) {
+    const batchTotalItems = Number.isFinite(Number(batchPf.total_items))
+      ? Number(batchPf.total_items)
+      : Number(batchPf.items_total || 0);
+    const blocked = {
+      schema_version: SCHEMA_VERSION,
+      execution_id: request.executionId,
+      batch_id: request.batchId,
+      actor: request.actor,
+      role: request.role,
+      started_at: startedAt,
+      completed_at: startedAt,
+      execution_mode: 'manual',
+      dry_run: false,
+      total_items: batchTotalItems,
+      planned_items: 0,
+      executed_items: 0,
+      skipped_items: 0,
+      blocked_items: batchTotalItems,
+      result_status: RESULT_STATUS.BLOCKED_PREFLIGHT,
+      preflight_snapshot: {
+        preflight_id: batchPf.preflight_id || null,
+        preflight_generated_at: batchPf.preflight_generated_at || null,
+        preflight_hash: batchPf.preflight_hash || null,
+        preflight_validity_status: batchPf.preflight_validity_status || null,
+        batch_executable: false,
+        batch_blockers: batchPf.batch_blockers,
+        batch_warnings: batchPf.batch_warnings,
+        batch_ready_for_manual_execution: batchPf.batch_ready_for_manual_execution === true,
+        missing_requirements: Array.isArray(batchPf.missing_requirements) ? batchPf.missing_requirements : []
+      },
+      item_results: [],
+      rollback_note: 'Sin mutaciones aplicadas. No se requiere rollback.'
+    };
+    appendJsonl(paths.executionLog, blocked);
+    return {
+      ok: false,
+      idempotent: false,
+      preflight_blocked: true,
+      execution: blocked,
+      message: 'Preflight fallido. Lote no ejecutable: ' + batchPf.batch_blockers.join(', ')
+    };
+  }
+
+  if (!request.dryRun) {
+    const contract = evaluateManualContract(payload, batchPf, Date.parse(startedAt));
+    if (!contract.ok) {
+      const batchTotalItems = Number.isFinite(Number(batchPf.total_items))
+        ? Number(batchPf.total_items)
+        : Number(batchPf.items_total || 0);
+      const blocked = {
+        schema_version: SCHEMA_VERSION,
+        execution_id: request.executionId,
+        batch_id: request.batchId,
+        actor: request.actor,
+        role: request.role,
+        started_at: startedAt,
+        completed_at: startedAt,
+        execution_mode: 'manual',
+        dry_run: false,
+        total_items: batchTotalItems,
+        planned_items: 0,
+        executed_items: 0,
+        skipped_items: 0,
+        blocked_items: batchTotalItems,
+        result_status: RESULT_STATUS.BLOCKED_PREFLIGHT,
+        preflight_snapshot: {
+          preflight_id: batchPf.preflight_id || null,
+          preflight_generated_at: batchPf.preflight_generated_at || null,
+          preflight_hash: batchPf.preflight_hash || null,
+          preflight_validity_status: batchPf.preflight_validity_status || null,
+          batch_executable: batchPf.batch_executable === true,
+          batch_ready_for_manual_execution: batchPf.batch_ready_for_manual_execution === true,
+          batch_blockers: batchPf.batch_blockers || [],
+          batch_warnings: batchPf.batch_warnings || [],
+          missing_requirements: contract.missing_requirements
+        },
+        item_results: [],
+        rollback_note: 'Sin mutaciones aplicadas. No se requiere rollback.'
+      };
+      appendJsonl(paths.executionLog, blocked);
+      return {
+        ok: false,
+        idempotent: false,
+        preflight_blocked: true,
+        execution: blocked,
+        message: 'Contrato de ejecución manual no satisfecho: ' + contract.missing_requirements.join(', ')
+      };
+    }
+  }
+
+  // construir plan por ítem
+  const targetBatch = batches.find((b) => b.batch_id === request.batchId);
+  const items = targetBatch && Array.isArray(targetBatch.items) ? targetBatch.items : [];
+  const itemPlans = items.map((item) => buildItemPlan(item, request.executionId, sources.itemReviews));
+
+  // dry-run: simular sin mutaciones
+  if (request.dryRun) {
+    const dryRunItems = itemPlans.map((plan) => executeItem(plan, request, root, true));
+    const completedAt = nowIso();
+    const dryRunExec = {
+      schema_version: SCHEMA_VERSION,
+      execution_id: request.executionId,
+      batch_id: request.batchId,
+      actor: request.actor,
+      role: request.role,
+      started_at: startedAt,
+      completed_at: completedAt,
+      execution_mode: 'dry_run',
+      dry_run: true,
+      total_items: items.length,
+      planned_items: itemPlans.length,
+      executed_items: 0,
+      skipped_items: 0,
+      blocked_items: 0,
+      result_status: RESULT_STATUS.DRY_RUN_OK,
+      preflight_snapshot: {
+        preflight_id: batchPf.preflight_id || null,
+        preflight_generated_at: batchPf.preflight_generated_at || null,
+        preflight_hash: batchPf.preflight_hash || null,
+        preflight_validity_status: batchPf.preflight_validity_status || null,
+        preflight_ttl_seconds: batchPf.preflight_ttl_seconds || null,
+        batch_executable: batchPf.batch_executable,
+        batch_blockers: batchPf.batch_blockers,
+        batch_warnings: batchPf.batch_warnings,
+        batch_ready_for_manual_execution: batchPf.batch_ready_for_manual_execution === true,
+        missing_requirements: Array.isArray(batchPf.missing_requirements) ? batchPf.missing_requirements : []
+      },
+      item_results: dryRunItems.map((r) => r.item),
+      rollback_note: 'Dry-run: sin mutaciones.'
+    };
+    appendJsonl(paths.executionLog, dryRunExec);
+    dryRunItems.forEach((r) => appendJsonl(paths.itemExecutionLog, r.item));
+    return {
+      ok: true,
+      idempotent: false,
+      dry_run: true,
+      execution: dryRunExec,
+      message: 'Dry-run completado. Sin mutaciones aplicadas.'
+    };
+  }
+
+  // ejecución real: ítem por ítem
+  const itemResults = [];
+  let executedCount = 0;
+  let skippedCount = 0;
+  let blockedCount = 0;
+  let hardError = false;
+
+  for (let i = 0; i < itemPlans.length; i++) {
+    const plan = itemPlans[i];
+
+    // re-check preflight por ítem (parada limpia si aparece blocker nuevo)
+    const itemPf = batchPf.item_preflights
+      ? batchPf.item_preflights.find((p) => p.item_id === plan.item_id)
+      : null;
+
+    if (itemPf && itemPf.execution_readiness !== 'executable' && itemPf.execution_readiness !== 'warning') {
+      const blockedItem = {
+        schema_version: SCHEMA_VERSION,
+        item_execution_id: plan.item_execution_id,
+        execution_id: request.executionId,
+        batch_id: request.batchId,
+        item_id: plan.item_id,
+        listing_id: plan.listing_id,
+        city: plan.city,
+        operation: plan.operation,
+        action_type: plan.action_type,
+        idempotency_key: plan.idempotency_key,
+        source_review_id: plan.source_review_id,
+        dry_run: false,
+        result: 'skipped_blocked',
+        before: null,
+        after: null,
+        error: 'preflight_blocked:' + (itemPf.blockers || []).join(','),
+        executed_at: nowIso()
+      };
+      itemResults.push(blockedItem);
+      appendJsonl(paths.itemExecutionLog, blockedItem);
+      blockedCount++;
+      continue;
+    }
+
+    const outcome = executeItem(plan, request, root, false);
+    itemResults.push(outcome.item);
+    appendJsonl(paths.itemExecutionLog, outcome.item);
+
+    if (outcome.idempotent) {
+      skippedCount++;
+    } else if (outcome.ok) {
+      executedCount++;
+    } else {
+      blockedCount++;
+      // error no crítico: seguimos con el siguiente ítem pero marcamos
+      if (!hardError && outcome.item.error && outcome.item.error.includes('target_not_found')) {
+        hardError = false; // listing no encontrado: continuamos
+      }
+    }
+  }
+
+  const completedAt = nowIso();
+  const hasErrors = itemResults.some((r) => r.result === 'error');
+  const resultStatus = hasErrors
+    ? (executedCount > 0 ? RESULT_STATUS.PARTIAL : RESULT_STATUS.ERROR)
+    : (blockedCount > 0 ? RESULT_STATUS.PARTIAL : RESULT_STATUS.COMPLETED);
+
+  const rollbackNote = executedCount === 0
+    ? 'Sin mutaciones aplicadas. No se requiere rollback.'
+    : executedCount < itemPlans.length
+    ? 'Ejecución parcial. ' + executedCount + ' de ' + itemPlans.length + ' ítems aplicados. ' +
+      'Para revertir: crear lote inverso con acciones de restauración usando los campos "before" de cada item_result.'
+    : 'Ejecución completa. Para revertir: crear lote inverso desde "before" de cada item_result.';
+
+  const execution = {
+    schema_version: SCHEMA_VERSION,
+    execution_id: request.executionId,
+    batch_id: request.batchId,
+    actor: request.actor,
+    role: request.role,
+    started_at: startedAt,
+    completed_at: completedAt,
+    execution_mode: 'manual',
+    dry_run: false,
+    total_items: items.length,
+    planned_items: itemPlans.length,
+    executed_items: executedCount,
+    skipped_items: skippedCount,
+    blocked_items: blockedCount,
+    result_status: resultStatus,
+    preflight_snapshot: {
+      preflight_id: batchPf.preflight_id || null,
+      preflight_generated_at: batchPf.preflight_generated_at || null,
+      preflight_hash: batchPf.preflight_hash || null,
+      preflight_validity_status: batchPf.preflight_validity_status || null,
+      preflight_ttl_seconds: batchPf.preflight_ttl_seconds || null,
+      batch_executable: batchPf.batch_executable,
+      batch_blockers: batchPf.batch_blockers,
+      batch_warnings: batchPf.batch_warnings,
+      batch_ready_for_manual_execution: batchPf.batch_ready_for_manual_execution === true,
+      missing_requirements: Array.isArray(batchPf.missing_requirements) ? batchPf.missing_requirements : []
+    },
+    item_results: itemResults,
+    rollback_note: rollbackNote
+  };
+
+  appendJsonl(paths.executionLog, execution);
+
+  return {
+    ok: !hasErrors || executedCount > 0,
+    idempotent: false,
+    dry_run: false,
+    execution,
+    message: 'Ejecución manual completada. Estado: ' + resultStatus
+  };
+}
+
+function listRecentExecutions(options) {
+  const root = (options && options.root) ? options.root : process.cwd();
+  const limit = Math.min(Math.max(Number(options && options.limit) || 20, 1), 100);
+  const paths = buildPaths(root);
+  const rows = readJsonl(paths.executionLog);
+  return rows
+    .slice()
+    .sort((a, b) => String((b && b.started_at) || '').localeCompare(String((a && a.started_at) || '')))
+    .slice(0, limit)
+    .map((row) => {
+      // omitir item_results del listado reciente para no saturar
+      if (!row) return row;
+      const { item_results: _, ...rest } = row;
+      return Object.assign({}, rest, { item_count: Array.isArray(row.item_results) ? row.item_results.length : 0 });
+    });
+}
+
+function getExecution(executionId, options) {
+  const root = (options && options.root) ? options.root : process.cwd();
+  const paths = buildPaths(root);
+  const rows = readJsonl(paths.executionLog);
+  return rows.find((r) => r && r.execution_id === executionId) || null;
+}
+
+module.exports = {
+  executeBatch,
+  listRecentExecutions,
+  getExecution,
+  RESULT_STATUS,
+  evaluateManualContract
+};

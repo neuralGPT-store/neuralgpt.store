@@ -1,3 +1,7 @@
 User-agent: *
+Disallow: /ops/
+Disallow: /data/
+Disallow: /confirm.html
+Disallow: /edit.html
 Allow: /
 Sitemap: https://neuralgpt.store/sitemap.xml

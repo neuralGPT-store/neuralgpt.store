@@ -1,0 +1,272 @@
+#!/usr/bin/env node
+'use strict';
+
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+
+const { upsertListing } = require('./listing-flow-engine.js');
+
+function assert(condition, code) {
+  if (!condition) throw new Error(code);
+}
+
+function writeJson(filePath, value) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, JSON.stringify(value, null, 2) + '\n', 'utf8');
+}
+
+function fixtureListing(base) {
+  return Object.assign({
+    id: 're-test-' + Math.random().toString(16).slice(2, 10),
+    slug: 're-test-' + Math.random().toString(16).slice(2, 10),
+    title: 'Piso test en Madrid',
+    summary: 'Resumen test',
+    description: 'Descripción test larga para análisis de similitud',
+    operation: 'sale',
+    asset_type: 'apartment',
+    country: 'ES',
+    region: 'Madrid',
+    city: 'Madrid',
+    zone: 'Salamanca',
+    price: 500000,
+    currency: 'EUR',
+    surface_m2: 120,
+    rooms: 3,
+    bathrooms: 2,
+    status: 'pending',
+    verification_state: 'pending',
+    featured: false,
+    published_at: '2026-04-18T10:00:00.000Z',
+    expiration_at: '2026-07-18T10:00:00.000Z',
+    images: ['/assets/img/real-estate/placeholders/test-a.svg'],
+    coordinates: { lat: 40.4168, lng: -3.7038 },
+    badges: [],
+    contact_cta: 'Contactar',
+    contact_name: 'Propietario Test',
+    contact_email: 'owner@example.com',
+    contact_phone: '+34600111222'
+  }, base || {});
+}
+
+function writeBinary(filePath, bytes) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, bytes);
+}
+
+function makeFixtures(tempRoot) {
+  const fixtures = path.join(tempRoot, 'fixtures');
+  fs.mkdirSync(fixtures, { recursive: true });
+
+  const pngPath = path.join(fixtures, 'foto-valida.png');
+  const jpgPath = path.join(fixtures, 'foto-valida.jpg');
+  const phpPath = path.join(fixtures, 'payload.php');
+  const hugeJpgPath = path.join(fixtures, 'huge.jpg');
+
+  const pngBytes = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9q24wAAAAASUVORK5CYII=', 'base64');
+  const jpgBytes = Buffer.from('/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQDxAQEA8QEA8PEA8QEA8PDw8QFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0fHyUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAAEAAQMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQID/8QAFhEBAQEAAAAAAAAAAAAAAAAAAQAC/9oADAMBAAIQAxAAAAH0qg//xAAXEAADAQAAAAAAAAAAAAAAAAAAAREx/9oACAEBAAEFAo9f/8QAFhEAAwAAAAAAAAAAAAAAAAAAARAR/9oACAEDAQE/AYf/xAAVEQEBAAAAAAAAAAAAAAAAAAABEP/aAAgBAgEBPwGX/8QAFhABAQEAAAAAAAAAAAAAAAAAABEB/9oACAEBAAY/Ah0f/8QAFBABAAAAAAAAAAAAAAAAAAAAEP/aAAgBAQABPyH/xAAWEQEBAQAAAAAAAAAAAAAAAAABABH/2gAIAQMBAT8QhP/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAgBAgEBPxDq/8QAFhABAQEAAAAAAAAAAAAAAAAAABEh/9oACAEBAAE/EFg//9k=', 'base64');
+
+  writeBinary(pngPath, pngBytes);
+  writeBinary(jpgPath, jpgBytes);
+  writeBinary(phpPath, Buffer.from('<?php echo 1; ?>'));
+
+  const huge = Buffer.alloc((8 * 1024 * 1024) + 1024, 0);
+  huge[0] = 0xFF; huge[1] = 0xD8; huge[2] = 0xFF;
+  writeBinary(hugeJpgPath, huge);
+
+  return { pngPath, jpgPath, phpPath, hugeJpgPath };
+}
+
+async function main() {
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'ngpt-listing-flow-'));
+  const dataDir = path.join(tempRoot, 'data');
+  const listingsPath = path.join(dataDir, 'listings.json');
+  const eventsPath = path.join(dataDir, 'moderation-events.log.jsonl');
+  writeJson(listingsPath, [
+    fixtureListing({
+      id: 're-base-strong-001',
+      slug: 're-base-strong-001',
+      title: 'Piso premium Salamanca Madrid',
+      summary: 'Resumen premium',
+      description: 'Descripción premium completa con acabados de lujo y alta similitud.',
+      operation: 'sale',
+      asset_type: 'apartment',
+      city: 'Madrid',
+      zone: 'Salamanca',
+      price: 750000,
+      surface_m2: 140,
+      images: ['hash-img-a', 'hash-img-b'],
+      contact_email: 'same@example.com',
+      contact_phone: '+34600000111'
+    }),
+    fixtureListing({
+      id: 're-base-moderate-001',
+      slug: 're-base-moderate-001',
+      title: 'Activo distinto Barcelona',
+      description: 'Otro activo distinto',
+      city: 'Barcelona',
+      zone: 'Eixample',
+      country: 'ES',
+      operation: 'sale',
+      asset_type: 'apartment',
+      price: 310000,
+      surface_m2: 95,
+      images: ['hash-img-c'],
+      contact_email: 'moderate@example.com',
+      contact_phone: '+34600000222'
+    })
+  ]);
+  fs.writeFileSync(eventsPath, '', 'utf8');
+
+  const files = makeFixtures(tempRoot);
+
+  // 1) subida válida
+  const validRes = await upsertListing({
+    mode: 'create',
+    listing: fixtureListing({
+      id: 're-valid-upload-001',
+      slug: 're-valid-upload-001',
+      title: 'Atico nuevo Malaga',
+      description: 'Activo no duplicado con imágenes válidas',
+      city: 'Málaga',
+      zone: 'Centro',
+      country: 'ES',
+      operation: 'sale',
+      asset_type: 'apartment',
+      price: 420000,
+      surface_m2: 110,
+      contact_email: 'new@example.com',
+      contact_phone: '+34600000999'
+    }),
+    image_files: [
+      { path: files.pngPath, original_name: 'foto1.png' },
+      { path: files.jpgPath, original_name: 'foto2.jpg' }
+    ]
+  }, { root: tempRoot, actor: 'qa_bot', role: 'operator' });
+  assert(validRes.ok === true, 'valid_upsert_failed');
+  assert(validRes.image_pipeline && Array.isArray(validRes.image_pipeline.artifacts) && validRes.image_pipeline.artifacts.length === 2, 'valid_pipeline_artifacts_missing');
+
+  // 2) exceso de fotos
+  let tooManyErr = null;
+  try {
+    await upsertListing({
+      mode: 'create',
+      listing: fixtureListing({ id: 're-too-many-001', slug: 're-too-many-001', title: 'Too many photos', city: 'Sevilla', zone: 'Centro' }),
+      image_files: [files.pngPath, files.jpgPath, files.pngPath, files.jpgPath, files.pngPath, files.jpgPath, files.pngPath].map((p, i) => ({ path: p, original_name: 'f' + i + path.extname(p) }))
+    }, { root: tempRoot, actor: 'qa_bot', role: 'operator' });
+  } catch (error) {
+    tooManyErr = error;
+  }
+  assert(tooManyErr && tooManyErr.statusCode === 422, 'too_many_should_fail_422');
+
+  // 3) extensión peligrosa
+  let dangerousErr = null;
+  try {
+    await upsertListing({
+      mode: 'create',
+      listing: fixtureListing({ id: 're-dangerous-001', slug: 're-dangerous-001', title: 'Dangerous ext', city: 'Valencia', zone: 'Centro' }),
+      image_files: [{ path: files.phpPath, original_name: 'payload.php' }]
+    }, { root: tempRoot, actor: 'qa_bot', role: 'operator' });
+  } catch (error) {
+    dangerousErr = error;
+  }
+  assert(dangerousErr && dangerousErr.statusCode === 422, 'dangerous_ext_should_fail_422');
+
+  // 4) peso excesivo
+  let weightErr = null;
+  try {
+    await upsertListing({
+      mode: 'create',
+      listing: fixtureListing({ id: 're-huge-001', slug: 're-huge-001', title: 'Huge image', city: 'Bilbao', zone: 'Abando' }),
+      image_files: [{ path: files.hugeJpgPath, original_name: 'huge.jpg' }]
+    }, { root: tempRoot, actor: 'qa_bot', role: 'operator' });
+  } catch (error) {
+    weightErr = error;
+  }
+  assert(weightErr && weightErr.statusCode === 422, 'oversized_should_fail_422');
+
+  // 5) duplicado fuerte
+  const strongRes = await upsertListing({
+    mode: 'create',
+    listing: fixtureListing({
+      id: 're-dup-strong-001',
+      slug: 're-dup-strong-001',
+      title: 'Piso premium Salamanca Madrid',
+      summary: 'Resumen premium',
+      description: 'Descripción premium completa con acabados de lujo y alta similitud.',
+      city: 'Madrid',
+      zone: 'Salamanca',
+      country: 'ES',
+      operation: 'sale',
+      asset_type: 'apartment',
+      price: 750000,
+      surface_m2: 140,
+      images: ['hash-img-a', 'hash-img-b'],
+      contact_email: 'same@example.com',
+      contact_phone: '+34600000111',
+      status: 'published',
+      verification_state: 'verified'
+    })
+  }, { root: tempRoot, actor: 'qa_bot', role: 'operator' });
+  assert(strongRes.duplicate_review.duplicate_abuse_blocked === true, 'strong_duplicate_not_blocked');
+  assert(strongRes.listing.verification_state === 'pending_review', 'strong_duplicate_not_pending_review');
+
+  // 6) duplicado moderado
+  const moderateRes = await upsertListing({
+    mode: 'create',
+    listing: fixtureListing({
+      id: 're-dup-moderate-001',
+      slug: 're-dup-moderate-001',
+      title: 'Apartamento familiar Barcelona zona centro',
+      description: 'Texto distinto',
+      city: 'Barcelona',
+      zone: 'Sant Antoni',
+      country: 'ES',
+      operation: 'sale',
+      asset_type: 'apartment',
+      price: 312000,
+      surface_m2: 96,
+      images: ['hash-img-z'],
+      contact_email: 'other@example.com',
+      contact_phone: '+34600000998'
+    })
+  }, { root: tempRoot, actor: 'qa_bot', role: 'operator' });
+  assert(moderateRes.duplicate_review.review_required === true, 'moderate_duplicate_not_flagged');
+  assert(moderateRes.duplicate_review.duplicate_abuse_blocked === false, 'moderate_duplicate_should_not_abuse_block');
+
+  // 7) no duplicado
+  const cleanRes = await upsertListing({
+    mode: 'create',
+    listing: fixtureListing({
+      id: 're-no-dup-001',
+      slug: 're-no-dup-001',
+      title: 'Loft creativo waterfront Helsinki unique',
+      description: 'Activo de control sin coincidencias de duplicado ni proximidad semántica.',
+      city: 'Helsinki',
+      zone: 'Jatkasaari',
+      country: 'FI',
+      region: 'Uusimaa',
+      operation: 'room_rent',
+      asset_type: 'room',
+      price: 990,
+      surface_m2: 22,
+      images: ['hash-helsinki-1'],
+      coordinates: { lat: 60.1699, lng: 24.9384 },
+      contact_email: 'helsinki.unique@example.com',
+      contact_phone: '+358401112233'
+    })
+  }, { root: tempRoot, actor: 'qa_bot', role: 'operator' });
+  assert(cleanRes.duplicate_review.review_required === false, 'clean_listing_should_not_require_review');
+
+  console.log('[check-listing-flow-integration] PASS');
+  console.log('- root=' + tempRoot);
+  console.log('- valid_upload.image_processed=' + String(validRes.listing.image_processed_count || 0));
+  console.log('- strong_duplicate.blocked=' + String(strongRes.duplicate_review.duplicate_abuse_blocked));
+  console.log('- moderate_duplicate.review=' + String(moderateRes.duplicate_review.review_required));
+  console.log('- clean_duplicate.review=' + String(cleanRes.duplicate_review.review_required));
+}
+
+main().catch((error) => {
+  console.error('[check-listing-flow-integration] FAIL:', error && error.message ? error.message : error);
+  process.exit(1);
+});

@@ -1,0 +1,124 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const SCHEMA_VERSION = 1;
+const ALLOWED_REVIEW_STATUS = ['accepted', 'rejected', 'deferred'];
+const LOG_FILE = path.join('data', 'chany', 'batch-review-log.jsonl');
+
+function ensureDirForFile(filePath) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+}
+
+function appendJsonl(filePath, payload) {
+  ensureDirForFile(filePath);
+  fs.appendFileSync(filePath, JSON.stringify(payload) + '\n', { encoding: 'utf8', flag: 'a' });
+}
+
+function readJsonl(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const raw = fs.readFileSync(filePath, 'utf8');
+  if (!raw.trim()) return [];
+  const lines = raw.split(/\r?\n/).filter(Boolean);
+  const out = [];
+  lines.forEach((line) => {
+    try {
+      out.push(JSON.parse(line));
+    } catch (_error) {
+      /* ignore malformed lines to preserve append-only log */
+    }
+  });
+  return out;
+}
+
+function normalizeString(value) {
+  if (value == null) return null;
+  const text = String(value).trim();
+  return text ? text : null;
+}
+
+function validateRole(role) {
+  const normalized = normalizeString(role) || 'viewer';
+  if (normalized === 'viewer') {
+    throw new Error('batch_review_role_forbidden');
+  }
+  return normalized;
+}
+
+function buildLogPath(root) {
+  return path.join(root, LOG_FILE);
+}
+
+function submitReview(payload, context) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    throw new Error('invalid_payload');
+  }
+  const role = validateRole(context && context.role);
+  const batchId = normalizeString(payload.batch_id);
+  const reviewedBy = normalizeString(payload.reviewed_by) || normalizeString(context && context.actor) || 'ops_user';
+  const reviewStatus = normalizeString(payload.review_status);
+  const reviewReason = normalizeString(payload.review_reason);
+  const notes = normalizeString(payload.notes);
+  const itemCountRaw = Number(payload.item_count);
+  const itemCount = Number.isFinite(itemCountRaw) && itemCountRaw >= 0 ? Math.floor(itemCountRaw) : 0;
+  const idempotencyKey = normalizeString(payload.idempotency_key);
+
+  if (!batchId) throw new Error('batch_id_required');
+  if (!reviewStatus || ALLOWED_REVIEW_STATUS.indexOf(reviewStatus) < 0) {
+    throw new Error('invalid_review_status');
+  }
+  if (!reviewReason || reviewReason.length < 8) {
+    throw new Error('review_reason_required_min_8');
+  }
+
+  const logPath = buildLogPath((context && context.root) || process.cwd());
+
+  if (idempotencyKey) {
+    const existing = readJsonl(logPath).find((row) => row && row.idempotency_key === idempotencyKey);
+    if (existing) {
+      return { ok: true, review: existing, log_path: logPath, idempotent: true };
+    }
+  }
+
+  const now = new Date().toISOString();
+  const entry = {
+    schema_version: SCHEMA_VERSION,
+    review_id: 'batch_rev_' + now.replace(/[:.]/g, '-') + '_' + batchId.slice(-16).replace(/[^a-z0-9_-]/gi, '_'),
+    batch_id: batchId,
+    reviewed_at: now,
+    reviewed_by: reviewedBy,
+    reviewed_role: role,
+    review_status: reviewStatus,
+    review_reason: reviewReason,
+    item_count: itemCount,
+    notes: notes || null,
+    idempotency_key: idempotencyKey || null
+  };
+
+  appendJsonl(logPath, entry);
+  return {
+    ok: true,
+    review: entry,
+    log_path: logPath,
+    idempotent: false
+  };
+}
+
+function listRecentReviews(params) {
+  const root = (params && params.root) || process.cwd();
+  const limitRaw = Number(params && params.limit);
+  const limit = Number.isFinite(limitRaw) && limitRaw > 0 ? Math.min(Math.floor(limitRaw), 100) : 20;
+  const logPath = buildLogPath(root);
+  const rows = readJsonl(logPath)
+    .sort((a, b) => String((b && b.reviewed_at) || '').localeCompare(String((a && a.reviewed_at) || '')))
+    .slice(0, limit);
+  return rows;
+}
+
+module.exports = {
+  submitReview,
+  listRecentReviews
+};

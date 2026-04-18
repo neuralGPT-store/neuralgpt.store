@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>Anuncio recibido — neuralgpt.store</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/venta.html">Venta</a></li>
+        <li><a href="/alquiler.html">Alquiler</a></li>
+        <li><a href="/contact.html">Publicar</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="/real-estate-index.html" class="btn">Ver inmuebles</a>
+      <a href="/contact.html" class="btn btn-primary">Publicar activo</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="rgb-divider"></div>
+
+  <main id="main-content" class="wrap" style="padding-top:48px;padding-bottom:80px;max-width:720px">
+    <div id="confirm-state"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <span>© 2025–2026 neuralgpt.store</span>
+      <span><a href="/real-estate-index.html" style="color:var(--accent)">Inmuebles</a></span>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+    if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+
+    var raw = null;
+    try { raw = sessionStorage.getItem('neuralgpt_confirm'); sessionStorage.removeItem('neuralgpt_confirm'); } catch(_) {}
+
+    var container = document.getElementById('confirm-state');
+
+    if (!raw) {
+      container.innerHTML =
+        '<div style="padding:42px 24px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg);text-align:center">'
+        +'<div style="font-size:2.5rem;margin-bottom:12px">🔍</div>'
+        +'<h1 style="font-family:var(--font-title);font-size:1rem;margin-bottom:10px">No hay confirmación pendiente</h1>'
+        +'<p style="color:var(--muted);line-height:1.7;margin-bottom:22px">Esta página es accesible solo tras publicar un anuncio desde el formulario.</p>'
+        +'<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">'
+        +'<a href="/contact.html" class="btn btn-primary">Publicar anuncio</a>'
+        +'<a href="/edit.html" class="btn">Editar anuncio existente</a>'
+        +'<a href="/real-estate-index.html" class="btn">Ver inmuebles</a>'
+        +'</div></div>';
+      return;
+    }
+
+    var data = {};
+    try { data = JSON.parse(raw); } catch(_) {}
+
+    var listing_id   = String(data.listing_id   || '');
+    var listing_slug = String(data.listing_slug  || '');
+    var edit_key     = String(data.edit_key      || '');
+    var mode         = String(data.mode          || 'created');
+    var review_req   = !!data.review_required;
+    var abuse_blk    = !!data.abuse_blocked;
+
+    var isNew = (mode === 'created');
+    var modeLabel = isNew ? 'Anuncio recibido correctamente' : 'Anuncio actualizado';
+
+    document.title = modeLabel + ' — neuralgpt.store';
+
+    var html = '<div style="padding:28px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">';
+
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">'
+      +'<span class="badge badge-verified">CONFIRMACIÓN</span>'
+      +(isNew ? '<span class="badge badge-hot">NUEVO ANUNCIO</span>' : '<span class="badge">ACTUALIZACIÓN</span>')
+      +'</div>';
+
+    html += '<h1 style="font-family:var(--font-title);font-size:1.05rem;color:var(--accent4);margin-bottom:22px">'
+      +escapeHtml(modeLabel)+'</h1>';
+
+    // listing_id
+    html += '<div style="margin-bottom:18px;padding:14px;border:1px solid var(--border);border-radius:8px;background:rgba(0,234,255,0.04)">'
+      +'<p style="font-size:0.72rem;color:var(--muted);letter-spacing:1px;margin-bottom:6px">IDENTIFICADOR DE ANUNCIO</p>'
+      +'<code style="font-size:0.92rem;word-break:break-all;color:var(--accent)">'+escapeHtml(listing_id)+'</code>'
+      +'<p style="font-size:0.72rem;color:var(--muted);margin-top:6px;margin-bottom:0">Anota este ID. Lo necesitarás para editar el anuncio junto a la clave de edición.</p>'
+      +'</div>';
+
+    // edit_key — solo al crear
+    if (edit_key) {
+      html += '<div style="margin-bottom:18px;padding:16px;border:2px solid rgba(0,255,153,0.45);border-radius:8px;background:rgba(0,255,153,0.06)">'
+        +'<p style="font-size:0.72rem;font-weight:700;color:var(--accent4);letter-spacing:1px;margin-bottom:8px">CLAVE DE EDICIÓN — GUÁRDALA AHORA. NO SE VOLVERÁ A MOSTRAR.</p>'
+        +'<code style="font-size:0.9rem;word-break:break-all;color:var(--accent4)">'+escapeHtml(edit_key)+'</code>'
+        +'<p style="font-size:0.73rem;color:var(--muted);margin-top:10px;margin-bottom:0">'
+        +'Esta clave no se almacena ni se puede recuperar. Si la pierdes, no podrás editar el anuncio.'
+        +'</p>'
+        +'</div>';
+    }
+
+    // estado / revisión
+    if (abuse_blk) {
+      html += '<div style="margin-bottom:18px;padding:14px;border:1px solid rgba(255,0,128,0.35);border-radius:8px;background:rgba(255,0,128,0.06)">'
+        +'<strong style="color:var(--accent3)">Detectado como posible duplicado</strong>'
+        +'<p style="color:var(--muted);font-size:0.82rem;margin-top:6px;margin-bottom:0">El anuncio ha quedado retenido para revisión humana. No se publicará hasta que lo verifiquemos manualmente.</p>'
+        +'</div>';
+    } else if (review_req) {
+      html += '<div style="margin-bottom:18px;padding:14px;border:1px solid rgba(255,183,0,0.35);border-radius:8px;background:rgba(255,183,0,0.06)">'
+        +'<strong style="color:#ffb700">Pendiente de revisión humana</strong>'
+        +'<p style="color:var(--muted);font-size:0.82rem;margin-top:6px;margin-bottom:0">Tu anuncio está en cola de revisión. Se publicará en cuanto un verificador lo apruebe.</p>'
+        +'</div>';
+    } else {
+      html += '<div style="margin-bottom:18px;padding:14px;border:1px solid rgba(0,234,255,0.2);border-radius:8px;background:rgba(0,234,255,0.04)">'
+        +'<strong style="color:var(--accent)">En proceso de verificación</strong>'
+        +'<p style="color:var(--muted);font-size:0.82rem;margin-top:6px;margin-bottom:0">El anuncio está siendo revisado y se publicará en breve.</p>'
+        +'</div>';
+    }
+
+    // CTAs
+    html += '<div style="display:flex;gap:10px;flex-wrap:wrap">';
+    if (listing_slug) {
+      html += '<a href="/listing.html?slug='+encodeURIComponent(listing_slug)+'" class="btn btn-primary">Ver anuncio</a>';
+    }
+    html += '<a href="/edit.html" class="btn">Editar más tarde</a>';
+    html += '<a href="/contact.html" class="btn">Publicar otro</a>';
+    html += '<a href="/real-estate-index.html" class="btn">Ver inmuebles</a>';
+    html += '</div>';
+
+    html += '</div>';
+    container.innerHTML = html;
+  })();
+
+  function escapeHtml(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+  </script>
+  <script src="/js/agent-chat.js" defer></script>
+</body>
+</html>

@@ -11,7 +11,7 @@
     "pt"
   ],
   "default_currency": "EUR",
-  "public_contact_email": "support@neuralgpt.store",
+  "public_contact_email": "neuralgpt.store@protonmail.com",
   "legal_entity_name": "NeuralGPT Store Real Assets Division",
   "development_banner_text": "Plataforma en desarrollo",
   "feature_flags": {
@@ -34,21 +34,21 @@
   },
   "seo_defaults": {
     "title": "neuralgpt.store | Portal premium europeo de anuncios de activos inmobiliarios",
-    "description": "Selección cuidada de activos inmobiliarios en Europa para compraventa, alquiler estable, locales, naves, suelo y activos singulares.",
+    "description": "Selección cuidada de activos inmobiliarios en Europa, Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia para compraventa, alquiler estable, locales, naves, suelo y activos singulares.",
     "og_image": "/assets/img/og-real-estate-default.png",
     "robots": "index,follow"
   },
   "seo_routes": {
     "listing_detail_fallback_template": "/listing.html?slug={slug}",
     "listing_detail_future_template": "/listing/{slug}",
-    "collection_fallback_path": "/marketplace.html",
-    "home_to_collection_path": "/marketplace.html?re_bridge=1"
+    "collection_fallback_path": "/real-estate-index.html",
+    "home_to_collection_path": "/real-estate-index.html"
   },
   "seo_collections": {
     "marketplace": {
       "title": "Activos inmobiliarios premium en Europa | neuralgpt.store",
       "description": "Portal premium europeo de anuncios de activos inmobiliarios con foco en compraventa, alquiler estable, locales, naves, suelo y activos singulares.",
-      "canonical_path": "/marketplace.html",
+      "canonical_path": "/real-estate-index.html",
       "intro": "Colección editorial de activos inmobiliarios pensada para exposición cualificada, posicionamiento orgánico y monetización progresiva."
     }
   },
@@ -57,5 +57,17 @@
     "european_cities": 12,
     "verified_assets": 18,
     "active_advertisers": 9
+  },
+  "ops_thresholds": {
+    "validity_days_sale_non_rent": 90,
+    "validity_days_rent": 60,
+    "reconfirmation_due_soon_days": 14,
+    "expiration_expiring_soon_days": 7,
+    "expiration_archived_candidate_days": 15,
+    "priority_urgent_min": 75,
+    "priority_moderate_min": 55,
+    "batch_quality_min_critical_fields_pct": 95,
+    "batch_quality_min_city_pct": 95,
+    "batch_quality_min_operation_pct": 95
   }
 }

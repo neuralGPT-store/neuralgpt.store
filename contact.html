@@ -23,15 +23,14 @@
     <nav class="main-nav" id="main-nav" aria-label="Principal">
       <ul>
         <li><a href="/">Inicio</a></li>
-        <li><a href="/marketplace.html">Marketplace</a></li>
-        <li><a href="/providers.html">Proveedores</a></li>
-        <li><a href="/pricing.html">Precios</a></li>
+        <li><a href="/venta.html">Venta</a></li>
+        <li><a href="/alquiler.html">Alquiler</a></li>
         <li><a href="/contact.html" aria-current="page">Contacto</a></li>
       </ul>
     </nav>
     <div class="header-actions">
-      <a href="/marketplace.html" class="btn">Explorar</a>
-      <a href="/provider-register.html" class="btn btn-primary">Vender</a>
+      <a href="/real-estate-index.html" class="btn">Ver inmuebles</a>
+      <a href="/contact.html" class="btn btn-primary">Publicar</a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -39,13 +38,26 @@
 
   <main id="main-content" class="wrap section">
     <h1 class="section-title">Contacto</h1>
-    <p class="section-sub">Estamos aquí para ayudarte. Soporte técnico, preguntas sobre ventas, partnerships y más.</p>
+    <p class="section-sub">Estamos aquí para ayudarte en toda Europa (incluye Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia): soporte, publicación, negocio y partnerships.</p>
 
     <div class="grid-2" style="gap:40px;align-items:start;max-width:1000px">
       <!-- Formulario -->
       <div>
-        <h2 style="font-family:var(--font-title);font-size:0.9rem;letter-spacing:1px;color:var(--accent);margin-bottom:20px">ENVÍANOS UN MENSAJE</h2>
-        <form id="contact-form" novalidate>
+        <h2 style="font-family:var(--font-title);font-size:0.9rem;letter-spacing:1px;color:var(--accent);margin-bottom:20px">PUBLICAR / EDITAR ACTIVO</h2>
+        <form id="contact-form" novalidate enctype="multipart/form-data">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-mode">MODO</label>
+              <select id="listing-mode" name="mode" class="form-control">
+                <option value="create">Alta</option>
+                <option value="edit">Edición</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="listing-edit-key">EDIT KEY (solo edición)</label>
+              <input type="text" id="listing-edit-key" name="edit_key" class="form-control" placeholder="Clave de edición" maxlength="128" />
+            </div>
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label for="contact-name">NOMBRE</label>
@@ -57,20 +69,105 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="contact-subject">ASUNTO</label>
-            <select id="contact-subject" name="subject" class="form-control">
-              <option value="">Selecciona un asunto</option>
-              <option value="soporte">Soporte técnico</option>
-              <option value="ventas">Quiero vender un producto</option>
-              <option value="compra">Problema con una compra</option>
-              <option value="partnership">Partnership / Colaboración</option>
-              <option value="seguridad">Reportar vulnerabilidad</option>
-              <option value="otro">Otro</option>
-            </select>
+            <label for="contact-phone">TELÉFONO</label>
+            <input type="tel" id="contact-phone" name="phone" class="form-control" placeholder="+34 600 000 000" required maxlength="40" />
           </div>
           <div class="form-group">
-            <label for="contact-message">MENSAJE</label>
-            <textarea id="contact-message" name="message" class="form-control" rows="5" placeholder="Cuéntanos en qué podemos ayudarte…" required maxlength="2000"></textarea>
+            <label for="listing-title">TÍTULO</label>
+            <input type="text" id="listing-title" name="title" class="form-control" placeholder="Ej: Piso premium en Madrid" required maxlength="140" />
+          </div>
+          <div class="form-group">
+            <label for="listing-summary">RESUMEN</label>
+            <input type="text" id="listing-summary" name="summary" class="form-control" placeholder="Resumen breve del activo" required maxlength="220" />
+          </div>
+          <div class="form-group">
+            <label for="listing-description">DESCRIPCIÓN</label>
+            <textarea id="listing-description" name="description" class="form-control" rows="5" placeholder="Describe el activo…" required maxlength="5000"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-id">ID</label>
+              <input type="text" id="listing-id" name="listing_id" class="form-control" placeholder="re-sale-madrid-001" required maxlength="80" />
+            </div>
+            <div class="form-group">
+              <label for="listing-slug">SLUG</label>
+              <input type="text" id="listing-slug" name="slug" class="form-control" placeholder="piso-premium-madrid" required maxlength="120" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-operation">OPERACIÓN</label>
+              <select id="listing-operation" name="operation" class="form-control" required>
+                <option value="sale">Venta</option>
+                <option value="long_term_rent">Alquiler estable</option>
+                <option value="room_rent">Habitación</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="listing-asset-type">TIPO</label>
+              <select id="listing-asset-type" name="asset_type" class="form-control" required>
+                <option value="apartment">Apartamento</option>
+                <option value="room">Habitación</option>
+                <option value="commercial_unit">Local</option>
+                <option value="warehouse">Nave</option>
+                <option value="land">Suelo</option>
+                <option value="singular_asset">Singular</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-country">PAÍS</label>
+              <input type="text" id="listing-country" name="country" class="form-control" placeholder="ES" required maxlength="2" />
+            </div>
+            <div class="form-group">
+              <label for="listing-region">REGIÓN</label>
+              <input type="text" id="listing-region" name="region" class="form-control" placeholder="Madrid" required maxlength="80" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-city">CIUDAD</label>
+              <input type="text" id="listing-city" name="city" class="form-control" placeholder="Madrid" required maxlength="80" />
+            </div>
+            <div class="form-group">
+              <label for="listing-zone">ZONA</label>
+              <input type="text" id="listing-zone" name="zone" class="form-control" placeholder="Salamanca" required maxlength="80" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-price">PRECIO EUR</label>
+              <input type="number" id="listing-price" name="price" class="form-control" min="1" step="1" required />
+            </div>
+            <div class="form-group">
+              <label for="listing-surface">SUPERFICIE M²</label>
+              <input type="number" id="listing-surface" name="surface_m2" class="form-control" min="1" step="1" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-rooms">HABITACIONES</label>
+              <input type="number" id="listing-rooms" name="rooms" class="form-control" min="0" step="1" />
+            </div>
+            <div class="form-group">
+              <label for="listing-bathrooms">BAÑOS</label>
+              <input type="number" id="listing-bathrooms" name="bathrooms" class="form-control" min="0" step="1" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="listing-images">FOTOS (máximo 6)</label>
+            <input type="file" id="listing-images" name="images" class="form-control" accept=".jpg,.jpeg,.png,.webp,.avif" multiple />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-lat">LAT</label>
+              <input type="number" id="listing-lat" name="lat" class="form-control" step="0.000001" value="40.4168" />
+            </div>
+            <div class="form-group">
+              <label for="listing-lng">LNG</label>
+              <input type="number" id="listing-lng" name="lng" class="form-control" step="0.000001" value="-3.7038" />
+            </div>
           </div>
           <div style="margin-top:4px;margin-bottom:16px">
             <label style="display:flex;gap:10px;align-items:flex-start;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
@@ -78,8 +175,10 @@
               Acepto la <a href="/privacy.html" style="color:var(--accent)">política de privacidad</a>
             </label>
           </div>
+          <!-- honeypot anti-bot: oculto para usuarios reales, visible para bots -->
+          <input type="text" name="hp_check" id="hp-check" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;width:0;height:0" />
           <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
-            Enviar mensaje →
+            Publicar / Editar activo →
           </button>
           <div id="contact-msg" style="margin-top:12px;font-size:0.82rem;color:var(--accent4)" role="status" aria-live="polite"></div>
         </form>
@@ -92,8 +191,8 @@
         <div class="card" style="display:flex;gap:16px;align-items:flex-start">
           <span style="font-size:1.8rem;flex-shrink:0">✉</span>
           <div>
-            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:4px">SOPORTE GENERAL</div>
-            <a href="mailto:support@neuralgpt.store" style="color:var(--text);font-size:0.88rem">support@neuralgpt.store</a>
+            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:4px">ATENCIÓN AL USUARIO</div>
+            <a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--text);font-size:0.88rem">neuralgpt.store@protonmail.com</a>
             <p style="color:var(--muted);font-size:0.78rem;margin-top:4px">Soporte técnico, dudas sobre compras y productos. Respuesta en &lt;24h laborables.</p>
           </div>
         </div>
@@ -110,9 +209,9 @@
         <div class="card" style="display:flex;gap:16px;align-items:flex-start">
           <span style="font-size:1.8rem;flex-shrink:0">🚀</span>
           <div>
-            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent2);margin-bottom:4px">VENTAS Y ONBOARDING</div>
-            <a href="mailto:support@neuralgpt.store" style="color:var(--text);font-size:0.88rem">support@neuralgpt.store</a>
-            <p style="color:var(--muted);font-size:0.78rem;margin-top:4px">Registrarte como vendedor, dudas sobre comisiones, proceso de verificación.</p>
+            <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent2);margin-bottom:4px">NEGOCIO Y ALIANZAS</div>
+            <a href="mailto:wilfreyera@gmail.com" style="color:var(--text);font-size:0.88rem">wilfreyera@gmail.com</a>
+            <p style="color:var(--muted);font-size:0.78rem;margin-top:4px">Ofertas de negocio, acuerdos comerciales y crecimiento corporativo.</p>
           </div>
         </div>
 
@@ -120,7 +219,7 @@
           <span style="font-size:1.8rem;flex-shrink:0">💼</span>
           <div>
             <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent3);margin-bottom:4px">PARTNERSHIPS / INVERSORES</div>
-            <a href="mailto:partners@neuralgpt.store" style="color:var(--text);font-size:0.88rem">partners@neuralgpt.store</a>
+            <a href="mailto:wilfreyera@gmail.com" style="color:var(--text);font-size:0.88rem">wilfreyera@gmail.com</a>
             <p style="color:var(--muted);font-size:0.78rem;margin-top:4px">Acuerdos comerciales, co-marketing y oportunidades de inversión.</p>
           </div>
         </div>
@@ -141,30 +240,99 @@
   <div class="rgb-divider"></div>
   <footer class="site-footer" role="contentinfo">
     <div class="footer-grid">
-      <div class="footer-brand-col"><a class="brand" href="/">neural<span>GPT</span>.store</a><p>Marketplace premium de software creado con IA.</p></div>
+      <div class="footer-brand-col"><a class="brand" href="/">neural<span>GPT</span>.store</a><p>Portal inmobiliario premium. Anuncios verificados en venta y alquiler.</p></div>
       <div class="footer-col"><h4>NEURALGPT</h4><ul><li><a href="/about.html">Sobre nosotros</a></li><li><a href="/contact.html">Contacto</a></li></ul></div>
-      <div class="footer-col"><h4>MARKETPLACE</h4><ul><li><a href="/marketplace.html">Productos</a></li><li><a href="/pricing.html">Precios</a></li></ul></div>
-      <div class="footer-col"><h4>VENDEDORES</h4><ul><li><a href="/provider-register.html">Registrarse</a></li></ul></div>
+      <div class="footer-col"><h4>INMOBILIARIO</h4><ul><li><a href="/venta.html">Venta</a></li><li><a href="/alquiler.html">Alquiler</a></li><li><a href="/real-estate-index.html">Índice inmobiliario</a></li></ul></div>
+      
       <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:support@neuralgpt.store" style="color:var(--accent)">support@neuralgpt.store</a></span></div>
+    <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a></span><span><a href="mailto:wilfreyera@gmail.com" style="color:var(--accent2)">wilfreyera@gmail.com</a></span></div>
   </footer>
   <script>
   var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
   if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
 
-  document.getElementById('contact-form').addEventListener('submit',function(e){
+  document.getElementById('contact-form').addEventListener('submit', async function(e){
     e.preventDefault();
-    var name  = document.getElementById('contact-name').value.trim();
-    var email = document.getElementById('contact-email').value.trim();
-    var msg   = document.getElementById('contact-message').value.trim();
-    var priv  = document.getElementById('contact-privacy').checked;
-    var out   = document.getElementById('contact-msg');
-    if(!name||!email||!msg){ out.textContent='Por favor completa todos los campos.'; out.style.color='var(--accent3)'; return; }
-    if(!priv){ out.textContent='Debes aceptar la política de privacidad.'; out.style.color='var(--accent3)'; return; }
-    out.textContent='✓ Mensaje enviado. Te respondemos en menos de 24h laborables.';
-    out.style.color='var(--accent4)';
-    this.reset();
+    var out = document.getElementById('contact-msg');
+    var privacy = document.getElementById('contact-privacy').checked;
+    var mode = document.getElementById('listing-mode').value;
+    var files = document.getElementById('listing-images').files;
+    if(!privacy){ out.textContent='Debes aceptar la política de privacidad.'; out.style.color='var(--accent3)'; return; }
+    if(files && files.length > 6){ out.textContent='Máximo 6 fotos por anuncio.'; out.style.color='var(--accent3)'; return; }
+    var advertiserPhone = (document.getElementById('contact-phone').value || '').trim();
+    if(!advertiserPhone || advertiserPhone.length < 7){ out.textContent='Introduce un teléfono de contacto válido.'; out.style.color='var(--accent3)'; return; }
+
+    var fd = new FormData();
+    fd.append('privacy_accepted', 'true');
+    fd.append('mode', mode || 'create');
+    // hp_check vacío — se envía siempre vacío; si un bot lo rellena, el servidor lo bloquea
+    fd.append('hp_check', '');
+    [
+      'listing_id','slug','title','summary','description','operation','asset_type','country','region','city','zone',
+      'price','surface_m2','rooms','bathrooms','lat','lng','edit_key'
+    ].forEach(function(id){
+      var node = document.getElementById(id.replace(/_/g,'-')) || document.querySelector('[name="' + id + '"]');
+      if(node && node.value != null && String(node.value).trim() !== '') fd.append(id, String(node.value).trim());
+    });
+    fd.append('contact_email', (document.getElementById('contact-email').value || '').trim());
+    fd.append('contact_phone', advertiserPhone);
+    fd.append('contact_name', (document.getElementById('contact-name').value || '').trim());
+    Array.prototype.slice.call(files || []).forEach(function(file){
+      fd.append('images', file, file.name);
+    });
+
+    out.textContent='Enviando anuncio...';
+    out.style.color='var(--accent2)';
+    try{
+      var response = await fetch('/api/listings/upsert', { method:'POST', body: fd });
+      var data = await response.json();
+      if(!response.ok || !data || data.ok !== true){
+        var code = data && data.error ? String(data.error) : 'publicacion_fallida';
+        if (code === 'content_policy_blocked') {
+          out.textContent = 'El anuncio no supera la política de contenido inmobiliario. Revisa título, descripción e imágenes.';
+        } else if (code.indexOf('advertiser_contact_required_fields_missing') === 0) {
+          out.textContent = 'Debes informar nombre, teléfono y correo del anunciante.';
+        } else {
+          out.textContent = 'Error: ' + code;
+        }
+        out.style.color='var(--accent3)';
+        return;
+      }
+      var reviewReq = !!(
+        (data.duplicate_review && data.duplicate_review.review_required) ||
+        (data.content_policy && data.content_policy.review_required)
+      );
+      var abuseBlk = !!(data.duplicate_review && data.duplicate_review.duplicate_abuse_blocked);
+      try {
+        sessionStorage.setItem('neuralgpt_confirm', JSON.stringify({
+          listing_id:    data.listing_id   || '',
+          listing_slug:  data.listing_slug || '',
+          mode:          data.mode         || 'created',
+          edit_key:      data.edit_key     || null,
+          review_required: reviewReq,
+          abuse_blocked:   abuseBlk
+        }));
+        window.location.href = '/confirm.html';
+        return;
+      } catch(_) {
+        // sessionStorage no disponible — fallback inline
+        var editKey = data.edit_key ? String(data.edit_key) : '';
+        if(editKey){
+          out.innerHTML = '<strong style="color:var(--accent4)">✓ Anuncio recibido.</strong>'
+            +(reviewReq ? ' <span style="color:#ffb700">Pendiente de revisión.</span>' : '')
+            +(abuseBlk ? ' <span style="color:var(--accent3)">Bloqueado — revisión humana.</span>' : '')
+            +'<br><strong style="color:var(--accent)">Clave de edición (guárdala, no se volverá a mostrar):</strong><br>'
+            +'<code style="font-size:0.85rem;word-break:break-all;color:var(--accent4)">'+editKey+'</code>';
+        } else {
+          out.textContent = '✓ Actualización procesada.'+(reviewReq ? ' Pendiente de revisión.' : '');
+        }
+        out.style.color='var(--accent4)';
+      }
+    }catch(error){
+      out.textContent='Error de red al publicar/editar el anuncio.';
+      out.style.color='var(--accent3)';
+    }
   });
   </script>
   <script src="/js/i18n-global.js" defer></script>

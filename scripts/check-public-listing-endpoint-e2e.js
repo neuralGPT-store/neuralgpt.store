@@ -1,0 +1,518 @@
+#!/usr/bin/env node
+'use strict';
+
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const http = require('http');
+const net = require('net');
+const { spawn } = require('child_process');
+
+function assert(condition, code, detail) {
+  if (!condition) {
+    if (detail == null) throw new Error(code);
+    const rendered = typeof detail === 'string' ? detail : JSON.stringify(detail);
+    throw new Error(code + ':' + rendered);
+  }
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function writeJson(filePath, value) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, JSON.stringify(value, null, 2) + '\n', 'utf8');
+}
+
+function listing(base) {
+  return Object.assign({
+    id: 're-base-' + Math.random().toString(16).slice(2, 9),
+    slug: 're-base-' + Math.random().toString(16).slice(2, 9),
+    title: 'Piso base Madrid Salamanca',
+    summary: 'Resumen base',
+    description: 'Descripción base extensa para riesgo.',
+    operation: 'sale',
+    asset_type: 'apartment',
+    country: 'ES',
+    region: 'Madrid',
+    city: 'Madrid',
+    zone: 'Salamanca',
+    price: 700000,
+    currency: 'EUR',
+    surface_m2: 130,
+    rooms: 3,
+    bathrooms: 2,
+    status: 'pending',
+    verification_state: 'pending',
+    featured: false,
+    published_at: '2026-04-18T10:00:00.000Z',
+    expiration_at: '2026-07-18T10:00:00.000Z',
+    images: ['hash-a', 'hash-b'],
+    coordinates: { lat: 40.4168, lng: -3.7038 },
+    badges: [],
+    contact_cta: 'Contactar',
+    contact_name: 'Owner Fixture',
+    contact_email: 'owner@example.com',
+    contact_phone: '+34600111222'
+  }, base || {});
+}
+
+function makeMultipartBody(fields, files) {
+  const boundary = '----ngpt-' + Math.random().toString(16).slice(2);
+  const chunks = [];
+  const CRLF = '\r\n';
+
+  Object.keys(fields || {}).forEach((name) => {
+    chunks.push(Buffer.from('--' + boundary + CRLF));
+    chunks.push(Buffer.from('Content-Disposition: form-data; name="' + name + '"' + CRLF + CRLF));
+    chunks.push(Buffer.from(String(fields[name] == null ? '' : fields[name])));
+    chunks.push(Buffer.from(CRLF));
+  });
+
+  (Array.isArray(files) ? files : []).forEach((file) => {
+    chunks.push(Buffer.from('--' + boundary + CRLF));
+    chunks.push(Buffer.from('Content-Disposition: form-data; name="' + (file.fieldName || 'images') + '"; filename="' + file.filename + '"' + CRLF));
+    chunks.push(Buffer.from('Content-Type: ' + (file.mimeType || 'application/octet-stream') + CRLF + CRLF));
+    chunks.push(file.buffer);
+    chunks.push(Buffer.from(CRLF));
+  });
+
+  chunks.push(Buffer.from('--' + boundary + '--' + CRLF));
+  return {
+    boundary,
+    body: Buffer.concat(chunks)
+  };
+}
+
+function requestMultipart(port, multipart, extraHeaders) {
+  return new Promise((resolve, reject) => {
+    const req = http.request({
+      method: 'POST',
+      host: '127.0.0.1',
+      port,
+      path: '/api/listings/upsert',
+      headers: Object.assign({
+        'Content-Type': 'multipart/form-data; boundary=' + multipart.boundary,
+        'Content-Length': multipart.body.length
+      }, extraHeaders || {})
+    }, (res) => {
+      const chunks = [];
+      res.on('data', (d) => chunks.push(d));
+      res.on('end', () => {
+        const raw = Buffer.concat(chunks).toString('utf8');
+        let parsed = null;
+        try { parsed = JSON.parse(raw); } catch (_) { parsed = { raw }; }
+        resolve({ status: res.statusCode, body: parsed });
+      });
+    });
+    req.on('error', reject);
+    req.write(multipart.body);
+    req.end();
+  });
+}
+
+function requestGet(port, urlPath, authHeader) {
+  return new Promise((resolve, reject) => {
+    const headers = {};
+    if (authHeader) headers['Authorization'] = authHeader;
+    const req = http.request({
+      method: 'GET',
+      host: '127.0.0.1',
+      port,
+      path: urlPath,
+      headers
+    }, (res) => {
+      const chunks = [];
+      res.on('data', (d) => chunks.push(d));
+      res.on('end', () => {
+        const raw = Buffer.concat(chunks).toString('utf8');
+        let parsed = null;
+        try { parsed = JSON.parse(raw); } catch (_) { parsed = { raw }; }
+        resolve({ status: res.statusCode, body: parsed });
+      });
+    });
+    req.on('error', reject);
+    req.end();
+  });
+}
+
+async function startServer(repoRoot, tempRoot, port, extraEnv) {
+  const child = spawn('node', [path.join(repoRoot, 'scripts', 'serve.js')], {
+    cwd: tempRoot,
+    env: Object.assign({}, process.env, {
+      PORT: String(port),
+      OPS_BASIC_AUTH_USER: 'testops',
+      OPS_BASIC_AUTH_PASS: 'testpass',
+      OPS_ADMINS: 'testops',
+      LISTING_PUBLIC_TOKEN: '',
+      PUBLIC_LISTING_RATE_MAX_OVERRIDE: '100'
+    }, extraEnv || {}),
+    stdio: ['ignore', 'pipe', 'pipe']
+  });
+
+  let ready = false;
+  let bootError = null;
+  child.stdout.on('data', (d) => {
+    const text = String(d || '');
+    if (text.indexOf('Static server running on') >= 0) ready = true;
+  });
+  child.stderr.on('data', (d) => {
+    const text = String(d || '').trim();
+    if (text) bootError = text;
+  });
+  child.on('exit', (code) => {
+    if (!ready && code !== 0 && !bootError) bootError = 'server_exit_' + String(code);
+  });
+
+  for (let i = 0; i < 80; i += 1) {
+    if (ready) return child;
+    if (bootError) throw new Error('server_boot_error:' + bootError);
+    await wait(100);
+  }
+  throw new Error('server_not_ready');
+}
+
+function pickAvailablePort() {
+  return new Promise((resolve, reject) => {
+    const server = net.createServer();
+    server.listen(0, '127.0.0.1', () => {
+      const address = server.address();
+      const port = address && address.port ? Number(address.port) : 0;
+      server.close(() => resolve(port));
+    });
+    server.on('error', reject);
+  });
+}
+
+function makeTempRoot(repoRoot, fixtures) {
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'ngpt-public-e2e-'));
+  const dataDir = path.join(tempRoot, 'data');
+  fs.mkdirSync(path.join(tempRoot, 'assets', 'img'), { recursive: true });
+  fs.mkdirSync(path.join(dataDir, 'chany'), { recursive: true });
+  writeJson(path.join(dataDir, 'listings.json'), fixtures || []);
+  fs.writeFileSync(path.join(dataDir, 'moderation-events.log.jsonl'), '', 'utf8');
+  return tempRoot;
+}
+
+async function main() {
+  const repoRoot = path.resolve(__dirname, '..');
+
+  const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9q24wAAAAASUVORK5CYII=', 'base64');
+  const jpg = Buffer.from('/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQDxAQEA8QEA8PEA8QEA8PDw8QFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0fHyUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAAEAAQMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQID/8QAFhEBAQEAAAAAAAAAAAAAAAAAAQAC/9oADAMBAAIQAxAAAAH0qg//xAAXEAADAQAAAAAAAAAAAAAAAAAAAREx/9oACAEBAAEFAo9f/8QAFhEAAwAAAAAAAAAAAAAAAAAAARAR/9oACAEDAQE/AYf/xAAVEQEBAAAAAAAAAAAAAAAAAAABEP/aAAgBAgEBPwGX/8QAFhABAQEAAAAAAAAAAAAAAAAAABEB/9oACAEBAAY/Ah0f/8QAFBABAAAAAAAAAAAAAAAAAAAAEP/aAAgBAQABPyH/xAAWEQEBAQAAAAAAAAAAAAAAAAABABH/2gAIAQMBAT8QhP/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAgBAgEBPxDq/8QAFhABAQEAAAAAAAAAAAAAAAAAABEh/9oACAEBAAE/EFg//9k=', 'base64');
+  const php = Buffer.from('<?php echo 1; ?>', 'utf8');
+  const huge = Buffer.alloc((8 * 1024 * 1024) + 1024, 0);
+  huge[0] = 0xFF; huge[1] = 0xD8; huge[2] = 0xFF;
+
+  const fixtures = [
+    listing({ id: 're-strong-base-001', slug: 're-strong-base-001', title: 'Piso premium Salamanca Madrid', summary: 'Premium', description: 'Texto premium igual', images: ['hash-shared-1', 'hash-shared-2'], contact_email: 'same@example.com', contact_phone: '+34600000111', price: 750000, surface_m2: 140 }),
+    listing({ id: 're-moderate-base-001', slug: 're-moderate-base-001', title: 'Apartamento familiar Barcelona', summary: 'Base moderate', description: 'Otro texto', city: 'Barcelona', zone: 'Eixample', images: ['hash-mod-1'], contact_email: 'mod@example.com', contact_phone: '+34600000222', price: 320000, surface_m2: 96 })
+  ];
+
+  // ── Bloque 1: flujo principal ───────────────────────────────────────────────
+  const port1 = await pickAvailablePort();
+  const tempRoot1 = makeTempRoot(repoRoot, fixtures);
+  const server1 = await startServer(repoRoot, tempRoot1, port1);
+
+  const baseFields = {
+    privacy_accepted: 'true',
+    mode: 'create',
+    listing_id: 're-new-valid-001',
+    slug: 're-new-valid-001',
+    title: 'Activo valido Malaga',
+    summary: 'Resumen activo válido',
+    description: 'Descripción activa no duplicada',
+    operation: 'sale',
+    asset_type: 'apartment',
+    country: 'ES',
+    region: 'Andalucia',
+    city: 'Malaga',
+    zone: 'Centro',
+    price: '420000',
+    surface_m2: '100',
+    rooms: '3',
+    bathrooms: '2',
+    contact_name: 'Publicador QA',
+    contact_phone: '+34600123456',
+    contact_email: 'ok@example.com',
+    lat: '36.7213',
+    lng: '-4.4214'
+  };
+
+  try {
+    // 1. Alta válida con imágenes
+    const altaValida = await requestMultipart(port1, makeMultipartBody(baseFields, [
+      { fieldName: 'images', filename: 'f1.png', mimeType: 'image/png', buffer: png },
+      { fieldName: 'images', filename: 'f2.jpg', mimeType: 'image/jpeg', buffer: jpg }
+    ]), { 'X-Forwarded-For': '10.0.1.1' });
+    assert(altaValida.status === 200 && altaValida.body && altaValida.body.ok === true, 'alta_valida_failed', { status: altaValida.status, body: altaValida.body });
+    const editKey = altaValida.body.edit_key;
+    assert(typeof editKey === 'string' && editKey.length > 10, 'edit_key_missing');
+    // respuesta filtrada: no debe exponer listing completo con ops_flags
+    assert(altaValida.body.listing === undefined, 'respuesta_publica_expone_listing_interno');
+    assert(altaValida.body.listing_id === 're-new-valid-001', 'listing_id_missing_in_response');
+
+    // 2. Edición válida
+    const edicionValida = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      mode: 'edit',
+      target_id: 're-new-valid-001',
+      listing_id: 're-new-valid-001',
+      edit_key: editKey,
+      title: 'Activo valido Malaga editado'
+    }), []), { 'X-Forwarded-For': '10.0.1.2' });
+    assert(edicionValida.status === 200 && edicionValida.body && edicionValida.body.ok === true, 'edicion_valida_failed', edicionValida.body);
+
+    // 3. Exceso de fotos
+    const excesoFotos = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: 're-too-many-001', slug: 're-too-many-001'
+    }), [1,2,3,4,5,6,7].map((n) => ({ fieldName: 'images', filename: 'x' + n + '.png', mimeType: 'image/png', buffer: png }))),
+    { 'X-Forwarded-For': '10.0.1.3' });
+    assert(excesoFotos.status === 422, 'exceso_fotos_should_fail', excesoFotos.status);
+
+    // 4. Fichero peligroso (extensión .php)
+    const ficheroPeligroso = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: 're-danger-001', slug: 're-danger-001'
+    }), [{ fieldName: 'images', filename: 'evil.php', mimeType: 'application/octet-stream', buffer: php }]),
+    { 'X-Forwarded-For': '10.0.1.4' });
+    assert(ficheroPeligroso.status === 422, 'fichero_peligroso_should_fail', ficheroPeligroso.status);
+
+    // 5. Peso excesivo (>8MB por archivo)
+    const pesoExcesivo = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: 're-huge-001', slug: 're-huge-001'
+    }), [{ fieldName: 'images', filename: 'huge.jpg', mimeType: 'image/jpeg', buffer: huge }]),
+    { 'X-Forwarded-For': '10.0.1.5' });
+    assert(pesoExcesivo.status === 422, 'peso_excesivo_should_fail', pesoExcesivo.status);
+
+    // 6. Duplicado fuerte (abuse_blocked)
+    const duplicadoFuerte = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: 're-dup-strong-001', slug: 're-dup-strong-001',
+      title: 'Piso premium Salamanca Madrid', summary: 'Premium', description: 'Texto premium igual',
+      city: 'Madrid', zone: 'Salamanca', price: '750000', surface_m2: '140', contact_email: 'same@example.com'
+    }), []), { 'X-Forwarded-For': '10.0.1.6' });
+    assert(duplicadoFuerte.status === 200, 'duplicado_fuerte_status', duplicadoFuerte.status);
+    assert(
+      duplicadoFuerte.body && duplicadoFuerte.body.duplicate_review && duplicadoFuerte.body.duplicate_review.duplicate_abuse_blocked === true,
+      'duplicado_fuerte_not_blocked', duplicadoFuerte.body && duplicadoFuerte.body.duplicate_review
+    );
+
+    // 7. Duplicado moderado (review_required sin bloqueo)
+    const duplicadoModerado = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: 're-dup-moderate-001', slug: 're-dup-moderate-001',
+      title: 'Apartamento familiar Barcelona zona centro', description: 'Texto no idéntico',
+      city: 'Barcelona', zone: 'Sant Antoni', price: '322000', surface_m2: '97', contact_email: 'other@example.com'
+    }), []), { 'X-Forwarded-For': '10.0.1.7' });
+    assert(duplicadoModerado.status === 200, 'duplicado_moderado_status', duplicadoModerado.status);
+    assert(
+      duplicadoModerado.body && duplicadoModerado.body.duplicate_review && duplicadoModerado.body.duplicate_review.review_required === true,
+      'duplicado_moderado_not_flagged', duplicadoModerado.body && duplicadoModerado.body.duplicate_review
+    );
+
+    // 8. Caso limpio no duplicado
+    const limpio = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: 're-clean-001', slug: 're-clean-001',
+      title: 'Activo singular Helsinki control', description: 'Totalmente diferente',
+      country: 'FI', region: 'Uusimaa', city: 'Helsinki', zone: 'Jatkasaari',
+      operation: 'room_rent', asset_type: 'room', price: '990', surface_m2: '22',
+      lat: '60.1699', lng: '24.9384', contact_email: 'helsinki@example.com', contact_phone: '+358401239999'
+    }), []), { 'X-Forwarded-For': '10.0.1.8' });
+    assert(limpio.status === 200, 'limpio_status', limpio.status);
+    assert(limpio.body && limpio.body.duplicate_review && limpio.body.duplicate_review.review_required === false, 'limpio_flagged', limpio.body && limpio.body.duplicate_review);
+
+    // 9. Hardening: status=published del cliente NO se acepta — server fuerza pending
+    const statusPublishedForzado = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: 're-status-attack-001', slug: 're-status-attack-001',
+      status: 'published', verification_state: 'verified', featured: 'true'
+    }), []), { 'X-Forwarded-For': '10.0.1.9' });
+    assert(statusPublishedForzado.status === 200, 'status_attack_server_error', statusPublishedForzado.status);
+    // el listing completo no se devuelve al público — no hay .listing en la respuesta
+    assert(statusPublishedForzado.body && statusPublishedForzado.body.listing === undefined, 'respuesta_expone_listing_con_status');
+
+    // 10. Hardening: honeypot anti-bot — hp_check relleno → 400
+    const honeypotBloqueado = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: 're-bot-001', slug: 're-bot-001', hp_check: 'soy-un-bot'
+    }), []), { 'X-Forwarded-For': '10.0.1.10' });
+    assert(honeypotBloqueado.status === 400, 'honeypot_should_block', honeypotBloqueado.status);
+    assert(honeypotBloqueado.body && honeypotBloqueado.body.error === 'bot_check_failed', 'honeypot_wrong_error', honeypotBloqueado.body);
+
+    // 11. Hardening: listing_id con path traversal sanitizado
+    const pathTraversal = await requestMultipart(port1, makeMultipartBody(Object.assign({}, baseFields, {
+      listing_id: '../../etc/passwd', slug: 're-traversal-001'
+    }), []), { 'X-Forwarded-For': '10.0.1.11' });
+    // debe fallar (id queda vacío tras sanitizar → required field missing) o crear con id sanitizado
+    assert(pathTraversal.status === 400 || pathTraversal.status === 200, 'path_traversal_unexpected_status', pathTraversal.status);
+    if (pathTraversal.status === 200) {
+      // si crea, el id NO puede contener '..' ni '/'
+      const resultId = pathTraversal.body && pathTraversal.body.listing_id ? String(pathTraversal.body.listing_id) : '';
+      assert(!resultId.includes('..') && !resultId.includes('/'), 'path_traversal_id_not_sanitized', resultId);
+    }
+
+    // 12. Log público creado
+    const pubLogPath = path.join(tempRoot1, 'data', 'chany', 'public-listing-upsert-log.jsonl');
+    assert(fs.existsSync(pubLogPath), 'public_log_missing');
+
+    // 13. Endpoint ops recent-public devuelve entradas
+    const opsAuth = 'Basic ' + Buffer.from('testops:testpass').toString('base64');
+    const recentPub = await requestGet(port1, '/ops/api/listings/recent-public?limit=20', opsAuth);
+    assert(recentPub.status === 200 && recentPub.body && recentPub.body.ok === true, 'recent_public_endpoint_failed', recentPub.body);
+    assert(typeof recentPub.body.count === 'number' && recentPub.body.count > 0, 'recent_public_no_entries', recentPub.body);
+
+    // 14. Cleanup de uploadDir: data/tmp/uploads/ no debe tener directorios residuales tras éxito
+    const tmpUploadsDir = path.join(tempRoot1, 'data', 'tmp', 'uploads');
+    if (fs.existsSync(tmpUploadsDir)) {
+      const residual = fs.readdirSync(tmpUploadsDir).filter((f) => fs.statSync(path.join(tmpUploadsDir, f)).isDirectory());
+      assert(residual.length === 0, 'upload_tmpdir_not_cleaned', { residual_dirs: residual.length });
+    }
+
+    console.log('[check-public-listing-endpoint-e2e] PASS bloque-1 (flujo principal)');
+    console.log('- alta=' + altaValida.status + ' edicion=' + edicionValida.status + ' limpio=' + limpio.status);
+    console.log('- fuerte_abuse_blocked=' + String(duplicadoFuerte.body.duplicate_review.duplicate_abuse_blocked));
+    console.log('- honeypot_bloqueado=' + String(honeypotBloqueado.status === 400));
+    console.log('- recent_public_count=' + recentPub.body.count);
+  } finally {
+    server1.kill('SIGINT');
+    await wait(250);
+  }
+
+  // ── Bloque 2: token enforcement ─────────────────────────────────────────────
+  const port2 = await pickAvailablePort();
+  const tempRoot2 = makeTempRoot(repoRoot, []);
+  const server2 = await startServer(repoRoot, tempRoot2, port2, {
+    LISTING_PUBLIC_TOKEN: 'tok-test-abc123',
+    LISTING_REQUIRE_TOKEN: 'true'
+  });
+
+  const tokenFields = Object.assign({}, {
+    privacy_accepted: 'true', mode: 'create',
+    listing_id: 're-tok-001', slug: 're-tok-001',
+    title: 'Test token', summary: 'Resumen', description: 'Descripcion larga suficiente',
+    operation: 'sale', asset_type: 'apartment', country: 'ES', region: 'Madrid',
+    city: 'Madrid', zone: 'Centro', price: '100000', surface_m2: '60',
+    contact_name: 'Token Owner', contact_phone: '+34600999888', contact_email: 'tok@example.com', lat: '40.4', lng: '-3.7'
+  });
+
+  try {
+    // Sin token → 403
+    const sinToken = await requestMultipart(port2, makeMultipartBody(tokenFields, []), { 'X-Forwarded-For': '10.0.2.1' });
+    assert(sinToken.status === 403, 'sin_token_should_403', sinToken.status);
+
+    // Token incorrecto → 403
+    const tokenMalo = await requestMultipart(port2, makeMultipartBody(tokenFields, []), {
+      'X-Forwarded-For': '10.0.2.2', 'X-Listing-Token': 'tok-incorrecto'
+    });
+    assert(tokenMalo.status === 403, 'token_malo_should_403', tokenMalo.status);
+
+    // Token correcto → 200
+    const tokenBueno = await requestMultipart(port2, makeMultipartBody(tokenFields, []), {
+      'X-Forwarded-For': '10.0.2.3', 'X-Listing-Token': 'tok-test-abc123'
+    });
+    assert(tokenBueno.status === 200 && tokenBueno.body && tokenBueno.body.ok === true, 'token_bueno_failed', { status: tokenBueno.status, body: tokenBueno.body });
+
+    console.log('[check-public-listing-endpoint-e2e] PASS bloque-2 (token enforcement)');
+    console.log('- sin_token=403 token_malo=403 token_bueno=200');
+  } finally {
+    server2.kill('SIGINT');
+    await wait(250);
+  }
+
+  // ── Bloque 3: LISTING_REQUIRE_TOKEN=true sin token configurado → 503 ────────
+  const port3 = await pickAvailablePort();
+  const tempRoot3 = makeTempRoot(repoRoot, []);
+  const server3 = await startServer(repoRoot, tempRoot3, port3, {
+    LISTING_PUBLIC_TOKEN: '',
+    LISTING_REQUIRE_TOKEN: 'true'
+  });
+
+  try {
+    const disabledEndpoint = await requestMultipart(port3, makeMultipartBody(tokenFields, []), { 'X-Forwarded-For': '10.0.3.1' });
+    assert(disabledEndpoint.status === 503, 'disabled_endpoint_should_503', disabledEndpoint.status);
+    assert(disabledEndpoint.body && disabledEndpoint.body.error === 'listing_endpoint_disabled', 'disabled_wrong_error', disabledEndpoint.body);
+
+    console.log('[check-public-listing-endpoint-e2e] PASS bloque-3 (endpoint deshabilitado sin token)');
+  } finally {
+    server3.kill('SIGINT');
+    await wait(250);
+  }
+
+  // ── Bloque 4: status endpoint + flujo de edición + pending-review ops ───────
+  const port4 = await pickAvailablePort();
+  const tempRoot4 = makeTempRoot(repoRoot, []);
+  const server4 = await startServer(repoRoot, tempRoot4, port4);
+
+  try {
+    // 1. Crear listing para obtener edit_key
+    const altaB4 = await requestMultipart(port4, makeMultipartBody(
+      Object.assign({}, baseFields, { listing_id: 're-status-test-001', slug: 're-status-test-001' }), []
+    ), { 'X-Forwarded-For': '10.0.4.1' });
+    assert(altaB4.status === 200 && altaB4.body && altaB4.body.ok === true, 'bloque4_alta_failed', altaB4.body);
+    const ek4 = altaB4.body.edit_key;
+    const lid4 = altaB4.body.listing_id;
+    assert(typeof ek4 === 'string' && ek4.length > 10, 'bloque4_edit_key_missing');
+
+    // 2. GET /api/listings/status con clave válida → 200 + campos públicos
+    const statusValido = await requestGet(port4, '/api/listings/status?listing_id=' + lid4 + '&edit_key=' + encodeURIComponent(ek4));
+    assert(statusValido.status === 200 && statusValido.body && statusValido.body.ok === true, 'status_valido_failed', statusValido.body);
+    assert(statusValido.body.listing && statusValido.body.listing.id === lid4, 'status_listing_id_mismatch', statusValido.body);
+    assert(statusValido.body.listing.edit_key_hash === undefined, 'status_expone_edit_key_hash');
+    assert(statusValido.body.listing.ops_flags === undefined, 'status_expone_ops_flags');
+    assert(statusValido.body.listing.duplicate_candidates === undefined, 'status_expone_dup_candidates');
+
+    // 3. GET /api/listings/status con clave inválida → 403
+    const statusKeyMala = await requestGet(port4, '/api/listings/status?listing_id=' + lid4 + '&edit_key=clave-incorrecta-xyz');
+    assert(statusKeyMala.status === 403, 'status_key_mala_should_403', statusKeyMala.status);
+    assert(statusKeyMala.body && statusKeyMala.body.error === 'edit_forbidden_invalid_key', 'status_key_mala_wrong_error', statusKeyMala.body);
+
+    // 4. GET /api/listings/status con listing_id desconocido → 404
+    const statusNoExiste = await requestGet(port4, '/api/listings/status?listing_id=no-existe-jamas&edit_key=cualquiera');
+    assert(statusNoExiste.status === 404, 'status_no_existe_should_404', statusNoExiste.status);
+
+    // 5. GET /api/listings/status sin params → 400
+    const statusSinParams = await requestGet(port4, '/api/listings/status');
+    assert(statusSinParams.status === 400, 'status_sin_params_should_400', statusSinParams.status);
+
+    // 6. Edición válida con edit_key obtenida — slug obligatorio para no sobreescribir con null
+    const edicionB4 = await requestMultipart(port4, makeMultipartBody({
+      privacy_accepted: 'true', mode: 'edit',
+      target_id: lid4, listing_id: lid4, slug: 're-status-test-001', edit_key: ek4,
+      title: 'Activo valido Malaga actualizado v2', summary: 'Resumen actualizado',
+      description: 'Descripcion actualizada completamente distinta',
+      operation: 'sale', asset_type: 'apartment', country: 'ES', region: 'Andalucia',
+      city: 'Malaga', zone: 'Centro', price: '430000', surface_m2: '102',
+      rooms: '3', bathrooms: '2', contact_name: 'Editor QA', contact_phone: '+34600555111', contact_email: 'edit@example.com', lat: '36.72', lng: '-4.42'
+    }, []), { 'X-Forwarded-For': '10.0.4.6' });
+    assert(edicionB4.status === 200 && edicionB4.body && edicionB4.body.ok === true, 'edicion_b4_failed', edicionB4.body);
+    assert(edicionB4.body.mode === 'updated', 'edicion_b4_mode_wrong', edicionB4.body);
+
+    // 7. Edición con clave incorrecta → 403
+    const edicionKeyMala = await requestMultipart(port4, makeMultipartBody({
+      privacy_accepted: 'true', mode: 'edit',
+      target_id: lid4, listing_id: lid4, slug: 're-status-test-001', edit_key: 'clave-invalida-xxxx',
+      title: 'Intento no autorizado', summary: 'Resumen', description: 'Descripcion texto aqui',
+      operation: 'sale', asset_type: 'apartment', country: 'ES', region: 'Madrid',
+      city: 'Madrid', zone: 'Centro', price: '100000', surface_m2: '60',
+      contact_name: 'Intruso', contact_phone: '+34600000000', contact_email: 'x@x.com', lat: '40.4', lng: '-3.7'
+    }, []), { 'X-Forwarded-For': '10.0.4.7' });
+    assert(edicionKeyMala.status === 403, 'edicion_key_mala_should_403', { status: edicionKeyMala.status, body: edicionKeyMala.body });
+
+    // 8. Ops pending-review → 200 con estructura correcta
+    const opsAuth4 = 'Basic ' + Buffer.from('testops:testpass').toString('base64');
+    const pendingReview = await requestGet(port4, '/ops/api/listings/pending-review', opsAuth4);
+    assert(pendingReview.status === 200 && pendingReview.body && pendingReview.body.ok === true, 'pending_review_endpoint_failed', pendingReview.body);
+    assert(typeof pendingReview.body.count === 'number', 'pending_review_count_missing', pendingReview.body);
+    assert(Array.isArray(pendingReview.body.items), 'pending_review_items_not_array', pendingReview.body);
+
+    console.log('[check-public-listing-endpoint-e2e] PASS bloque-4 (status + edit + pending-review)');
+    console.log('- status_valido=' + statusValido.status + ' status_key_mala=' + statusKeyMala.status + ' status_no_existe=' + statusNoExiste.status);
+    console.log('- edicion_valida=' + edicionB4.status + ' edicion_key_mala=' + edicionKeyMala.status);
+    console.log('- pending_review_count=' + pendingReview.body.count + ' pending_review_items=' + pendingReview.body.items.length);
+  } finally {
+    server4.kill('SIGINT');
+    await wait(250);
+  }
+
+  console.log('[check-public-listing-endpoint-e2e] TODOS LOS BLOQUES PASS');
+}
+
+main().catch((error) => {
+  console.error('[check-public-listing-endpoint-e2e] FAIL:', error && error.message ? error.message : error);
+  process.exit(1);
+});
