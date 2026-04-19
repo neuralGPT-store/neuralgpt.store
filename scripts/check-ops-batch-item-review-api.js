@@ -1,0 +1,246 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const http = require('http');
+const { spawn } = require('child_process');
+
+const HOST = '127.0.0.1';
+const BASE_PORT = 18990;
+const SERVE_SCRIPT = path.join(__dirname, 'serve.js');
+
+function authHeader(user, pass) {
+  return 'Basic ' + Buffer.from(user + ':' + pass).toString('base64');
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function waitForServer(server, headers, timeoutMs) {
+  const baseUrl = server.baseUrl;
+  const started = Date.now();
+  while ((Date.now() - started) < timeoutMs) {
+    if (server.child && server.child.exitCode != null) {
+      throw new Error('server_exited_early:' + String(server.child.exitCode) + ':stderr=' + server.stderr.join(' | '));
+    }
+    try {
+      const response = await httpJsonRequest(baseUrl + '/ops/api/actions/recent?limit=1', {
+        method: 'GET',
+        headers
+      });
+      if ([200, 400, 403, 401, 404, 405].includes(response.status)) {
+        return;
+      }
+    } catch (_error) {
+      /* retry */
+    }
+    await wait(120);
+  }
+  throw new Error('server_start_timeout:stderr=' + server.stderr.join(' | '));
+}
+
+function httpJsonRequest(urlValue, opts) {
+  return new Promise((resolve, reject) => {
+    const urlObj = new URL(urlValue);
+    const request = http.request({
+      protocol: urlObj.protocol,
+      hostname: urlObj.hostname,
+      port: urlObj.port,
+      path: urlObj.pathname + (urlObj.search || ''),
+      method: opts && opts.method ? opts.method : 'GET',
+      headers: opts && opts.headers ? opts.headers : {}
+    }, (response) => {
+      const chunks = [];
+      response.on('data', (chunk) => chunks.push(chunk));
+      response.on('end', () => {
+        const raw = Buffer.concat(chunks).toString('utf8');
+        let body = null;
+        try {
+          body = raw ? JSON.parse(raw) : null;
+        } catch (_error) {
+          body = null;
+        }
+        resolve({ status: response.statusCode || 0, body });
+      });
+    });
+    request.on('error', reject);
+    if (opts && opts.body != null) request.write(opts.body);
+    request.end();
+  });
+}
+
+function startServer(opts) {
+  const role = opts && opts.role ? opts.role : 'viewer';
+  const user = 'ops';
+  const pass = 'ops-pass';
+  const port = Number(opts && opts.port) || BASE_PORT;
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'chany-ops-api-check-'));
+  const env = Object.assign({}, process.env, {
+    PORT: String(port),
+    OPS_BASIC_AUTH_USER: user,
+    OPS_BASIC_AUTH_PASS: pass,
+    OPS_VIEWERS: role === 'viewer' ? user : '',
+    OPS_OPERATORS: role === 'operator' ? user : '',
+    OPS_ADMINS: role === 'admin' ? user : ''
+  });
+  const child = spawn(process.execPath, [SERVE_SCRIPT], {
+    cwd: root,
+    env,
+    stdio: ['ignore', 'pipe', 'pipe']
+  });
+  const stdout = [];
+  const stderr = [];
+  child.stdout.on('data', (chunk) => stdout.push(String(chunk)));
+  child.stderr.on('data', (chunk) => stderr.push(String(chunk)));
+  return {
+    child,
+    root,
+    user,
+    pass,
+    port,
+    baseUrl: 'http://' + HOST + ':' + String(port),
+    stdout,
+    stderr
+  };
+}
+
+async function stopServer(child) {
+  if (!child || child.killed) return;
+  await new Promise((resolve) => {
+    child.once('exit', () => resolve());
+    child.kill('SIGINT');
+    setTimeout(() => resolve(), 1200);
+  });
+}
+
+async function postJson(baseUrl, pathname, payload, headers) {
+  const response = await httpJsonRequest(baseUrl + pathname, {
+    method: 'POST',
+    headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+    body: JSON.stringify(payload)
+  });
+  return { status: response.status, body: response.body };
+}
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+async function runViewerDenied() {
+  const server = startServer({ role: 'viewer', port: BASE_PORT });
+  const headers = { Authorization: authHeader(server.user, server.pass) };
+  try {
+    await waitForServer(server, headers, 5000);
+    const result = await postJson(server.baseUrl, '/ops/api/batches/items/review', {
+      batch_id: 'ops_batch_test',
+      item_id: 'item_1',
+      listing_id: 'listing_1',
+      expected_last_review_id: 'none',
+      review_status: 'deferred',
+      review_reason: 'Prueba de denegación para viewer.'
+    }, headers);
+    assert(result.status === 400, 'viewer_should_be_denied_http_400');
+    assert(result.body && result.body.error === 'batch_item_review_role_forbidden', 'viewer_denied_error_code_mismatch');
+    return { ok: true, result };
+  } finally {
+    await stopServer(server.child);
+    fs.rmSync(server.root, { recursive: true, force: true });
+  }
+}
+
+async function runOperatorFlow() {
+  const server = startServer({ role: 'operator', port: BASE_PORT + 1 });
+  const headers = { Authorization: authHeader(server.user, server.pass) };
+  try {
+    await waitForServer(server, headers, 5000);
+
+    const first = await postJson(server.baseUrl, '/ops/api/batches/items/review', {
+      batch_id: 'ops_batch_test',
+      item_id: 'item_1',
+      listing_id: 'listing_1',
+      expected_last_review_id: 'none',
+      review_status: 'deferred',
+      review_reason: 'Primera revisión operator para test de API.'
+    }, headers);
+    assert(first.status === 200, 'operator_first_review_should_be_200');
+    assert(first.body && first.body.ok === true, 'operator_first_review_payload_invalid');
+    const firstReviewId = first.body.review && first.body.review.review_id;
+    assert(!!firstReviewId, 'operator_first_review_missing_review_id');
+
+    const missingExpected = await postJson(server.baseUrl, '/ops/api/batches/items/review', {
+      batch_id: 'ops_batch_test',
+      item_id: 'item_1',
+      listing_id: 'listing_1',
+      review_status: 'accepted',
+      review_reason: 'Intento sin expected para forzar conflicto.'
+    }, headers);
+    assert(missingExpected.status === 409, 'missing_expected_should_conflict_409');
+    assert(
+      missingExpected.body && missingExpected.body.error === 'concurrency_conflict_expected_last_review_id_required',
+      'missing_expected_conflict_error_mismatch'
+    );
+
+    const mismatchExpected = await postJson(server.baseUrl, '/ops/api/batches/items/review', {
+      batch_id: 'ops_batch_test',
+      item_id: 'item_1',
+      listing_id: 'listing_1',
+      expected_last_review_id: 'stale_review_id',
+      review_status: 'accepted',
+      review_reason: 'Intento con expected viejo para conflicto.'
+    }, headers);
+    assert(mismatchExpected.status === 409, 'mismatch_expected_should_conflict_409');
+    assert(
+      mismatchExpected.body && mismatchExpected.body.error === 'concurrency_conflict_expected_last_review_id_mismatch',
+      'mismatch_expected_conflict_error_mismatch'
+    );
+
+    const second = await postJson(server.baseUrl, '/ops/api/batches/items/review', {
+      batch_id: 'ops_batch_test',
+      item_id: 'item_1',
+      listing_id: 'listing_1',
+      expected_last_review_id: firstReviewId,
+      review_status: 'accepted',
+      review_reason: 'Revisión válida con expected actual.'
+    }, headers);
+    assert(second.status === 200, 'operator_second_review_should_be_200');
+    assert(second.body && second.body.ok === true, 'operator_second_review_payload_invalid');
+
+    const reviewLogPath = path.join(server.root, 'data', 'chany', 'batch-item-review-log.jsonl');
+    const conflictLogPath = path.join(server.root, 'data', 'chany', 'batch-item-review-conflicts.log.jsonl');
+    assert(fs.existsSync(reviewLogPath), 'review_log_not_created');
+    assert(fs.existsSync(conflictLogPath), 'conflict_log_not_created');
+
+    return {
+      ok: true,
+      first_review_id: firstReviewId,
+      missing_expected: missingExpected.body,
+      mismatch_expected: mismatchExpected.body,
+      second: second.body
+    };
+  } finally {
+    await stopServer(server.child);
+    fs.rmSync(server.root, { recursive: true, force: true });
+  }
+}
+
+async function main() {
+  const viewer = await runViewerDenied();
+  const operator = await runOperatorFlow();
+
+  console.log('OPS BATCH ITEM REVIEW API CHECK: OK');
+  console.log('- viewer_denied=' + JSON.stringify({ status: viewer.result.status, error: viewer.result.body && viewer.result.body.error }));
+  console.log('- operator_first_review_id=' + operator.first_review_id);
+  console.log('- conflict_missing_expected=' + JSON.stringify(operator.missing_expected && operator.missing_expected.error));
+  console.log('- conflict_mismatch_expected=' + JSON.stringify(operator.mismatch_expected && operator.mismatch_expected.error));
+  console.log('- operator_second_ok=' + JSON.stringify(operator.second && operator.second.ok));
+}
+
+main().catch((error) => {
+  console.error('OPS BATCH ITEM REVIEW API CHECK: FAIL');
+  console.error('- ' + (error && error.message ? error.message : String(error)));
+  process.exit(1);
+});

@@ -1,0 +1,77 @@
+/* ============================================================
+   neuralgpt.store — Design Tokens v1.0
+   Fuente de verdad única para toda la paleta del ecosistema.
+   Importar este archivo antes de cualquier otra hoja de estilos.
+   Nunca escribir colores hardcodeados fuera de este archivo.
+   ============================================================ */
+
+/* @property permite interpolar --rgb-angle en conic-gradient */
+@property --rgb-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+:root {
+  /* --- Fondos --- */
+  --bg:            #00040D;
+  --bg2:           #00060f;
+  --card-bg:       rgba(0, 10, 25, 0.75);
+
+  /* --- Bordes --- */
+  --border:        rgba(0, 234, 255, 0.18);
+  --border-muted:  rgba(122, 139, 160, 0.24);
+  --input-border:  rgba(122, 139, 160, 0.28);
+
+  /* --- Colores principales --- */
+  --accent:        #00eaff;
+  --accent2:       #7f00ff;
+  --accent3:       #ff0080;
+  --accent4:       #00ff99;
+  --text:          #e6f0ff;
+  --muted:         #7a8ba0;
+  --warn:          #f7d774;
+
+  /* --- Superficies semitransparentes --- */
+  --surface-dark:  rgba(0, 4, 12, 0.45);
+  --input-bg:      rgba(0, 4, 12, 0.65);
+  --overlay-bg:    rgba(0, 4, 12, 0.82);
+
+  /* --- Superficies ops --- */
+  --ops-header-bg: rgba(0, 8, 20, 0.82);
+  --ops-card-bg:   rgba(0, 10, 24, 0.86);
+  --ops-modal-bg:  rgba(0, 10, 24, 0.96);
+
+  /* --- Accent glow (radial gradients de fondo) --- */
+  --accent-glow:   rgba(0, 234, 255, 0.1);
+  --accent2-glow:  rgba(127, 0, 255, 0.1);
+
+  /* --- Accent4 (verde) pills y badges --- */
+  --accent4-border: rgba(0, 255, 153, 0.35);
+  --accent4-surface: rgba(0, 255, 153, 0.08);
+
+  /* --- Accent3 (rosa) pills y badges --- */
+  --accent3-border: rgba(255, 0, 128, 0.35);
+  --accent3-surface: rgba(255, 0, 128, 0.08);
+
+  /* --- Gradientes RGB animados --- */
+  --rgb:      linear-gradient(90deg,#00eaff,#7f00ff,#ff0080,#00ff99,#00eaff);
+  --rgb-diag: linear-gradient(135deg,#00eaff,#7f00ff,#ff0080,#00ff99,#00eaff);
+
+  /* --- Sombras --- */
+  --shadow:    0 8px 32px rgba(0,234,255,0.10);
+  --shadow-lg: 0 16px 64px rgba(0,234,255,0.15);
+
+  /* --- Geometría --- */
+  --radius:    16px;
+  --radius-lg: 24px;
+  --header-h:  68px;
+
+  /* --- Tipografía --- */
+  --font-title: 'Orbitron', system-ui, sans-serif;
+  --font-body:  system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+
+  /* --- Animación --- */
+  --transition: 0.22s cubic-bezier(.4,0,.2,1);
+  --rgb-angle:  0deg;
+}

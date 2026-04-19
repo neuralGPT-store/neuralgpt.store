@@ -1,0 +1,13 @@
+# Proteccion recomendada para /ops/ en despliegue con Nginx
+# Requiere: archivo htpasswd existente (ejemplo: /etc/nginx/.htpasswd-chany-ops)
+
+location ^~ /ops/ {
+  auth_basic "Chany Ops Internal";
+  auth_basic_user_file /etc/nginx/.htpasswd-chany-ops;
+
+  # Endurecimiento minimo
+  add_header X-Robots-Tag "noindex, nofollow, noarchive, nosnippet" always;
+  add_header Cache-Control "no-store" always;
+
+  try_files $uri $uri/ =404;
+}
