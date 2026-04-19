@@ -1514,3 +1514,53 @@ select.form-control {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Testimonials */
+.testimonials {
+  padding: 64px 0;
+  background: var(--bg);
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+.testimonial-card {
+  background: var(--surface);
+  border: 1px solid rgba(0,234,255,0.12);
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+}
+.testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  font-size: 4rem;
+  color: var(--accent-cyan);
+  opacity: 0.4;
+  line-height: 1;
+}
+.testimonial-text {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.author-name {
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-size: 0.9rem;
+}
+.author-loc {
+  color: var(--muted);
+  font-size: 0.8rem;
+}

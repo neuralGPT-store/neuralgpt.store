@@ -89,7 +89,9 @@
             </div>
             <div id="listing-location" style="color:var(--text);font-size:0.88rem;margin-bottom:14px"></div>
             <div style="display:flex;flex-direction:column;gap:10px">
-              <button id="listing-contact" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">Solicitar desbloqueo de contacto</button>
+              <button id="listing-contact" class="btn btn-primary btn-lg" style="width:100%;justify-content:center" onclick="unlockContact()">Ver contacto — 19,95 €</button>
+              <button id="listing-visibility-boost" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(0,234,255,0.15),rgba(127,0,255,0.15));border:1.5px solid var(--accent);display:none" onclick="boostVisibility()">Más visibilidad — 19,95 €</button>
+              <button id="listing-sensacional" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15));border:1.5px solid #ffd700;color:#ffd700;display:none" onclick="sensacional24h()">Sensacional 24h — 9,95 €</button>
               <a id="listing-collection-link" href="/real-estate-index.html" class="btn btn-lg" style="width:100%;justify-content:center;text-decoration:none">Volver al índice</a>
             </div>
             <div style="margin-top:14px;padding:12px 14px;background:rgba(0,234,255,0.05);border:1.5px solid rgba(0,234,255,0.18);border-radius:10px">
@@ -385,7 +387,23 @@
     return String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
   }
   </script>
-<script>function unlockContact(){alert("Pago simulado completado");var el=document.querySelector(".contact-locked");if(el){el.innerHTML="<p><strong>Nombre:</strong> Anunciante</p><p><strong>Teléfono:</strong> +34 XXX XXX XXX</p><p><strong>Email:</strong> contacto@email.com</p>";}}</script>
+<script>
+function unlockContact(){
+  alert("Redirigiendo a pago Stripe — 19,95 €");
+  fetch('/api/stripe/checkout-contact-unlock', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({listing_id:new URLSearchParams(location.search).get('slug')})})
+  .then(r=>r.json()).then(d=>{if(d.checkout_url){location.href=d.checkout_url;}}).catch(()=>alert('Error al iniciar pago'));
+}
+function boostVisibility(){
+  alert("Redirigiendo a pago Stripe — 19,95 €");
+  fetch('/api/stripe/checkout-mas-visibilidad', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({listing_id:new URLSearchParams(location.search).get('slug')})})
+  .then(r=>r.json()).then(d=>{if(d.checkout_url){location.href=d.checkout_url;}}).catch(()=>alert('Error al iniciar pago'));
+}
+function sensacional24h(){
+  alert("Redirigiendo a pago Stripe — 9,95 €");
+  fetch('/api/stripe/checkout-sensacional', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({listing_id:new URLSearchParams(location.search).get('slug')})})
+  .then(r=>r.json()).then(d=>{if(d.checkout_url){location.href=d.checkout_url;}}).catch(()=>alert('Error al iniciar pago'));
+}
+</script>
 <script>
 (function(){
   const observer = new IntersectionObserver((entries) => {

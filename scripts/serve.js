@@ -1099,13 +1099,33 @@ const server = http.createServer((req,res)=>{
       authContext.role = resolveRole(authContext.user);
     }
 
+    // Stripe payment endpoints (public)
+    if (urlPath === '/api/stripe/checkout-contact-unlock' && req.method === 'POST') {
+      return send(res, 200, { ok: true, checkout_url: 'https://buy.stripe.com/test_placeholder_contact', message: 'Stripe integration pending' });
+    }
+    if (urlPath === '/api/stripe/checkout-mas-visibilidad' && req.method === 'POST') {
+      return send(res, 200, { ok: true, checkout_url: 'https://buy.stripe.com/test_placeholder_visibility', message: 'Stripe integration pending' });
+    }
+    if (urlPath === '/api/stripe/checkout-sensacional' && req.method === 'POST') {
+      return send(res, 200, { ok: true, checkout_url: 'https://buy.stripe.com/test_placeholder_sensacional', message: 'Stripe integration pending' });
+    }
+    if (urlPath === '/api/stripe/webhook' && req.method === 'POST') {
+      return send(res, 200, { ok: true, message: 'Webhook received (integration pending)' });
+    }
+    if (urlPath === '/api/listings/contact' && req.method === 'GET') {
+      const sp = new URL(req.url, 'http://localhost').searchParams;
+      const listingId = String(sp.get('listing_id') || '').trim();
+      if (!listingId) return send(res, 400, { ok: false, error: 'listing_id required' });
+      return send(res, 402, { ok: false, error: 'payment_required', message: 'Contact unlock requires payment' });
+    }
+
     if (urlPath.startsWith('/ops/api/') || urlPath === '/api/listings/upsert' || urlPath === '/api/listings/status') {
       return handleOpsApi(req, res, urlPath, authContext);
     }
 
     // Bloquear rutas privadas del filesystem que nunca deben exponerse públicamente
-    const privatePaths = ['/scripts/', '/data/chany/', '/data/risk-report.json', '/data/moderation-events.log.jsonl',
-      '/data/products-stripe.json', '/data/commission-config.json', '/deploy/', '/test/'];
+    const privatePaths = ['/scripts/', '/data/chany/', '/data/fiscal/', '/data/risk-report.json', '/data/moderation-events.log.jsonl',
+      '/data/products-stripe.json', '/data/commission-config.json', '/deploy/', '/test/', '/ops/'];
     if (privatePaths.some((p) => urlPath === p || urlPath.startsWith(p))) return send404(res);
 
     if(urlPath === '/' || urlPath === '') urlPath = '/index.html';
