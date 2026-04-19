@@ -3,6 +3,8 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const Stripe = require('stripe');
+const stripe = process.env.STRIPE_SECRET_KEY ? Stripe(process.env.STRIPE_SECRET_KEY) : null;
 
 function sha256(str) {
   return crypto.createHash('sha256').update(String(str || '')).digest('hex');
@@ -82,6 +84,18 @@ function send401(res){
 }
 function send403(res){ send(res, 403, 'Forbidden'); }
 function send405(res){ send(res, 405, { ok: false, error: 'method_not_allowed' }); }
+
+function parseJsonBody(req, callback) {
+  let body = '';
+  req.on('data', chunk => { body += chunk.toString(); });
+  req.on('end', () => {
+    try {
+      callback(null, JSON.parse(body || '{}'));
+    } catch (e) {
+      callback(e, null);
+    }
+  });
+}
 
 function isOpsPath(urlPath) {
   return urlPath === '/ops' || urlPath.startsWith('/ops/');
@@ -384,6 +398,59 @@ function triggerEmailNotification(eventPayload) {
         error: error && error.message ? error.message : 'notification_dispatch_failed'
       });
     });
+}
+
+function handleStripeWebhookEvent(event, res) {
+  if (event.type !== 'checkout.session.completed') {
+    return send(res, 200, { ok: true, received: true, skipped: event.type });
+  }
+  const session = event.data.object;
+  const { listing_id, type } = session.metadata || {};
+  if (!listing_id || !type) {
+    console.warn('Webhook session missing metadata:', session.id);
+    return send(res, 200, { ok: true, received: true, warning: 'missing_metadata' });
+  }
+  const listingsPath = path.join(root, 'data', 'listings.json');
+  try {
+    const listings = JSON.parse(fs.readFileSync(listingsPath, 'utf8'));
+    const idx = listings.findIndex(l => l.id === listing_id || l.slug === listing_id);
+    if (idx === -1) {
+      console.warn('Listing not found:', listing_id);
+      return send(res, 200, { ok: true, received: true, warning: 'listing_not_found' });
+    }
+    if (type === 'contact_unlock') {
+      listings[idx].contact_unlocked = true;
+      listings[idx].contact_unlocked_at = new Date().toISOString();
+    }
+    if (type === 'mas_visibilidad') {
+      listings[idx].featured = true;
+      listings[idx].featured_until = new Date(Date.now() + 30*24*60*60*1000).toISOString();
+    }
+    if (type === 'sensacional_24h') {
+      listings[idx].sensacional = true;
+      listings[idx].sensacional_until = new Date(Date.now() + 24*60*60*1000).toISOString();
+    }
+    fs.writeFileSync(listingsPath, JSON.stringify(listings, null, 2), 'utf8');
+    const income = {
+      fecha: new Date().toISOString(),
+      concepto: type,
+      importe: session.amount_total / 100,
+      iva: 0.21,
+      neto: parseFloat(((session.amount_total / 100) / 1.21).toFixed(2)),
+      stripe_session: session.id,
+      listing_id: listing_id
+    };
+    const mes = new Date().toISOString().slice(0,7);
+    const fiscalDir = path.join(root, 'data', 'fiscal', 'ingresos', mes);
+    fs.mkdirSync(fiscalDir, { recursive: true });
+    const fiscalFile = path.join(fiscalDir, `ingresos-${mes}.jsonl`);
+    fs.appendFileSync(fiscalFile, JSON.stringify(income) + '\n', 'utf8');
+    console.log('Webhook processed:', type, listing_id, session.amount_total / 100, 'EUR');
+    return send(res, 200, { ok: true, received: true, processed: type });
+  } catch (e) {
+    console.error('Webhook processing error:', e.message);
+    return send(res, 500, { ok: false, error: 'processing_failed', message: e.message });
+  }
 }
 
 function handleOpsApi(req, res, urlPath, authContext) {
@@ -1101,16 +1168,103 @@ const server = http.createServer((req,res)=>{
 
     // Stripe payment endpoints (public)
     if (urlPath === '/api/stripe/checkout-contact-unlock' && req.method === 'POST') {
-      return send(res, 200, { ok: true, checkout_url: 'https://buy.stripe.com/test_placeholder_contact', message: 'Stripe integration pending' });
+      if (!stripe) return send(res, 503, { ok: false, error: 'stripe_not_configured' });
+      return parseJsonBody(req, async (err, body) => {
+        if (err) return send(res, 400, { ok: false, error: 'invalid_json' });
+        try {
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+              price_data: {
+                currency: 'eur',
+                unit_amount: 1995,
+                product_data: { name: 'Desbloqueo de contacto del anunciante' }
+              },
+              quantity: 1
+            }],
+            mode: 'payment',
+            metadata: { listing_id: body.listing_id || '', type: 'contact_unlock' },
+            success_url: `https://neuralgpt.store/listing.html?slug=${body.listing_id || ''}&unlocked=true`,
+            cancel_url: `https://neuralgpt.store/listing.html?slug=${body.listing_id || ''}`
+          });
+          return send(res, 200, { ok: true, url: session.url });
+        } catch (e) {
+          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+        }
+      });
     }
     if (urlPath === '/api/stripe/checkout-mas-visibilidad' && req.method === 'POST') {
-      return send(res, 200, { ok: true, checkout_url: 'https://buy.stripe.com/test_placeholder_visibility', message: 'Stripe integration pending' });
+      if (!stripe) return send(res, 503, { ok: false, error: 'stripe_not_configured' });
+      return parseJsonBody(req, async (err, body) => {
+        if (err) return send(res, 400, { ok: false, error: 'invalid_json' });
+        try {
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+              price_data: {
+                currency: 'eur',
+                unit_amount: 1995,
+                product_data: { name: 'Más visibilidad — 30 días destacado' }
+              },
+              quantity: 1
+            }],
+            mode: 'payment',
+            metadata: { listing_id: body.listing_id || '', type: 'mas_visibilidad' },
+            success_url: 'https://neuralgpt.store/confirm.html?upgrade=visibilidad',
+            cancel_url: `https://neuralgpt.store/listing.html?slug=${body.listing_id || ''}`
+          });
+          return send(res, 200, { ok: true, url: session.url });
+        } catch (e) {
+          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+        }
+      });
     }
     if (urlPath === '/api/stripe/checkout-sensacional' && req.method === 'POST') {
-      return send(res, 200, { ok: true, checkout_url: 'https://buy.stripe.com/test_placeholder_sensacional', message: 'Stripe integration pending' });
+      if (!stripe) return send(res, 503, { ok: false, error: 'stripe_not_configured' });
+      return parseJsonBody(req, async (err, body) => {
+        if (err) return send(res, 400, { ok: false, error: 'invalid_json' });
+        try {
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+              price_data: {
+                currency: 'eur',
+                unit_amount: 995,
+                product_data: { name: 'Sensacional 24h — Badge premium' }
+              },
+              quantity: 1
+            }],
+            mode: 'payment',
+            metadata: { listing_id: body.listing_id || '', type: 'sensacional_24h' },
+            success_url: 'https://neuralgpt.store/confirm.html?upgrade=sensacional',
+            cancel_url: `https://neuralgpt.store/listing.html?slug=${body.listing_id || ''}`
+          });
+          return send(res, 200, { ok: true, url: session.url });
+        } catch (e) {
+          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+        }
+      });
     }
     if (urlPath === '/api/stripe/webhook' && req.method === 'POST') {
-      return send(res, 200, { ok: true, message: 'Webhook received (integration pending)' });
+      if (!stripe) return send(res, 503, { ok: false, error: 'stripe_not_configured' });
+      let rawBody = '';
+      req.on('data', chunk => { rawBody += chunk.toString(); });
+      return req.on('end', () => {
+        try {
+          const sig = req.headers['stripe-signature'];
+          const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
+          if (!webhookSecret) {
+            console.warn('STRIPE_WEBHOOK_SECRET not set, skipping signature verification');
+            const event = JSON.parse(rawBody);
+            return handleStripeWebhookEvent(event, res);
+          }
+          const event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
+          return handleStripeWebhookEvent(event, res);
+        } catch (e) {
+          console.error('Webhook error:', e.message);
+          return send(res, 400, { ok: false, error: 'webhook_error', message: e.message });
+        }
+      });
     }
     if (urlPath === '/api/listings/contact' && req.method === 'GET') {
       const sp = new URL(req.url, 'http://localhost').searchParams;
