@@ -1,9 +1,0 @@
-future_route,current_equivalent,github_pages_shape,publication_mechanism,canonical_future,difficulty,scalability,fallback_transition,notes
-/inmobiliario,/real-estate-index.html,"/inmobiliario/index.html","static folder or generated folder","https://neuralgpt.store/inmobiliario",baja,alta,/real-estate-index.html,"Puede publicarse pronto porque no depende de parámetros."
-/venta,/venta.html,"/venta/index.html","static folder or generated folder","https://neuralgpt.store/venta",baja,alta,/venta.html,"Colección fija sin parámetros."
-/alquiler,/alquiler.html,"/alquiler/index.html","static folder or generated folder","https://neuralgpt.store/alquiler",baja,alta,/alquiler.html,"Colección fija sin parámetros."
-/pais/{slug},/pais.html?country={slug},"/pais/{slug}/index.html","generated folder from taxonomy countries","https://neuralgpt.store/pais/{slug}",media,media,"/pais.html?country={slug}","Depende de country code estable."
-/ciudad/{slug},/ciudad.html?city={slug},"/ciudad/{slug}/index.html","generated folder from listing/taxonomy cities","https://neuralgpt.store/ciudad/{slug}",media,media,"/ciudad.html?city={slug}","Depende de normalización de ciudad."
-/hub/pais/{slug},/hub-pais.html?country={slug},"/hub/pais/{slug}/index.html","generated folder from taxonomy countries","https://neuralgpt.store/hub/pais/{slug}",media,media,"/hub-pais.html?country={slug}","Debe seguir separado de la colección comercial."
-/hub/ciudad/{slug},/hub-ciudad.html?city={slug},"/hub/ciudad/{slug}/index.html","generated folder from listing/taxonomy cities","https://neuralgpt.store/hub/ciudad/{slug}",media,media,"/hub-ciudad.html?city={slug}","Debe seguir separado de la colección comercial."
-/listing/{slug},/listing.html?slug={slug},"/listing/{slug}/index.html","generated folder per published listing slug","https://neuralgpt.store/listing/{slug}",media-alta,alta,"/listing.html?slug={slug}","Ruta con mayor sensibilidad SEO y de volumen."
