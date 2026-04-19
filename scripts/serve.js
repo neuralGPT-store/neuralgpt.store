@@ -1103,9 +1103,31 @@ const server = http.createServer((req,res)=>{
       return handleOpsApi(req, res, urlPath, authContext);
     }
 
+    // Bloquear rutas privadas del filesystem que nunca deben exponerse públicamente
+    const privatePaths = ['/scripts/', '/data/chany/', '/data/risk-report.json', '/data/moderation-events.log.jsonl',
+      '/data/products-stripe.json', '/data/commission-config.json', '/deploy/', '/test/'];
+    if (privatePaths.some((p) => urlPath === p || urlPath.startsWith(p))) return send404(res);
+
     if(urlPath === '/' || urlPath === '') urlPath = '/index.html';
     const filePath = path.resolve(path.join(root, urlPath.replace(/^\//,'')));
     if(!safePathInsideRoot(root, filePath)) return send404(res);
+
+    // listings.json: servir versión filtrada sin datos privados del anunciante
+    if (urlPath === '/data/listings.json') {
+      const PRIVATE_LISTING_FIELDS = ['contact_email','contact_phone','contact_name','edit_key_hash',
+        'ops_flags','duplicate_candidates','duplicate_abuse_block_reason','content_policy_flags',
+        'moderation_events','moderation_review_snapshots','review_trail','review_notes'];
+      try {
+        const raw = fs.readFileSync(filePath, 'utf8');
+        const listings = JSON.parse(raw);
+        const sanitized = listings.map((l) => {
+          const out = Object.assign({}, l);
+          PRIVATE_LISTING_FIELDS.forEach((k) => delete out[k]);
+          return out;
+        });
+        return send(res, 200, sanitized, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=60' });
+      } catch (_) { return send404(res); }
+    }
 
     fs.stat(filePath, (err, stats)=>{
       if(err || !stats.isFile()) return send404(res);

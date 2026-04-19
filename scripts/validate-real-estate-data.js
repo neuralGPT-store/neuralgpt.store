@@ -215,7 +215,7 @@ function validateSiteSettings(siteSettings, taxonomy) {
   const sensacional = pricing.sensacional_24h || {};
 
   ensure(visibilidad.label === 'Más visibilidad', 'featured_pricing.mas_visibilidad.label debe ser "Más visibilidad"');
-  ensure(visibilidad.amount === 29.95, 'featured_pricing.mas_visibilidad.amount debe ser 29.95');
+  ensure(visibilidad.amount === 19.95, 'featured_pricing.mas_visibilidad.amount debe ser 19.95');
   ensure(visibilidad.currency === 'EUR', 'featured_pricing.mas_visibilidad.currency debe ser "EUR"');
 
   ensure(sensacional.label === 'Sensacional 24h', 'featured_pricing.sensacional_24h.label debe ser "Sensacional 24h"');

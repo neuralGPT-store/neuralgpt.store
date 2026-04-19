@@ -293,19 +293,25 @@ async function processImagesIfProvided(root, listingId, imageFiles) {
 
 function computeDuplicateReviewDecision(listing, pool) {
   const duplicate = riskEngine.computeDuplicateSignals(listing, pool, {});
-  const candidates = Array.isArray(duplicate.duplicate_candidates) ? duplicate.duplicate_candidates : [];
-  const topMatch = duplicate.top_match || null;
-  const strongSuspicion = duplicate.abuse_blocked === true;
-  const moderateSuspicion = !strongSuspicion && candidates.length > 0;
+  // computeDuplicateSignals devuelve: { score, strong_match_count, peers, flags, top_peer }
+  const score = Number(duplicate.score || 0);
+  const strongMatchCount = Number(duplicate.strong_match_count || 0);
+  const peers = Array.isArray(duplicate.peers) ? duplicate.peers : [];
+  const flags = Array.isArray(duplicate.flags) ? duplicate.flags : [];
+  const topPeer = duplicate.top_peer || null;
+  // fuerte: ≥2 coincidencias fuertes (hard_block) O score ≥55 (quarantine threshold)
+  const strongSuspicion = strongMatchCount >= 2 || score >= 55;
+  // moderada: no fuerte pero hay peers similares O score ≥35 (pending_review threshold)
+  const moderateSuspicion = !strongSuspicion && (peers.length > 0 || score >= 35);
 
   return {
-    duplicate_score: Number(duplicate.duplicate_score || duplicate.score || 0),
-    duplicate_flags: Array.isArray(duplicate.duplicate_flags) ? duplicate.duplicate_flags : [],
-    duplicate_candidates: candidates,
-    top_match: topMatch,
-    duplicate_reason_evidence: duplicate.reason_evidence || null,
+    duplicate_score: score,
+    duplicate_flags: flags,
+    duplicate_candidates: peers,
+    top_match: topPeer,
+    duplicate_reason_evidence: null,
     duplicate_abuse_blocked: strongSuspicion,
-    duplicate_abuse_block_reason: duplicate.abuse_block_reason || null,
+    duplicate_abuse_block_reason: strongSuspicion ? (strongMatchCount >= 2 ? 'duplicate_strong_count_exceeded' : 'duplicate_score_quarantine') : null,
     review_required: strongSuspicion || moderateSuspicion,
     review_severity: strongSuspicion ? 'strong' : (moderateSuspicion ? 'moderate' : 'none')
   };
