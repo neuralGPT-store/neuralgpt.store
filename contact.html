@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
   <title>Contacto — neuralgpt.store</title>
-  <meta name="description" content="Contacta con el equipo de neuralgpt.store. Soporte, ventas, partnerships y reportar vulnerabilidades." />
+  <meta name="description" content="Contacta con el equipo de neuralgpt.store. Publicación de activos, desbloqueo de contacto tras pago, partnerships y seguridad." />
+  <link rel="canonical" href="https://neuralgpt.store/contact.html" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Frame-Options" content="DENY">
@@ -43,20 +44,17 @@
     <div class="grid-2" style="gap:40px;align-items:start;max-width:1000px">
       <!-- Formulario -->
       <div>
-        <h2 style="font-family:var(--font-title);font-size:0.9rem;letter-spacing:1px;color:var(--accent);margin-bottom:20px">PUBLICAR / EDITAR ACTIVO</h2>
+        <h2 style="font-family:var(--font-title);font-size:0.9rem;letter-spacing:1px;color:var(--accent);margin-bottom:20px">PUBLICAR ACTIVO</h2>
         <form id="contact-form" novalidate enctype="multipart/form-data">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="listing-mode">MODO</label>
-              <select id="listing-mode" name="mode" class="form-control">
-                <option value="create">Alta</option>
-                <option value="edit">Edición</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="listing-edit-key">EDIT KEY (solo edición)</label>
-              <input type="text" id="listing-edit-key" name="edit_key" class="form-control" placeholder="Clave de edición" maxlength="128" />
-            </div>
+          <input type="hidden" id="listing-mode" name="mode" value="create" />
+          <input type="hidden" id="listing-edit-key" name="edit_key" value="" />
+          <input type="hidden" id="listing-id" name="listing_id" value="" />
+          <input type="hidden" id="listing-slug" name="slug" value="" />
+          <input type="hidden" id="listing-lat" name="lat" value="40.4168" />
+          <input type="hidden" id="listing-lng" name="lng" value="-3.7038" />
+          <div style="margin-bottom:16px;padding:12px 14px;background:rgba(0,234,255,0.05);border:1.5px solid rgba(0,234,255,0.18);border-radius:10px">
+            <div style="font-family:var(--font-title);font-size:0.64rem;letter-spacing:1px;color:var(--accent);margin-bottom:6px">PUBLICACIÓN ESTÁNDAR</div>
+            <p style="margin:0;color:var(--muted);font-size:0.8rem;line-height:1.6">Para editar un anuncio ya existente usa <a href="/edit.html" style="color:var(--accent)">/edit.html</a> con tu `listing_id` y clave de edición.</p>
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -83,16 +81,6 @@
           <div class="form-group">
             <label for="listing-description">DESCRIPCIÓN</label>
             <textarea id="listing-description" name="description" class="form-control" rows="5" placeholder="Describe el activo…" required maxlength="5000"></textarea>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="listing-id">ID</label>
-              <input type="text" id="listing-id" name="listing_id" class="form-control" placeholder="re-sale-madrid-001" required maxlength="80" />
-            </div>
-            <div class="form-group">
-              <label for="listing-slug">SLUG</label>
-              <input type="text" id="listing-slug" name="slug" class="form-control" placeholder="piso-premium-madrid" required maxlength="120" />
-            </div>
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -159,16 +147,6 @@
             <label for="listing-images">FOTOS (máximo 6)</label>
             <input type="file" id="listing-images" name="images" class="form-control" accept=".jpg,.jpeg,.png,.webp,.avif" multiple />
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="listing-lat">LAT</label>
-              <input type="number" id="listing-lat" name="lat" class="form-control" step="0.000001" value="40.4168" />
-            </div>
-            <div class="form-group">
-              <label for="listing-lng">LNG</label>
-              <input type="number" id="listing-lng" name="lng" class="form-control" step="0.000001" value="-3.7038" />
-            </div>
-          </div>
           <div style="margin-top:4px;margin-bottom:16px">
             <label style="display:flex;gap:10px;align-items:flex-start;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:var(--font-body)">
               <input type="checkbox" id="contact-privacy" required style="width:auto;margin-top:2px" />
@@ -178,7 +156,7 @@
           <!-- honeypot anti-bot: oculto para usuarios reales, visible para bots -->
           <input type="text" name="hp_check" id="hp-check" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;width:0;height:0" />
           <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
-            Publicar / Editar activo →
+            Publicar activo →
           </button>
           <div id="contact-msg" style="margin-top:12px;font-size:0.82rem;color:var(--accent4)" role="status" aria-live="polite"></div>
         </form>
@@ -193,7 +171,7 @@
           <div>
             <div style="font-family:var(--font-title);font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:4px">ATENCIÓN AL USUARIO</div>
             <a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--text);font-size:0.88rem">neuralgpt.store@protonmail.com</a>
-            <p style="color:var(--muted);font-size:0.78rem;margin-top:4px">Soporte técnico, dudas sobre compras y productos. Respuesta en &lt;24h laborables.</p>
+            <p style="color:var(--muted);font-size:0.78rem;margin-top:4px">Soporte del portal, publicación de activos y desbloqueo de contacto tras pago. Respuesta en &lt;24h laborables.</p>
           </div>
         </div>
 

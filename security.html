@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>Seguridad — neuralgpt.store</title>
+  <meta name="description" content="Política de seguridad y canal de reporte de vulnerabilidades de neuralgpt.store." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://neuralgpt.store/security.html" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/theme-override.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/venta.html">Venta</a></li>
+        <li><a href="/alquiler.html">Alquiler</a></li>
+        <li><a href="/contact.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="/real-estate-index.html" class="btn">Ver inmuebles</a>
+      <a href="/contact.html" class="btn btn-primary">Publicar</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="rgb-divider"></div>
+
+  <main id="main-content" class="wrap" style="padding-top:40px;padding-bottom:80px;max-width:920px">
+    <section class="card" style="padding:28px">
+      <h1 class="section-title" style="text-align:left">Seguridad</h1>
+      <p style="color:var(--muted);line-height:1.8;margin-top:12px">Este portal aplica endurecimiento básico de cabeceras, control de indexación de rutas sensibles y separación estricta entre dataset público y dataset operativo privado.</p>
+      <p style="color:var(--muted);line-height:1.8">Si detectas una vulnerabilidad, escribe a <a href="mailto:security@neuralgpt.store" style="color:var(--accent)">security@neuralgpt.store</a> con asunto `[SECURITY]` y una descripción reproducible.</p>
+      <p style="color:var(--muted);line-height:1.8">No publiques detalles técnicos de forma pública antes de que el equipo confirme mitigación.</p>
+    </section>
+  </main>
+
+  <div class="rgb-divider"></div>
+  <footer class="site-footer"><div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="/legal.html" style="color:var(--accent)">Aviso legal</a></span></div></footer>
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+  </script>
+</body>
+</html>

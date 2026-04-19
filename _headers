@@ -1,3 +1,37 @@
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/public-data/*
+  Cache-Control: public, max-age=300
+
+/data/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/confirm.html
+  X-Robots-Tag: noindex, nofollow
+
+/edit.html
+  X-Robots-Tag: noindex, nofollow
+
+/inmobiliario/
+  X-Robots-Tag: noindex, follow
+
+/venta/
+  X-Robots-Tag: noindex, follow
+
+/alquiler/
+  X-Robots-Tag: noindex, follow
+
+/pais/es/
+  X-Robots-Tag: noindex, follow
+
+/pais/pt/
+  X-Robots-Tag: noindex, follow
+
+/ciudad/madrid/
+  X-Robots-Tag: noindex, follow
+
+/ciudad/lisboa/
+  X-Robots-Tag: noindex, follow

@@ -1,7 +1,15 @@
 User-agent: *
 Allow: /
-Disallow: /ops/
 Disallow: /data/
+Disallow: /ops/
+Disallow: /scripts/
+Disallow: /reports/
+Disallow: /deploy/
+Disallow: /test/
+Disallow: /core/
+Disallow: /autosys/
+Disallow: /build/
+Disallow: /_lab_clean_routes/
 Disallow: /confirm.html
 Disallow: /edit.html
 Sitemap: https://neuralgpt.store/sitemap.xml

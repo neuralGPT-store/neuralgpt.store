@@ -1,12 +1,12 @@
 /**
  * Chany — Agente IA flotante para neuralgpt.store
- * Sin API externa. Lee /data/agent-kb.json y usa keyword matching.
+ * Sin API externa. Lee /public-data/agent-kb.public.json y usa keyword matching.
  * Detecta idioma desde window.NeuralI18n (i18n-global.js).
  */
 (function () {
   'use strict';
 
-  const KB_URL = '/data/agent-kb.json';
+  const KB_URL = '/public-data/agent-kb.public.json';
   let kb = null;
 
   // ── Detección de idioma ─────────────────────────────────────────────

@@ -2,9 +2,9 @@
   'use strict';
 
   var DATA_PATHS = {
-    listings: '/data/listings.json',
-    taxonomy: '/data/taxonomy.json',
-    siteSettings: '/data/site-settings.json'
+    listings: '/public-data/listings.public.json',
+    taxonomy: '/public-data/taxonomy.public.json',
+    siteSettings: '/public-data/site-settings.public.json'
   };
 
   var cache = {

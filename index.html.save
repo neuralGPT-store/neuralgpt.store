@@ -29,10 +29,6 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebSite","name":"neuralgpt.store","url":"https://neuralgpt.store","potentialAction":{"@type":"SearchAction","target":"https://neuralgpt.store/real-estate-index.html?search={search_term_string}","query-input":"required name=search_term_string"}}
   </script>
-<script>
-window.__AUTO_LANG__ = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
-document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : 'en';
-</script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -47,8 +43,13 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
         <li><a href="/alquiler.html">Alquiler</a></li>
         <li><a href="/contact.html">Contacto</a></li>
       </ul>
-    </nav>
-    <div class="header-actions">
+    </nav><div class="hero-bg" aria-hidden="true"
+     style="
+     background-image: url('/assets/img/hero/file_00000000f154720abe99046f2e35594d.png');
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;">
+</div>    <div class="header-actions">
       <a href="/real-estate-index.html" class="btn">Ver inmuebles</a>
       <a href="/contact.html" class="btn btn-primary">Publicar anuncio</a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false" aria-controls="main-nav">
@@ -59,10 +60,10 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
   <div class="rgb-divider"></div>
 
   <!-- ── HERO ── -->
-  <section class="hero" role="main" id="main-content" style="position:relative;overflow:hidden;background-image:url('/assets/img/real-estate/hero-sunset-villa.webp');background-size:cover;background-position:center 30%;background-repeat:no-repeat;">
-    <div class="hero-bg" aria-hidden="true" style="display:none"></div>
-    <div class="particles-wrap" id="particles" aria-hidden="true" style="position:absolute;inset:0;z-index:1;pointer-events:none;" aria-hidden="true" style="display:none"></div>
-    <div class="hero-content wrap" style="position:relative;z-index:2;">
+  <section class="hero" role="main" id="main-content">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="particles-wrap" id="particles" aria-hidden="true"></div>
+    <div class="hero-content wrap">
       <div class="hero-badge">
         <span class="dot"></span>PORTAL INMOBILIARIO VERIFICADO
       </div>
@@ -75,34 +76,12 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
     </div>
   </section>
 
-  <!-- ── STATS BAR ── -->
-  <section class="stats-bar">
-    <div class="wrap stats-grid">
-      <div class="stat-item">
-        <span class="stat-num" data-target="2847">0</span>
-        <span class="stat-label">Anuncios activos</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num" data-target="142">0</span>
-        <span class="stat-label">Ciudades</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num" data-target="12">0</span>
-        <span class="stat-label">Países</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num" data-target="100">0</span>
-        <span class="stat-label">% Verificados</span>
-      </div>
-    </div>
-  </section>
-
   <!-- ── ACCESO RÁPIDO ── -->
   <section class="section" id="acceso-rapido" style="padding-top:48px">
     <div class="wrap">
       <h2 class="section-title">Explora por tipo de operación</h2>
       <p class="section-sub">Encuentra el inmueble que buscas según tus necesidades.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:32px">
+     v style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:32px">
 
         <!-- Venta -->
         <a href="/venta.html" class="card" style="text-decoration:none;display:flex;flex-direction:column;gap:14px;border-color:rgba(0,234,255,0.3);transition:border-color .2s" aria-label="Ver inmuebles en venta">
@@ -382,50 +361,12 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
     autoRotate = setInterval(next, 7000);
   })();
 
-  // Stats bar counter-up animation
-  (function(){
-    function animateCounter(el) {
-      const target = parseInt(el.dataset.target);
-      const duration = 2000;
-      const step = target / (duration / 16);
-      let current = 0;
-      const timer = setInterval(() => {
-        current += step;
-        if (current >= target) { current = target; clearInterval(timer); }
-        el.textContent = Math.floor(current).toLocaleString('es-ES');
-      }, 16);
-    }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.querySelectorAll('.stat-num').forEach(animateCounter);
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    const bar = document.querySelector('.stats-bar');
-    if (bar) observer.observe(bar);
-  })();
-
-  // Animaciones entrada scroll
-  (function(){
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.animate-on-scroll').forEach(el => obs.observe(el));
-  })();
-
   // Hero background principal (portada única premium)
   (function(){
     var hero = document.querySelector('.hero');
     if(!hero) return;
-    // hero background transition disabled
-    // hero.style.backgroundImage = 'url(/assets/img/real-estate/hero-sunset-villa.webp)';
+    hero.style.transition = 'background-image 1.2s ease-in-out';
+    hero.style.backgroundImage = 'url(/assets/img/hero/gaudi-casa-principal.webp)';
   })();
   </script>
   <script src="/js/agent-chat.js" defer></script>
