@@ -154,7 +154,12 @@
     var siteName = siteSettings && siteSettings.site_name ? siteSettings.site_name : 'neuralgpt.store';
     var defaultLocale = siteSettings && siteSettings.default_locale ? siteSettings.default_locale : 'es';
     var title = listing.title + ' | ' + siteName;
-    var description = listing.summary || listing.description || '';
+    var ciudad = String(listing.city || '');
+    var precio = typeof listing.price === 'number' ? listing.price.toLocaleString('es-ES') + ' €' : '';
+    var description = listing.title
+      + (ciudad ? ' en ' + ciudad : '')
+      + (precio ? ' — ' + precio : '')
+      + ' | ' + siteName;
     var image = firstImage(listing) || (siteSettings && siteSettings.seo_defaults ? siteSettings.seo_defaults.og_image : null);
 
     return {

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
   <title id="page-title">Activos en alquiler — neuralgpt.store</title>
-  <meta name="description" id="page-desc" content="Colección inmobiliaria pública de alquiler estable y habitaciones de larga estancia." />
+  <meta name="description" id="page-desc" content="Alquiler de larga duración en Europa — pisos, habitaciones y locales en neuralgpt.store." />
   <meta property="og:title" content="Activos en alquiler — neuralgpt.store" id="og-title" />
   <meta property="og:description" content="Colección inmobiliaria pública de alquiler estable y habitaciones de larga estancia." id="og-desc" />
   <meta property="og:site_name" content="neuralgpt.store" />
@@ -23,6 +23,7 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
+  <link rel="canonical" id="canonical-tag" href="">
   <script type="application/ld+json" id="collection-schema">{}</script>
 </head>
 <body>
@@ -93,8 +94,7 @@
     var ogImg = location.origin + ((settings.seo_defaults && settings.seo_defaults.og_image) || '/assets/img/og-real-estate-default.png');
     document.getElementById('og-image').setAttribute('content', ogImg);
     document.getElementById('twitter-image').setAttribute('content', ogImg);
-    var canon = document.querySelector('link[rel="canonical"]');
-    if(!canon){ canon = document.createElement('link'); canon.rel='canonical'; document.head.appendChild(canon); }
+    var canon = document.getElementById('canonical-tag') || document.querySelector('link[rel="canonical"]');
     canon.href = location.origin + '/alquiler.html';
     document.getElementById('collection-title').textContent = title;
     document.getElementById('collection-intro').textContent = description;

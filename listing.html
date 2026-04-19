@@ -25,6 +25,7 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
+  <link rel="canonical" id="canonical-tag" href="">
   <script type="application/ld+json" id="listing-schema">{}</script>
 </head>
 <body>
@@ -215,12 +216,7 @@
     document.getElementById('twitter-desc').setAttribute('content', seo.ogDescription);
     document.getElementById('twitter-image').setAttribute('content', ogImage);
 
-    var canon = document.querySelector('link[rel="canonical"]');
-    if(!canon){
-      canon = document.createElement('link');
-      canon.rel = 'canonical';
-      document.head.appendChild(canon);
-    }
+    var canon = document.getElementById('canonical-tag') || document.querySelector('link[rel="canonical"]');
     canon.href = canonicalUrl;
 
     document.getElementById('breadcrumb-name').textContent = detail.title;
@@ -272,29 +268,29 @@
 
     document.getElementById('listing-schema').textContent = JSON.stringify({
       "@context":"https://schema.org",
-      "@type":"Offer",
+      "@type":"RealEstateListing",
       "name": detail.title,
       "description": seo.description,
       "url": canonicalUrl,
-      "priceCurrency": detail.currency,
-      "price": detail.price,
+      "datePosted": String(listing.published_at || '').slice(0,10) || undefined,
       "image": detail.images || [],
-      "availability": "https://schema.org/InStock",
-      "itemOffered": {
-        "@type":"Place",
-        "name": detail.title,
-        "address": {
-          "@type":"PostalAddress",
-          "addressCountry": detail.country,
-          "addressRegion": detail.region,
-          "addressLocality": detail.city
-        },
-        "floorSize": {
-          "@type":"QuantitativeValue",
-          "value": detail.surfaceM2,
-          "unitCode": "MTK"
-        },
-        "numberOfRooms": detail.rooms
+      "offers": {
+        "@type":"Offer",
+        "price": detail.price,
+        "priceCurrency": detail.currency || "EUR",
+        "availability": "https://schema.org/InStock"
+      },
+      "floorSize": {
+        "@type":"QuantitativeValue",
+        "value": detail.surfaceM2,
+        "unitCode": "MTK"
+      },
+      "numberOfRooms": detail.rooms,
+      "address": {
+        "@type":"PostalAddress",
+        "addressCountry": detail.country,
+        "addressRegion": detail.region,
+        "addressLocality": detail.city
       }
     });
   }
