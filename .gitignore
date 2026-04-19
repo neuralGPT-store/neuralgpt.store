@@ -1,6 +1,9 @@
 # ENV files
 .env
 *.env
+.env.*
+.env.save*
+x
 
 # Credentials / private keys
 *.json
