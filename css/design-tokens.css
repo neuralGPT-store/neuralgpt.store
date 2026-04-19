@@ -75,3 +75,29 @@
   --transition: 0.22s cubic-bezier(.4,0,.2,1);
   --rgb-angle:  0deg;
 }
+
+/* ============================================================
+   RGB ACTIVO — Animación rotatoria aplicable vía ::before
+   ============================================================ */
+@keyframes rgb-rotate {
+  from { --rgb-angle: 0deg; }
+  to   { --rgb-angle: 360deg; }
+}
+
+/* Clase auxiliar para aplicar RGB activo a cualquier elemento */
+.rgb-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.rgb-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--rgb-angle), #00eaff, #7f00ff, #ff0080, #00ff99, #00eaff);
+  animation: rgb-rotate 8s linear infinite;
+  opacity: 0.35;
+  z-index: -1;
+  pointer-events: none;
+}

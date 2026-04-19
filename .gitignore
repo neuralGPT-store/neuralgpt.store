@@ -7,6 +7,16 @@
 # Excepción: archivos de datos del sitio (no contienen credenciales)
 !data/*.json
 
+# Datos fiscales y financieros privados
+data/fiscal/
+
+# Chany Ops logs (operaciones internas, no commitear)
+data/chany/*.jsonl
+data/chany/*.log
+
+# Herramientas locales
+.codex
+
 # Node
 node_modules/
 npm-debug.log
