@@ -34,14 +34,14 @@
     en: {
       placeholder: 'Type your question…',
       sub: 'neuralgpt.store assistant',
-      greeting_prefix: '👋 Hi! I\'m Chany, neuralgpt.store\'s real estate assistant. Our platform is in Spanish, but I\'ll help you in English!\n\n🏠 Browse properties for sale or rent on our portal.\n\nHow can I help you?',
+      greeting_prefix: '🏡 Hi! I\'m Chany, neuralgpt.store\'s real estate assistant. Our platform is in Spanish, but I\'ll help you in English!\n\n🏠 Browse properties for sale or rent on our portal.\n\nHow can I help you?',
       fallback: 'I couldn\'t find an exact answer. Email us at neuralgpt.store@protonmail.com',
       suggestions: ['Properties for sale', 'Properties for rent', 'Post a listing', 'Contact'],
     },
     fr: {
       placeholder: 'Tapez votre question…',
       sub: 'Assistant neuralgpt.store',
-      greeting_prefix: '👋 Bonjour! Je suis Chany, l\'assistant immobilier de neuralgpt.store. Notre plateforme est en espagnol, mais je vais vous aider en français!\n\n🏠 Parcourez les biens à vendre ou à louer sur notre portail.\n\nComment puis-je vous aider?',
+      greeting_prefix: '🏡 Bonjour! Je suis Chany, l\'assistant immobilier de neuralgpt.store. Notre plateforme est en espagnol, mais je vais vous aider en français!\n\n🏠 Parcourez les biens à vendre ou à louer sur notre portail.\n\nComment puis-je vous aider?',
       fallback: 'Pas de réponse exacte. Écrivez-nous à neuralgpt.store@protonmail.com',
       suggestions: ['Biens à vendre', 'Biens à louer', 'Publier une annonce', 'Contact'],
     },
@@ -65,41 +65,33 @@
     if (document.getElementById('neural-chat')) return;
 
     /* Fantasmita SVG reutilizable */
-    const ghostSVG = (size) => `<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">
+    const ghostSVG = (size) => `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">
   <!-- Cuerpo del fantasma -->
   <defs>
-    <radialGradient id="ghost-body" cx="50%" cy="40%" r="55%">
-      <stop offset="0%" stop-color="#e8f4ff"/>
-      <stop offset="100%" stop-color="#b0d0f0"/>
-    </radialGradient>
-    <radialGradient id="ghost-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="rgba(0,234,255,0.25)"/>
+    <radialGradient id="house-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(0,234,255,0.2)"/>
       <stop offset="100%" stop-color="rgba(127,0,255,0.05)"/>
     </radialGradient>
   </defs>
   <!-- Aura RGB -->
-  <ellipse cx="28" cy="30" rx="24" ry="22" fill="url(#ghost-glow)"/>
-  <!-- Cuerpo -->
-  <path d="M6 34 C6 18 12 6 28 6 C44 6 50 18 50 34 L50 50 L44 45 L38 50 L32 45 L26 50 L20 45 L14 50 L8 45 Z" fill="url(#ghost-body)" opacity="0.95"/>
-  <!-- Ojos (grandes, expresivos) -->
-  <g class="chany-eye">
-    <ellipse cx="20" cy="28" rx="5.5" ry="6" fill="#0a0020"/>
-    <ellipse cx="21.5" cy="26.5" rx="1.8" ry="1.8" fill="white" opacity="0.9"/>
-    <ellipse cx="20" cy="28" rx="2.5" ry="2.8" fill="#7f00ff"/>
-    <ellipse cx="19" cy="27" rx="1" ry="1" fill="white" opacity="0.7"/>
-  </g>
-  <g class="chany-eye chany-eye-r">
-    <ellipse cx="36" cy="28" rx="5.5" ry="6" fill="#0a0020"/>
-    <ellipse cx="37.5" cy="26.5" rx="1.8" ry="1.8" fill="white" opacity="0.9"/>
-    <ellipse cx="36" cy="28" rx="2.5" ry="2.8" fill="#00eaff"/>
-    <ellipse cx="35" cy="27" rx="1" ry="1" fill="white" opacity="0.7"/>
-  </g>
-  <!-- Lápiz dorado -->
-  <g class="chany-pencil" transform="translate(34,14) rotate(35,8,8)">
-    <rect x="4" y="0" width="6" height="20" rx="1" fill="#ffd700"/>
-    <polygon points="4,20 10,20 7,26" fill="#ffaa00"/>
-    <polygon points="5,24 9,24 7,27" fill="#333"/>
-    <rect x="4" y="0" width="6" height="4" rx="1" fill="#ff6b9d"/>
+  <circle cx="50" cy="50" r="42" fill="url(#house-glow)"/>
+  <!-- Tejado triangular -->
+  <polygon points="50,20 15,50 85,50" fill="currentColor" opacity="0.9"/>
+  <polygon points="50,20 15,50 85,50" fill="#00eaff" opacity="0.3"/>
+  <!-- Paredes casa -->
+  <rect x="20" y="48" width="60" height="40" fill="currentColor" opacity="0.8"/>
+  <rect x="20" y="48" width="60" height="40" fill="#e8f4ff" opacity="0.5"/>
+  <!-- Ventana cuadrada -->
+  <rect x="30" y="56" width="16" height="16" rx="2" fill="#00eaff" opacity="0.7"/>
+  <line x1="38" y1="56" x2="38" y2="72" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+  <line x1="30" y1="64" x2="46" y2="64" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+  <!-- Puerta rectangular -->
+  <rect x="54" y="60" width="16" height="28" rx="1" fill="#7f00ff" opacity="0.6"/>
+  <circle cx="65" cy="74" r="1.5" fill="#00eaff"/>
+  <!-- Estrella 4 puntas (calidad) -->
+  <g transform="translate(75,30) scale(1.2)">
+    <polygon points="0,-4 1,-1 4,0 1,1 0,4 -1,1 -4,0 -1,-1" fill="#00ff99" opacity="0.9"/>
+    <polygon points="0,-4 1,-1 4,0 1,1 0,4 -1,1 -4,0 -1,-1" fill="#fff" opacity="0.4"/>
   </g>
 </svg>`;
 
