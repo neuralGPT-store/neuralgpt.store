@@ -10,7 +10,11 @@
     "commercial_unit",
     "warehouse",
     "land",
-    "singular_asset"
+    "singular_asset",
+    "business_sale",
+    "business_transfer",
+    "franchise",
+    "factory"
   ],
   "countries": [
     {

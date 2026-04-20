@@ -13,6 +13,9 @@ x
 # Datos fiscales y financieros privados
 data/fiscal/
 
+# Suscriptores Stripe (datos privados de clientes)
+data/subscribers.json
+
 # Chany Ops logs (operaciones internas, no commitear)
 data/chany/*.jsonl
 data/chany/*.log

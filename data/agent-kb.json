@@ -42,8 +42,8 @@
     },
     {
       "id": "tipos_inmuebles",
-      "keywords": ["tipos", "qué se puede publicar", "qué tipos de inmuebles", "activos", "inmueble", "venta", "larga duración", "habitaciones", "locales", "naves", "suelo", "activos singulares", "what types"],
-      "response": "📋 Tipos de inmuebles permitidos:\n\n• Venta: pisos, casas, chalets, apartamentos\n• Alquiler larga duración: residencial y habitaciones\n• Locales comerciales y naves industriales\n• Suelo urbano y rústico\n• Activos singulares: palacios, castillos, edificios históricos\n\nNO se aceptan: software, cursos, crypto, escorts, contenido no inmobiliario."
+      "keywords": ["tipos", "qué se puede publicar", "qué tipos de inmuebles", "activos", "inmueble", "venta", "larga duración", "habitaciones", "locales", "naves", "suelo", "activos singulares", "negocios", "traspaso", "franquicia", "what types"],
+      "response": "📋 Tipos de inmuebles y negocios permitidos:\n\n• Venta: pisos, casas, chalets, apartamentos\n• Alquiler larga duración: residencial y habitaciones\n• Locales comerciales y naves industriales\n• Suelo urbano y rústico\n• Activos singulares: palacios, castillos, edificios históricos\n• Negocios: venta de negocio, traspaso, franquicia, fábrica\n\nNO se aceptan: software, cursos, crypto, escorts, contenido no inmobiliario."
     },
     {
       "id": "cobertura_paises",

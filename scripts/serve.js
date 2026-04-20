@@ -6,6 +6,12 @@ const crypto = require('crypto');
 const Stripe = require('stripe');
 const stripe = process.env.STRIPE_SECRET_KEY ? Stripe(process.env.STRIPE_SECRET_KEY) : null;
 
+// Price IDs reales de Stripe Live
+const PRICE_SENSACIONAL = "price_1TOPlHFVnpodYhTU9MoCCrEs";
+const PRICE_MAS_VISIBILIDAD = "price_1TOPkHFVnpodYhTUDY6ZVO0m";
+const PRICE_PLAN_PREMIUM = "price_1TOPjIFVnpodYhTUuIXQF1D9";
+const PRICE_PLAN_BASICO = "price_1TOPi0FVnpodYhTUdV5rkCsf";
+
 function sha256(str) {
   return crypto.createHash('sha256').update(String(str || '')).digest('hex');
 }
@@ -401,6 +407,68 @@ function triggerEmailNotification(eventPayload) {
 }
 
 function handleStripeWebhookEvent(event, res) {
+  // Manejar eventos de suscripciones
+  if (event.type === 'customer.subscription.created') {
+    const subscription = event.data.object;
+    const subscribersPath = path.join(root, 'data', 'subscribers.json');
+    try {
+      let subscribers = [];
+      if (fs.existsSync(subscribersPath)) {
+        subscribers = JSON.parse(fs.readFileSync(subscribersPath, 'utf8'));
+      }
+      subscribers.push({
+        customer_id: subscription.customer,
+        subscription_id: subscription.id,
+        status: subscription.status,
+        plan_id: subscription.items.data[0]?.price?.id || null,
+        created_at: new Date().toISOString()
+      });
+      fs.writeFileSync(subscribersPath, JSON.stringify(subscribers, null, 2), 'utf8');
+      console.log('Subscription created:', subscription.id);
+      return send(res, 200, { ok: true, received: true, processed: 'subscription_created' });
+    } catch (e) {
+      console.error('Subscription creation error:', e.message);
+      return send(res, 500, { ok: false, error: 'subscription_processing_failed' });
+    }
+  }
+
+  if (event.type === 'customer.subscription.deleted') {
+    const subscription = event.data.object;
+    const subscribersPath = path.join(root, 'data', 'subscribers.json');
+    try {
+      if (fs.existsSync(subscribersPath)) {
+        let subscribers = JSON.parse(fs.readFileSync(subscribersPath, 'utf8'));
+        subscribers = subscribers.filter(s => s.subscription_id !== subscription.id);
+        fs.writeFileSync(subscribersPath, JSON.stringify(subscribers, null, 2), 'utf8');
+      }
+      console.log('Subscription deleted:', subscription.id);
+      return send(res, 200, { ok: true, received: true, processed: 'subscription_deleted' });
+    } catch (e) {
+      console.error('Subscription deletion error:', e.message);
+      return send(res, 500, { ok: false, error: 'subscription_deletion_failed' });
+    }
+  }
+
+  if (event.type === 'invoice.payment_succeeded') {
+    const invoice = event.data.object;
+    const income = {
+      fecha: new Date().toISOString(),
+      concepto: 'subscription_payment',
+      importe: invoice.amount_paid / 100,
+      iva: 0.21,
+      neto: parseFloat(((invoice.amount_paid / 100) / 1.21).toFixed(2)),
+      stripe_invoice: invoice.id,
+      customer_id: invoice.customer
+    };
+    const mes = new Date().toISOString().slice(0,7);
+    const fiscalDir = path.join(root, 'data', 'fiscal', 'ingresos', mes);
+    fs.mkdirSync(fiscalDir, { recursive: true });
+    const fiscalFile = path.join(fiscalDir, `ingresos-${mes}.jsonl`);
+    fs.appendFileSync(fiscalFile, JSON.stringify(income) + '\n', 'utf8');
+    console.log('Invoice payment processed:', invoice.id, income.importe, 'EUR');
+    return send(res, 200, { ok: true, received: true, processed: 'invoice_payment' });
+  }
+
   if (event.type !== 'checkout.session.completed') {
     return send(res, 200, { ok: true, received: true, skipped: event.type });
   }
@@ -1201,11 +1269,7 @@ const server = http.createServer((req,res)=>{
           const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [{
-              price_data: {
-                currency: 'eur',
-                unit_amount: 1995,
-                product_data: { name: 'Más visibilidad — 30 días destacado' }
-              },
+              price: PRICE_MAS_VISIBILIDAD,
               quantity: 1
             }],
             mode: 'payment',
@@ -1227,17 +1291,55 @@ const server = http.createServer((req,res)=>{
           const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [{
-              price_data: {
-                currency: 'eur',
-                unit_amount: 995,
-                product_data: { name: 'Sensacional 24h — Badge premium' }
-              },
+              price: PRICE_SENSACIONAL,
               quantity: 1
             }],
             mode: 'payment',
             metadata: { listing_id: body.listing_id || '', type: 'sensacional_24h' },
             success_url: 'https://neuralgpt.store/confirm.html?upgrade=sensacional',
             cancel_url: `https://neuralgpt.store/listing.html?slug=${body.listing_id || ''}`
+          });
+          return send(res, 200, { ok: true, url: session.url });
+        } catch (e) {
+          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+        }
+      });
+    }
+    if (urlPath === '/api/stripe/checkout-plan-basico' && req.method === 'POST') {
+      if (!stripe) return send(res, 503, { ok: false, error: 'stripe_not_configured' });
+      return parseJsonBody(req, async (err, body) => {
+        if (err) return send(res, 400, { ok: false, error: 'invalid_json' });
+        try {
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+              price: PRICE_PLAN_BASICO,
+              quantity: 1
+            }],
+            mode: 'subscription',
+            success_url: 'https://neuralgpt.store/confirm.html?plan=basico',
+            cancel_url: 'https://neuralgpt.store/pricing.html'
+          });
+          return send(res, 200, { ok: true, url: session.url });
+        } catch (e) {
+          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+        }
+      });
+    }
+    if (urlPath === '/api/stripe/checkout-plan-premium' && req.method === 'POST') {
+      if (!stripe) return send(res, 503, { ok: false, error: 'stripe_not_configured' });
+      return parseJsonBody(req, async (err, body) => {
+        if (err) return send(res, 400, { ok: false, error: 'invalid_json' });
+        try {
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+              price: PRICE_PLAN_PREMIUM,
+              quantity: 1
+            }],
+            mode: 'subscription',
+            success_url: 'https://neuralgpt.store/confirm.html?plan=premium',
+            cancel_url: 'https://neuralgpt.store/pricing.html'
           });
           return send(res, 200, { ok: true, url: session.url });
         } catch (e) {
