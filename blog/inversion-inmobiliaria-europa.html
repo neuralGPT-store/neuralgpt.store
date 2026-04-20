@@ -31,15 +31,20 @@
   </script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap header-content">
-      <a class="brand" href="/">neural<span>GPT</span>.store</a>
-      <nav class="nav">
-        <a href="/venta.html">Venta</a>
-        <a href="/alquiler.html">Alquiler</a>
-        <a href="/blog/">Blog</a>
-      </nav>
-      <a href="/contact.html" class="btn btn-primary">Publicar activo</a>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/venta.html">Venta</a></li>
+        <li><a href="/alquiler.html">Alquiler</a></li>
+        <li><a href="/blog/" aria-current="page">Blog</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="/real-estate-index.html" class="btn">Ver inmuebles</a>
+      <a href="/contact.html" class="btn btn-primary">Publicar</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false" aria-controls="main-nav"><span></span><span></span><span></span></button>
     </div>
   </header>
   <div class="rgb-divider"></div>
@@ -95,5 +100,9 @@
     </div>
     <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span></div>
   </footer>
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+  </script>
 </body>
 </html>

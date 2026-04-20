@@ -17,6 +17,7 @@
   --bg:            #00040D;
   --bg2:           #00060f;
   --card-bg:       rgba(0, 10, 25, 0.75);
+  --surface:       rgba(0, 10, 25, 0.75);
 
   /* --- Bordes --- */
   --border:        rgba(0, 234, 255, 0.18);
@@ -25,6 +26,7 @@
 
   /* --- Colores principales --- */
   --accent:        #00eaff;
+  --accent-cyan:   #00eaff;
   --accent2:       #7f00ff;
   --accent3:       #ff0080;
   --accent4:       #00ff99;
