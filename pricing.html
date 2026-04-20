@@ -84,8 +84,8 @@
         <div style="font-size:2.2rem;margin-bottom:12px">💼</div>
         <h2 style="font-family:var(--font-title);font-size:1.3rem;margin-bottom:8px;color:var(--text)">Plan Básico</h2>
         <div style="margin-bottom:20px">
-          <div style="font-size:2.4rem;font-weight:700;color:var(--accent);font-family:var(--font-title)">19,95€<span style="font-size:0.85rem;font-weight:400;color:var(--muted)">/mes</span></div>
-          <div style="font-size:0.8rem;color:var(--muted)">facturación mensual</div>
+          <div style="font-size:2.0rem;font-weight:700;color:var(--muted);font-family:var(--font-title)">No disponible</div>
+          <div style="font-size:0.8rem;color:var(--muted)">temporalmente desactivado</div>
         </div>
         <ul style="list-style:none;padding:0;margin:0 0 24px 0;flex:1;display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:0.88rem">
           <li style="display:flex;gap:8px;align-items:flex-start">
@@ -105,7 +105,7 @@
             <span>Cancela cuando quieras</span>
           </li>
         </ul>
-        <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center" onclick="checkoutPlanBasico()">Suscribirse</button>
+        <button class="btn btn-lg" style="width:100%;justify-content:center;opacity:0.75;cursor:not-allowed" disabled>No disponible temporalmente</button>
       </div>
 
       <!-- MÁS VISIBILIDAD -->
@@ -116,7 +116,7 @@
         <div style="font-size:2.2rem;margin-bottom:12px">🚀</div>
         <h2 style="font-family:var(--font-title);font-size:1.3rem;margin-bottom:8px;color:var(--text)">Más Visibilidad</h2>
         <div style="margin-bottom:20px">
-          <div style="font-size:2.4rem;font-weight:700;color:var(--accent2);font-family:var(--font-title)">29,95€<span style="font-size:0.85rem;font-weight:400;color:var(--muted)">/único</span></div>
+          <div style="font-size:2.4rem;font-weight:700;color:var(--accent2);font-family:var(--font-title)">19,95€<span style="font-size:0.85rem;font-weight:400;color:var(--muted)">/único</span></div>
           <div style="font-size:0.8rem;color:var(--muted)">pago único, 30 días</div>
         </div>
         <ul style="list-style:none;padding:0;margin:0 0 24px 0;flex:1;display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:0.88rem">
@@ -149,8 +149,8 @@
         <div style="font-size:2.2rem;margin-bottom:12px">👑</div>
         <h2 style="font-family:var(--font-title);font-size:1.3rem;margin-bottom:8px;color:var(--text)">Plan Premium</h2>
         <div style="margin-bottom:20px">
-          <div style="font-size:2.4rem;font-weight:700;color:var(--accent3);font-family:var(--font-title)">49,95€<span style="font-size:0.85rem;font-weight:400;color:var(--muted)">/mes</span></div>
-          <div style="font-size:0.8rem;color:var(--muted)">facturación mensual</div>
+          <div style="font-size:2.0rem;font-weight:700;color:var(--muted);font-family:var(--font-title)">No disponible</div>
+          <div style="font-size:0.8rem;color:var(--muted)">temporalmente desactivado</div>
         </div>
         <ul style="list-style:none;padding:0;margin:0 0 24px 0;flex:1;display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:0.88rem">
           <li style="display:flex;gap:8px;align-items:flex-start">
@@ -170,7 +170,7 @@
             <span>Sin permanencia</span>
           </li>
         </ul>
-        <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,var(--accent3),var(--accent2));border:none" onclick="checkoutPlanPremium()">Suscribirse</button>
+        <button class="btn btn-lg" style="width:100%;justify-content:center;opacity:0.75;cursor:not-allowed;background:linear-gradient(135deg,var(--accent3),var(--accent2));border:none" disabled>No disponible temporalmente</button>
       </div>
 
       <!-- SENSACIONAL 24h -->
@@ -217,12 +217,12 @@
 
         <div class="card" style="padding:20px">
           <h3 style="font-family:var(--font-title);font-size:0.95rem;margin-bottom:8px;color:var(--accent)">¿Puedo cancelar mi suscripción en cualquier momento?</h3>
-          <p style="color:var(--muted);font-size:0.88rem;margin:0">Sí, tanto el Plan Básico como el Plan Premium son sin permanencia. Puedes cancelar en cualquier momento desde tu panel de usuario o contactando con soporte.</p>
+          <p style="color:var(--muted);font-size:0.88rem;margin:0">Los planes de suscripción mensual están temporalmente no disponibles en esta fase pública. El portal mantiene publicación gratuita inicial y pagos únicos por contacto y visibilidad.</p>
         </div>
 
         <div class="card" style="padding:20px">
           <h3 style="font-family:var(--font-title);font-size:0.95rem;margin-bottom:8px;color:var(--accent)">¿Cómo funciona el pago único de Más Visibilidad?</h3>
-          <p style="color:var(--muted);font-size:0.88rem;margin:0">Pagas una sola vez 29,95€ y tu anuncio aparece destacado durante 30 días consecutivos desde el momento del pago. No hay renovación automática.</p>
+          <p style="color:var(--muted);font-size:0.88rem;margin:0">Pagas una sola vez 19,95€ y tu anuncio aparece destacado durante 30 días consecutivos desde el momento del pago. No hay renovación automática.</p>
         </div>
 
         <div class="card" style="padding:20px">
@@ -265,7 +265,7 @@
       <div class="footer-col"><h4>INMOBILIARIO</h4><ul><li><a href="/venta.html">Venta</a></li><li><a href="/alquiler.html">Alquiler</a></li><li><a href="/real-estate-index.html">Índice inmobiliario</a></li></ul></div>
       <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a></span></div>
+    <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:hola@neuralgpt.store" style="color:var(--accent)">hola@neuralgpt.store</a></span></div>
   </footer>
 
   <script>

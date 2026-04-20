@@ -12,26 +12,6 @@
   ],
   "default_currency": "EUR",
   "public_contact_email": "hola@neuralgpt.store",
-  "legal_entity_name": "NeuralGPT Store Real Assets Division",
-  "development_banner_text": "Plataforma en desarrollo",
-  "feature_flags": {
-    "activation_query_param": "re_bridge",
-    "real_estate_marketplace": false,
-    "real_estate_product": false,
-    "real_estate_home": false
-  },
-  "featured_pricing": {
-    "mas_visibilidad": {
-      "label": "Más visibilidad",
-      "amount": 19.95,
-      "currency": "EUR"
-    },
-    "sensacional_24h": {
-      "label": "Sensacional 24h",
-      "amount": 9.95,
-      "currency": "EUR"
-    }
-  },
   "seo_defaults": {
     "title": "neuralgpt.store | Portal premium europeo de anuncios de activos inmobiliarios",
     "description": "Selección cuidada de activos inmobiliarios en Europa, Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia para compraventa, alquiler estable, locales, naves, suelo y activos singulares.",
@@ -57,17 +37,5 @@
     "european_cities": 12,
     "verified_assets": 18,
     "active_advertisers": 9
-  },
-  "ops_thresholds": {
-    "validity_days_sale_non_rent": 90,
-    "validity_days_rent": 60,
-    "reconfirmation_due_soon_days": 14,
-    "expiration_expiring_soon_days": 7,
-    "expiration_archived_candidate_days": 15,
-    "priority_urgent_min": 75,
-    "priority_moderate_min": 55,
-    "batch_quality_min_critical_fields_pct": 95,
-    "batch_quality_min_city_pct": 95,
-    "batch_quality_min_operation_pct": 95
   }
 }

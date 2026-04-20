@@ -180,8 +180,8 @@
     </div>
     <div class="footer-bottom">
       <span>© 2025–2026 neuralgpt.store</span>
-      <span>Atención usuario: <a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a></span>
-      <span>Negocio: <a href="mailto:wilfreyera@gmail.com" style="color:var(--accent2)">wilfreyera@gmail.com</a></span>
+      <span>Atención usuario: <a href="mailto:hola@neuralgpt.store" style="color:var(--accent)">hola@neuralgpt.store</a></span>
+      <span>Contacto: <a href="mailto:hola@neuralgpt.store" style="color:var(--accent2)">hola@neuralgpt.store</a></span>
     </div>
   </footer>
 
@@ -296,7 +296,7 @@
     ].join('');
     document.getElementById('listing-contact').textContent = detail.contactCta || 'Solicitar desbloqueo de contacto tras pago';
     document.getElementById('listing-contact').onclick = function(){
-      window.location.href = 'mailto:' + ((settings && settings.public_contact_email) || 'neuralgpt.store@protonmail.com') + '?subject=' + encodeURIComponent('Solicitud de desbloqueo de contacto (tras pago): ' + detail.title);
+      window.location.href = 'mailto:' + ((settings && settings.public_contact_email) || 'hola@neuralgpt.store') + '?subject=' + encodeURIComponent('Solicitud de desbloqueo de contacto (tras pago): ' + detail.title);
     };
     document.getElementById('listing-seo-note').innerHTML = '<span style="color:var(--muted);font-size:0.75rem">/listing.html?slug='+escapeHtml(detail.slug)+'</span><br><span style="color:var(--muted);font-size:0.75rem">El contacto directo del anunciante se libera tras pago del servicio de conexión.</span>';
     document.getElementById('listing-seo-copy').innerHTML = [
