@@ -182,7 +182,7 @@
         <div style="font-size:2.2rem;margin-bottom:12px">⚡</div>
         <h2 style="font-family:var(--font-title);font-size:1.3rem;margin-bottom:8px;color:var(--text)">Sensacional 24h</h2>
         <div style="margin-bottom:20px">
-          <div style="font-size:2.4rem;font-weight:700;color:#FFB700;font-family:var(--font-title)">14,95€<span style="font-size:0.85rem;font-weight:400;color:var(--muted)">/único</span></div>
+          <div style="font-size:2.4rem;font-weight:700;color:#FFB700;font-family:var(--font-title)">9,95€<span style="font-size:0.85rem;font-weight:400;color:var(--muted)">/único</span></div>
           <div style="font-size:0.8rem;color:var(--muted)">pago único, 24 horas</div>
         </div>
         <ul style="list-style:none;padding:0;margin:0 0 24px 0;flex:1;display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:0.88rem">
@@ -269,46 +269,9 @@
     <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:hola@neuralgpt.store" style="color:var(--accent)">hola@neuralgpt.store</a></span></div>
   </footer>
 
-  <script src="/js/runtime-config.js"></script>
   <script>
   var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
   if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
-
-  async function checkoutPlanBasico() {
-    if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
-      alert('El checkout de Plan Básico no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
-      return;
-    }
-    try {
-      const res = await fetch(window.NeuralRuntime.api('/stripe/checkout-plan-basico'), { method: 'POST', headers: { 'Content-Type': 'application/json' } });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.url) {
-        alert('El checkout de Plan Básico no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
-        return;
-      }
-      window.location.href = data.url;
-    } catch (e) {
-      alert('El checkout de Plan Básico requiere backend /api/* compatible y no está disponible en este entorno.');
-    }
-  }
-
-  async function checkoutPlanPremium() {
-    if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
-      alert('El checkout de Plan Premium no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
-      return;
-    }
-    try {
-      const res = await fetch(window.NeuralRuntime.api('/stripe/checkout-plan-premium'), { method: 'POST', headers: { 'Content-Type': 'application/json' } });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.url) {
-        alert('El checkout de Plan Premium no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
-        return;
-      }
-      window.location.href = data.url;
-    } catch (e) {
-      alert('El checkout de Plan Premium requiere backend /api/* compatible y no está disponible en este entorno.');
-    }
-  }
   </script>
   <script src="/js/agent-chat.js" defer></script>
 </body>
