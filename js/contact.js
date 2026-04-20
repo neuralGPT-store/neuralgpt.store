@@ -2,7 +2,7 @@
   const enc = s => btoa(unescape(encodeURIComponent(s)));
   const dec = s => decodeURIComponent(escape(atob(s)));
 
-  const MAIL = enc('contact@neuralgpt.store'); // oculto en base64
+  const MAIL = enc('hola@neuralgpt.store'); // oculto en base64
 
   const form = document.getElementById('contact-form');
   if(!form) return;
