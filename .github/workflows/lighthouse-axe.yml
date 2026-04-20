@@ -34,9 +34,17 @@ jobs:
         run: |
           npx lighthouse http://127.0.0.1:8080 --quiet --chrome-flags="--no-sandbox --headless" --output=json --output-path=./lighthouse-home.json || true
 
-      - name: Run Lighthouse (marketplace)
+      - name: Run Lighthouse (real-estate-index)
         run: |
-          npx lighthouse http://127.0.0.1:8080/marketplace.html --quiet --chrome-flags="--no-sandbox --headless" --output=json --output-path=./lighthouse-marketplace.json || true
+          npx lighthouse http://127.0.0.1:8080/real-estate-index.html --quiet --chrome-flags="--no-sandbox --headless" --output=json --output-path=./lighthouse-real-estate-index.json || true
+
+      - name: Run Lighthouse (venta)
+        run: |
+          npx lighthouse http://127.0.0.1:8080/venta.html --quiet --chrome-flags="--no-sandbox --headless" --output=json --output-path=./lighthouse-venta.json || true
+
+      - name: Run Lighthouse (alquiler)
+        run: |
+          npx lighthouse http://127.0.0.1:8080/alquiler.html --quiet --chrome-flags="--no-sandbox --headless" --output=json --output-path=./lighthouse-alquiler.json || true
 
       - name: Run pa11y accessibility check (homepage)
         run: |
@@ -48,7 +56,9 @@ jobs:
           name: audit-reports
           path: |
             ./lighthouse-home.json
-            ./lighthouse-marketplace.json
+            ./lighthouse-real-estate-index.json
+            ./lighthouse-venta.json
+            ./lighthouse-alquiler.json
             ./pa11y-home.json
 
       - name: Fail job if critical issues found (light heuristic)

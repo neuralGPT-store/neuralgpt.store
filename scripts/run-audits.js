@@ -75,11 +75,16 @@ async function main(){
     await runPa11y(`${BASE}/index.html`, path.join(AUDITS_DIR,'pa11y-index.json'))
   }catch(e){ console.error('pa11y failed:',e.message) }
 
-  // additional pages we can audit without changing project files
-  const extra = ['/marketplace.html','/product.html']
-  for(const p of extra){
-    try{ await runLighthouse(`${BASE}${p}`, path.join(AUDITS_DIR,`lighthouse-${path.basename(p)}.json`)) }catch(e){ console.error('Lighthouse',p,'failed:',e.message) }
-    try{ await runPa11y(`${BASE}${p}`, path.join(AUDITS_DIR,`pa11y-${path.basename(p)}.json`)) }catch(e){ console.error('pa11y',p,'failed:',e.message) }
+  // rutas inmobiliarias públicas clave
+  const extra = [
+    { path: '/real-estate-index.html', key: 'real-estate-index' },
+    { path: '/venta.html', key: 'venta' },
+    { path: '/alquiler.html', key: 'alquiler' }
+  ]
+  for (const item of extra) {
+    const url = `${BASE}${item.path}`
+    try { await runLighthouse(url, path.join(AUDITS_DIR, `lighthouse-${item.key}.json`)) } catch (e) { console.error('Lighthouse', item.path, 'failed:', e.message) }
+    try { await runPa11y(url, path.join(AUDITS_DIR, `pa11y-${item.key}.json`)) } catch (e) { console.error('pa11y', item.path, 'failed:', e.message) }
   }
 
   // stop server
