@@ -403,21 +403,26 @@
   }
   </script>
 <script>
-function unlockContact(){
-  alert("Redirigiendo a pago Stripe — 19,95 €");
-  fetch('/api/stripe/checkout-contact-unlock', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({listing_id:new URLSearchParams(location.search).get('slug')})})
-  .then(r=>r.json()).then(d=>{if(d.checkout_url){location.href=d.checkout_url;}}).catch(()=>alert('Error al iniciar pago'));
+async function startCheckout(endpoint, label){
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ listing_id: new URLSearchParams(location.search).get('slug') })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.checkout_url) {
+      alert('El checkout de ' + label + ' no está disponible en este despliegue estático. Contacta en hola@neuralgpt.store para activarlo.');
+      return;
+    }
+    location.href = data.checkout_url;
+  } catch (_) {
+    alert('El checkout de ' + label + ' requiere un backend /api/* compatible que no está disponible en este entorno.');
+  }
 }
-function boostVisibility(){
-  alert("Redirigiendo a pago Stripe — 19,95 €");
-  fetch('/api/stripe/checkout-mas-visibilidad', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({listing_id:new URLSearchParams(location.search).get('slug')})})
-  .then(r=>r.json()).then(d=>{if(d.checkout_url){location.href=d.checkout_url;}}).catch(()=>alert('Error al iniciar pago'));
-}
-function sensacional24h(){
-  alert("Redirigiendo a pago Stripe — 9,95 €");
-  fetch('/api/stripe/checkout-sensacional', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({listing_id:new URLSearchParams(location.search).get('slug')})})
-  .then(r=>r.json()).then(d=>{if(d.checkout_url){location.href=d.checkout_url;}}).catch(()=>alert('Error al iniciar pago'));
-}
+function unlockContact(){ startCheckout('/api/stripe/checkout-contact-unlock', 'desbloqueo de contacto'); }
+function boostVisibility(){ startCheckout('/api/stripe/checkout-mas-visibilidad', 'más visibilidad'); }
+function sensacional24h(){ startCheckout('/api/stripe/checkout-sensacional', 'sensacional 24h'); }
 </script>
 <script>
 (function(){

@@ -276,22 +276,28 @@
   async function checkoutPlanBasico() {
     try {
       const res = await fetch('/api/stripe/checkout-plan-basico', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
-      const data = await res.json();
-      if (data.url) window.location.href = data.url;
-      else alert('Error al crear sesión de pago');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.url) {
+        alert('El checkout de Plan Básico no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
+        return;
+      }
+      window.location.href = data.url;
     } catch (e) {
-      alert('Error de red al procesar el pago');
+      alert('El checkout de Plan Básico requiere backend /api/* compatible y no está disponible en este entorno.');
     }
   }
 
   async function checkoutPlanPremium() {
     try {
       const res = await fetch('/api/stripe/checkout-plan-premium', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
-      const data = await res.json();
-      if (data.url) window.location.href = data.url;
-      else alert('Error al crear sesión de pago');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.url) {
+        alert('El checkout de Plan Premium no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
+        return;
+      }
+      window.location.href = data.url;
     } catch (e) {
-      alert('Error de red al procesar el pago');
+      alert('El checkout de Plan Premium requiere backend /api/* compatible y no está disponible en este entorno.');
     }
   }
   </script>
