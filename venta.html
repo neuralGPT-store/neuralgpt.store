@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="/css/theme-override.css">
   <link rel="canonical" id="canonical-tag" href="">
   <script type="application/ld+json" id="collection-schema">{}</script>
+  <script src="/js/i18n.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -34,9 +35,23 @@
       <ul>
         <li><a href="/">Inicio</a></li>
         <li><a href="/real-estate-index.html">Inmuebles</a></li>
-        <li><a href="/contact.html">Publicar</a></li>
+        <li><a href="/contact.html" data-i18n="nav_publicar">Publicar</a></li>
         <li><a href="/contact.html">Contacto</a></li>
       </ul>
+      <div class="lang-selector">
+        <select id="lang-select" onchange="I18N.set(this.value)" aria-label="Idioma">
+          <option value="es">🇪🇸 ES</option>
+          <option value="en">🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="de">🇩🇪 DE</option>
+          <option value="pt">🇵🇹 PT</option>
+          <option value="it">🇮🇹 IT</option>
+          <option value="ru">🇷🇺 RU</option>
+          <option value="tr">🇹🇷 TR</option>
+          <option value="ar">🇸🇦 AR</option>
+          <option value="zh">🇨🇳 ZH</option>
+        </select>
+      </div>
     </nav>
     <div class="header-actions">
       <a href="/real-estate-index.html" class="btn">Ver inmuebles</a>
@@ -58,7 +73,7 @@
         <span class="badge badge-verified">COLECCIÓN PÚBLICA</span>
         <span class="badge badge-hot">VENTA</span>
       </div>
-      <h1 id="collection-title" class="section-title" style="text-align:left;margin-bottom:12px">Activos en venta</h1>
+      <h1 id="collection-title" class="section-title" style="text-align:left;margin-bottom:12px" data-i18n="type_sale">Activos en venta</h1>
       <p id="collection-intro" style="color:var(--muted);max-width:880px;line-height:1.8;margin:0">Cargando colección.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
         <a href="/real-estate-index.html" class="btn">Índice inmobiliario</a>

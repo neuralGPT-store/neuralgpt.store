@@ -2,13 +2,33 @@
   "version": "4.0",
   "language": "es",
   "botName": "Chany",
-  "greeting": "Hola, soy Chany. Te ayudo con anuncios inmobiliarios de neuralgpt.store en Europa fase 1.",
-  "fallback": "No encontré una respuesta exacta. Escríbenos a neuralgpt.store@protonmail.com (atención) o a wilfreyera@gmail.com (negocio).",
+  "greeting": "🏡 Hola, soy Chany, tu asistente inmobiliaria en neuralgpt.store",
+  "fallback": "No tengo una respuesta exacta para eso. ¿Puedes reformular tu pregunta? O escríbenos a neuralgpt.store@protonmail.com (atención) o wilfreyera@gmail.com (negocio).",
   "intents": [
     {
       "id": "greeting",
-      "keywords": ["hola", "buenas", "saludos", "hey", "hello", "hi"],
-      "response": "Hola. Soy Chany, asistente inmobiliaria de neuralgpt.store. Puedo ayudarte a publicar, editar, buscar anuncios y entender el estado de revisión."
+      "keywords": ["hola", "buenas", "saludos", "hey", "hello", "hi", "buenos días", "buenas tardes", "qué tal"],
+      "response": "🏡 ¡Hola! Soy Chany, tu asistente inmobiliaria en neuralgpt.store. Puedo ayudarte a publicar tu inmueble, encontrar lo que buscas, explicarte cómo funciona el portal o resolver cualquier duda sobre anuncios. ¿En qué te ayudo hoy?"
+    },
+    {
+      "id": "que_es_portal",
+      "keywords": ["qué es", "qué es esto", "qué es neuralgpt", "what is this", "explica", "de qué trata", "qué hacéis"],
+      "response": "neuralgpt.store es un portal inmobiliario premium con anuncios verificados manualmente en toda Europa (incluye Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia). Publicamos venta, alquiler, habitaciones, locales, naves, suelo y activos singulares. ¡Gratis hasta 5 inmuebles hasta diciembre 2027!"
+    },
+    {
+      "id": "como_publicar",
+      "keywords": ["cómo publico", "cómo publicar", "how do I list", "how to publish", "subir anuncio", "poner anuncio", "anunciar mi piso"],
+      "response": "Publicar es muy fácil:\n1. Ve a /contact.html\n2. Rellena tus datos de contacto (nombre, email, teléfono)\n3. Describe tu inmueble: título, ubicación, precio, superficie, descripción\n4. Sube hasta 6 fotos (máx 40MB total)\n5. Acepta privacidad y envía ✨\n\nTu anuncio se revisa manualmente y se publica en 24-48h. ¡Es gratis hasta 5 inmuebles!"
+    },
+    {
+      "id": "es_gratis",
+      "keywords": ["es gratis", "is it free", "cuánto cuesta publicar", "gratis", "free", "precio publicar", "pago"],
+      "response": "✅ Publicar es GRATIS hasta 5 inmuebles hasta diciembre 2027.\n\nLo único de pago opcional:\n• Desbloquear contacto del anunciante: 19,95 € (para compradores/interesados)\n• Más visibilidad (30 días destacado): 19,95 €\n• Sensacional 24h (badge premium): 9,95 €\n\nLa publicación básica es 100% gratuita."
+    },
+    {
+      "id": "precios_servicios",
+      "keywords": ["cuánto cuesta", "how much", "precio", "tarifas", "19.95", "9.95", "euros", "coste"],
+      "response": "💶 Precios actuales:\n\n• Publicar anuncio: GRATIS (hasta 5 inmuebles)\n• Desbloquear contacto del vendedor: 19,95 €\n• Más visibilidad (30 días destacado): 19,95 €\n• Sensacional 24h (badge premium): 9,95 €\n\nPagos seguros con Stripe. Sin suscripciones ni cuotas ocultas."
     },
     {
       "id": "publicar_inmueble",
@@ -21,14 +41,19 @@
       "response": "Para editar usa /edit.html con listing_id y edit_key. Si la clave no coincide, el sistema bloquea la edición por seguridad."
     },
     {
-      "id": "tipos_fase1",
-      "keywords": ["tipos", "qué se puede publicar", "activos", "inmueble", "venta", "larga duración", "habitaciones", "locales", "naves", "suelo", "activos singulares"],
-      "response": "Fase 1 admite solo inmobiliario: venta, larga duración, habitaciones de larga estancia, locales, naves, suelo y activos singulares."
+      "id": "tipos_inmuebles",
+      "keywords": ["tipos", "qué se puede publicar", "qué tipos de inmuebles", "activos", "inmueble", "venta", "larga duración", "habitaciones", "locales", "naves", "suelo", "activos singulares", "what types"],
+      "response": "📋 Tipos de inmuebles permitidos:\n\n• Venta: pisos, casas, chalets, apartamentos\n• Alquiler larga duración: residencial y habitaciones\n• Locales comerciales y naves industriales\n• Suelo urbano y rústico\n• Activos singulares: palacios, castillos, edificios históricos\n\nNO se aceptan: software, cursos, crypto, escorts, contenido no inmobiliario."
     },
     {
-      "id": "cobertura_fase1",
-      "keywords": ["europa", "reino unido", "irlanda", "escocia", "turquía", "islandia", "groenlandia", "países", "ciudades"],
-      "response": "Cobertura fase 1 visible: Europa, Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia. Puedes explorar en /real-estate-index.html, /pais.html y /ciudad.html."
+      "id": "cobertura_paises",
+      "keywords": ["europa", "reino unido", "irlanda", "escocia", "turquía", "islandia", "groenlandia", "países", "qué países", "what countries", "dónde", "cobertura", "ciudades"],
+      "response": "🌍 Cobertura geográfica completa:\n\nEuropa continental + Reino Unido + Irlanda + Escocia + Turquía + Islandia + Groenlandia\n\nCiudades principales: Madrid, Barcelona, Lisboa, Oporto, Londres, Dublín, París, Berlín, Roma, Estambul...\n\nExplora por ubicación en /real-estate-index.html, /pais.html y /ciudad.html"
+    },
+    {
+      "id": "contacto_vendedor",
+      "keywords": ["cómo contacto", "contactar vendedor", "contactar anunciante", "how do I contact", "ver teléfono", "ver email", "desbloqueo"],
+      "response": "📞 Para contactar al vendedor/anunciante:\n\n1. Abre la ficha del inmueble en /listing.html\n2. Haz clic en 'Ver contacto — 19,95 €'\n3. Pago seguro con Stripe\n4. Se desbloquea: nombre, teléfono y email del anunciante\n\nEl pago protege de spam y garantiza contactos reales."
     },
     {
       "id": "revision_humana",
@@ -37,13 +62,13 @@
     },
     {
       "id": "duplicados",
-      "keywords": ["duplicado", "duplicados", "abuse_blocked", "repetido", "anuncio repetido"],
-      "response": "El sistema detecta duplicados por señales de contenido e imagen. Casos fuertes se bloquean; casos intermedios se envían a revisión humana antes de publicar."
+      "keywords": ["duplicado", "duplicados", "abuse_blocked", "repetido", "anuncio repetido", "política duplicados"],
+      "response": "🚫 Política de duplicados:\n\nEl sistema detecta anuncios duplicados por:\n• Contenido similar (título + descripción)\n• Imágenes idénticas o muy parecidas\n• Misma ubicación + precio\n\nCasos graves → bloqueado automáticamente\nCasos intermedios → revisión humana manual\n\nEvita republicar el mismo inmueble varias veces."
     },
     {
-      "id": "frescura_caducidad",
-      "keywords": ["caducidad", "frescura", "vence", "expira", "días", "90 días", "vigencia"],
-      "response": "Regla actual: venta y activos en venta caducan a 90 días. Alquiler mantiene su configuración vigente hasta decisión explícita de producto."
+      "id": "caducidad",
+      "keywords": ["caducidad", "frescura", "vence", "expira", "cuánto dura", "días", "90 días", "60 días", "vigencia", "cuánto tiempo"],
+      "response": "⏰ Vigencia de anuncios:\n\n• Venta: 90 días de vigencia\n• Alquiler: 60 días de vigencia\n\nAntes de caducar recibes aviso por email para renovar gratis. Los anuncios caducados se archivan automáticamente pero puedes volver a publicarlos cuando quieras."
     },
     {
       "id": "contacto_anunciante",

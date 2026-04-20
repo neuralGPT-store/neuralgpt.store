@@ -25,16 +25,17 @@
   <link rel="stylesheet" href="/css/theme-override.css">
   <link rel="canonical" id="canonical-tag" href="">
   <script type="application/ld+json" id="collection-schema">{}</script>
+  <script src="/js/i18n.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
-  <header class="site-header" role="banner"><a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a><nav class="main-nav" id="main-nav" aria-label="Principal"><ul><li><a href="/">Inicio</a></li><li><a href="/real-estate-index.html">Inmuebles</a></li><li><a href="/contact.html">Publicar</a></li><li><a href="/contact.html">Contacto</a></li></ul></nav><div class="header-actions"><a href="/real-estate-index.html" class="btn">Ver inmuebles</a><a href="/contact.html" class="btn btn-primary">Publicar activo</a><button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+  <header class="site-header" role="banner"><a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a><nav class="main-nav" id="main-nav" aria-label="Principal"><ul><li><a href="/">Inicio</a></li><li><a href="/real-estate-index.html">Inmuebles</a></li><li><a href="/contact.html">Publicar</a></li><li><a href="/contact.html">Contacto</a></li></ul><div class="lang-selector"><select id="lang-select" onchange="I18N.set(this.value)" aria-label="Idioma"><option value="es">🇪🇸 ES</option><option value="en">🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="de">🇩🇪 DE</option><option value="pt">🇵🇹 PT</option><option value="it">🇮🇹 IT</option><option value="ru">🇷🇺 RU</option><option value="tr">🇹🇷 TR</option><option value="ar">🇸🇦 AR</option><option value="zh">🇨🇳 ZH</option></select></div></nav><div class="header-actions"><a href="/real-estate-index.html" class="btn">Ver inmuebles</a><a href="/contact.html" class="btn btn-primary">Publicar activo</a><button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
   <div class="rgb-divider"></div>
   <nav aria-label="Ruta de navegación" style="padding:12px 0;border-bottom:1px solid var(--border)"><div class="wrap" style="font-size:0.78rem;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a href="/" style="color:var(--muted)">Inicio</a><span>›</span><a href="/real-estate-index.html" style="color:var(--muted)">Inmuebles</a><span>›</span><span id="breadcrumb-current" style="color:var(--text)">Alquiler</span></div></nav>
   <main id="main-content" class="wrap" style="padding-top:36px;padding-bottom:80px">
     <section style="margin-bottom:28px;padding:26px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">COLECCIÓN PÚBLICA</span><span class="badge badge-hot">ALQUILER</span></div>
-      <h1 id="collection-title" class="section-title" style="text-align:left;margin-bottom:12px">Activos en alquiler</h1>
+      <h1 id="collection-title" class="section-title" style="text-align:left;margin-bottom:12px" data-i18n="type_rent">Activos en alquiler</h1>
       <p id="collection-intro" style="color:var(--muted);max-width:880px;line-height:1.8;margin:0">Cargando colección.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
         <a href="/real-estate-index.html" class="btn">Índice inmobiliario</a>

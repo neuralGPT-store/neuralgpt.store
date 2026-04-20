@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="/css/theme-override.css">
   <link rel="canonical" id="canonical-tag" href="">
   <script type="application/ld+json" id="listing-schema">{}</script>
+  <script src="/js/i18n.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -37,9 +38,23 @@
       <ul>
         <li><a href="/">Inicio</a></li>
         <li><a href="/real-estate-index.html">Inmuebles</a></li>
-        <li><a href="/contact.html">Publicar</a></li>
+        <li><a href="/contact.html" data-i18n="nav_publicar">Publicar</a></li>
         <li><a href="/contact.html">Contacto</a></li>
       </ul>
+      <div class="lang-selector">
+        <select id="lang-select" onchange="I18N.set(this.value)" aria-label="Idioma">
+          <option value="es">🇪🇸 ES</option>
+          <option value="en">🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="de">🇩🇪 DE</option>
+          <option value="pt">🇵🇹 PT</option>
+          <option value="it">🇮🇹 IT</option>
+          <option value="ru">🇷🇺 RU</option>
+          <option value="tr">🇹🇷 TR</option>
+          <option value="ar">🇸🇦 AR</option>
+          <option value="zh">🇨🇳 ZH</option>
+        </select>
+      </div>
     </nav>
     <div class="header-actions">
       <a href="/real-estate-index.html" class="btn">Índice</a>
@@ -89,9 +104,9 @@
             </div>
             <div id="listing-location" style="color:var(--text);font-size:0.88rem;margin-bottom:14px"></div>
             <div style="display:flex;flex-direction:column;gap:10px">
-              <button id="listing-contact" class="btn btn-primary btn-lg" style="width:100%;justify-content:center" onclick="unlockContact()">Ver contacto — 19,95 €</button>
-              <button id="listing-visibility-boost" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(0,234,255,0.15),rgba(127,0,255,0.15));border:1.5px solid var(--accent);display:none" onclick="boostVisibility()">Más visibilidad — 19,95 €</button>
-              <button id="listing-sensacional" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15));border:1.5px solid #ffd700;color:#ffd700;display:none" onclick="sensacional24h()">Sensacional 24h — 9,95 €</button>
+              <button id="listing-contact" class="btn btn-primary btn-lg" style="width:100%;justify-content:center" onclick="unlockContact()" data-i18n="btn_contact_unlock">Ver contacto — 19,95 €</button>
+              <button id="listing-visibility-boost" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(0,234,255,0.15),rgba(127,0,255,0.15));border:1.5px solid var(--accent);display:none" onclick="boostVisibility()" data-i18n="btn_mas_visibilidad">Más visibilidad — 19,95 €</button>
+              <button id="listing-sensacional" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15));border:1.5px solid #ffd700;color:#ffd700;display:none" onclick="sensacional24h()" data-i18n="btn_sensacional">Sensacional 24h — 9,95 €</button>
               <a id="listing-collection-link" href="/real-estate-index.html" class="btn btn-lg" style="width:100%;justify-content:center;text-decoration:none">Volver al índice</a>
             </div>
             <div style="margin-top:14px;padding:12px 14px;background:rgba(0,234,255,0.05);border:1.5px solid rgba(0,234,255,0.18);border-radius:10px">
