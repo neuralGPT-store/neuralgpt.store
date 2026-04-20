@@ -236,6 +236,7 @@
     </div>
     <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:hola@neuralgpt.store" style="color:var(--accent)">hola@neuralgpt.store</a></span><span><a href="mailto:security@neuralgpt.store" style="color:var(--accent2)">security@neuralgpt.store</a></span></div>
   </footer>
+  <script src="/js/runtime-config.js"></script>
   <script>
   var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
   if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
@@ -270,10 +271,16 @@
       fd.append('images', file, file.name);
     });
 
+    if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+      out.textContent='Publicación no disponible en este despliegue estático (requiere backend /api/*). Escribe a hola@neuralgpt.store para asistencia manual.';
+      out.style.color='var(--accent3)';
+      return;
+    }
+
     out.textContent='Enviando anuncio...';
     out.style.color='var(--accent2)';
     try{
-      var response = await fetch('/api/listings/upsert', { method:'POST', body: fd });
+      var response = await fetch(window.NeuralRuntime.api('/listings/upsert'), { method:'POST', body: fd });
       var data = await response.json();
       if(!response.ok || !data || data.ok !== true){
         var code = data && data.error ? String(data.error) : 'publicacion_fallida';

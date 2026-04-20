@@ -185,6 +185,7 @@
     </div>
   </footer>
 
+  <script src="/js/runtime-config.js"></script>
   <script src="/js/real-estate-data.js"></script>
   <script src="/js/real-estate-presenters.js"></script>
   <script src="/js/real-estate-adapters.js"></script>
@@ -404,8 +405,12 @@
   </script>
 <script>
 async function startCheckout(endpoint, label){
+  if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+    alert('El checkout de ' + label + ' no está disponible en este despliegue estático. Contacta en hola@neuralgpt.store para activarlo.');
+    return;
+  }
   try {
-    const res = await fetch(endpoint, {
+    const res = await fetch(window.NeuralRuntime.api(endpoint.replace(/^\/api/, '')), {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ listing_id: new URLSearchParams(location.search).get('slug') })

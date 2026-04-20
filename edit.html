@@ -170,6 +170,7 @@
     </div>
   </footer>
 
+  <script src="/js/runtime-config.js"></script>
   <script>
   (function(){
     var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
@@ -202,8 +203,14 @@
       accessBtn.disabled = true;
       accessMsg.textContent = 'Verificando...';
       accessMsg.style.color = 'var(--muted)';
+      if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+        accessMsg.textContent = 'La edición no está disponible en este despliegue estático (requiere backend /api/*).';
+        accessMsg.style.color = 'var(--accent3)';
+        accessBtn.disabled = false;
+        return;
+      }
       try {
-        var res = await fetch('/api/listings/status?listing_id=' + encodeURIComponent(lid) + '&edit_key=' + encodeURIComponent(ek));
+        var res = await fetch(window.NeuralRuntime.api('/listings/status') + '?listing_id=' + encodeURIComponent(lid) + '&edit_key=' + encodeURIComponent(ek));
         var data = await res.json();
         if (res.status === 403) {
           accessMsg.textContent = 'Clave de edición incorrecta.';
@@ -289,9 +296,14 @@
         return;
       }
       try {
+        if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+          editMsg.textContent = 'La actualización no está disponible en este despliegue estático (requiere backend /api/*).';
+          editMsg.style.color = 'var(--accent3)';
+          return;
+        }
         var fd = new FormData(editForm);
         fd.set('hp_check', '');
-        var res = await fetch('/api/listings/upsert', { method: 'POST', body: fd });
+        var res = await fetch(window.NeuralRuntime.api('/listings/upsert'), { method: 'POST', body: fd });
         var data = await res.json();
         if (!res.ok || !data || data.ok !== true) {
           var code = data && data.error ? String(data.error) : 'actualizacion_fallida';

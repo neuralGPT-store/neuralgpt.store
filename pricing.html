@@ -269,13 +269,18 @@
     <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:hola@neuralgpt.store" style="color:var(--accent)">hola@neuralgpt.store</a></span></div>
   </footer>
 
+  <script src="/js/runtime-config.js"></script>
   <script>
   var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
   if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
 
   async function checkoutPlanBasico() {
+    if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+      alert('El checkout de Plan Básico no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
+      return;
+    }
     try {
-      const res = await fetch('/api/stripe/checkout-plan-basico', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+      const res = await fetch(window.NeuralRuntime.api('/stripe/checkout-plan-basico'), { method: 'POST', headers: { 'Content-Type': 'application/json' } });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.url) {
         alert('El checkout de Plan Básico no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
@@ -288,8 +293,12 @@
   }
 
   async function checkoutPlanPremium() {
+    if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+      alert('El checkout de Plan Premium no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
+      return;
+    }
     try {
-      const res = await fetch('/api/stripe/checkout-plan-premium', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+      const res = await fetch(window.NeuralRuntime.api('/stripe/checkout-plan-premium'), { method: 'POST', headers: { 'Content-Type': 'application/json' } });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.url) {
         alert('El checkout de Plan Premium no está disponible en este despliegue estático. Escríbenos a hola@neuralgpt.store.');
