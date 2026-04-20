@@ -505,7 +505,200 @@ const LITERAL_TEXT = {
     'Portal inmobiliario': 'Real estate portal',
     'Todos los tipos': 'All types',
     'Todas las ciudades': 'All cities',
-    'Filtrar por ciudad': 'Filter by city'
+    'Filtrar por ciudad': 'Filter by city',
+    'Menú': 'Menu',
+    'Saltar al contenido': 'Skip to content',
+    'Portal inmobiliario premium.': 'Premium real estate portal.',
+    'Portal inmobiliario premium. Anuncios verificados en venta y alquiler.': 'Premium real estate portal. Verified listings for sale and rent.',
+    'Política de Privacidad': 'Privacy Policy',
+    'Términos de Servicio': 'Terms of Service',
+    'Aviso Legal': 'Legal Notice',
+    'Seguridad': 'Security',
+    'Última actualización: 1 de junio de 2025 · Versión 1.0 ·': 'Last updated: June 1, 2025 · Version 1.0 ·',
+    'Última actualización: 1 de junio de 2025 ·': 'Last updated: June 1, 2025 ·',
+    'Términos de Servicio': 'Terms of Service',
+    'Aviso Legal': 'Legal Notice',
+    'Resumen:': 'Summary:',
+    'Recogemos únicamente los datos necesarios para gestionar tus consultas y anuncios. No vendemos tus datos. Cumplimos con el RGPD.': 'We only collect the data needed to manage your inquiries and listings. We do not sell your data. We comply with GDPR.',
+    'neuralgpt.store es un portal inmobiliario premium europeo en fase 1, centrado en venta y alquiler estable.': 'neuralgpt.store is a premium European real estate portal in phase 1, focused on sales and long-term rentals.',
+    'La plataforma publica fichas verificadas manualmente y aplica un modelo de contacto tras pago: el contacto directo del anunciante se libera únicamente tras el pago del servicio de conexión.': 'The platform publishes manually verified listings and applies a pay-to-unlock contact model: direct advertiser contact is released only after paying the connection service.',
+    'Nuestra prioridad operativa actual es mantener una sola identidad pública, mínima superficie expuesta y calidad editorial consistente en todas las rutas activas.': 'Our current operational priority is to maintain a single public identity, minimal exposed surface, and consistent editorial quality across all active routes.',
+    'neuralgpt.store aplica una política activa de seguridad con controles técnicos de cabeceras, separación estricta entre superficie pública y operativa, y revisión periódica de riesgos sobre rutas y datos expuestos.': 'neuralgpt.store applies an active security policy with technical header controls, strict separation between public and operational surfaces, and periodic risk reviews of routes and exposed data.',
+    'El portal mantiene cifrado HTTPS, restricciones de indexación en rutas sensibles y prácticas de mínima exposición de datos en frontend. Ningún flujo comercial debe depender de publicar información privada en páginas indexables.': 'The portal enforces HTTPS, index restrictions on sensitive routes, and minimum data-exposure practices in frontend. No commercial flow should rely on publishing private information on indexable pages.',
+    'Si detectas una vulnerabilidad, escribe a': 'If you detect a vulnerability, write to',
+    'con asunto': 'with subject',
+    'pasos de reproducción y evidencia mínima. Priorizamos el triage y coordinamos la mitigación antes de cualquier divulgación pública.': 'reproduction steps and minimum evidence. We prioritize triage and coordinate mitigation before any public disclosure.',
+    'Sponsors del sector inmobiliario — neuralgpt.store': 'Real estate sponsors — neuralgpt.store',
+    'SPONSORS & COLABORADORES': 'SPONSORS & COLLABORATORS',
+    'Partners de neuralgpt.store': 'neuralgpt.store partners',
+    'Colaboramos con empresas y profesionales del sector inmobiliario que comparten nuestra visión: un portal de anuncios honesto, verificado y útil para propietarios, compradores e inquilinos.': 'We collaborate with companies and professionals in the real estate sector who share our vision: an honest, verified listing portal that is useful for owners, buyers, and tenants.',
+    'Contactar': 'Contact',
+    'Enviar propuesta sponsor': 'Send sponsor proposal',
+    '¿Por qué colaborar con neuralgpt.store?': 'Why collaborate with neuralgpt.store?',
+    'Conectamos tu marca con propietarios, compradores e inquilinos que buscan servicios de confianza.': 'We connect your brand with owners, buyers, and tenants looking for trusted services.',
+    'AUDIENCIA INMOBILIARIA': 'REAL ESTATE AUDIENCE',
+    'CONTEXTO DE COMPRA REAL': 'REAL BUYER CONTEXT',
+    'PORTAL VERIFICADO': 'VERIFIED PORTAL',
+    'PRESENCIA LOCAL': 'LOCAL PRESENCE',
+    'COLABORACIÓN TRANSPARENTE': 'TRANSPARENT COLLABORATION',
+    'SOPORTE DIRECTO': 'DIRECT SUPPORT',
+    'Sectores de colaboración': 'Collaboration sectors',
+    'Damos visibilidad a empresas y profesionales que complementan la experiencia inmobiliaria.': 'We provide visibility to companies and professionals that complement the real estate experience.',
+    '¿Tu empresa complementa la experiencia inmobiliaria?': 'Does your company complement the real estate experience?',
+    'Cuéntanos tu propuesta. Estudiamos cada colaboración de forma individual y respondemos en menos de 48h laborables.': 'Tell us your proposal. We review each collaboration individually and respond in under 48 business hours.',
+    'Inversión Inmobiliaria en Europa 2026': 'Real Estate Investment in Europe 2026',
+    'Rentabilidad, fiscalidad y estrategias para invertir en propiedades europeas con visión a largo plazo.': 'Profitability, taxation, and strategies for investing in European properties with a long-term perspective.',
+    'Mercados de alta rentabilidad 2026': 'High-yield markets 2026',
+    'Fiscalidad para inversores': 'Taxation for investors',
+    'Estrategias de inversión': 'Investment strategies',
+    'Riesgos a considerar': 'Risks to consider',
+    'Recomendación:': 'Recommendation:',
+    '← Volver al blog': '← Back to blog',
+    'Inmuebles premium en Europa': 'Premium properties in Europe',
+    'Descubre una selección curada de inmuebles en venta y alquiler de larga duración con foco en mercados europeos de alta demanda.': 'Discover a curated selection of properties for sale and long-term rent focused on high-demand European markets.',
+    'Sitemap HTML': 'HTML sitemap',
+    'Sitemap XML': 'XML sitemap',
+    'Colecciones principales': 'Main collections',
+    'Explorar por país': 'Browse by country',
+    'Explorar por ciudad': 'Browse by city',
+    'Activos destacados': 'Featured listings',
+    'Hubs editoriales': 'Editorial hubs',
+    'Cómo explorar mejor': 'How to explore better',
+    'Empieza por operación:': 'Start with operation:',
+    'explora primero venta o alquiler para reducir ruido y afinar intención.': 'explore sale or rent first to reduce noise and refine intent.',
+    'Profundiza por ubicación:': 'Go deeper by location:',
+    'usa países y ciudades para llegar a hubs editoriales y fichas relevantes.': 'use countries and cities to reach editorial hubs and relevant listings.',
+    'Actúa con rapidez:': 'Act quickly:',
+    'en cada ficha puedes solicitar desbloqueo de contacto tras pago del servicio de conexión.': 'on each listing you can request contact unlock after paying the connection service.',
+    'Publicación premium:': 'Premium publishing:',
+    'propietarios y representantes pueden publicar activos con revisión manual.': 'owners and representatives can publish assets with manual review.',
+    'Sitemap inmobiliario': 'Real estate sitemap',
+    'Mapa de navegación con acceso a colecciones, mercados activos y fichas destacadas del portal.': 'Navigation map with access to collections, active markets, and featured listings.',
+    'Mapa de navegación': 'Navigation map',
+    'Colecciones públicas': 'Public collections',
+    'Países disponibles': 'Available countries',
+    'Ciudades disponibles': 'Available cities',
+    'Detalles destacados': 'Featured details',
+    'SUPERFICIE ACTIVA': 'ACTIVE SURFACE',
+    'Este sitemap enlaza únicamente rutas públicas canónicas de fase 1 para mantener una identidad única y una indexación limpia.': 'This sitemap links only canonical public phase-1 routes to maintain a single identity and clean indexation.',
+    'Hub por país': 'Country hub',
+    'Hub por ciudad': 'City hub',
+    'Hub sin datos disponibles': 'Hub without available data',
+    'Análisis editorial por país con acceso a colección pública, enlaces internos y activos destacados.': 'Editorial analysis by country with access to public collection, internal links, and featured assets.',
+    'Análisis editorial por ciudad con accesos internos y activos destacados del mercado local.': 'Editorial analysis by city with internal links and featured local-market assets.',
+    'Activos por país': 'Assets by country',
+    'Activos por ciudad': 'Assets by city',
+    'Detalle del inmueble': 'Property detail',
+    'FORMAS DE CONTACTO': 'CONTACT CHANNELS',
+    'Tarifas públicas del portal': 'Public portal pricing',
+    'Sin activos disponibles en este filtro': 'No assets available for this filter',
+    'Usa los filtros para explorar activos en venta por ciudad y tipo.': 'Use filters to explore sale assets by city and type.',
+    'Usa los filtros para explorar activos en alquiler por tipo y ciudad.': 'Use filters to explore rental assets by type and city.',
+    'Colección pública de inmuebles en venta con validación editorial y cobertura europea.': 'Public sale collection with editorial validation and European coverage.',
+    'Colección pública de alquiler de larga duración y habitación con revisión editorial.': 'Public long-term rent and room collection with editorial review.',
+    'Estamos aquí para ayudarte en toda Europa (incluye Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia): soporte, publicación y seguridad.': 'We are here to help you across Europe (including the UK, Ireland, Scotland, Turkey, Iceland, and Greenland): support, publishing, and security.',
+    'Debes aceptar la política de privacidad.': 'You must accept the privacy policy.',
+    'Máximo 6 fotos por anuncio.': 'Maximum 6 photos per listing.',
+    'Introduce un teléfono de contacto válido.': 'Enter a valid contact phone number.',
+    'Enviando anuncio...': 'Submitting listing...',
+    'Error de red al publicar/editar el anuncio.': 'Network error while publishing/editing the listing.',
+    'Publicación no disponible en este despliegue estático (requiere backend /api/*). Escribe a hola@neuralgpt.store para asistencia manual.': 'Publishing is not available in this static deployment (requires /api/* backend). Email hola@neuralgpt.store for manual assistance.'
+    ,'neuralgpt.store utiliza únicamente cookies técnicas estrictamente necesarias para el funcionamiento de la web. No utilizamos cookies de seguimiento ni publicidad de terceros.': 'neuralgpt.store uses only strictly necessary technical cookies for website operation. We do not use tracking or third-party advertising cookies.'
+    ,'No realizamos transferencias internacionales de datos personales salvo obligación legal.': 'We do not perform international transfers of personal data unless legally required.'
+    ,'Aplicamos medidas técnicas y organizativas para proteger tus datos: cifrado HTTPS (TLS 1.3), cabeceras de seguridad HTTP, acceso restringido a datos personales, y análisis periódico de vulnerabilidades. Para reportar problemas de seguridad:': 'We apply technical and organizational measures to protect your data: HTTPS encryption (TLS 1.3), security headers, restricted access to personal data, and periodic vulnerability analysis. To report security issues:'
+    ,'neuralgpt.store no está dirigido a menores de 16 años. No recogemos conscientemente datos de menores. Si detectamos datos de un menor, los eliminaremos inmediatamente.': 'neuralgpt.store is not directed to minors under 16. We do not knowingly collect minors data. If we detect such data, we will remove it immediately.'
+    ,'Podemos actualizar esta política. Publicaremos los cambios en esta página con la fecha de actualización. Para cambios sustanciales, notificaremos por email si tienes cuenta o suscripción de newsletter.': 'We may update this policy. We will publish changes on this page with an updated date. For substantial changes, we will notify by email if you have an account or newsletter subscription.'
+    ,'neuralgpt.store es un portal inmobiliario. Al publicar un anuncio, el anunciante es responsable de la veracidad de los datos. El contacto directo del anunciante se facilita al interesado tras el pago del servicio de conexión.': 'neuralgpt.store is a real estate portal. When publishing a listing, the advertiser is responsible for data accuracy. Direct advertiser contact is provided after payment of the connection service.'
+    ,'neuralgpt.store es un portal inmobiliario digital dedicado a la publicación de anuncios de venta y alquiler de inmuebles. neuralgpt.store opera como portal de anuncios entre anunciantes y demandantes de vivienda o activos inmobiliarios.': 'neuralgpt.store is a digital real estate portal focused on publishing property sale and rental listings. neuralgpt.store operates as a listings portal between advertisers and housing or real estate seekers.'
+    ,'neuralgpt.store no actúa como agencia inmobiliaria, no presta mediación transaccional y no comercializa inmuebles directamente.': 'neuralgpt.store does not operate as a real estate agency, does not provide transaction mediation, and does not commercialize properties directly.'
+    ,'Para publicar un anuncio, los anunciantes deben contactar con el equipo a través de': 'To publish a listing, advertisers must contact the team through'
+    ,'. Al enviar un anuncio, el anunciante declara que la información proporcionada es veraz, que el inmueble descrito existe y que está autorizado a anunciarlo.': '. By submitting a listing, the advertiser declares that the provided information is truthful, the described property exists, and they are authorized to list it.'
+    ,'neuralgpt.store ofrece exclusivamente visibilidad y publicación. No actúa como agencia, no presta mediación transaccional, no ejerce custodia y no gestiona reservas, señales ni depósitos. Cualquier transacción entre propietario e interesado es responsabilidad exclusiva de las partes.': 'neuralgpt.store provides visibility and publishing only. It is not an agency, does not provide transaction mediation, does not hold custody, and does not manage reservations, deposits, or down payments. Any transaction between owner and interested party is solely the parties responsibility.'
+    ,'Los datos de contacto directo del anunciante (nombre, teléfono y email) se desbloquean únicamente tras el pago del servicio de conexión habilitado para cada ficha. Antes de ese pago, la ficha muestra solo información pública del activo.': 'Direct advertiser contact data (name, phone, email) is unlocked only after payment of the connection service enabled for each listing. Before payment, the listing shows only public asset information.'
+    ,'Antes de publicar un anuncio, neuralgpt.store realiza una revisión manual que incluye:': 'Before publishing a listing, neuralgpt.store performs a manual review including:'
+    ,'El badge "Verificado por Chany ✓" indica que el anuncio ha superado este proceso. La verificación no garantiza la disponibilidad del inmueble ni el resultado de ninguna transacción.': 'The "Verified by Chany ✓" badge indicates that the listing passed this process. Verification does not guarantee property availability or transaction outcome.'
+    ,'El anunciante es responsable de: la veracidad completa de los datos publicados, la disponibilidad real del inmueble, la actualización o retirada del anuncio cuando el inmueble deje de estar disponible, y el cumplimiento de la legislación aplicable en materia de arrendamientos y compraventa.': 'The advertiser is responsible for full data accuracy, real property availability, updating or removing the listing when unavailable, and compliance with applicable rental and sale law.'
+    ,'Está prohibido publicar: inmuebles inexistentes o no disponibles, datos falsos o engañosos sobre precio, superficie o condiciones, anuncios duplicados, y contenido que infrinja derechos de terceros o la normativa vigente.': 'It is forbidden to publish non-existent or unavailable properties, false or misleading data on price/surface/conditions, duplicate listings, or content that infringes third-party rights or current regulations.'
+    ,'indicando la URL del anuncio y la descripción del problema. Evaluamos cada incidencia individualmente y respondemos en menos de 24h laborables.': 'including the listing URL and problem description. We evaluate each incident individually and respond within 24 business hours.'
+    ,'Para reportar vulnerabilidades de seguridad o contenido que pueda infringir derechos de propiedad intelectual:': 'To report security vulnerabilities or content that may infringe intellectual property rights:'
+    ,'neuralgpt.store actúa exclusivamente como portal de publicación. No somos responsables de: la exactitud de los datos proporcionados por los anunciantes, el resultado de ninguna transacción entre propietario e interesado, la disponibilidad del inmueble en el momento de contacto, ni daños indirectos o consecuentes derivados del uso del portal.': 'neuralgpt.store acts exclusively as a publishing portal. We are not responsible for advertisers data accuracy, transaction outcomes between owner and interested party, property availability at contact time, or indirect/consequential damages from portal use.'
+    ,'Nos reservamos el derecho de modificar estos términos. Los cambios sustanciales se notificarán con 30 días de antelación mediante aviso en la web. El uso continuado del servicio tras la notificación implica la aceptación de los nuevos términos.': 'We reserve the right to modify these terms. Substantial changes will be notified 30 days in advance via website notice. Continued use after notice implies acceptance of the new terms.'
+    ,'Estos términos se rigen por la legislación española. Para disputas no resueltas amigablemente, las partes se someten a los juzgados y tribunales competentes de España. Para usuarios de la Unión Europea, también es aplicable la normativa de protección al consumidor vigente en el país de residencia del usuario.': 'These terms are governed by Spanish law. For unresolved disputes, parties submit to competent Spanish courts. For EU users, consumer-protection rules of the user residence country also apply.'
+    ,'Portal inmobiliario digital — publicación y gestión de anuncios de venta y alquiler de inmuebles': 'Digital real estate portal — publishing and management of property sale and rental listings'
+    ,'neuralgpt.store es un portal inmobiliario digital. La plataforma opera como portal de anuncios para anunciantes y demandantes de vivienda o activos inmobiliarios.': 'neuralgpt.store is a digital real estate portal. The platform operates as a listings portal for advertisers and housing/asset seekers.'
+    ,'neuralgpt.store no comercializa inmuebles directamente, no actúa como agencia inmobiliaria y no presta mediación transaccional. Los anuncios son publicados por propietarios o representantes autorizados.': 'neuralgpt.store does not commercialize properties directly, does not act as an agency, and does not provide transaction mediation. Listings are published by owners or authorized representatives.'
+    ,'El diseño, código fuente, textos, logotipos, imágenes y elementos gráficos propios de neuralgpt.store están protegidos por derechos de propiedad intelectual e industrial. Queda prohibida su reproducción, distribución, transformación o comunicación pública sin autorización expresa por escrito.': 'Design, source code, texts, logos, images, and proprietary graphic elements of neuralgpt.store are protected by intellectual and industrial property rights. Reproduction, distribution, transformation, or public communication without written authorization is prohibited.'
+    ,'El contenido de los anuncios (descripciones, fotografías) es propiedad de sus respectivos autores. neuralgpt.store no reivindica derechos de propiedad sobre el contenido de terceros.': 'Listing content (descriptions, photos) belongs to their respective authors. neuralgpt.store does not claim ownership over third-party content.'
+    ,'El acceso y uso de neuralgpt.store implica la aceptación de las presentes condiciones y de los': 'Access and use of neuralgpt.store implies acceptance of these conditions and the'
+    ,'neuralgpt.store pone todos los medios razonables para mantener la información del sitio web actualizada y precisa, pero no garantiza la exactitud, integridad o actualidad de la información en todo momento. El usuario debe verificar la información relevante antes de tomar decisiones basadas en ella.': 'neuralgpt.store uses reasonable means to keep website information updated and accurate, but does not guarantee accuracy, completeness, or timeliness at all times. Users must verify relevant information before making decisions.'
+    ,'neuralgpt.store verifica los anuncios publicados, pero no actúa como agencia ni mediador transaccional y no puede garantizar la exactitud de todos los datos aportados por el anunciante. La responsabilidad sobre la veracidad del anuncio es del anunciante correspondiente.': 'neuralgpt.store verifies published listings, but does not act as an agency or transaction mediator and cannot guarantee all advertiser-provided data. Responsibility for listing truthfulness belongs to the advertiser.'
+    ,'Salvo lo expresamente indicado, el sitio y sus contenidos se proporcionan "tal cual", sin garantías de ningún tipo, expresas o implícitas.': 'Unless expressly stated, the site and its content are provided "as is", without warranties of any kind, express or implied.'
+    ,'El presente aviso legal se rige por la legislación española, en particular por la Ley de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), la Ley Orgánica de Protección de Datos Personales y Garantía de Derechos Digitales (LOPDGDD) y el Reglamento General de Protección de Datos (RGPD).': 'This legal notice is governed by Spanish law, particularly LSSI-CE, LOPDGDD, and GDPR.'
+    ,'Para la resolución de disputas, las partes se someten a los juzgados y tribunales del domicilio del usuario, salvo disposición legal en contrario. Los usuarios de la Unión Europea pueden recurrir a la plataforma europea de resolución de litigios en línea.': 'For dispute resolution, parties submit to courts at the user domicile unless law provides otherwise. EU users may use the European online dispute resolution platform.'
+    ,', pasos de reproducción y evidencia mínima. Priorizamos el triage y coordinamos la mitigación antes de cualquier divulgación pública.': ', reproduction steps and minimum evidence. We prioritize triage and coordinate mitigation before any public disclosure.'
+    ,'Accede a propietarios, compradores y arrendatarios activos que buscan inmuebles verificados en España y Portugal.': 'Reach active owners, buyers, and tenants looking for verified properties in Spain and Portugal.'
+    ,'Nuestros usuarios están en proceso activo de compra, venta o alquiler — el momento ideal para ofrecer servicios complementarios.': 'Our users are in an active buying, selling, or renting process — the ideal moment to offer complementary services.'
+    ,'Asociarse con neuralgpt.store transmite confianza. Cada anuncio pasa por revisión manual antes de publicarse.': 'Partnering with neuralgpt.store conveys trust. Every listing goes through manual review before publication.'
+    ,'Visibilidad en páginas de ciudades y países específicos. Llega a usuarios que buscan en tu zona de operación.': 'Visibility on specific city and country pages. Reach users searching in your operating area.'
+    ,'Acuerdos claros, sin letra pequeña. Definimos juntos el formato de colaboración más adecuado para tu perfil.': 'Clear agreements, no fine print. We define together the collaboration format that best fits your profile.'
+    ,'Interlocutor humano para cada partner. Sin formularios genéricos ni procesos automatizados para casos importantes.': 'A human point of contact for each partner. No generic forms or automated processes for important cases.'
+    ,'Empresas de reformas, construcción y rehabilitación de viviendas. Contacta a propietarios en el momento de compra.': 'Renovation, construction, and housing rehabilitation companies. Contact owners at the moment of purchase.'
+    ,'Estudios de arquitectura, interiorismo y diseño de espacios residenciales y comerciales.': 'Architecture, interior design, and residential/commercial space design studios.'
+    ,'Aseguradoras y corredurías con productos de hogar, alquiler, impago de renta y comunidades.': 'Insurers and brokers with home, rental, rent-default, and community products.'
+    ,'Despachos especializados en derecho inmobiliario, contratos de compraventa, arrendamientos y herencias.': 'Firms specialized in real estate law, sale contracts, leases, and inheritances.'
+    ,'Servicios de home staging, decoración temporal y preparación de inmuebles para la venta o el alquiler.': 'Home staging services, temporary decoration, and property preparation for sale or rent.'
+    ,'Fotógrafos profesionales, tours virtuales 360° y producción de vídeo para anuncios inmobiliarios.': 'Professional photographers, 360° virtual tours, and video production for real estate listings.'
+    ,'Sociedades de tasación homologadas, peritos inmobiliarios y servicios de valoración para compraventas e hipotecas.': 'Certified appraisal firms, real estate experts, and valuation services for sales and mortgages.'
+    ,'Entidades financieras, brókers hipotecarios y servicios de asesoramiento en financiación de inmuebles.': 'Financial institutions, mortgage brokers, and advisory services for property financing.'
+    ,'Inversión Inmobiliaria en Europa 2026: Rentabilidad y Fiscalidad | neuralgpt.store': 'Real Estate Investment in Europe 2026: Profitability and Taxation | neuralgpt.store'
+    ,'La inversión inmobiliaria en Europa ofrece estabilidad y diversificación para inversores que buscan rentabilidad sostenida. El rental yield promedio en ciudades europeas ronda el 4-6% bruto anual, con variaciones significativas según mercado y tipología de activo.': 'Real estate investment in Europe offers stability and diversification for investors seeking sustained returns. Average rental yield in European cities is around 4–6% gross annually, with significant variation by market and asset type.'
+    ,'5-7%, mercados secundarios del Reino Unido con buena relación precio/rentabilidad.': '5–7%, secondary UK markets with a good price/return ratio.'
+    ,'Los ingresos por alquiler tributan como rendimientos del capital inmobiliario. En España: hasta el 47% (escala progresiva). Portugal: régimen de residente no habitual puede reducir tributación hasta 10 años. Irlanda: hasta 52% sobre rentas de alquiler. Reino Unido: 20-45% según tramo. Consulta siempre con asesor fiscal local para optimizar estructura fiscal.': 'Rental income is taxed as real estate capital income. Spain: up to 47% (progressive scale). Portugal: non-habitual resident regime can reduce taxation for up to 10 years. Ireland: up to 52% on rental income. UK: 20–45% depending on bracket. Always consult a local tax advisor to optimize your tax structure.'
+    ,'mejor equilibrio entre rentabilidad y estabilidad operativa en estancias de media duración.': 'better balance between profitability and operational stability in mid-term stays.'
+    ,'Fluctuación cambiaria (si inviertes fuera de zona euro), vacío de inquilinos (reserva 3-6 meses de renta), gastos de mantenimiento imprevistos y cambios regulatorios (control de rentas, eficiencia energética y obligaciones documentales). Diversifica geográficamente y por tipología de activo.': 'Currency fluctuation (if investing outside the euro zone), vacancy risk (reserve 3–6 months of rent), unexpected maintenance costs, and regulatory changes (rent controls, energy efficiency, and documentation obligations). Diversify by geography and asset type.'
+    ,'Antes de invertir, visita el mercado local, analiza la demanda real de alquiler, verifica la legislación vigente y calcula el rental yield neto (después de impuestos, mantenimiento y vacío). Una inversión inmobiliaria es a largo plazo: piensa en horizonte mínimo de 5-10 años.': 'Before investing, visit the local market, analyze real rental demand, verify current legislation, and calculate net rental yield (after taxes, maintenance, and vacancy). Real estate investment is long-term: think in a 5–10 year minimum horizon.'
+    ,'Este mercado aún no tiene suficientes activos publicados para generar un hub completo. Puedes explorar países activos y publicar alertas.': 'This market does not yet have enough published assets to generate a complete hub. You can explore active countries and create alerts.'
+    ,'Esta ciudad aún no tiene suficiente inventario público para generar un hub completo. Revisa otras plazas activas o crea una alerta.': 'This city does not yet have enough public inventory to generate a complete hub. Check other active markets or create an alert.'
+    ,'Explora la selección por país y accede a mercados con inventario activo y hubs editoriales.': 'Explore the selection by country and access markets with active inventory and editorial hubs.'
+    ,'Estamos ampliando oferta en este país. Mientras tanto, consulta ciudades con tracción y hubs editoriales activos.': 'We are expanding supply in this country. In the meantime, check cities with traction and active editorial hubs.'
+    ,'Explora la oferta por ciudad para encontrar zonas con inventario verificado y hubs editoriales activos.': 'Explore city supply to find areas with verified inventory and active editorial hubs.'
+    ,'Esta plaza está en activación comercial. Mientras tanto, revisa hubs cercanos y oportunidades destacadas del portal.': 'This market is in commercial activation. In the meantime, review nearby hubs and featured portal opportunities.'
+    ,'La URL que buscas no existe o ha sido movida. Es posible que la página haya cambiado de dirección.': 'The URL you are looking for does not exist or has been moved. The page address may have changed.'
+    ,'Soporte del portal, publicación de activos y desbloqueo de contacto tras pago. Respuesta en &lt;24h laborables.': 'Portal support, asset publishing, and contact unlock after payment. Response in <24 business hours.'
+    ,'Reportar vulnerabilidades, problemas de seguridad. Asunto: [SECURITY]. Respuesta en &lt;4h.': 'Report vulnerabilities and security issues. Subject: [SECURITY]. Response in <4h.'
+    ,'Dudas sobre publicación, revisión editorial y opciones de visibilidad del anuncio.': 'Questions about publishing, editorial review, and listing visibility options.'
+    ,'Ajusta ciudad o tipo de activo, o consulta hubs y mercados con inventario activo para seguir explorando.': 'Adjust city or asset type, or check hubs and markets with active inventory to continue exploring.'
+    ,'Ajusta filtros de ciudad o modalidad de alquiler, o explora hubs y mercados con inventario activo.': 'Adjust city filters or rental mode, or explore hubs and markets with active inventory.'
+    ,'Anuncios de venta y alquiler verificados manualmente en toda Europa, incluyendo Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia.': 'Manually verified sale and rental listings across Europe, including the UK, Ireland, Scotland, Turkey, Iceland, and Greenland.'
+    ,'Pisos, casas, áticos, locales y terrenos disponibles para compra. Verificados y con toda la información.': 'Apartments, houses, penthouses, commercial units, and land available for purchase. Verified and fully detailed.'
+    ,'Pisos, apartamentos y casas en alquiler de larga duración. Precios claros sin sorpresas.': 'Flats, apartments, and houses for long-term rent. Clear pricing without surprises.'
+    ,'¿Tienes un inmueble que vender o alquilar? Contacta con nuestro equipo y lo publicamos con verificación manual.': 'Do you have a property to sell or rent? Contact our team and we publish it with manual verification.'
+    ,'Cobertura inmobiliaria europea completa: UE, Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia.': 'Full European real estate coverage: EU, UK, Ireland, Scotland, Turkey, Iceland, and Greenland.'
+    ,'Rotación activa para inmobiliarias, arquitectura, banca e hipotecas, construcción, reformas y restauración de inmuebles.': 'Active rotation for real estate firms, architecture, banking and mortgages, construction, renovations, and property restoration.'
+    ,'"Publiqué mi piso en Madrid en 5 minutos. Al día siguiente ya tenía 3 contactos serios."': '"I listed my apartment in Madrid in 5 minutes. The next day I already had 3 serious contacts."'
+    ,'"Por fin un portal europeo que no cobra una fortuna por publicar. Claro, directo y sin comisiones."': '"Finally a European portal that does not charge a fortune to list. Clear, direct, and no commissions."'
+    ,'"Encontré comprador para mi local en Rotterdam en menos de dos semanas. Increíble alcance europeo."': '"I found a buyer for my commercial unit in Rotterdam in less than two weeks. Incredible European reach."'
+    ,'Publica tu anuncio en neuralgpt.store. Nuestro equipo lo revisa, verifica y lo publica con el badge de calidad.': 'Publish your listing on neuralgpt.store. Our team reviews, verifies, and publishes it with the quality badge.'
+  }
+};
+
+const ATTRIBUTE_LITERALS = {
+  en: {
+    placeholder: {
+      'tu@email.com': 'you@email.com',
+      'nombre@dominio.com': 'name@domain.com',
+      'Tu nombre': 'Your name',
+      '+34 600 000 000': '+34 600 000 000',
+      'Ej: Piso premium en Madrid': 'Ex: Premium apartment in Madrid',
+      'Resumen breve del activo': 'Short asset summary',
+      'Describe el activo…': 'Describe the asset…',
+      'Madrid': 'Madrid',
+      'Salamanca': 'Salamanca'
+    },
+    'aria-label': {
+      'Menú': 'Menu',
+      'Idioma': 'Language'
+    }
   }
 };
 
@@ -522,7 +715,7 @@ const I18N = {
   },
   ensureSelector() {
     if (document.getElementById('lang-select')) return;
-    const nav = document.querySelector('.main-nav');
+    const nav = document.querySelector('.main-nav, .nav');
     if (!nav) return;
     const wrap = document.createElement('div');
     wrap.className = 'lang-selector';
@@ -567,6 +760,35 @@ const I18N = {
       const trailing = raw.match(/\s*$/)[0];
       node.textContent = leading + translated + trailing;
     });
+    const titleTranslated = map[document.title];
+    if (titleTranslated) document.title = titleTranslated;
+  },
+  applyAttributeLiterals() {
+    const map = ATTRIBUTE_LITERALS[this.lang];
+    if (!map || !document.body) return;
+    const placeholders = map.placeholder || {};
+    const aria = map['aria-label'] || {};
+    document.querySelectorAll('[placeholder]').forEach(el => {
+      const raw = el.getAttribute('placeholder');
+      const translated = placeholders[raw];
+      if (translated) el.setAttribute('placeholder', translated);
+    });
+    document.querySelectorAll('[aria-label]').forEach(el => {
+      const raw = el.getAttribute('aria-label');
+      const translated = aria[raw];
+      if (translated) el.setAttribute('aria-label', translated);
+    });
+  },
+  bindMutationTranslation() {
+    if (this._observerBound || !document.body) return;
+    this._observerBound = true;
+    const observer = new MutationObserver(() => {
+      if (this.lang !== 'en') return;
+      this.applyLiteralTexts();
+      this.applyAttributeLiterals();
+      this.applyHrefTexts();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   },
   set(lang) {
     if (!TRANSLATIONS[lang]) return;
@@ -591,6 +813,8 @@ const I18N = {
     });
     this.applyHrefTexts();
     this.applyLiteralTexts();
+    this.applyAttributeLiterals();
+    this.bindMutationTranslation();
     if (this.lang === 'ar') {
       document.body.setAttribute('dir', 'rtl');
     } else {
