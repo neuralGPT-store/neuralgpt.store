@@ -34,6 +34,7 @@
 window.__AUTO_LANG__ = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
 document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : 'en';
 </script>
+<script src="/js/i18n.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -44,10 +45,24 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
     <nav class="main-nav" id="main-nav" aria-label="Principal">
       <ul>
         <li><a href="/" aria-current="page">Inicio</a></li>
-        <li><a href="/venta.html">Venta</a></li>
-        <li><a href="/alquiler.html">Alquiler</a></li>
+        <li><a href="/venta.html" data-i18n="nav_venta">Venta</a></li>
+        <li><a href="/alquiler.html" data-i18n="nav_alquiler">Alquiler</a></li>
         <li><a href="/contact.html">Contacto</a></li>
       </ul>
+      <div class="lang-selector">
+        <select id="lang-select" onchange="I18N.set(this.value)" aria-label="Idioma">
+          <option value="es">🇪🇸 ES</option>
+          <option value="en">🇬🇧 EN</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="de">🇩🇪 DE</option>
+          <option value="pt">🇵🇹 PT</option>
+          <option value="it">🇮🇹 IT</option>
+          <option value="ru">🇷🇺 RU</option>
+          <option value="tr">🇹🇷 TR</option>
+          <option value="ar">🇸🇦 AR</option>
+          <option value="zh">🇨🇳 ZH</option>
+        </select>
+      </div>
     </nav>
     <div class="header-actions">
       <a href="/real-estate-index.html" class="btn">Ver inmuebles</a>
@@ -65,13 +80,13 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
     <div class="particles-wrap" id="particles" aria-hidden="true" style="position:absolute;inset:0;z-index:1;pointer-events:none;" aria-hidden="true" style="display:none"></div>
     <div class="hero-content wrap" style="position:relative;z-index:2;">
       <div class="hero-badge">
-        <span class="dot"></span>PORTAL INMOBILIARIO VERIFICADO
+        <span class="dot"></span><span data-i18n="verified_badge">PORTAL INMOBILIARIO VERIFICADO</span>
       </div>
-      <h1>Tu próximo inmueble<br>está aquí</h1>
-      <p class="hero-sub">Anuncios de venta y alquiler verificados manualmente en toda Europa, incluyendo Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia.</p>
+      <h1 data-i18n="hero_title">Tu próximo inmueble está aquí</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Anuncios de venta y alquiler verificados manualmente en toda Europa, incluyendo Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia.</p>
       <div class="hero-ctas">
-        <a href="/venta.html" class="btn btn-primary btn-lg">Ver en venta</a>
-        <a href="/alquiler.html" class="btn btn-lg">Ver en alquiler</a>
+        <a href="/venta.html" class="btn btn-primary btn-lg" data-i18n="btn_venta">Ver en venta</a>
+        <a href="/alquiler.html" class="btn btn-lg" data-i18n="btn_alquiler">Ver en alquiler</a>
       </div>
     </div>
   </section>
@@ -81,19 +96,19 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
     <div class="wrap stats-grid">
       <div class="stat-item">
         <span class="stat-num" data-target="2847">0</span>
-        <span class="stat-label">Anuncios activos</span>
+        <span class="stat-label" data-i18n="stats_listings">Anuncios activos</span>
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="142">0</span>
-        <span class="stat-label">Ciudades</span>
+        <span class="stat-label" data-i18n="stats_cities">Ciudades</span>
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="12">0</span>
-        <span class="stat-label">Países</span>
+        <span class="stat-label" data-i18n="stats_countries">Países</span>
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="100">0</span>
-        <span class="stat-label">% Verificados</span>
+        <span class="stat-label" data-i18n="stats_verified">% Verificados</span>
       </div>
     </div>
   </section>
