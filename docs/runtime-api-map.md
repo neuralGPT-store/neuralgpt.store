@@ -3,6 +3,69 @@
 Fecha: 2026-04-21  
 Estado actual frontend: degradación segura en despliegue estático (GitHub Pages) con `backendReady=false` por defecto.
 
+## 0) Diseño técnico final (bloque 16)
+
+### Arquitectura elegida
+- Frontend estático (ya cerrado) en `neuralgpt.store`.
+- Backend Node dedicado para `/api/*` (dominio API o reverse proxy).
+- Webhook Stripe solo en backend: `POST /api/stripe/webhook`.
+
+### Por qué esta opción y no otra
+- Es la mínima compatible con el frontend actual (`/api/*` ya integrado).
+- GitHub Pages no ejecuta Node, por lo que backend debe ir separado.
+- Mantiene secretos y webhook fuera de frontend.
+- Evita introducir proveedores o servicios no confirmados.
+
+### Variables de entorno necesarias
+- Runtime:
+  - `PORT`, `NODE_ENV`
+  - `NEURAL_PUBLIC_BASE_URL`
+  - `NEURAL_API_BASE_URL`
+- Persistencia:
+  - `LISTINGS_STORE_PATH`
+  - `LISTINGS_EDIT_KEY_PEPPER`
+- Stripe:
+  - `STRIPE_SECRET_KEY` (no configurar aún)
+  - `STRIPE_WEBHOOK_SECRET` (no configurar aún)
+  - `STRIPE_PRICE_CONTACT_UNLOCK`
+  - `STRIPE_PRICE_MAS_VISIBILIDAD`
+  - `STRIPE_PRICE_SENSACIONAL`
+  - `STRIPE_PRICE_PLAN_BASICO`
+  - `STRIPE_PRICE_PLAN_PREMIUM`
+  - `STRIPE_SUCCESS_URL`
+  - `STRIPE_CANCEL_URL`
+
+### Estructura mínima de carpetas (runtime nuevo)
+```text
+runtime/
+  server.js
+  router.js
+  config/env.js
+  handlers/listings.js
+  handlers/stripe.js
+  services/listings-store.js
+  services/stripe-client.js
+  lib/http.js
+  lib/multipart.js
+  data/.gitkeep
+  .env.example
+```
+
+### Orden exacto de implementación
+1. Base runtime (`server`, `router`, utilidades HTTP, `env`).
+2. `listings/upsert` y `listings/status`.
+3. Stripe checkout handlers con guardas de configuración.
+4. Webhook con verificación de firma.
+5. Ajuste de `neural-api-base` y `neural-backend-ready` en despliegue.
+6. Prueba E2E con claves reales en último paso.
+
+### Riesgos si se toca mal
+- Exponer secretos Stripe en frontend.
+- Aceptar `edit_key` sin hash/pepper.
+- No validar firma `stripe-signature` en webhook.
+- Cambiar contrato JSON esperado por frontend.
+- Persistencia sin volumen (pérdida de datos).
+
 ## 1) Endpoints activos en frontend
 
 ### Publicación y edición de anuncios
