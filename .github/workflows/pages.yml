@@ -24,10 +24,26 @@ jobs:
         run: |
           if npm run -s build > /dev/null 2>&1; then npm run build; else echo "No build step; publishing repository root"; fi
 
+      - name: Prepare sanitized public artifact
+        run: |
+          set -euo pipefail
+          rm -rf .pages-dist
+          mkdir -p .pages-dist
+
+          for file in CNAME favicon.ico robots.txt sitemap.xml sitemap-real-estate.xml _redirects _headers; do
+            if [ -f "$file" ]; then cp "$file" ".pages-dist/$file"; fi
+          done
+
+          find . -maxdepth 1 -type f -name '*.html' -exec cp {} .pages-dist/ \;
+
+          for dir in assets css js blog public-data venta alquiler ciudad pais listing inmobiliario .well-known; do
+            if [ -d "$dir" ]; then cp -a "$dir" ".pages-dist/$dir"; fi
+          done
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./
+          path: ./.pages-dist
 
   deploy:
     needs: build
