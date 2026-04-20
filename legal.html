@@ -28,6 +28,7 @@
     .legal-wrap a { color: var(--accent); }
     .legal-wrap .highlight { padding: 16px 20px; background: rgba(0,234,255,0.04); border: 1.5px solid rgba(0,234,255,0.15); border-radius: 10px; margin: 20px 0; }
   </style>
+  <script src="/js/i18n.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -126,7 +127,6 @@
   var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
   if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
   </script>
-  <script src="/js/i18n-global.js" defer></script>
   <script src="/js/agent-chat.js" defer></script>
 </body>
 </html>

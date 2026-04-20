@@ -1,13 +1,27 @@
 const TRANSLATIONS = {
   es: {
+    nav_home: "Inicio",
     hero_title: "Tu próximo inmueble está aquí",
     hero_sub: "Anuncios verificados en toda Europa",
     btn_venta: "Ver en venta",
     btn_alquiler: "Ver en alquiler",
     nav_venta: "Venta",
     nav_alquiler: "Alquiler",
+    nav_contact: "Contacto",
+    nav_inmuebles: "Inmuebles",
+    nav_about: "Sobre nosotros",
     nav_publicar: "Publicar gratis",
     nav_sponsors: "Sponsors",
+    nav_blog: "Blog",
+    nav_privacy: "Privacidad",
+    nav_terms: "Términos",
+    nav_legal: "Aviso legal",
+    nav_security: "Seguridad",
+    label_language: "Idioma",
+    btn_view_listings: "Ver inmuebles",
+    btn_publish_listing: "Publicar activo",
+    btn_publish_ad: "Publicar anuncio",
+    btn_back_blog: "← Volver al blog",
     footer_desc: "Portal inmobiliario premium europeo.",
     contact_title: "Publicar anuncio",
     verified_badge: "PORTAL VERIFICADO",
@@ -43,14 +57,28 @@ const TRANSLATIONS = {
     days: "días"
   },
   en: {
+    nav_home: "Home",
     hero_title: "Your next property is here",
     hero_sub: "Verified listings across Europe",
     btn_venta: "Properties for sale",
     btn_alquiler: "Properties to rent",
     nav_venta: "Sale",
     nav_alquiler: "Rent",
+    nav_contact: "Contact",
+    nav_inmuebles: "Listings",
+    nav_about: "About us",
     nav_publicar: "List for free",
     nav_sponsors: "Sponsors",
+    nav_blog: "Blog",
+    nav_privacy: "Privacy",
+    nav_terms: "Terms",
+    nav_legal: "Legal notice",
+    nav_security: "Security",
+    label_language: "Language",
+    btn_view_listings: "View listings",
+    btn_publish_listing: "Post listing",
+    btn_publish_ad: "Post ad",
+    btn_back_blog: "← Back to blog",
     footer_desc: "Premium European real estate portal.",
     contact_title: "Post your listing",
     verified_badge: "VERIFIED PORTAL",
@@ -431,6 +459,56 @@ const TRANSLATIONS = {
   }
 };
 
+const LANG_OPTIONS = [
+  ['es', '🇪🇸 ES'], ['en', '🇬🇧 EN'], ['fr', '🇫🇷 FR'], ['de', '🇩🇪 DE'], ['pt', '🇵🇹 PT'],
+  ['it', '🇮🇹 IT'], ['ru', '🇷🇺 RU'], ['tr', '🇹🇷 TR'], ['ar', '🇸🇦 AR'], ['zh', '🇨🇳 ZH']
+];
+
+const LINK_KEY_BY_HREF = {
+  '/': 'nav_home',
+  '/index.html': 'nav_home',
+  '/venta.html': 'nav_venta',
+  '/alquiler.html': 'nav_alquiler',
+  '/contact.html': 'nav_contact',
+  '/real-estate-index.html': 'nav_inmuebles',
+  '/about.html': 'nav_about',
+  '/sponsors.html': 'nav_sponsors',
+  '/blog/': 'nav_blog',
+  '/privacy.html': 'nav_privacy',
+  '/terms.html': 'nav_terms',
+  '/legal.html': 'nav_legal',
+  '/security.html': 'nav_security'
+};
+
+const LITERAL_TEXT = {
+  en: {
+    'Inicio': 'Home',
+    'Venta': 'Sale',
+    'Alquiler': 'Rent',
+    'Inmuebles': 'Listings',
+    'Contacto': 'Contact',
+    'Publicar': 'Post',
+    'Publicar activo': 'Post listing',
+    'Publicar anuncio': 'Post ad',
+    'Ver inmuebles': 'View listings',
+    'Sobre nosotros': 'About us',
+    'Sponsors': 'Sponsors',
+    'Privacidad': 'Privacy',
+    'Términos': 'Terms',
+    'Aviso legal': 'Legal notice',
+    'Seguridad': 'Security',
+    'Sitemap': 'Sitemap',
+    'Sitemap inmobiliario': 'Real estate sitemap',
+    'Blog': 'Blog',
+    'Índice inmobiliario': 'Real estate index',
+    'Volver al portal': 'Back to portal',
+    'Portal inmobiliario': 'Real estate portal',
+    'Todos los tipos': 'All types',
+    'Todas las ciudades': 'All cities',
+    'Filtrar por ciudad': 'Filter by city'
+  }
+};
+
 const I18N = {
   lang: 'es',
   t(key) {
@@ -442,6 +520,54 @@ const I18N = {
     const browser = (navigator.language || navigator.userLanguage || 'es').slice(0,2).toLowerCase();
     this.lang = TRANSLATIONS[browser] ? browser : 'es';
   },
+  ensureSelector() {
+    if (document.getElementById('lang-select')) return;
+    const nav = document.querySelector('.main-nav');
+    if (!nav) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'lang-selector';
+    const sel = document.createElement('select');
+    sel.id = 'lang-select';
+    sel.setAttribute('aria-label', this.t('label_language'));
+    LANG_OPTIONS.forEach(([code, label]) => {
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = label;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener('change', () => this.set(sel.value));
+    wrap.appendChild(sel);
+    nav.appendChild(wrap);
+  },
+  applyHrefTexts() {
+    document.querySelectorAll('a[href]').forEach(el => {
+      const href = el.getAttribute('href');
+      const key = LINK_KEY_BY_HREF[href];
+      if (key && TRANSLATIONS.es[key] !== undefined) {
+        el.textContent = this.t(key);
+      }
+    });
+  },
+  applyLiteralTexts() {
+    const map = LITERAL_TEXT[this.lang];
+    if (!map || !document.body) return;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => {
+      const parent = node.parentElement;
+      if (!parent) return;
+      const tag = parent.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return;
+      const raw = node.textContent || '';
+      const trimmed = raw.trim();
+      const translated = map[trimmed];
+      if (!translated) return;
+      const leading = raw.match(/^\s*/)[0];
+      const trailing = raw.match(/\s*$/)[0];
+      node.textContent = leading + translated + trailing;
+    });
+  },
   set(lang) {
     if (!TRANSLATIONS[lang]) return;
     this.lang = lang;
@@ -450,6 +576,7 @@ const I18N = {
   },
   apply() {
     document.documentElement.lang = this.lang;
+    this.ensureSelector();
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.dataset.i18n;
       const val = this.t(key);
@@ -462,6 +589,8 @@ const I18N = {
     document.querySelectorAll('[data-i18n-href]').forEach(el => {
       el.href = el.dataset.i18nHref.replace('{lang}', this.lang);
     });
+    this.applyHrefTexts();
+    this.applyLiteralTexts();
     if (this.lang === 'ar') {
       document.body.setAttribute('dir', 'rtl');
     } else {
