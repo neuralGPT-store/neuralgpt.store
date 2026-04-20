@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
   <title>Seguridad — neuralgpt.store</title>
-  <meta name="description" content="Política de seguridad y canal de reporte de vulnerabilidades de neuralgpt.store." />
+  <meta name="description" content="Compromiso de seguridad de neuralgpt.store, medidas técnicas aplicadas y canal responsable de reporte de vulnerabilidades." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://neuralgpt.store/security.html" />
   <link rel="icon" href="/favicon.ico" />
@@ -35,14 +35,20 @@
   <main id="main-content" class="wrap" style="padding-top:40px;padding-bottom:80px;max-width:920px">
     <section class="card" style="padding:28px">
       <h1 class="section-title" style="text-align:left">Seguridad</h1>
-      <p style="color:var(--muted);line-height:1.8;margin-top:12px">Este portal aplica endurecimiento básico de cabeceras, control de indexación de rutas sensibles y separación estricta entre dataset público y dataset operativo privado.</p>
-      <p style="color:var(--muted);line-height:1.8">Si detectas una vulnerabilidad, escribe a <a href="mailto:security@neuralgpt.store" style="color:var(--accent)">security@neuralgpt.store</a> con asunto `[SECURITY]` y una descripción reproducible.</p>
-      <p style="color:var(--muted);line-height:1.8">No publiques detalles técnicos de forma pública antes de que el equipo confirme mitigación.</p>
+      <p style="color:var(--muted);line-height:1.8;margin-top:12px">neuralgpt.store aplica una política activa de seguridad con controles técnicos de cabeceras, separación estricta entre superficie pública y operativa, y revisión periódica de riesgos sobre rutas y datos expuestos.</p>
+      <p style="color:var(--muted);line-height:1.8">El portal mantiene cifrado HTTPS, restricciones de indexación en rutas sensibles y prácticas de mínima exposición de datos en frontend. Ningún flujo comercial debe depender de publicar información privada en páginas indexables.</p>
+      <p style="color:var(--muted);line-height:1.8">Si detectas una vulnerabilidad, escribe a <a href="mailto:security@neuralgpt.store" style="color:var(--accent)">security@neuralgpt.store</a> con asunto <code>[SECURITY]</code>, pasos de reproducción y evidencia mínima. Priorizamos el triage y coordinamos la mitigación antes de cualquier divulgación pública.</p>
     </section>
   </main>
 
   <div class="rgb-divider"></div>
-  <footer class="site-footer"><div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="/legal.html" style="color:var(--accent)">Aviso legal</a></span></div></footer>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand-col"><a class="brand" href="/">neural<span>GPT</span>.store</a><p>Portal inmobiliario premium.</p></div>
+      <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/legal.html">Aviso legal</a></li><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:security@neuralgpt.store" style="color:var(--accent)">security@neuralgpt.store</a></span><span><a href="mailto:hola@neuralgpt.store" style="color:var(--muted)">hola@neuralgpt.store</a></span></div>
+  </footer>
   <script>
   var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
   if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
