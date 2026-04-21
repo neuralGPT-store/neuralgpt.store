@@ -153,3 +153,14 @@ runtime/
   - navegación, SEO, copy, legal, i18n y degradación segura en estático.
 - B) Backend pendiente:
   - runtime `/api/*` para publicación, edición y pagos E2E.
+
+## 8) Estado de scaffolding backend (bloque 17)
+- Runtime nuevo creado en `runtime/` con router y handlers dedicados.
+- Endpoints `/api/listings/status` y `/api/listings/upsert` preparados.
+- Endpoints Stripe y webhook preparados con guardas seguras (`stripe_not_configured` sin secretos).
+- Sin claves reales en código del scaffold.
+
+Pendiente para activación real:
+- Cargar variables `STRIPE_*` en entorno seguro.
+- Implementar reconciliación de eventos en `POST /api/stripe/webhook` (actualmente stub seguro).
+- Activar flags de frontend (`neural-backend-ready` y `neural-api-base`) en despliegue final.
