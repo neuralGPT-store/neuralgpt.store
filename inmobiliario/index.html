@@ -2,56 +2,78 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Indice inmobiliario europeo premium | neuralgpt.store</title>
-  <meta name="description" content="Puerta de entrada del vertical inmobiliario premium en Europa. Acceso directo a venta, alquiler estable y detalle piloto de activo verificado." />
-  <meta name="robots" content="noindex,follow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>Portal inmobiliario europeo | neuralgpt.store</title>
+  <meta name="description" content="Puerta de entrada al vertical inmobiliario premium: venta, alquiler, hubs por mercado y rutas editoriales activas." />
+  <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://neuralgpt.store/inmobiliario/" />
-  <style>
-    :root { --bg:#f6f3ed; --ink:#1d1a16; --muted:#645a4b; --line:#d7cec1; --card:#fff; --accent:#7d6032; }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif; background:linear-gradient(180deg,#faf7f1 0%,#f2ece0 100%); color:var(--ink); }
-    main { max-width:980px; margin:0 auto; padding:34px 20px 58px; }
-    nav ol { list-style:none; padding:0; margin:0 0 16px; display:flex; gap:8px; flex-wrap:wrap; color:var(--muted); font-size:14px; }
-    nav li::after { content:"/"; margin-left:8px; }
-    nav li:last-child::after { content:""; margin:0; }
-    h1 { margin:10px 0 12px; font-size:clamp(1.6rem,3vw,2.1rem); }
-    p { line-height:1.65; margin:0 0 12px; }
-    .muted { color:var(--muted); }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; margin-top:14px; }
-    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
-    .links { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-    a.btn { display:inline-block; text-decoration:none; border:1px solid var(--line); border-radius:999px; padding:8px 12px; color:var(--ink); background:#fff; font-size:14px; }
-  </style>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/theme-override.css" />
+  <script src="/js/i18n.js"></script>
 </head>
 <body>
-  <!-- PILOTO CLEAN ROUTES FASE 15: subset real controlado -->
-  <main>
-    <nav aria-label="breadcrumbs">
-      <ol>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
         <li><a href="/">Inicio</a></li>
-        <li aria-current="page">Inmobiliario</li>
-      </ol>
+        <li><a href="/venta/">Venta</a></li>
+        <li><a href="/alquiler/">Alquiler</a></li>
+        <li><a href="/contact">Contacto</a></li>
+      </ul>
     </nav>
-    <h1>Indice inmobiliario premium</h1>
-    <p class="muted">Entrada editorial y comercial del piloto limpio. Esta ruta convive con las superficies .html existentes sin reemplazarlas todavia.</p>
-    <div class="grid">
-      <article class="card">
-        <h2>Venta</h2>
-        <p class="muted">Coleccion de activos en compraventa con foco patrimonial y ubicacion prime.</p>
-        <div class="links"><a class="btn" href="/venta/">Abrir venta</a></div>
-      </article>
-      <article class="card">
-        <h2>Alquiler</h2>
-        <p class="muted">Coleccion de alquiler estable y larga estancia para demanda profesional solvente.</p>
-        <div class="links"><a class="btn" href="/alquiler/">Abrir alquiler</a></div>
-      </article>
-      <article class="card">
-        <h2>Listing piloto</h2>
-        <p class="muted">Detalle limpio de referencia para validar navegacion, canonical y rastreabilidad del subset.</p>
-        <div class="links"><a class="btn" href="/listing/piso-senorial-reformado-barrio-salamanca-madrid/">Abrir detalle piloto</a></div>
-      </article>
+    <div class="header-actions">
+      <a href="/real-estate-index" class="btn">Ver inmuebles</a>
+      <a href="/contact" class="btn btn-primary">Publicar activo</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
+  </header>
+  <div class="rgb-divider"></div>
+
+  <main id="main-content" class="wrap" style="padding-top:36px;padding-bottom:80px">
+    <section class="card" style="padding:26px;margin-bottom:20px">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">PORTAL INMOBILIARIO</span><span class="badge badge-hot">EUROPA</span></div>
+      <h1 class="section-title" style="text-align:left;margin-bottom:10px">Entrada inmobiliaria premium</h1>
+      <p style="color:var(--muted);line-height:1.8;margin:0">Acceso rápido a colecciones, hubs editoriales y rutas de conversión. Modelo comercial alineado: publicación verificable y desbloqueo de contacto tras pago por ficha.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+        <a href="/venta/" class="btn">Explorar venta</a>
+        <a href="/alquiler/" class="btn">Explorar alquiler</a>
+        <a href="/real-estate-index" class="btn">Índice global</a>
+        <a href="/sitemap-real-estate" class="btn">Sitemap inmobiliario</a>
+      </div>
+    </section>
+
+    <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px">
+      <article class="card" style="padding:20px">
+        <h2 style="font-family:var(--font-title);font-size:0.9rem;margin-bottom:8px">Rutas comerciales</h2>
+        <p style="margin:0;color:var(--muted);line-height:1.7">Landing por operación, colecciones por país y ciudad, y fichas listas para activación E2E con backend.</p>
+      </article>
+      <article class="card" style="padding:20px">
+        <h2 style="font-family:var(--font-title);font-size:0.9rem;margin-bottom:8px">Calidad editorial</h2>
+        <p style="margin:0;color:var(--muted);line-height:1.7">Texto y navegación diseñados para evitar ruido de maqueta y mantener percepción de portal europeo real.</p>
+      </article>
+      <article class="card" style="padding:20px">
+        <h2 style="font-family:var(--font-title);font-size:0.9rem;margin-bottom:8px">Activación operativa</h2>
+        <p style="margin:0;color:var(--muted);line-height:1.7">Al activar backend y Stripe reales, esta superficie ya queda preparada para operar sin contradicciones de producto.</p>
+      </article>
+    </section>
   </main>
+
+  <div class="rgb-divider"></div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-bottom">
+      <span>© 2025–2026 neuralgpt.store</span>
+      <span><a href="/contact" style="color:var(--accent)">Publicar activo</a></span>
+      <span><a href="/security" style="color:var(--muted)">Seguridad</a></span>
+    </div>
+  </footer>
+
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+  </script>
 </body>
 </html>

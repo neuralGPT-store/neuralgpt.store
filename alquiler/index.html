@@ -2,46 +2,78 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Alquiler estable premium | neuralgpt.store</title>
-  <meta name="description" content="Coleccion limpia piloto de alquiler estable y larga estancia en Europa, preparada para evolucionar sin romper la capa .html vigente." />
-  <meta name="robots" content="noindex,follow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>Alquiler estable en Europa | neuralgpt.store</title>
+  <meta name="description" content="Colección editorial de alquiler estable y larga estancia en Europa con acceso a hubs activos y fichas verificadas." />
+  <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://neuralgpt.store/alquiler/" />
-  <style>
-    :root { --bg:#f6f3ed; --ink:#1d1a16; --muted:#645a4b; --line:#d7cec1; --card:#fff; }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif; background:linear-gradient(180deg,#faf7f1 0%,#f2ece0 100%); color:var(--ink); }
-    main { max-width:980px; margin:0 auto; padding:34px 20px 58px; }
-    nav ol { list-style:none; padding:0; margin:0 0 16px; display:flex; gap:8px; flex-wrap:wrap; color:var(--muted); font-size:14px; }
-    nav li::after { content:"/"; margin-left:8px; }
-    nav li:last-child::after { content:""; margin:0; }
-    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-top:14px; }
-    .muted { color:var(--muted); }
-    .links { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-    a.btn { display:inline-block; text-decoration:none; border:1px solid var(--line); border-radius:999px; padding:8px 12px; color:var(--ink); background:#fff; font-size:14px; }
-  </style>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/theme-override.css" />
+  <script src="/js/i18n.js"></script>
 </head>
 <body>
-  <!-- PILOTO CLEAN ROUTES FASE 15: subset real controlado -->
-  <main>
-    <nav aria-label="breadcrumbs">
-      <ol>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/">neural<span>GPT</span>.store</a>
+    <nav class="main-nav" id="main-nav" aria-label="Principal">
+      <ul>
         <li><a href="/">Inicio</a></li>
-        <li><a href="/inmobiliario/">Inmobiliario</a></li>
-        <li aria-current="page">Alquiler</li>
-      </ol>
+        <li><a href="/venta/">Venta</a></li>
+        <li><a href="/alquiler/" aria-current="page">Alquiler</a></li>
+        <li><a href="/contact">Contacto</a></li>
+      </ul>
     </nav>
-    <h1>Coleccion piloto de alquiler estable</h1>
-    <p class="muted">Ruta limpia de alquiler en piloto controlado. Se mantiene convivencia con `alquiler.html` mientras se valida el modelo de publicacion estatica.</p>
-    <article class="card">
-      <h2>Referencia destacada del piloto</h2>
-      <p class="muted">El detalle piloto corresponde a una operacion de venta y se mantiene enlazado para comprobar coherencia transversal entre colecciones y detalle.</p>
-      <div class="links">
-        <a class="btn" href="/listing/piso-senorial-reformado-barrio-salamanca-madrid/">Ver detalle piloto</a>
-        <a class="btn" href="/venta/">Ir a venta</a>
-        <a class="btn" href="/inmobiliario/">Volver al indice</a>
+    <div class="header-actions">
+      <a href="/real-estate-index" class="btn">Ver inmuebles</a>
+      <a href="/contact" class="btn btn-primary">Publicar activo</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="rgb-divider"></div>
+
+  <main id="main-content" class="wrap" style="padding-top:36px;padding-bottom:80px">
+    <section class="card" style="padding:26px;margin-bottom:20px">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">COLECCIÓN PÚBLICA</span><span class="badge badge-hot">ALQUILER</span></div>
+      <h1 class="section-title" style="text-align:left;margin-bottom:10px">Alquiler estable y larga estancia</h1>
+      <p style="color:var(--muted);line-height:1.8;margin:0">Ruta orientada a alquiler residencial y habitación en mercados europeos con demanda activa. El acceso a contacto del anunciante se activa tras pago del servicio de conexión en la ficha.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+        <a href="/real-estate-index" class="btn">Índice inmobiliario</a>
+        <a href="/sitemap-real-estate" class="btn">Sitemap inmobiliario</a>
+        <a href="/hub-pais?country=pt" class="btn">Hub Portugal</a>
+        <a href="/hub-ciudad?city=lisboa" class="btn">Hub Lisboa</a>
       </div>
-    </article>
+    </section>
+
+    <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px">
+      <article class="card" style="padding:20px">
+        <h2 style="font-family:var(--font-title);font-size:0.9rem;margin-bottom:8px">Modalidad operativa</h2>
+        <p style="margin:0;color:var(--muted);line-height:1.7">Alquiler estable y habitación de larga estancia con foco en claridad de condiciones y precio mensual.</p>
+      </article>
+      <article class="card" style="padding:20px">
+        <h2 style="font-family:var(--font-title);font-size:0.9rem;margin-bottom:8px">Cobertura prioritaria</h2>
+        <p style="margin:0;color:var(--muted);line-height:1.7">Madrid, Lisboa, Berlín y Valencia como plazas de referencia para demanda internacional y movilidad profesional.</p>
+      </article>
+      <article class="card" style="padding:20px">
+        <h2 style="font-family:var(--font-title);font-size:0.9rem;margin-bottom:8px">Siguiente paso</h2>
+        <p style="margin:0;color:var(--muted);line-height:1.7">Si quieres publicar, reforzar visibilidad o activar alertas de nuevas fichas, utiliza contacto del portal.</p>
+      </article>
+    </section>
   </main>
+
+  <div class="rgb-divider"></div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-bottom">
+      <span>© 2025–2026 neuralgpt.store</span>
+      <span><a href="/contact" style="color:var(--accent)">Publicar activo</a></span>
+      <span><a href="/security" style="color:var(--muted)">Seguridad</a></span>
+    </div>
+  </footer>
+
+  <script>
+  var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+  </script>
 </body>
 </html>
