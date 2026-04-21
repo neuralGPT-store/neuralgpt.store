@@ -9,6 +9,7 @@ x
 *.json
 # Excepción: archivos de datos del sitio (no contienen credenciales)
 !data/*.json
+!public-data/*.public.json
 
 # Datos fiscales y financieros privados
 data/fiscal/

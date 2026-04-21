@@ -458,59 +458,38 @@
       "name": "Islas Marianas del Norte"
     }
   ],
-  "languages": [
-    "es",
-    "en",
-    "fr",
-    "de",
-    "it",
-    "pt"
-  ],
-  "listing_statuses": [
-    "draft",
-    "published",
-    "reserved",
-    "off_market",
-    "expired"
-  ],
-  "verification_states": [
-    "pending",
-    "in_review",
-    "verified"
-  ],
-  "badges": [
-    "destacado",
-    "verificado",
-    "prime",
-    "larga-estancia",
-    "rentabilidad",
-    "logistica",
-    "suelo",
-    "oportunidad",
-    "activo-singular"
-  ],
-  "sponsor_categories": [
-    "home_featured",
-    "listing_boost",
-    "category_spotlight",
-    "city_spotlight"
-  ],
-  "operation_seo": {
-    "sale": {
-      "title": "Activos en venta",
-      "description": "Selección de activos en venta con enfoque patrimonial, corporativo y de reposicionamiento en mercados europeos."
+  "city_seo": {
+    "Madrid": {
+      "title": "Activos en Madrid",
+      "description": "Presencia inicial en Madrid con localizaciones prime y productos aptos para reposicionamiento patrimonial."
     },
-    "rent_collection": {
-      "title": "Activos en alquiler estable",
-      "description": "Colección de alquiler de larga duración y habitaciones de larga estancia en mercados europeos con demanda solvente."
+    "Lisboa": {
+      "title": "Activos en Lisboa",
+      "description": "Oferta estable en Lisboa orientada a relocalización, estancia ejecutiva y demanda internacional solvente."
     },
-    "long_term_rent": {
-      "title": "Activos en alquiler estable",
-      "description": "Oferta orientada a alquiler de larga duración para residencial, logística y uso corporativo con vocación estable."
+    "Berlín": {
+      "title": "Activos en Berlín",
+      "description": "Base inmobiliaria en Berlín para larga estancia y ocupación profesional con gestión cuidada."
     },
-    "room_rent": {
-      "title": "Habitaciones de larga estancia",
-      "description": "Habitaciones premium para estancia prolongada en ciudades europeas con demanda internacional y profesional."
+    "Milán": {
+      "title": "Activos en Milán",
+      "description": "Selección en Milán para retail, presencia de marca y exposición en barrios con alta intensidad comercial."
+    },
+    "Róterdam": {
+      "title": "Activos en Róterdam",
+      "description": "Cobertura inicial en Róterdam para logística, almacenaje técnico y distribución de última milla."
+    },
+    "Valencia": {
+      "title": "Activos en Valencia",
+      "description": "Punto de partida en Valencia con activos de suelo y crecimiento terciario en corredores empresariales."
+    },
+    "Lyon": {
+      "title": "Activos en Lyon",
+      "description": "Oferta patrimonial en Lyon para uso representativo, institucional y conservación de valor."
+    },
+    "Edimburgo": {
+      "title": "Activos en Edimburgo",
+      "description": "Cobertura para Escocia con foco en Edimburgo y activos residenciales de demanda estable."
     }
   },
   "country_seo": {
@@ -659,53 +638,23 @@
       "description": "Cobertura preparada para Islas Marianas del Norte dentro de la taxonomía geográfica completa del proyecto."
     }
   },
-  "city_seo": {
-    "Madrid": {
-      "title": "Activos en Madrid",
-      "description": "Presencia inicial en Madrid con localizaciones prime y productos aptos para reposicionamiento patrimonial."
+  "operation_seo": {
+    "sale": {
+      "title": "Activos en venta",
+      "description": "Selección de activos en venta con enfoque patrimonial, corporativo y de reposicionamiento en mercados europeos."
     },
-    "Lisboa": {
-      "title": "Activos en Lisboa",
-      "description": "Oferta estable en Lisboa orientada a relocalización, estancia ejecutiva y demanda internacional solvente."
+    "rent_collection": {
+      "title": "Activos en alquiler estable",
+      "description": "Colección de alquiler de larga duración y habitaciones de larga estancia en mercados europeos con demanda solvente."
     },
-    "Berlín": {
-      "title": "Activos en Berlín",
-      "description": "Base inmobiliaria en Berlín para larga estancia y ocupación profesional con gestión cuidada."
+    "long_term_rent": {
+      "title": "Activos en alquiler estable",
+      "description": "Oferta orientada a alquiler de larga duración para residencial, logística y uso corporativo con vocación estable."
     },
-    "Milán": {
-      "title": "Activos en Milán",
-      "description": "Selección en Milán para retail, presencia de marca y exposición en barrios con alta intensidad comercial."
-    },
-    "Róterdam": {
-      "title": "Activos en Róterdam",
-      "description": "Cobertura inicial en Róterdam para logística, almacenaje técnico y distribución de última milla."
-    },
-    "Valencia": {
-      "title": "Activos en Valencia",
-      "description": "Punto de partida en Valencia con activos de suelo y crecimiento terciario en corredores empresariales."
-    },
-    "Lyon": {
-      "title": "Activos en Lyon",
-      "description": "Oferta patrimonial en Lyon para uso representativo, institucional y conservación de valor."
-    },
-    "Edimburgo": {
-      "title": "Activos en Edimburgo",
-      "description": "Cobertura para Escocia con foco en Edimburgo y activos residenciales de demanda estable."
+    "room_rent": {
+      "title": "Habitaciones de larga estancia",
+      "description": "Habitaciones premium para estancia prolongada en ciudades europeas con demanda internacional y profesional."
     }
-  },
-  "breadcrumb_labels": {
-    "home": "Inicio",
-    "marketplace": "Activos",
-    "sale": "Venta",
-    "rent": "Alquiler",
-    "country": "País",
-    "city": "Ciudad"
-  },
-  "sitemap_labels": {
-    "collections": "Colecciones públicas",
-    "countries": "Países disponibles",
-    "cities": "Ciudades disponibles",
-    "featured": "Detalles destacados"
   },
   "country_editorial": {
     "ES": "Mercado de referencia para activo urbano, producto patrimonial y suelo con recorrido de reposicionamiento.",
@@ -754,5 +703,19 @@
     "Valencia": "Valencia aporta recorrido para suelo y crecimiento terciario en entornos empresariales emergentes.",
     "Lyon": "Lyon encaja en un discurso de conservación de valor, uso representativo y activo singular bien posicionado.",
     "Edimburgo": "Edimburgo representa la cobertura explícita de Escocia dentro del portal."
+  },
+  "sitemap_labels": {
+    "collections": "Colecciones públicas",
+    "countries": "Países disponibles",
+    "cities": "Ciudades disponibles",
+    "featured": "Detalles destacados"
+  },
+  "breadcrumb_labels": {
+    "home": "Inicio",
+    "marketplace": "Activos",
+    "sale": "Venta",
+    "rent": "Alquiler",
+    "country": "País",
+    "city": "Ciudad"
   }
 }

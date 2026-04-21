@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
-  <title id="page-title">Inmuebles premium en Europa | neuralgpt.store</title>
-  <meta name="description" id="page-desc" content="Explora inmuebles premium en venta y alquiler de larga duración con hubs por país y ciudad, fichas verificadas y cobertura europea." />
-  <meta property="og:title" content="Inmuebles premium en Europa | neuralgpt.store" id="og-title" />
-  <meta property="og:description" content="Explora inmuebles premium en venta y alquiler de larga duración con hubs por país y ciudad, fichas verificadas y cobertura europea." id="og-desc" />
+  <title id="page-title">Inmuebles premium en Europa, América y África | neuralgpt.store</title>
+  <meta name="description" id="page-desc" content="Explora inmuebles premium en venta y alquiler de larga duración con cobertura en Europa, América completa, Caribe completo, África y Canadá completo, con prioridad en Cuba." />
+  <meta property="og:title" content="Inmuebles premium en Europa, América y África | neuralgpt.store" id="og-title" />
+  <meta property="og:description" content="Explora inmuebles premium en venta y alquiler de larga duración con cobertura en Europa, América completa, Caribe completo, África y Canadá completo, con prioridad en Cuba." id="og-desc" />
   <meta property="og:site_name" content="neuralgpt.store" />
   <meta property="og:url" content="https://neuralgpt.store/real-estate-index.html" id="og-url" />
   <meta property="og:image" content="https://neuralgpt.store/assets/img/og-real-estate-default.png" id="og-image" />
@@ -28,9 +28,9 @@
   <nav aria-label="Ruta de navegación" style="padding:12px 0;border-bottom:1px solid var(--border)"><div class="wrap" style="font-size:0.78rem;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a href="/" style="color:var(--muted)">Inicio</a><span>›</span><a href="/real-estate-index.html" style="color:var(--muted)">Inmuebles</a><span>›</span><span style="color:var(--text)">Portal inmobiliario</span></div></nav>
   <main id="main-content" class="wrap" style="padding-top:36px;padding-bottom:80px">
     <section style="margin-bottom:28px;padding:28px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">INMUEBLES PREMIUM</span><span class="badge badge-hot">COBERTURA EUROPEA</span></div>
-      <h1 class="section-title" style="text-align:left;margin-bottom:12px">Inmuebles premium en Europa</h1>
-      <p id="index-intro" style="color:var(--muted);max-width:940px;line-height:1.8;margin:0">Descubre una selección curada de inmuebles en venta y alquiler de larga duración con foco en mercados europeos de alta demanda.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">INMUEBLES PREMIUM</span><span class="badge badge-hot">EUROPA + AMÉRICA + CARIBE + ÁFRICA</span></div>
+      <h1 class="section-title" style="text-align:left;margin-bottom:12px">Inmuebles premium en Europa, América y África</h1>
+      <p id="index-intro" style="color:var(--muted);max-width:940px;line-height:1.8;margin:0">Descubre una selección curada de inmuebles en venta y alquiler de larga duración con base europea, expansión en América completa y África, cobertura completa de Canadá (Quebec y Terranova y Labrador incluidos), Caribe completo y prioridad de despliegue para Cuba.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
         <a href="/venta.html" class="btn">Venta</a>
         <a href="/alquiler.html" class="btn">Alquiler</a>
@@ -86,7 +86,16 @@
     var listings = await window.RealEstateData.loadListings();
     var image = location.origin + ((settings.seo_defaults && settings.seo_defaults.og_image) || '/assets/img/og-real-estate-default.png');
     var countries = Array.isArray(taxonomy.countries) ? taxonomy.countries.slice() : [];
-    var countryPriority = ['ES', 'PT', 'GB', 'IE', 'TR', 'IS', 'GL', 'DE', 'FR', 'IT', 'NL'];
+    var fallbackCountries = [
+      { code:'CA', name:'Canadá' }, { code:'US', name:'Estados Unidos' }, { code:'CU', name:'Cuba' }, { code:'PR', name:'Puerto Rico' }, { code:'VI', name:'Islas Vírgenes (US)' }, { code:'VG', name:'Islas Vírgenes (VG)' }, { code:'DO', name:'República Dominicana' }, { code:'HT', name:'Haití' }, { code:'JM', name:'Jamaica' },
+      { code:'MX', name:'México' }, { code:'CO', name:'Colombia' }, { code:'CL', name:'Chile' }, { code:'BR', name:'Brasil' },
+      { code:'AR', name:'Argentina' }, { code:'PE', name:'Perú' }, { code:'MA', name:'Marruecos' }, { code:'ZA', name:'Sudáfrica' },
+      { code:'NG', name:'Nigeria' }, { code:'EG', name:'Egipto' }, { code:'KE', name:'Kenia' }
+    ];
+    fallbackCountries.forEach(function(country){
+      if(!countries.some(function(item){ return String(item.code||'').toUpperCase()===country.code; })) countries.push(country);
+    });
+    var countryPriority = ['CU', 'US', 'PR', 'VI', 'VG', 'CA', 'ES', 'PT', 'GB', 'IE', 'TR', 'IS', 'GL', 'DE', 'FR', 'IT', 'NL', 'MX', 'CO', 'CL', 'BR', 'AR', 'PE', 'DO', 'HT', 'JM', 'MA', 'ZA', 'NG', 'EG', 'KE'];
     countries.sort(function(a, b){
       var aCode = String(a && a.code || '');
       var bCode = String(b && b.code || '');
@@ -97,19 +106,19 @@
       if (bi < 0) return -1;
       return ai - bi;
     });
-    countries = countries.slice(0, 10);
+    countries = countries.slice(0, 12);
     var cities = uniqueCities(listings);
     if (cities.indexOf('Edimburgo') < 0) cities.unshift('Edimburgo');
     cities = cities.slice(0, 10);
     var featured = listings.filter(function(listing){ return listing.featured === true; }).slice(0, 4);
 
-    document.title = 'Inmuebles premium en Europa | neuralgpt.store';
-    document.getElementById('page-title').textContent = 'Inmuebles premium en Europa | neuralgpt.store';
-    document.getElementById('page-desc').setAttribute('content', 'Explora inmuebles premium en venta y alquiler de larga duración con hubs por país y ciudad, fichas verificadas y cobertura europea.');
-    document.getElementById('og-title').setAttribute('content', 'Inmuebles premium en Europa | neuralgpt.store');
-    document.getElementById('og-desc').setAttribute('content', 'Explora inmuebles premium en venta y alquiler de larga duración con hubs por país y ciudad, fichas verificadas y cobertura europea.');
-    document.getElementById('twitter-title').setAttribute('content', 'Inmuebles premium en Europa | neuralgpt.store');
-    document.getElementById('twitter-desc').setAttribute('content', 'Explora inmuebles premium en venta y alquiler de larga duración con hubs por país y ciudad, fichas verificadas y cobertura europea.');
+    document.title = 'Inmuebles premium en Europa, América y África | neuralgpt.store';
+    document.getElementById('page-title').textContent = 'Inmuebles premium en Europa, América y África | neuralgpt.store';
+    document.getElementById('page-desc').setAttribute('content', 'Explora inmuebles premium en venta y alquiler de larga duración con cobertura en Europa, América completa, Caribe completo, África y Canadá completo, con prioridad en Cuba.');
+    document.getElementById('og-title').setAttribute('content', 'Inmuebles premium en Europa, América y África | neuralgpt.store');
+    document.getElementById('og-desc').setAttribute('content', 'Explora inmuebles premium en venta y alquiler de larga duración con cobertura en Europa, América completa, Caribe completo, África y Canadá completo, con prioridad en Cuba.');
+    document.getElementById('twitter-title').setAttribute('content', 'Inmuebles premium en Europa, América y África | neuralgpt.store');
+    document.getElementById('twitter-desc').setAttribute('content', 'Explora inmuebles premium en venta y alquiler de larga duración con cobertura en Europa, América completa, Caribe completo, África y Canadá completo, con prioridad en Cuba.');
     document.getElementById('og-url').setAttribute('content', location.origin + '/real-estate-index.html');
     document.getElementById('og-image').setAttribute('content', image);
     document.getElementById('twitter-image').setAttribute('content', image);
@@ -134,18 +143,22 @@
     }).join('');
 
     document.getElementById('hub-links').innerHTML =
+      linkItem('/hub-pais.html?country=cu', 'Hub país: Cuba', editorialText(taxonomy.country_editorial, 'CU')) +
+      linkItem('/hub-pais.html?country=us', 'Hub país: Estados Unidos', editorialText(taxonomy.country_editorial, 'US')) +
+      linkItem('/hub-pais.html?country=pr', 'Hub país: Puerto Rico', editorialText(taxonomy.country_editorial, 'PR')) +
+      linkItem('/hub-pais.html?country=ca', 'Hub país: Canadá', editorialText(taxonomy.country_editorial, 'CA')) +
       linkItem('/hub-pais.html?country=es', 'Hub país: España', editorialText(taxonomy.country_editorial, 'ES')) +
-      linkItem('/hub-pais.html?country=pt', 'Hub país: Portugal', editorialText(taxonomy.country_editorial, 'PT')) +
+      linkItem('/hub-pais.html?country=mx', 'Hub país: México', editorialText(taxonomy.country_editorial, 'MX')) +
       linkItem('/hub-ciudad.html?city=madrid', 'Hub ciudad: Madrid', editorialText(taxonomy.city_editorial, 'Madrid')) +
       linkItem('/hub-ciudad.html?city=milan', 'Hub ciudad: Milán', editorialText(taxonomy.city_editorial, 'Milán'));
 
     document.getElementById('index-schema').textContent = JSON.stringify({
       "@context":"https://schema.org",
       "@type":"CollectionPage",
-      "name":"Inmuebles premium en Europa",
-      "description":"Página editorial y comercial para descubrir inmuebles premium en venta y alquiler de larga duración en Europa.",
+      "name":"Inmuebles premium en Europa, América y África",
+      "description":"Página editorial y comercial para descubrir inmuebles premium en venta y alquiler de larga duración en Europa, América completa, Caribe completo, África y Canadá completo.",
       "url": location.origin + '/real-estate-index.html',
-      "mainEntity": { "@type":"ItemList", "numberOfItems": 4 + countries.length + cities.length + featured.length + 4 }
+      "mainEntity": { "@type":"ItemList", "numberOfItems": 4 + countries.length + cities.length + featured.length + 5 }
     });
   }
   function uniqueCities(listings){ var set={}; listings.forEach(function(listing){ if(listing && listing.city){ set[listing.city]=true; } }); return Object.keys(set).sort(function(a,b){ return a.localeCompare(b,'es'); }); }
