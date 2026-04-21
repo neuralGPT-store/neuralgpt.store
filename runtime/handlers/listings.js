@@ -5,7 +5,8 @@ const {
   writeStore,
   sanitizeListingInput,
   buildListingRecord,
-  verifyEditKey
+  verifyEditKey,
+  getListingEditState
 } = require('../services/listings-store');
 const { parseUrl, readMultipartBody, sendError, sendJson } = require('../lib/http');
 
@@ -17,20 +18,17 @@ function createListingsHandlers(env) {
     const listingId = String(url.searchParams.get('listing_id') || '').trim();
     const editKey = String(url.searchParams.get('edit_key') || '').trim();
 
-    if (!listingId || !editKey) {
-      return sendError(res, 400, 'listing_id_and_edit_key_required');
+    const state = getListingEditState(env.listingsStorePath, listingId, editKey, env.listingsEditKeyPepper);
+    if (!state.ok) {
+      if (state.code === 'listing_id_and_edit_key_required') return sendError(res, 400, state.code);
+      if (state.code === 'listing_not_found') return sendError(res, 404, state.code);
+      if (state.code === 'invalid_edit_key') return sendError(res, 403, state.code);
+      return sendError(res, 400, state.code || 'invalid_status_request');
     }
-
-    const rows = readStore(env.listingsStorePath);
-    const listing = rows.find((row) => String(row.id) === listingId);
-    if (!listing) return sendError(res, 404, 'listing_not_found');
-
-    const ok = verifyEditKey(listing, editKey, env.listingsEditKeyPepper);
-    if (!ok) return sendError(res, 403, 'invalid_edit_key');
 
     return sendJson(res, 200, {
       ok: true,
-      listing
+      listing: state.listing
     });
   }
 

@@ -162,5 +162,32 @@ runtime/
 
 Pendiente para activación real:
 - Cargar variables `STRIPE_*` en entorno seguro.
-- Implementar reconciliación de eventos en `POST /api/stripe/webhook` (actualmente stub seguro).
 - Activar flags de frontend (`neural-backend-ready` y `neural-api-base`) en despliegue final.
+
+## 9) Contrato E2E final de persistencia operativa
+
+Store: `LISTINGS_STORE_PATH` (JSON array de listings).
+
+Capacidades garantizadas en runtime:
+- Lectura y escritura de store (`readStore`, `writeStore`).
+- Actualización por `listing_id` (`updateListingById`).
+- Estado de edición con `edit_key` (`getListingEditState` + hash pepper).
+- Aplicación idempotente de efectos comerciales (`applyCommercialEffect`).
+
+Webhook reconciliado:
+- `checkout.session.completed`
+- `payment_intent.succeeded`
+
+Mapeo comercial soportado:
+- `contact_unlock` -> desbloqueo de contacto en listing.
+- `mas_visibilidad` -> incremento de `visibility_rank`.
+- `sensacional_24h` -> extensión de `commercial.sensacional_until`.
+- `plan_basico` -> `commercial.subscription.tier = basico`.
+- `plan_premium` -> `commercial.subscription.tier = premium`.
+
+Campos operativos añadidos por reconciliación:
+- `listing.commercial.effects[effect_key]` con contador/último evento.
+- `listing.commercial.subscription`.
+- `listing.commercial.processed_event_ids`.
+- `listing.commercial.processed_transaction_keys`.
+- `listing.commercial.ledger`.
