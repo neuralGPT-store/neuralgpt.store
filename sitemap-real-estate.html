@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
   <title id="page-title">Sitemap inmobiliario — neuralgpt.store</title>
-  <meta name="description" id="page-desc" content="Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store en Europa, América completa, Caribe completo, África y Canadá." />
+  <meta name="description" id="page-desc" content="Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store en Europa." />
   <meta property="og:title" content="Sitemap inmobiliario — neuralgpt.store" id="og-title" />
   <meta property="og:description" content="Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store." id="og-desc" />
   <meta property="og:site_name" content="neuralgpt.store" />
@@ -30,7 +30,7 @@
     <section style="margin-bottom:28px;padding:26px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="badge badge-verified">MAPA DE NAVEGACIÓN</span><span class="badge badge-hot">SEO</span></div>
       <h1 class="section-title" style="text-align:left;margin-bottom:12px">Sitemap inmobiliario</h1>
-      <p id="sitemap-intro" style="color:var(--muted);max-width:920px;line-height:1.8;margin:0">Mapa de navegación con acceso a colecciones, mercados activos y fichas destacadas del portal en Europa, América completa, Caribe completo, África y Canadá.</p>
+      <p id="sitemap-intro" style="color:var(--muted);max-width:920px;line-height:1.8;margin:0">Mapa de navegación con acceso a colecciones, mercados activos y fichas destacadas del portal en Europa.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
         <a href="/real-estate-index.html" class="btn">Portal inmobiliario</a>
         <a href="/sitemap-real-estate.xml" class="btn">XML sitemap</a>
@@ -63,10 +63,8 @@
     var labels = taxonomy.sitemap_labels || {};
     var countries = Array.isArray(taxonomy.countries) ? taxonomy.countries.slice() : [];
     var fallbackCountries = [
-      { code:'CA', name:'Canadá' }, { code:'US', name:'Estados Unidos' }, { code:'CU', name:'Cuba' }, { code:'PR', name:'Puerto Rico' }, { code:'VI', name:'Islas Vírgenes (US)' }, { code:'VG', name:'Islas Vírgenes (VG)' }, { code:'DO', name:'República Dominicana' }, { code:'HT', name:'Haití' }, { code:'JM', name:'Jamaica' },
-      { code:'MX', name:'México' }, { code:'CO', name:'Colombia' }, { code:'CL', name:'Chile' }, { code:'BR', name:'Brasil' },
-      { code:'AR', name:'Argentina' }, { code:'PE', name:'Perú' }, { code:'MA', name:'Marruecos' }, { code:'ZA', name:'Sudáfrica' },
-      { code:'NG', name:'Nigeria' }, { code:'EG', name:'Egipto' }, { code:'KE', name:'Kenia' }
+      { code:'ES', name:'España' }, { code:'PT', name:'Portugal' }, { code:'DE', name:'Alemania' }, { code:'IT', name:'Italia' }, { code:'NL', name:'Países Bajos' }, { code:'FR', name:'Francia' },
+      { code:'GB', name:'Reino Unido' }, { code:'IE', name:'Irlanda' }, { code:'TR', name:'Turquía' }, { code:'IS', name:'Islandia' }, { code:'GL', name:'Groenlandia' }
     ];
     fallbackCountries.forEach(function(country){
       if(!countries.some(function(item){ return String(item.code||'').toUpperCase()===country.code; })) countries.push(country);
@@ -77,11 +75,11 @@
 
     document.title = 'Sitemap inmobiliario | neuralgpt.store';
     document.getElementById('page-title').textContent = 'Sitemap inmobiliario | neuralgpt.store';
-    document.getElementById('page-desc').setAttribute('content', 'Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store en Europa, América completa, Caribe completo, África y Canadá.');
+    document.getElementById('page-desc').setAttribute('content', 'Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store en Europa.');
     document.getElementById('og-title').setAttribute('content', 'Sitemap inmobiliario | neuralgpt.store');
-    document.getElementById('og-desc').setAttribute('content', 'Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store en Europa, América completa, Caribe completo, África y Canadá.');
+    document.getElementById('og-desc').setAttribute('content', 'Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store en Europa.');
     document.getElementById('twitter-title').setAttribute('content', 'Sitemap inmobiliario | neuralgpt.store');
-    document.getElementById('twitter-desc').setAttribute('content', 'Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store en Europa, América completa, Caribe completo, África y Canadá.');
+    document.getElementById('twitter-desc').setAttribute('content', 'Mapa de navegación con colecciones, países, ciudades y activos destacados de neuralgpt.store en Europa.');
     document.getElementById('og-url').setAttribute('content', location.origin + '/sitemap-real-estate.html');
     document.getElementById('og-image').setAttribute('content', image);
     document.getElementById('twitter-image').setAttribute('content', image);
@@ -109,12 +107,9 @@
       return linkItem('/listing.html?slug=' + encodeURIComponent(listing.slug), listing.title, listing.summary);
     }).join('');
     document.getElementById('sitemap-hubs').innerHTML =
-      linkItem('/hub-pais.html?country=cu', 'Hub país: Cuba', editorialText(taxonomy.country_editorial, 'CU')) +
-      linkItem('/hub-pais.html?country=us', 'Hub país: Estados Unidos', editorialText(taxonomy.country_editorial, 'US')) +
-      linkItem('/hub-pais.html?country=pr', 'Hub país: Puerto Rico', editorialText(taxonomy.country_editorial, 'PR')) +
-      linkItem('/hub-pais.html?country=ca', 'Hub país: Canadá', editorialText(taxonomy.country_editorial, 'CA')) +
       linkItem('/hub-pais.html?country=es', 'Hub país: España', editorialText(taxonomy.country_editorial, 'ES')) +
-      linkItem('/hub-pais.html?country=mx', 'Hub país: México', editorialText(taxonomy.country_editorial, 'MX')) +
+      linkItem('/hub-pais.html?country=gb', 'Hub país: Reino Unido', editorialText(taxonomy.country_editorial, 'GB')) +
+      linkItem('/hub-pais.html?country=ie', 'Hub país: Irlanda', editorialText(taxonomy.country_editorial, 'IE')) +
       linkItem('/hub-ciudad.html?city=madrid', 'Hub ciudad: Madrid', editorialText(taxonomy.city_editorial, 'Madrid')) +
       linkItem('/hub-ciudad.html?city=milan', 'Hub ciudad: Milán', editorialText(taxonomy.city_editorial, 'Milán'));
 

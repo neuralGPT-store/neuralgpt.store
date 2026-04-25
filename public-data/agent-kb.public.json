@@ -1,5 +1,5 @@
 {
-  "greeting": "Hola, soy Chany. Te ayudo con anuncios inmobiliarios de neuralgpt.store en Europa, América y África.",
+  "greeting": "Hola, soy Chany. Te ayudo con anuncios inmobiliarios de neuralgpt.store en Europa.",
   "fallback": "No encontré una respuesta exacta. Escríbenos a neuralgpt.store@protonmail.com (atención) o a wilfreyera@gmail.com (negocio).",
   "intents": [
     {
@@ -69,7 +69,7 @@
         "países",
         "ciudades"
       ],
-      "response": "Cobertura visible: Europa completa, Canadá completo, América completa, Caribe completo y África completa. Cuba mantiene prioridad de visibilidad. Puedes explorar en /real-estate-index.html, /pais.html y /ciudad.html."
+      "response": "Cobertura visible: Europa completa, incluyendo Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia. Puedes explorar en /real-estate-index.html, /pais.html y /ciudad.html."
     },
     {
       "id": "revision_humana",

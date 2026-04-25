@@ -1,6 +1,6 @@
 {
   "site_name": "neuralgpt.store",
-  "tagline": "Portal premium de anuncios inmobiliarios con base europea y cobertura en América completa, África, Canadá y Caribe completo",
+  "tagline": "Portal premium de anuncios inmobiliarios con cobertura europea completa",
   "default_locale": "es",
   "supported_locales": [
     "es",
@@ -14,7 +14,7 @@
   "public_contact_email": "hola@neuralgpt.store",
   "seo_defaults": {
     "title": "neuralgpt.store | Portal premium europeo de anuncios de activos inmobiliarios",
-    "description": "Selección cuidada de activos inmobiliarios en Europa, América completa, África, Canadá completo y Caribe completo, con foco prioritario en Cuba para compraventa, alquiler estable, locales, naves, suelo y activos singulares.",
+    "description": "Selección cuidada de activos inmobiliarios en Europa completa, incluyendo Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia, para compraventa, alquiler estable, locales, naves, suelo y activos singulares.",
     "og_image": "/assets/img/og-real-estate-default.png",
     "robots": "index,follow"
   },
@@ -26,8 +26,8 @@
   },
   "seo_collections": {
     "marketplace": {
-      "title": "Activos inmobiliarios premium en Europa, América y África | neuralgpt.store",
-      "description": "Portal premium de anuncios de activos inmobiliarios con cobertura en Europa, América completa, Caribe completo, África y Canadá completo, con prioridad para Cuba.",
+      "title": "Activos inmobiliarios premium en Europa | neuralgpt.store",
+      "description": "Portal premium de anuncios de activos inmobiliarios con cobertura europea completa, incluyendo Reino Unido, Irlanda, Escocia, Turquía, Islandia y Groenlandia.",
       "canonical_path": "/real-estate-index.html",
       "intro": "Colección editorial de activos inmobiliarios pensada para exposición cualificada, posicionamiento orgánico y monetización progresiva."
     }
