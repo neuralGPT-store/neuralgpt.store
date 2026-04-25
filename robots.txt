@@ -4,6 +4,9 @@ Allow: /blog/
 Disallow: /data/
 Disallow: /ops/
 Disallow: /scripts/
+Disallow: /runtime/
+Disallow: /.env
+Disallow: /.git/
 Disallow: /reports/
 Disallow: /deploy/
 Disallow: /test/
@@ -14,3 +17,4 @@ Disallow: /_lab_clean_routes/
 Disallow: /confirm.html
 Disallow: /edit.html
 Sitemap: https://neuralgpt.store/sitemap.xml
+Sitemap: https://neuralgpt.store/sitemap-real-estate.xml

@@ -11,6 +11,7 @@ const PRICE_SENSACIONAL = "price_1TOPlHFVnpodYhTU9MoCCrEs";
 const PRICE_MAS_VISIBILIDAD = "price_1TOPkHFVnpodYhTUDY6ZVO0m";
 const PRICE_PLAN_PREMIUM = "price_1TOPjIFVnpodYhTUuIXQF1D9";
 const PRICE_PLAN_BASICO = "price_1TOPi0FVnpodYhTUdV5rkCsf";
+const PRICE_DONATION = String(process.env.STRIPE_DONATION_PRICE_ID || '').trim();
 
 function sha256(str) {
   return crypto.createHash('sha256').update(String(str || '')).digest('hex');
@@ -299,6 +300,17 @@ function safePathInsideRoot(baseRoot, candidatePath) {
   return resolvedCandidate === resolvedRoot || resolvedCandidate.startsWith(resolvedRoot + path.sep);
 }
 
+function isSensitiveUrlPath(urlPath) {
+  const parts = String(urlPath || '').split('/').filter(Boolean);
+  const hasHiddenSegment = parts.some((segment) => segment.startsWith('.') && segment !== '.well-known');
+  if (hasHiddenSegment) return true;
+  if (urlPath === '/package.json' || urlPath === '/package-lock.json') return true;
+  if (urlPath === '/runtime' || urlPath.startsWith('/runtime/')) return true;
+  if (urlPath === '/docs' || urlPath.startsWith('/docs/')) return true;
+  if (urlPath === '/data/private' || urlPath.startsWith('/data/private/')) return true;
+  return false;
+}
+
 function normalizeContactPhone(raw) {
   const text = String(raw || '').trim();
   return text.replace(/[^\d+().\- ]/g, '').slice(0, 40);
@@ -517,7 +529,7 @@ function handleStripeWebhookEvent(event, res) {
     return send(res, 200, { ok: true, received: true, processed: type });
   } catch (e) {
     console.error('Webhook processing error:', e.message);
-    return send(res, 500, { ok: false, error: 'processing_failed', message: e.message });
+    return send(res, 500, { ok: false, error: 'processing_failed' });
   }
 }
 
@@ -1257,7 +1269,7 @@ const server = http.createServer((req,res)=>{
           });
           return send(res, 200, { ok: true, url: session.url });
         } catch (e) {
-          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+          return send(res, 500, { ok: false, error: 'stripe_error' });
         }
       });
     }
@@ -1279,7 +1291,7 @@ const server = http.createServer((req,res)=>{
           });
           return send(res, 200, { ok: true, url: session.url });
         } catch (e) {
-          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+          return send(res, 500, { ok: false, error: 'stripe_error' });
         }
       });
     }
@@ -1301,7 +1313,7 @@ const server = http.createServer((req,res)=>{
           });
           return send(res, 200, { ok: true, url: session.url });
         } catch (e) {
-          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+          return send(res, 500, { ok: false, error: 'stripe_error' });
         }
       });
     }
@@ -1322,7 +1334,7 @@ const server = http.createServer((req,res)=>{
           });
           return send(res, 200, { ok: true, url: session.url });
         } catch (e) {
-          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+          return send(res, 500, { ok: false, error: 'stripe_error' });
         }
       });
     }
@@ -1343,7 +1355,29 @@ const server = http.createServer((req,res)=>{
           });
           return send(res, 200, { ok: true, url: session.url });
         } catch (e) {
-          return send(res, 500, { ok: false, error: 'stripe_error', message: e.message });
+          return send(res, 500, { ok: false, error: 'stripe_error' });
+        }
+      });
+    }
+    if (urlPath === '/api/stripe/checkout-donation' && req.method === 'POST') {
+      if (!stripe) return send(res, 503, { ok: false, error: 'stripe_not_configured' });
+      if (!PRICE_DONATION) return send(res, 503, { ok: false, error: 'stripe_donation_price_not_configured' });
+      return parseJsonBody(req, async (err, body) => {
+        if (err) return send(res, 400, { ok: false, error: 'invalid_json' });
+        try {
+          const successUrl = 'https://neuralgpt.store/confirm.html?donation=ok';
+          const cancelUrl = String((body && body.cancel_url) || 'https://neuralgpt.store/?donation=cancel').trim();
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{ price: PRICE_DONATION, quantity: 1 }],
+            mode: 'payment',
+            metadata: { checkout_type: 'donation_project', type: 'donation_project' },
+            success_url: successUrl,
+            cancel_url: cancelUrl
+          });
+          return send(res, 200, { ok: true, url: session.url });
+        } catch (e) {
+          return send(res, 500, { ok: false, error: 'stripe_error' });
         }
       });
     }
@@ -1364,7 +1398,7 @@ const server = http.createServer((req,res)=>{
           return handleStripeWebhookEvent(event, res);
         } catch (e) {
           console.error('Webhook error:', e.message);
-          return send(res, 400, { ok: false, error: 'webhook_error', message: e.message });
+          return send(res, 400, { ok: false, error: 'webhook_error' });
         }
       });
     }
@@ -1383,6 +1417,7 @@ const server = http.createServer((req,res)=>{
     const privatePaths = ['/scripts/', '/data/chany/', '/data/fiscal/', '/data/risk-report.json', '/data/moderation-events.log.jsonl',
       '/data/products-stripe.json', '/data/commission-config.json', '/deploy/', '/test/', '/ops/'];
     if (privatePaths.some((p) => urlPath === p || urlPath.startsWith(p))) return send404(res);
+    if (isSensitiveUrlPath(urlPath)) return send404(res);
 
     if(urlPath === '/' || urlPath === '') urlPath = '/index.html';
     const filePath = path.resolve(path.join(root, urlPath.replace(/^\//,'')));

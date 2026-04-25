@@ -19,7 +19,8 @@ const results = { ok: true, messages: [] }
 const requiredPublicData = [
   'listings.public.json',
   'taxonomy.public.json',
-  'site-settings.public.json'
+  'site-settings.public.json',
+  'agent-kb.public.json'
 ]
 
 requiredPublicData.forEach((fileName) => {

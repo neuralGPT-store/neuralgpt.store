@@ -97,6 +97,14 @@ function createStripeHandlers(env, stripe) {
     });
   }
 
+  async function checkoutDonation(req, res) {
+    return createCheckout(req, res, {
+      key: 'donation_project',
+      priceId: env.stripeDonationPriceId,
+      priceEnv: 'STRIPE_DONATION_PRICE_ID'
+    });
+  }
+
   async function webhook(req, res) {
     if (!requireStripe(res)) return;
     if (!env.stripeWebhookSecret) return sendError(res, 503, 'stripe_webhook_not_configured', 'STRIPE_WEBHOOK_SECRET');
@@ -205,6 +213,9 @@ function createStripeHandlers(env, stripe) {
     const session = event && event.data && event.data.object ? event.data.object : {};
     const meta = session && session.metadata && typeof session.metadata === 'object' ? session.metadata : {};
     const checkoutType = String(meta.checkout_type || '').trim();
+    if (checkoutType === 'donation_project') {
+      return { applied: false, ignored: true, reason: 'donation_checkout' };
+    }
     const listingId = String(meta.listing_id || '').trim();
     const sessionId = String(session.id || '').trim();
     const paymentIntentId = String(session.payment_intent || '').trim();
@@ -256,6 +267,9 @@ function createStripeHandlers(env, stripe) {
     const sessionId = String((session && session.id) || '').trim();
     const listingId = String(meta.listing_id || sessionMeta.listing_id || '').trim();
     const checkoutType = String(meta.checkout_type || sessionMeta.checkout_type || '').trim();
+    if (checkoutType === 'donation_project') {
+      return { applied: false, ignored: true, reason: 'donation_checkout' };
+    }
 
     const firstLineItem = await fetchFirstLineItemForSession(sessionId);
     const first = priceAndProductFromLineItem(firstLineItem);
@@ -321,6 +335,7 @@ function createStripeHandlers(env, stripe) {
     checkoutSensacional,
     checkoutPlanBasico,
     checkoutPlanPremium,
+    checkoutDonation,
     webhook
   };
 }

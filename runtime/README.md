@@ -12,6 +12,7 @@ Este runtime prepara la capa backend mínima para el frontend público ya cerrad
 - `POST /api/stripe/checkout-sensacional`
 - `POST /api/stripe/checkout-plan-basico`
 - `POST /api/stripe/checkout-plan-premium`
+- `POST /api/stripe/checkout-donation`
 - `POST /api/stripe/webhook`
 
 ## Arranque local

@@ -4,17 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
-  <title id="page-title">Activo inmobiliario — neuralgpt.store</title>
-  <meta name="description" id="page-desc" content="Detalle inmobiliario premium en neuralgpt.store." />
-  <meta property="og:title" content="Activo inmobiliario — neuralgpt.store" id="og-title" />
-  <meta property="og:description" content="Detalle inmobiliario premium en neuralgpt.store." id="og-desc" />
+  <title id="page-title">Ficha de inmueble en Europa — neuralgpt.store</title>
+  <meta name="description" id="page-desc" content="Consulta la ficha del inmueble con precio, ubicación, características y estado de verificación." />
+  <meta property="og:title" content="Ficha de inmueble en Europa — neuralgpt.store" id="og-title" />
+  <meta property="og:description" content="Consulta la ficha del inmueble con precio, ubicación y características verificadas." id="og-desc" />
   <meta property="og:site_name" content="neuralgpt.store" />
   <meta property="og:url" content="https://neuralgpt.store/listing.html" id="og-url" />
   <meta property="og:image" content="https://neuralgpt.store/assets/img/og-real-estate-default.png" id="og-image" />
   <meta property="og:type" content="article" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Activo inmobiliario — neuralgpt.store" id="twitter-title" />
-  <meta name="twitter:description" content="Detalle inmobiliario premium en neuralgpt.store." id="twitter-desc" />
+  <meta name="twitter:title" content="Ficha de inmueble en Europa — neuralgpt.store" id="twitter-title" />
+  <meta name="twitter:description" content="Consulta la ficha del inmueble con precio, ubicación y características verificadas." id="twitter-desc" />
   <meta name="twitter:image" content="https://neuralgpt.store/assets/img/og-real-estate-default.png" id="twitter-image" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -87,8 +87,8 @@
           <div style="padding:24px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="listing-badges"></div>
             <span id="listing-tag" style="font-family:var(--font-title);font-size:0.68rem;letter-spacing:2px;color:var(--accent2);font-weight:700">ACTIVO</span>
-            <h1 id="listing-title" class="product-info-title" style="margin-top:10px">Cargando activo…</h1>
-            <p id="listing-summary" style="color:var(--muted);line-height:1.8;font-size:0.95rem;margin-top:12px">Preparando detalle inmobiliario.</p>
+            <h1 id="listing-title" class="product-info-title" style="margin-top:10px">Detalle inmobiliario</h1>
+            <p id="listing-summary" style="color:var(--muted);line-height:1.8;font-size:0.95rem;margin-top:12px">Información pública y verificada del activo.</p>
           </div>
           <div style="padding:24px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
             <h2 style="font-family:var(--font-title);font-size:0.82rem;letter-spacing:1px;color:var(--accent);margin-bottom:16px">Descripción</h2>
@@ -201,7 +201,7 @@
 
   async function initListingPage(){
     if(!window.RealEstateData || !window.RealEstatePresenters || !window.RealEstateAdapters){
-      renderState('La base inmobiliaria no está disponible.', 'Faltan los módulos necesarios para renderizar este detalle.');
+      renderState('Detalle temporalmente no disponible.', 'No se ha podido mostrar esta ficha en este momento. Puedes continuar desde el índice inmobiliario.');
       return;
     }
 
@@ -212,7 +212,7 @@
     var listing = window.RealEstateAdapters.resolveListingFromQuery(listings, query);
 
     if(!listing){
-      renderState('Activo no encontrado.', 'El slug solicitado no existe en la base actual o no está disponible todavía.');
+      renderState('Activo no encontrado.', 'El identificador solicitado no está disponible en el catálogo público actual.');
       return;
     }
 
@@ -406,7 +406,7 @@
 <script>
 async function startCheckout(endpoint, label){
   if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
-    alert('El checkout de ' + label + ' no está disponible en este despliegue estático. Contacta en hola@neuralgpt.store para activarlo.');
+    alert('El servicio de ' + label + ' se está gestionando por confirmación asistida. Contacta en hola@neuralgpt.store para activarlo.');
     return;
   }
   try {
@@ -417,12 +417,12 @@ async function startCheckout(endpoint, label){
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.checkout_url) {
-      alert('El checkout de ' + label + ' no está disponible en este despliegue estático. Contacta en hola@neuralgpt.store para activarlo.');
+      alert('El servicio de ' + label + ' no se ha podido iniciar ahora mismo. Contacta en hola@neuralgpt.store para tramitarlo.');
       return;
     }
     location.href = data.checkout_url;
   } catch (_) {
-    alert('El checkout de ' + label + ' requiere un backend /api/* compatible que no está disponible en este entorno.');
+    alert('No se ha podido iniciar el servicio de ' + label + ' en este momento. Contacta en hola@neuralgpt.store para asistencia.');
   }
 }
 function unlockContact(){ startCheckout('/api/stripe/checkout-contact-unlock', 'desbloqueo de contacto'); }

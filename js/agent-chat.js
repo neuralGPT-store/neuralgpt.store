@@ -166,7 +166,7 @@
   function getContextSuggestions(ctx) {
     const lang = getLang();
     if (lang !== 'es') return t('suggestions');
-    if (ctx === 'home')     return ['Ver inmuebles en venta', 'Ver inmuebles en alquiler', 'Publicar inmueble', 'Cobertura fase 1'];
+    if (ctx === 'home')     return ['Ver inmuebles en venta', 'Ver inmuebles en alquiler', 'Publicar inmueble', 'Cobertura europea'];
     if (ctx === 'venta')    return ['Ver todos los inmuebles en venta', 'Caducidad de anuncios', '¿Cómo contacto al anunciante?'];
     if (ctx === 'alquiler') return ['Ver todos los inmuebles en alquiler', 'Habitaciones larga estancia', 'Publicar inmueble'];
     if (ctx === 'listing')  return ['¿Cómo contacto al anunciante?', '¿Tiene revisión humana?', 'Ver más inmuebles'];
@@ -235,7 +235,7 @@
 
   // ── Responder ────────────────────────────────────────────────────────
   function respondTo(text) {
-    if (!kb) { addBotMsg('Cargando…'); return; }
+    if (!kb) { addBotMsg('Un momento, ya reviso la información disponible.'); return; }
 
     const q = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     let bestMatch = null;
@@ -263,13 +263,13 @@
       'greeting':              ['Ver inmuebles en venta', 'Ver inmuebles en alquiler', 'Publicar inmueble'],
       'publicar_inmueble':     ['Ir a publicar', 'Editar anuncio', 'Contacto del portal'],
       'editar_anuncio':        ['Abrir edición', '¿Qué es review_required?', 'Contacto del portal'],
-      'tipos_fase1':           ['Venta', 'Alquiler larga duración', 'Locales y naves'],
-      'cobertura_fase1':       ['Ver índice inmobiliario', 'Ver por país', 'Ver por ciudad'],
+      'tipos_catalogo':        ['Venta', 'Alquiler larga duración', 'Locales y naves'],
+      'cobertura_europea':     ['Ver índice inmobiliario', 'Ver por país', 'Ver por ciudad'],
       'revision_humana':       ['Duplicados', 'Moderación anti-spam', 'Estado del anuncio'],
       'duplicados':            ['Cómo editar anuncio', 'Revisión humana', 'Contacto del portal'],
       'frescura_caducidad':    ['Venta 90 días', 'Ver anuncios en venta', 'Ver anuncios en alquiler'],
       'contacto_anunciante':   ['Qué datos se desbloquean', 'Publicar inmueble', 'Contacto del portal'],
-      'monetizacion_fase1':    ['Más visibilidad', 'Sensacional 24h', 'Sponsors sectoriales'],
+      'monetizacion_visibilidad': ['Más visibilidad', 'Sensacional 24h', 'Sponsors sectoriales'],
       'sponsors_sectoriales':  ['Sponsors en portada', 'Contacto de negocio', 'Ver inmuebles'],
       'seguridad_contenido':   ['Reportar incidencia', 'Revisión humana', 'Normas del portal'],
       'contacto_portal':       ['Atención al usuario', 'Negocio', 'Volver al inicio']

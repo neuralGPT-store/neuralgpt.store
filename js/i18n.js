@@ -581,6 +581,7 @@ const LITERAL_TEXT = {
     'Detalles destacados': 'Featured details',
     'SUPERFICIE ACTIVA': 'ACTIVE SURFACE',
     'Este sitemap enlaza únicamente rutas públicas canónicas de fase 1 para mantener una identidad única y una indexación limpia.': 'This sitemap links only canonical public phase-1 routes to maintain a single identity and clean indexation.',
+    'Este sitemap enlaza únicamente rutas públicas canónicas para mantener una identidad única y una indexación limpia.': 'This sitemap links only canonical public routes to maintain a single identity and clean indexation.',
     'Hub por país': 'Country hub',
     'Hub por ciudad': 'City hub',
     'Hub sin datos disponibles': 'Hub without available data',
@@ -602,7 +603,9 @@ const LITERAL_TEXT = {
     'Introduce un teléfono de contacto válido.': 'Enter a valid contact phone number.',
     'Enviando anuncio...': 'Submitting listing...',
     'Error de red al publicar/editar el anuncio.': 'Network error while publishing/editing the listing.',
-    'Publicación no disponible en este despliegue estático (requiere backend /api/*). Escribe a hola@neuralgpt.store para asistencia manual.': 'Publishing is not available in this static deployment (requires /api/* backend). Email hola@neuralgpt.store for manual assistance.'
+    'Publicación no disponible en este despliegue estático (requiere backend /api/*). Escribe a hola@neuralgpt.store para asistencia manual.': 'Publishing is not available in this static deployment (requires /api/* backend). Email hola@neuralgpt.store for manual assistance.',
+    'Selección premium de anuncios destacados.': 'Premium selection of featured listings.',
+    'Conectando pasarela de pago segura...': 'Connecting to secure payment gateway...'
     ,'neuralgpt.store utiliza únicamente cookies técnicas estrictamente necesarias para el funcionamiento de la web. No utilizamos cookies de seguimiento ni publicidad de terceros.': 'neuralgpt.store uses only strictly necessary technical cookies for website operation. We do not use tracking or third-party advertising cookies.'
     ,'No realizamos transferencias internacionales de datos personales salvo obligación legal.': 'We do not perform international transfers of personal data unless legally required.'
     ,'Aplicamos medidas técnicas y organizativas para proteger tus datos: cifrado HTTPS (TLS 1.3), cabeceras de seguridad HTTP, acceso restringido a datos personales, y análisis periódico de vulnerabilidades. Para reportar problemas de seguridad:': 'We apply technical and organizational measures to protect your data: HTTPS encryption (TLS 1.3), security headers, restricted access to personal data, and periodic vulnerability analysis. To report security issues:'
@@ -743,14 +746,43 @@ const ATTRIBUTE_LITERALS = {
 
 const I18N = {
   lang: 'es',
+  safeGetSavedLang() {
+    try {
+      return localStorage.getItem('neuralgpt_lang');
+    } catch (_error) {
+      return null;
+    }
+  },
+  safeSetSavedLang(lang) {
+    try {
+      localStorage.setItem('neuralgpt_lang', lang);
+    } catch (_error) {
+      // storage no disponible: mantener idioma solo en sesión actual
+    }
+  },
+  normalizeCandidateLang(value) {
+    const code = String(value || '').trim().toLowerCase();
+    if (!code) return null;
+    const short = code.split('-')[0];
+    return TRANSLATIONS[short] ? short : null;
+  },
   t(key) {
     return (TRANSLATIONS[this.lang] || TRANSLATIONS['es'])[key] || key;
   },
   detect() {
-    const saved = localStorage.getItem('neuralgpt_lang');
-    if (saved && TRANSLATIONS[saved]) { this.lang = saved; return; }
-    const browser = (navigator.language || navigator.userLanguage || 'es').slice(0,2).toLowerCase();
-    this.lang = TRANSLATIONS[browser] ? browser : 'es';
+    const saved = this.normalizeCandidateLang(this.safeGetSavedLang());
+    if (saved) { this.lang = saved; return; }
+    const candidates = Array.isArray(navigator.languages) && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language || navigator.userLanguage || 'es'];
+    for (let i = 0; i < candidates.length; i += 1) {
+      const normalized = this.normalizeCandidateLang(candidates[i]);
+      if (normalized) {
+        this.lang = normalized;
+        return;
+      }
+    }
+    this.lang = 'es';
   },
   ensureSelector() {
     if (document.getElementById('lang-select')) return;
@@ -832,7 +864,7 @@ const I18N = {
   set(lang) {
     if (!TRANSLATIONS[lang]) return;
     this.lang = lang;
-    localStorage.setItem('neuralgpt_lang', lang);
+    this.safeSetSavedLang(lang);
     this.apply();
   },
   apply() {

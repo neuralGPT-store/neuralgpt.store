@@ -42,6 +42,7 @@ const env = {
   stripePriceSensacional: text('STRIPE_PRICE_SENSACIONAL', ''),
   stripePricePlanBasico: text('STRIPE_PRICE_PLAN_BASICO', ''),
   stripePricePlanPremium: text('STRIPE_PRICE_PLAN_PREMIUM', ''),
+  stripeDonationPriceId: text('STRIPE_DONATION_PRICE_ID', ''),
   stripeSuccessUrl: text('STRIPE_SUCCESS_URL', 'https://neuralgpt.store/confirm.html'),
   stripeCancelUrl: text('STRIPE_CANCEL_URL', 'https://neuralgpt.store/pricing.html')
 };
