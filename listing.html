@@ -104,9 +104,9 @@
             </div>
             <div id="listing-location" style="color:var(--text);font-size:0.88rem;margin-bottom:14px"></div>
             <div style="display:flex;flex-direction:column;gap:10px">
-              <button id="listing-contact" class="btn btn-primary btn-lg" style="width:100%;justify-content:center" onclick="unlockContact()" data-i18n="btn_contact_unlock">Ver contacto — 19,95 €</button>
-              <button id="listing-visibility-boost" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(0,234,255,0.15),rgba(127,0,255,0.15));border:1.5px solid var(--accent);display:none" onclick="boostVisibility()" data-i18n="btn_mas_visibilidad">Más visibilidad — 19,95 €</button>
-              <button id="listing-sensacional" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15));border:1.5px solid #ffd700;color:#ffd700;display:none" onclick="sensacional24h()" data-i18n="btn_sensacional">Sensacional 24h — 9,95 €</button>
+              <a href="/pricing.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;text-decoration:none">Ver contacto (requiere Plan Básico o Premium)</a>
+              <button id="listing-visibility-boost" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(0,234,255,0.15),rgba(127,0,255,0.15));border:1.5px solid var(--accent);display:none" onclick="boostVisibility()" data-i18n="btn_mas_visibilidad">Más visibilidad — 29,95 €</button>
+              <button id="listing-sensacional" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15));border:1.5px solid #ffd700;color:#ffd700;display:none" onclick="sensacional24h()" data-i18n="btn_sensacional">Sensacional 24h — 14,95 €</button>
               <a id="listing-collection-link" href="/real-estate-index.html" class="btn btn-lg" style="width:100%;justify-content:center;text-decoration:none">Volver al índice</a>
             </div>
             <div style="margin-top:14px;padding:12px 14px;background:rgba(0,234,255,0.05);border:1.5px solid rgba(0,234,255,0.18);border-radius:10px">
@@ -295,10 +295,6 @@
       factRow('Verificación', humanVerification(detail.verificationState)),
       factRow('Publicado', String(detail.publishedAt || '').slice(0,10))
     ].join('');
-    document.getElementById('listing-contact').textContent = detail.contactCta || 'Solicitar desbloqueo de contacto tras pago';
-    document.getElementById('listing-contact').onclick = function(){
-      window.location.href = 'mailto:' + ((settings && settings.public_contact_email) || 'hola@neuralgpt.store') + '?subject=' + encodeURIComponent('Solicitud de desbloqueo de contacto (tras pago): ' + detail.title);
-    };
     document.getElementById('listing-seo-note').innerHTML = '<span style="color:var(--muted);font-size:0.75rem">/listing.html?slug='+escapeHtml(detail.slug)+'</span><br><span style="color:var(--muted);font-size:0.75rem">El contacto directo del anunciante se libera tras pago del servicio de conexión.</span>';
     document.getElementById('listing-seo-copy').innerHTML = [
       operationSeo ? '<p style="margin-bottom:12px">'+escapeHtml(operationSeo.description)+'</p>' : '',
@@ -425,7 +421,6 @@ async function startCheckout(endpoint, label){
     alert('No se ha podido iniciar el servicio de ' + label + ' en este momento. Contacta en hola@neuralgpt.store para asistencia.');
   }
 }
-function unlockContact(){ startCheckout('/api/stripe/checkout-contact-unlock', 'desbloqueo de contacto'); }
 function boostVisibility(){ startCheckout('/api/stripe/checkout-mas-visibilidad', 'más visibilidad'); }
 function sensacional24h(){ startCheckout('/api/stripe/checkout-sensacional', 'sensacional 24h'); }
 </script>

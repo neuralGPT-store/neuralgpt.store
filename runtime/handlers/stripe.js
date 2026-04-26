@@ -57,14 +57,6 @@ function createStripeHandlers(env, stripe) {
     }
   }
 
-  async function checkoutContactUnlock(req, res) {
-    return createCheckout(req, res, {
-      key: 'contact_unlock',
-      priceId: env.stripePriceContactUnlock,
-      priceEnv: 'STRIPE_PRICE_CONTACT_UNLOCK'
-    });
-  }
-
   async function checkoutMasVisibilidad(req, res) {
     return createCheckout(req, res, {
       key: 'mas_visibilidad',
@@ -137,7 +129,7 @@ function createStripeHandlers(env, stripe) {
   function effectByCheckoutType(checkoutType) {
     const key = String(checkoutType || '').trim();
     if (!key) return null;
-    if (['contact_unlock', 'mas_visibilidad', 'sensacional_24h', 'plan_basico', 'plan_premium'].includes(key)) {
+    if (['mas_visibilidad', 'sensacional_24h', 'plan_basico', 'plan_premium'].includes(key)) {
       return key;
     }
     return null;
@@ -146,7 +138,6 @@ function createStripeHandlers(env, stripe) {
   function effectByPriceId(priceId) {
     const id = String(priceId || '').trim();
     if (!id) return null;
-    if (id === env.stripePriceContactUnlock) return 'contact_unlock';
     if (id === env.stripePriceMasVisibilidad) return 'mas_visibilidad';
     if (id === env.stripePriceSensacional) return 'sensacional_24h';
     if (id === env.stripePricePlanBasico) return 'plan_basico';
@@ -157,7 +148,6 @@ function createStripeHandlers(env, stripe) {
   function effectByProductId(productId) {
     const id = String(productId || '').trim().toLowerCase();
     if (!id) return null;
-    if (id.includes('contact') && id.includes('unlock')) return 'contact_unlock';
     if (id.includes('visibilidad')) return 'mas_visibilidad';
     if (id.includes('sensacional')) return 'sensacional_24h';
     if (id.includes('premium')) return 'plan_premium';
@@ -338,7 +328,6 @@ function createStripeHandlers(env, stripe) {
   }
 
   return {
-    checkoutContactUnlock,
     checkoutMasVisibilidad,
     checkoutSensacional,
     checkoutPlanBasico,

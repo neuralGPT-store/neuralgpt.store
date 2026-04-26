@@ -21,11 +21,6 @@ function createRouter(listingsHandlers, stripeHandlers) {
       return listingsHandlers.upsert(req, res);
     }
 
-    if (path === '/api/stripe/checkout-contact-unlock') {
-      if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
-      return stripeHandlers.checkoutContactUnlock(req, res);
-    }
-
     if (path === '/api/stripe/checkout-mas-visibilidad') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
       return stripeHandlers.checkoutMasVisibilidad(req, res);

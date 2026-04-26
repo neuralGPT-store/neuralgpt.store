@@ -37,7 +37,6 @@ const env = {
   strictEditPepper: bool('LISTINGS_STRICT_EDIT_PEPPER', false),
   stripeSecretKey: text('STRIPE_SECRET_KEY', ''),
   stripeWebhookSecret: text('STRIPE_WEBHOOK_SECRET', ''),
-  stripePriceContactUnlock: text('STRIPE_PRICE_CONTACT_UNLOCK', ''),
   stripePriceMasVisibilidad: text('STRIPE_PRICE_MAS_VISIBILIDAD', ''),
   stripePriceSensacional: text('STRIPE_PRICE_SENSACIONAL', ''),
   stripePricePlanBasico: text('STRIPE_PRICE_PLAN_BASICO', ''),
@@ -53,7 +52,6 @@ const env = {
 function assertRuntimeReadyForStripe() {
   required('STRIPE_SECRET_KEY');
   required('STRIPE_WEBHOOK_SECRET');
-  required('STRIPE_PRICE_CONTACT_UNLOCK');
   required('STRIPE_PRICE_MAS_VISIBILIDAD');
   required('STRIPE_PRICE_SENSACIONAL');
   required('STRIPE_PRICE_PLAN_BASICO');

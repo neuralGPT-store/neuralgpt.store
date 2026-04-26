@@ -261,12 +261,7 @@ function applyCommercialEffect(filePath, input) {
   effect.last_price_id = priceId || null;
   effect.last_product_id = productId || null;
 
-  if (effectKey === 'contact_unlock') {
-    effect.unlocked = true;
-    effect.unlocked_at = effect.unlocked_at || now;
-    commercial.contact_unlocked = true;
-    commercial.contact_unlocked_at = commercial.contact_unlocked_at || now;
-  } else if (effectKey === 'mas_visibilidad') {
+  if (effectKey === 'mas_visibilidad') {
     const prev = Number(record.visibility_rank || 0);
     record.visibility_rank = prev + 1;
   } else if (effectKey === 'sensacional_24h') {
@@ -307,6 +302,52 @@ function applyCommercialEffect(filePath, input) {
   return { ok: true, code: 'applied', listing: record };
 }
 
+function getPlanLimit(tier) {
+  if (tier === 'premium') return 100;
+  if (tier === 'basico') return 50;
+  return 5; // free
+}
+
+function countUserListings(filePath, contactEmail) {
+  if (!contactEmail) return 0;
+  const rows = readStore(filePath);
+  const normalized = String(contactEmail).toLowerCase().trim();
+  return rows.filter((r) => String(r.contact_email || '').toLowerCase().trim() === normalized).length;
+}
+
+function checkListingLimit(filePath, contactEmail, tier) {
+  const count = countUserListings(filePath, contactEmail);
+  const limit = getPlanLimit(tier);
+
+  if (count >= limit) {
+    return {
+      ok: false,
+      code: 'payment_required',
+      reason: 'listing_limit_exceeded',
+      current_count: count,
+      limit,
+      tier: tier || 'free',
+      upgrade_required: tier === 'free' ? 'basico' : tier === 'basico' ? 'premium' : 'additional',
+      checkout_url_hint: '/api/stripe/checkout-publicacion-adicional'
+    };
+  }
+
+  return {
+    ok: true,
+    current_count: count,
+    limit,
+    tier: tier || 'free',
+    remaining: limit - count
+  };
+}
+
+function hasActivePlan(record) {
+  if (!record || !record.commercial) return false;
+  const sub = record.commercial.subscription;
+  if (!sub || !sub.active) return false;
+  return sub.tier === 'basico' || sub.tier === 'premium';
+}
+
 module.exports = {
   readStore,
   writeStore,
@@ -317,5 +358,9 @@ module.exports = {
   getListingById,
   updateListingById,
   getListingEditState,
-  applyCommercialEffect
+  applyCommercialEffect,
+  getPlanLimit,
+  countUserListings,
+  checkListingLimit,
+  hasActivePlan
 };
