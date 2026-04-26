@@ -268,8 +268,8 @@ function applyCommercialEffect(filePath, input) {
     const currentUntil = new Date(String(commercial.sensacional_until || 0)).getTime();
     const nextUntil = new Date(toIsoPlusHours(now, 24)).getTime();
     commercial.sensacional_until = new Date(Math.max(currentUntil || 0, nextUntil)).toISOString();
-  } else if (effectKey === 'plan_basico' || effectKey === 'plan_premium') {
-    commercial.subscription.tier = effectKey === 'plan_premium' ? 'premium' : 'basico';
+  } else if (effectKey === 'plan_basico' || effectKey === 'plan_premium' || effectKey === 'plan_enterprise') {
+    commercial.subscription.tier = effectKey === 'plan_premium' ? 'premium' : effectKey === 'plan_enterprise' ? 'enterprise' : 'basico';
     commercial.subscription.updated_at = now;
     commercial.subscription.active = true;
   }
@@ -303,6 +303,7 @@ function applyCommercialEffect(filePath, input) {
 }
 
 function getPlanLimit(tier) {
+  if (tier === 'enterprise') return Infinity;
   if (tier === 'premium') return 100;
   if (tier === 'basico') return 50;
   return 5; // free
@@ -345,7 +346,7 @@ function hasActivePlan(record) {
   if (!record || !record.commercial) return false;
   const sub = record.commercial.subscription;
   if (!sub || !sub.active) return false;
-  return sub.tier === 'basico' || sub.tier === 'premium';
+  return sub.tier === 'basico' || sub.tier === 'premium' || sub.tier === 'enterprise';
 }
 
 module.exports = {

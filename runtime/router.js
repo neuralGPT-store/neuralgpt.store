@@ -41,6 +41,11 @@ function createRouter(listingsHandlers, stripeHandlers) {
       return stripeHandlers.checkoutPlanPremium(req, res);
     }
 
+    if (path === '/api/stripe/checkout-plan-enterprise') {
+      if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      return stripeHandlers.checkoutPlanEnterprise(req, res);
+    }
+
     if (path === '/api/stripe/checkout-publicacion-adicional') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
       return stripeHandlers.checkoutPublicacionAdicional(req, res);

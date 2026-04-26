@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "product_id": "prod_UPLzFx77GU1JXo",
+    "product_name": "Publicación adicional",
+    "price_id": "price_1TQXHXFVnpodYhTUqgqRZ4ce",
+    "amount": 5.00,
+    "currency": "eur",
+    "type": "one_time",
+    "description": "Anuncio adicional para usuarios que superan su límite de plan"
+  },
+  {
+    "product_id": "prod_UNA58ftOM9ivAK",
+    "product_name": "Sensacional 24h",
+    "price_id": "price_1TOPlHFVnpodYhTU9MoCCrEs",
+    "amount": 14.95,
+    "currency": "eur",
+    "type": "one_time",
+    "description": "Badge premium 'Sensacional' activo durante 24 horas"
+  },
+  {
+    "product_id": "prod_UNA4ahAKkmAR5A",
+    "product_name": "Más visibilidad 30 días",
+    "price_id": "price_1TOPkHFVnpodYhTUDY6ZVO0m",
+    "amount": 29.95,
+    "currency": "eur",
+    "type": "one_time",
+    "description": "Incrementa la visibilidad del anuncio durante 30 días"
+  },
+  {
+    "product_id": "prod_UNA2X86aVJkYFJ",
+    "product_name": "neuralgpt.store — Plan Básico",
+    "price_id": "price_1TOPi0FVnpodYhTUdV5rkCsf",
+    "amount": 19.95,
+    "currency": "eur",
+    "type": "recurring",
+    "interval": "month",
+    "description": "Plan mensual con límite de 50 anuncios, contacto visible",
+    "limits": {
+      "listings": 50,
+      "contact_visible": true,
+      "premium_visibility": false
+    }
+  },
+  {
+    "product_id": "prod_UNA3yhuV9RRkjD",
+    "product_name": "neuralgpt.store — Plan Premium",
+    "price_id": "price_1TOPjIFVnpodYhTUuIXQF1D9",
+    "amount": 49.95,
+    "currency": "eur",
+    "type": "recurring",
+    "interval": "month",
+    "description": "Plan mensual con límite de 100 anuncios, contacto visible, visibilidad premium",
+    "limits": {
+      "listings": 100,
+      "contact_visible": true,
+      "premium_visibility": true
+    }
+  },
+  {
+    "product_id": "prod_UPNtHJWYRUCW6G",
+    "product_name": "neuralgpt.store — Plan Enterprise",
+    "price_id": "price_1TQZ7SFVnpodYhTUiHrpsHh6",
+    "amount": 150.00,
+    "currency": "eur",
+    "type": "recurring",
+    "interval": "month",
+    "description": "Plan mensual con anuncios ilimitados, contacto visible, visibilidad premium incluida",
+    "limits": {
+      "listings": "unlimited",
+      "contact_visible": true,
+      "premium_visibility": true
+    }
+  }
+]

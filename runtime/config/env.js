@@ -41,8 +41,10 @@ const env = {
   stripePriceSensacional: text('STRIPE_PRICE_SENSACIONAL', ''),
   stripePricePlanBasico: text('STRIPE_PRICE_PLAN_BASICO', ''),
   stripePricePlanPremium: text('STRIPE_PRICE_PLAN_PREMIUM', ''),
+  stripePricePlanEnterprise: text('STRIPE_PRICE_PLAN_ENTERPRISE', ''),
   stripeDonationPriceId: text('STRIPE_DONATION_PRICE_ID', ''),
   stripePricePublicacionAdicional: text('STRIPE_PRICE_PUBLICACION_ADICIONAL', ''),
+  stripeProductPlanEnterprise: text('STRIPE_PRODUCT_PLAN_ENTERPRISE', ''),
   stripeProductPublicacionAdicional: text('STRIPE_PRODUCT_PUBLICACION_ADICIONAL', ''),
   freeListingsPerUser: Number(text('FREE_LISTINGS_PER_USER', '10')),
   stripeSuccessUrl: text('STRIPE_SUCCESS_URL', 'https://neuralgpt.store/confirm.html'),
@@ -56,6 +58,7 @@ function assertRuntimeReadyForStripe() {
   required('STRIPE_PRICE_SENSACIONAL');
   required('STRIPE_PRICE_PLAN_BASICO');
   required('STRIPE_PRICE_PLAN_PREMIUM');
+  required('STRIPE_PRICE_PLAN_ENTERPRISE');
 }
 
 module.exports = {

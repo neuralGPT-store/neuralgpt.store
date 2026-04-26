@@ -89,6 +89,14 @@ function createStripeHandlers(env, stripe) {
     });
   }
 
+  async function checkoutPlanEnterprise(req, res) {
+    return createCheckout(req, res, {
+      key: 'plan_enterprise',
+      priceId: env.stripePricePlanEnterprise,
+      priceEnv: 'STRIPE_PRICE_PLAN_ENTERPRISE'
+    });
+  }
+
   async function checkoutPublicacionAdicional(req, res) {
     return createCheckout(req, res, {
       key: 'publicacion_adicional',
@@ -129,7 +137,7 @@ function createStripeHandlers(env, stripe) {
   function effectByCheckoutType(checkoutType) {
     const key = String(checkoutType || '').trim();
     if (!key) return null;
-    if (['mas_visibilidad', 'sensacional_24h', 'plan_basico', 'plan_premium'].includes(key)) {
+    if (['mas_visibilidad', 'sensacional_24h', 'plan_basico', 'plan_premium', 'plan_enterprise'].includes(key)) {
       return key;
     }
     return null;
@@ -142,6 +150,7 @@ function createStripeHandlers(env, stripe) {
     if (id === env.stripePriceSensacional) return 'sensacional_24h';
     if (id === env.stripePricePlanBasico) return 'plan_basico';
     if (id === env.stripePricePlanPremium) return 'plan_premium';
+    if (id === env.stripePricePlanEnterprise) return 'plan_enterprise';
     return null;
   }
 
@@ -150,6 +159,7 @@ function createStripeHandlers(env, stripe) {
     if (!id) return null;
     if (id.includes('visibilidad')) return 'mas_visibilidad';
     if (id.includes('sensacional')) return 'sensacional_24h';
+    if (id.includes('enterprise')) return 'plan_enterprise';
     if (id.includes('premium')) return 'plan_premium';
     if (id.includes('basico') || id.includes('basic')) return 'plan_basico';
     return null;
@@ -332,6 +342,7 @@ function createStripeHandlers(env, stripe) {
     checkoutSensacional,
     checkoutPlanBasico,
     checkoutPlanPremium,
+    checkoutPlanEnterprise,
     checkoutPublicacionAdicional,
     checkoutDonation,
     webhook
