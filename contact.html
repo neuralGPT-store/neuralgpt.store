@@ -73,15 +73,15 @@
           </div>
           <div class="form-group">
             <label for="listing-title">TÍTULO</label>
-            <input type="text" id="listing-title" name="title" class="form-control" placeholder="Ej: Piso premium en Madrid" required maxlength="140" />
+            <input type="text" id="listing-title" name="title" class="form-control" placeholder="Ej: Piso premium en Madrid" required maxlength="160" />
           </div>
           <div class="form-group">
             <label for="listing-summary">RESUMEN</label>
-            <input type="text" id="listing-summary" name="summary" class="form-control" placeholder="Resumen breve del activo" required maxlength="220" />
+            <input type="text" id="listing-summary" name="summary" class="form-control" placeholder="Resumen breve del activo" required maxlength="400" />
           </div>
           <div class="form-group">
             <label for="listing-description">DESCRIPCIÓN</label>
-            <textarea id="listing-description" name="description" class="form-control" rows="5" placeholder="Describe el activo…" required maxlength="5000"></textarea>
+            <textarea id="listing-description" name="description" class="form-control" rows="5" placeholder="Describe el activo…" required maxlength="4000"></textarea>
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -111,27 +111,27 @@
             </div>
             <div class="form-group">
               <label for="listing-region">REGIÓN</label>
-              <input type="text" id="listing-region" name="region" class="form-control" placeholder="Madrid" required maxlength="80" />
+              <input type="text" id="listing-region" name="region" class="form-control" placeholder="Madrid" maxlength="80" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label for="listing-city">CIUDAD</label>
-              <input type="text" id="listing-city" name="city" class="form-control" placeholder="Madrid" required maxlength="80" />
+              <input type="text" id="listing-city" name="city" class="form-control" placeholder="Madrid" maxlength="80" />
             </div>
             <div class="form-group">
               <label for="listing-zone">ZONA</label>
-              <input type="text" id="listing-zone" name="zone" class="form-control" placeholder="Salamanca" required maxlength="80" />
+              <input type="text" id="listing-zone" name="zone" class="form-control" placeholder="Salamanca" maxlength="80" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label for="listing-price">PRECIO EUR</label>
-              <input type="number" id="listing-price" name="price" class="form-control" min="1" step="1" required />
+              <input type="number" id="listing-price" name="price" class="form-control" min="0" step="1" />
             </div>
             <div class="form-group">
               <label for="listing-surface">SUPERFICIE M²</label>
-              <input type="number" id="listing-surface" name="surface_m2" class="form-control" min="1" step="1" required />
+              <input type="number" id="listing-surface" name="surface_m2" class="form-control" min="0" step="1" />
             </div>
           </div>
           <div class="form-row">
