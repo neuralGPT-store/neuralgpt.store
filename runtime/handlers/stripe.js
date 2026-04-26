@@ -97,6 +97,14 @@ function createStripeHandlers(env, stripe) {
     });
   }
 
+  async function checkoutPublicacionAdicional(req, res) {
+    return createCheckout(req, res, {
+      key: 'publicacion_adicional',
+      priceId: env.stripePricePublicacionAdicional,
+      priceEnv: 'STRIPE_PRICE_PUBLICACION_ADICIONAL'
+    });
+  }
+
   async function checkoutDonation(req, res) {
     return createCheckout(req, res, {
       key: 'donation_project',
@@ -335,6 +343,7 @@ function createStripeHandlers(env, stripe) {
     checkoutSensacional,
     checkoutPlanBasico,
     checkoutPlanPremium,
+    checkoutPublicacionAdicional,
     checkoutDonation,
     webhook
   };
