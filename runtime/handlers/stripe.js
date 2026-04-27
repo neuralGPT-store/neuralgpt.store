@@ -374,6 +374,89 @@ function createStripeHandlers(env, stripe) {
     };
   }
 
+  async function reconcileSubscriptionCreated(event) {
+    const subscription = event && event.data && event.data.object ? event.data.object : {};
+    const subscriptionId = String(subscription.id || '').trim();
+    const customerId = String(subscription.customer || '').trim();
+    const status = String(subscription.status || '').trim();
+    const meta = subscription && subscription.metadata && typeof subscription.metadata === 'object' ? subscription.metadata : {};
+
+    const listingId = String(meta.listing_id || '').trim();
+    if (!listingId) {
+      return { applied: false, reason: 'listing_id_missing_in_subscription_metadata', subscription_id: subscriptionId };
+    }
+
+    // Determinar tier desde metadata o desde el plan
+    const tier = String(meta.tier || meta.plan_tier || '').trim() || 'basico';
+    const validTiers = ['basico', 'premium', 'enterprise'];
+    const finalTier = validTiers.includes(tier) ? tier : 'basico';
+
+    // Marcar suscripción como activa
+    const effectKey = tier === 'premium' ? 'plan_premium' : tier === 'enterprise' ? 'plan_enterprise' : 'plan_basico';
+    const txKey = subscriptionId || String(event.id || '');
+
+    const result = applyCommercialEffect(env.listingsStorePath, {
+      listingId,
+      effectKey,
+      transactionKey: txKey,
+      eventId: String(event.id || ''),
+      eventType: 'customer.subscription.created',
+      checkoutSessionId: null,
+      paymentIntentId: null,
+      priceId: null,
+      productId: null
+    });
+
+    return {
+      applied: Boolean(result && result.ok),
+      code: result && result.code ? result.code : 'unknown',
+      listing_id: listingId,
+      effect_key: effectKey,
+      subscription_id: subscriptionId,
+      tier: finalTier,
+      status
+    };
+  }
+
+  async function reconcileSubscriptionDeleted(event) {
+    const subscription = event && event.data && event.data.object ? event.data.object : {};
+    const subscriptionId = String(subscription.id || '').trim();
+    const meta = subscription && subscription.metadata && typeof subscription.metadata === 'object' ? subscription.metadata : {};
+
+    const listingId = String(meta.listing_id || '').trim();
+    if (!listingId) {
+      return { applied: false, reason: 'listing_id_missing_in_subscription_metadata', subscription_id: subscriptionId };
+    }
+
+    // Desactivar suscripción
+    const { readStore, writeStore } = require('../services/listings-store');
+    const rows = readStore(env.listingsStorePath);
+    const idx = rows.findIndex((row) => String(row.id) === listingId);
+
+    if (idx < 0) {
+      return { applied: false, reason: 'listing_not_found', listing_id: listingId, subscription_id: subscriptionId };
+    }
+
+    const listing = rows[idx];
+    if (!listing.commercial) listing.commercial = {};
+    if (!listing.commercial.subscription) listing.commercial.subscription = {};
+
+    listing.commercial.subscription.active = false;
+    listing.commercial.subscription.canceled_at = new Date().toISOString();
+    listing.commercial.subscription.subscription_id = subscriptionId;
+    listing.updated_at = new Date().toISOString();
+
+    rows[idx] = listing;
+    writeStore(env.listingsStorePath, rows);
+
+    return {
+      applied: true,
+      code: 'subscription_deactivated',
+      listing_id: listingId,
+      subscription_id: subscriptionId
+    };
+  }
+
   async function reconcileStripeEvent(event) {
     const type = String(event && event.type || '');
     if (type === 'checkout.session.completed') {
@@ -381,6 +464,18 @@ function createStripeHandlers(env, stripe) {
     }
     if (type === 'payment_intent.succeeded') {
       return reconcilePaymentIntentSucceeded(event);
+    }
+    if (type === 'customer.subscription.created' || type === 'customer.subscription.updated') {
+      // Solo procesar si status = active
+      const subscription = event && event.data && event.data.object ? event.data.object : {};
+      const status = String(subscription.status || '').trim();
+      if (status === 'active') {
+        return reconcileSubscriptionCreated(event);
+      }
+      return { applied: false, ignored: true, reason: 'subscription_not_active', type, status };
+    }
+    if (type === 'customer.subscription.deleted') {
+      return reconcileSubscriptionDeleted(event);
     }
     return { applied: false, ignored: true, reason: 'event_type_not_supported', type };
   }
