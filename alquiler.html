@@ -16,13 +16,18 @@
   <meta name="twitter:title" content="Activos en alquiler — neuralgpt.store" id="twitter-title" />
   <meta name="twitter:description" content="Colección inmobiliaria pública de alquiler estable y habitaciones de larga estancia." id="twitter-desc" />
   <meta name="twitter:image" content="https://neuralgpt.store/assets/img/og-real-estate-default.png" id="twitter-image" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <!-- Leaflet.draw CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css"/>
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
+  <link rel="stylesheet" href="/css/map-search.css">
   <link rel="canonical" id="canonical-tag" href="https://neuralgpt.store/alquiler.html">
   <script type="application/ld+json" id="collection-schema">{}</script>
   <script src="/js/i18n.js"></script>
@@ -43,20 +48,36 @@
         <a href="/contact.html" class="btn">Publicar activo</a>
       </div>
     </section>
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px">
-      <span id="results-count" style="font-size:0.82rem;color:var(--muted)">Usa los filtros para explorar activos en alquiler por tipo y ciudad.</span>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <select id="filter-subtype" class="form-control" aria-label="Filtrar por modalidad de alquiler" style="min-width:160px;height:34px;font-size:0.78rem;padding:0 10px">
-          <option value="">Todos los tipos</option>
-          <option value="long_term_rent">Alquiler estable</option>
-          <option value="room_rent">Habitación</option>
-        </select>
-        <select id="filter-city" class="form-control" aria-label="Filtrar por ciudad" style="min-width:130px;height:34px;font-size:0.78rem;padding:0 10px">
-          <option value="">Todas las ciudades</option>
-        </select>
+    <!-- Instrucciones de búsqueda en mapa -->
+    <div class="map-instructions">
+      <h4>🗺️ Búsqueda en mapa interactivo</h4>
+      <ul>
+        <li>Haz clic en los marcadores para ver detalles de cada activo en alquiler</li>
+        <li>Usa las herramientas de dibujo (cuadrado, círculo, polígono) para filtrar por área geográfica</li>
+        <li>Los resultados se sincronizan automáticamente con el panel lateral</li>
+      </ul>
+    </div>
+
+    <!-- Contenedor: Mapa + Panel Lateral -->
+    <div class="map-search-container">
+      <div id="map-container"></div>
+      <div class="map-side-panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+          <span id="results-count" style="font-size:0.82rem;color:var(--muted)">Cargando activos...</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <select id="filter-subtype" class="form-control" aria-label="Filtrar por modalidad" style="min-width:150px;height:32px;font-size:0.75rem;padding:0 8px">
+              <option value="">Todos</option>
+              <option value="long_term_rent">Alquiler estable</option>
+              <option value="room_rent">Habitación</option>
+            </select>
+            <select id="filter-city" class="form-control" aria-label="Filtrar por ciudad" style="min-width:130px;height:32px;font-size:0.75rem;padding:0 8px">
+              <option value="">Todas las ciudades</option>
+            </select>
+          </div>
+        </div>
+        <div id="collection-grid" role="list" aria-live="polite"></div>
       </div>
     </div>
-    <div id="collection-grid" class="market-grid" role="list" aria-live="polite"></div>
     <div id="empty-state" style="display:none;padding:42px 24px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg);text-align:center"><div style="font-size:2.5rem;margin-bottom:12px">🏠</div><h2 style="font-family:var(--font-title);font-size:1rem;margin-bottom:8px">Sin activos disponibles en este filtro</h2><p style="color:var(--muted);line-height:1.7;margin:0 0 14px 0">Ajusta filtros de ciudad o modalidad de alquiler, o explora hubs y mercados con inventario activo.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a href="/hub-pais.html?country=pt" class="btn">Hub Portugal</a><a href="/hub-ciudad.html?city=lisboa" class="btn">Hub Lisboa</a><a href="/sponsors.html" class="btn">Sponsors</a><a href="/contact.html" class="btn btn-primary">Activar alerta / publicar</a></div></div>
   </main>
   <footer class="site-footer" role="contentinfo">
@@ -88,7 +109,12 @@
     </div>
     <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="/real-estate-index.html" style="color:var(--accent)">Inmuebles</a></span></div>
   </footer>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Leaflet.draw JS -->
+  <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
   <script src="/js/real-estate-data.js"></script><script src="/js/real-estate-presenters.js"></script><script src="/js/real-estate-adapters.js"></script>
+  <script src="/js/map-search.js"></script>
   <script>
   (function(){
     var toggle=document.getElementById('nav-toggle'), nav=document.getElementById('main-nav');
@@ -138,6 +164,27 @@
     applyFilters();
     document.getElementById('filter-subtype').addEventListener('change', applyFilters);
     document.getElementById('filter-city').addEventListener('change', applyFilters);
+
+    // Inicializar mapa con los listings de alquiler
+    if (window.initMapSearch) {
+      initMapSearch(items, 'rent');
+      // Sincronizar filtros con mapa
+      document.getElementById('filter-subtype').addEventListener('change', syncFiltersWithMap);
+      document.getElementById('filter-city').addEventListener('change', syncFiltersWithMap);
+    }
+
+    return items;
+  }
+
+  function syncFiltersWithMap() {
+    var subtype = document.getElementById('filter-subtype').value;
+    var city = document.getElementById('filter-city').value;
+    if (window.applyMapFilters) {
+      window.applyMapFilters({
+        city: city || null,
+        operation: subtype || null
+      });
+    }
   }
 
   function populateCityFilter(items){

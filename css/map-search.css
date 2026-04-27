@@ -1,0 +1,261 @@
+/**
+ * map-search.css — Estilos para búsqueda en mapa con Leaflet
+ */
+
+/* Contenedor principal con mapa y panel lateral */
+.map-search-container {
+  display: grid;
+  grid-template-columns: 1fr 450px;
+  gap: 20px;
+  margin-bottom: 40px;
+  min-height: 600px;
+}
+
+/* Contenedor del mapa */
+#map-container {
+  height: 600px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  overflow: hidden;
+  background: var(--card-bg);
+  z-index: 1;
+}
+
+/* Panel lateral con resultados */
+.map-side-panel {
+  height: 600px;
+  overflow-y: auto;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  background: var(--card-bg);
+  padding: 16px;
+}
+
+.map-side-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.map-side-panel::-webkit-scrollbar-track {
+  background: var(--bg);
+  border-radius: 4px;
+}
+
+.map-side-panel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.map-side-panel::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Marcadores personalizados */
+.custom-marker {
+  background: transparent;
+  border: none;
+}
+
+.marker-pin {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50% 50% 50% 0;
+  background: #00F5FF;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.4);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.marker-pin:hover {
+  transform: rotate(-45deg) scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 245, 255, 0.6);
+}
+
+.marker-price {
+  transform: rotate(45deg);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #000;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Popup del mapa */
+.leaflet-popup-content-wrapper {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.leaflet-popup-content {
+  margin: 12px;
+  font-family: var(--font-body);
+  color: var(--text);
+}
+
+.leaflet-popup-tip {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-top: none;
+  border-right: none;
+}
+
+/* Cards de listings en panel lateral */
+.market-card {
+  margin-bottom: 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.market-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.2);
+}
+
+.market-card.highlighted {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.3);
+}
+
+.market-card-image {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+}
+
+.market-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.market-card-body {
+  padding: 14px;
+}
+
+.market-card-title {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  margin: 0 0 6px 0;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.market-card-location {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin: 0 0 8px 0;
+}
+
+.market-card-summary {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0 0 10px 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.market-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.market-card-price {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.market-card-specs {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Controles de dibujo personalizados */
+.leaflet-draw-toolbar a {
+  background-color: var(--card-bg) !important;
+  border: 1.5px solid var(--border) !important;
+}
+
+.leaflet-draw-toolbar a:hover {
+  background-color: var(--accent) !important;
+}
+
+.leaflet-draw-actions a {
+  background-color: var(--card-bg) !important;
+  color: var(--text) !important;
+  border: 1.5px solid var(--border) !important;
+}
+
+/* Instrucciones de mapa */
+.map-instructions {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.map-instructions h4 {
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+  color: var(--text);
+}
+
+.map-instructions ul {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+/* Responsive: móvil */
+@media (max-width: 768px) {
+  .map-search-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  #map-container {
+    height: 400px;
+  }
+
+  .map-side-panel {
+    height: auto;
+    max-height: 600px;
+  }
+
+  .marker-pin {
+    width: 32px;
+    height: 32px;
+  }
+
+  .marker-price {
+    font-size: 0.6rem;
+  }
+}
+
+/* Modo oscuro optimizado */
+@media (prefers-color-scheme: dark) {
+  .leaflet-tile {
+    filter: brightness(0.8) contrast(1.1);
+  }
+}
