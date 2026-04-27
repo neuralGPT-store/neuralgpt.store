@@ -174,6 +174,7 @@
   function normalizeSlug(value){ return String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
   function escapeHtml(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
   </script>
+  <script src="/js/agent-chat.js" defer></script>
   <script src="/js/listing-strips.js"></script>
 </body>
 </html>
