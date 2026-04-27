@@ -121,6 +121,9 @@
             <div id="listing-facts" style="display:grid;gap:10px"></div>
           </div>
 
+          <!-- Valoración de zona -->
+          <div id="zone-valuation" style="padding:22px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg);display:none"></div>
+
           <!-- Calculadora de hipoteca -->
           <div class="mortgage-calculator" id="mortgage-calculator" style="display:none">
             <button class="mortgage-toggle" id="mortgage-toggle" aria-expanded="false">
@@ -218,6 +221,7 @@
   <script src="/js/real-estate-presenters.js"></script>
   <script src="/js/real-estate-adapters.js"></script>
   <script src="/js/mortgage-calculator.js"></script>
+  <script src="/js/zone-valuation.js"></script>
   <script>
   (function(){
     var toggle=document.getElementById('nav-toggle'), nav=document.getElementById('main-nav');
@@ -370,6 +374,11 @@
     if (detail.operation === 'sale' && detail.price && window.initMortgageCalculator) {
       document.getElementById('mortgage-calculator').style.display = 'block';
       initMortgageCalculator(detail.price);
+    }
+
+    // Mostrar valoración de zona (requiere listings completos)
+    if (listing.price && listing.surface_m2 && window.initZoneValuation && listings) {
+      initZoneValuation(listing, listings);
     }
   }
 
