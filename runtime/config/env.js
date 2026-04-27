@@ -46,6 +46,9 @@ const env = {
   stripePricePublicacionAdicional: text('STRIPE_PRICE_PUBLICACION_ADICIONAL', ''),
   stripeProductPlanEnterprise: text('STRIPE_PRODUCT_PLAN_ENTERPRISE', ''),
   stripeProductPublicacionAdicional: text('STRIPE_PRODUCT_PUBLICACION_ADICIONAL', ''),
+  cfAccountId: text('CF_ACCOUNT_ID', ''),
+  cfKvNamespaceId: text('CF_KV_NAMESPACE_ID', ''),
+  cfKvApiToken: text('CF_KV_API_TOKEN', ''),
   freeListingsPerUser: Number(text('FREE_LISTINGS_PER_USER', '10')),
   stripeSuccessUrl: text('STRIPE_SUCCESS_URL', 'https://neuralgpt.store/confirm.html'),
   stripeCancelUrl: text('STRIPE_CANCEL_URL', 'https://neuralgpt.store/pricing.html')

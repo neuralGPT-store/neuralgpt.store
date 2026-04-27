@@ -1,0 +1,196 @@
+'use strict';
+
+/**
+ * Cloudflare KV client para registro de leads
+ * API REST: https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair
+ *
+ * RGPD:
+ * - Datos mínimos: timestamp, listing_id, viewer_email, país
+ * - Retención: 90 días (TTL automático)
+ * - No se expone en API pública
+ * - Solo accesible internamente para métricas
+ */
+
+const https = require('https');
+
+/**
+ * Escribe un lead en Cloudflare KV
+ * @param {Object} config - { accountId, namespaceId, apiToken }
+ * @param {Object} lead - { listing_id, viewer_email, country }
+ * @returns {Promise<{ok: boolean, key?: string, error?: string}>}
+ */
+async function writeLeadToKV(config, lead) {
+  const { accountId, namespaceId, apiToken } = config;
+
+  if (!accountId || !namespaceId || !apiToken) {
+    return { ok: false, error: 'cf_kv_not_configured' };
+  }
+
+  if (!lead || !lead.listing_id || !lead.viewer_email) {
+    return { ok: false, error: 'lead_data_incomplete' };
+  }
+
+  // Generar clave única: lead:{timestamp}:{listing_id}:{hash}
+  const timestamp = Date.now();
+  const hash = generateHash(lead.viewer_email).slice(0, 8);
+  const key = `lead:${timestamp}:${sanitize(lead.listing_id)}:${hash}`;
+
+  // Datos del lead (RGPD: solo lo mínimo)
+  const value = JSON.stringify({
+    ts: timestamp,
+    listing_id: sanitize(lead.listing_id),
+    viewer_email_hash: generateHash(lead.viewer_email), // Hash, no email directo
+    country: sanitize(lead.country || 'unknown'),
+    expires_at: timestamp + (90 * 24 * 60 * 60 * 1000) // 90 días
+  });
+
+  // PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{key}
+  const path = `/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/values/${encodeURIComponent(key)}`;
+
+  const options = {
+    hostname: 'api.cloudflare.com',
+    port: 443,
+    path,
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${apiToken}`,
+      'Content-Type': 'text/plain',
+      'Content-Length': Buffer.byteLength(value)
+    }
+  };
+
+  return new Promise((resolve) => {
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', chunk => { data += chunk; });
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve({ ok: true, key });
+        } else {
+          resolve({ ok: false, error: 'cf_kv_write_failed', status: res.statusCode, response: data });
+        }
+      });
+    });
+
+    req.on('error', (error) => {
+      resolve({ ok: false, error: 'cf_kv_request_error', message: error.message });
+    });
+
+    req.write(value);
+    req.end();
+  });
+}
+
+/**
+ * Añade metadatos con TTL de 90 días (para expiración automática RGPD)
+ * @param {Object} config
+ * @param {string} key
+ * @param {Object} metadata
+ * @returns {Promise<{ok: boolean, error?: string}>}
+ */
+async function updateLeadMetadata(config, key, metadata) {
+  const { accountId, namespaceId, apiToken } = config;
+
+  if (!accountId || !namespaceId || !apiToken || !key) {
+    return { ok: false, error: 'cf_kv_not_configured_or_key_missing' };
+  }
+
+  const path = `/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/metadata/${encodeURIComponent(key)}`;
+
+  const payload = JSON.stringify({
+    metadata: {
+      ...metadata,
+      ttl_days: 90,
+      purpose: 'lead_tracking',
+      rgpd_compliant: true
+    }
+  });
+
+  const options = {
+    hostname: 'api.cloudflare.com',
+    port: 443,
+    path,
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${apiToken}`,
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(payload)
+    }
+  };
+
+  return new Promise((resolve) => {
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', chunk => { data += chunk; });
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve({ ok: true });
+        } else {
+          resolve({ ok: false, error: 'cf_kv_metadata_update_failed', status: res.statusCode });
+        }
+      });
+    });
+
+    req.on('error', (error) => {
+      resolve({ ok: false, error: 'cf_kv_request_error', message: error.message });
+    });
+
+    req.write(payload);
+    req.end();
+  });
+}
+
+/**
+ * Genera hash SHA-256 de un email (para no almacenar emails en claro)
+ */
+function generateHash(input) {
+  const crypto = require('crypto');
+  return crypto.createHash('sha256').update(String(input || '')).digest('hex');
+}
+
+/**
+ * Sanitiza strings para usar en claves y valores
+ */
+function sanitize(str) {
+  return String(str || '')
+    .replace(/[^a-zA-Z0-9_\-:.]/g, '')
+    .slice(0, 100);
+}
+
+/**
+ * Registra un lead cuando un suscriptor activo ve un contacto
+ * Esta función debe llamarse desde el endpoint que sirve los datos de contacto
+ *
+ * @param {Object} config - { accountId, namespaceId, apiToken }
+ * @param {Object} leadData - { listing_id, viewer_email, country }
+ * @returns {Promise<{ok: boolean, key?: string, error?: string}>}
+ */
+async function registerContactView(config, leadData) {
+  // Verificar que los datos cumplan RGPD
+  if (!leadData || !leadData.listing_id || !leadData.viewer_email) {
+    return { ok: false, error: 'insufficient_data_for_lead_tracking' };
+  }
+
+  // Escribir en KV
+  const result = await writeLeadToKV(config, {
+    listing_id: leadData.listing_id,
+    viewer_email: leadData.viewer_email,
+    country: leadData.country || 'unknown'
+  });
+
+  if (!result.ok) {
+    // No fallar la petición principal si el tracking falla
+    // Solo loguear internamente
+    return { ok: false, error: result.error, silent: true };
+  }
+
+  return { ok: true, key: result.key, tracked: true };
+}
+
+module.exports = {
+  writeLeadToKV,
+  updateLeadMetadata,
+  registerContactView,
+  generateHash,
+  sanitize
+};

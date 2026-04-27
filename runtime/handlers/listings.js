@@ -9,6 +9,7 @@ const {
   getListingEditState
 } = require('../services/listings-store');
 const { parseUrl, readMultipartBody, readJsonBody, sendError, sendJson } = require('../lib/http');
+const { registerContactView } = require('../services/cf-kv');
 
 const MAX_MULTIPART_BYTES = 12 * 1024 * 1024;
 const MAX_JSON_BYTES = 256 * 1024;
@@ -66,6 +67,26 @@ function createListingsHandlers(env) {
       safeListing.contact_name = listing.contact_name;
       safeListing.contact_phone = listing.contact_phone;
       safeListing.contact_email = listing.contact_email;
+
+      // Registrar lead si se proporciona viewer_email (RGPD-compliant tracking)
+      const viewerEmail = String(body.viewer_email || '').trim();
+      if (viewerEmail && env.cfAccountId && env.cfKvNamespaceId && env.cfKvApiToken) {
+        // Tracking en background (no bloquea la respuesta)
+        registerContactView(
+          {
+            accountId: env.cfAccountId,
+            namespaceId: env.cfKvNamespaceId,
+            apiToken: env.cfKvApiToken
+          },
+          {
+            listing_id: listing.id,
+            viewer_email: viewerEmail,
+            country: body.viewer_country || 'unknown'
+          }
+        ).catch(() => {
+          // Error silencioso: el tracking no debe fallar la petición principal
+        });
+      }
     }
 
     return sendJson(res, 200, {
