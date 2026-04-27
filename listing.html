@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
   <link rel="stylesheet" href="/css/mortgage-calculator.css">
+  <link rel="stylesheet" href="/css/print.css">
   <link rel="canonical" id="canonical-tag" href="https://neuralgpt.store/listing.html">
   <script type="application/ld+json" id="listing-schema">{}</script>
   <script src="/js/i18n.js"></script>
@@ -109,6 +110,22 @@
               <button id="listing-visibility-boost" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(0,234,255,0.15),rgba(127,0,255,0.15));border:1.5px solid var(--accent);display:none" onclick="boostVisibility()" data-i18n="btn_mas_visibilidad">Más visibilidad — 29,95 €</button>
               <button id="listing-sensacional" class="btn btn-lg" style="width:100%;justify-content:center;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.15));border:1.5px solid #ffd700;color:#ffd700;display:none" onclick="sensacional24h()" data-i18n="btn_sensacional">Sensacional 24h — 14,95 €</button>
               <a id="listing-collection-link" href="/real-estate-index.html" class="btn btn-lg" style="width:100%;justify-content:center;text-decoration:none">Volver al índice</a>
+            </div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;letter-spacing:0.5px">COMPARTIR</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button onclick="shareOnWhatsApp()" class="btn" style="flex:1;min-width:45px;padding:8px;justify-content:center;font-size:1.2rem" title="WhatsApp">💬</button>
+                <button onclick="shareOnTwitter()" class="btn" style="flex:1;min-width:45px;padding:8px;justify-content:center;font-size:1.2rem" title="X (Twitter)">𝕏</button>
+                <button onclick="shareOnFacebook()" class="btn" style="flex:1;min-width:45px;padding:8px;justify-content:center;font-size:1.2rem" title="Facebook">📘</button>
+                <button onclick="shareOnLinkedIn()" class="btn" style="flex:1;min-width:45px;padding:8px;justify-content:center;font-size:1.2rem" title="LinkedIn">💼</button>
+                <button onclick="copyLink()" class="btn" style="flex:1;min-width:45px;padding:8px;justify-content:center;font-size:1.2rem" title="Copiar enlace">🔗</button>
+              </div>
+            </div>
+            <div style="margin-top:12px">
+              <button onclick="window.print()" class="btn btn-lg" style="width:100%;justify-content:center">🖨️ Imprimir ficha</button>
+            </div>
+            <div style="margin-top:12px">
+              <button id="btn-add-to-compare" onclick="toggleCompare()" class="btn btn-lg" style="width:100%;justify-content:center;background:rgba(127,0,255,0.1);border:1.5px solid var(--accent2)">⚖️ Añadir a comparador</button>
             </div>
             <div style="margin-top:14px;padding:12px 14px;background:rgba(0,234,255,0.05);border:1.5px solid rgba(0,234,255,0.18);border-radius:10px">
               <div style="font-family:var(--font-title);font-size:0.62rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px">DETALLE INMOBILIARIO PÚBLICO</div>
@@ -216,6 +233,23 @@
     </div>
   </footer>
 
+  <!-- Lightbox de galería -->
+  <div id="lightbox" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;align-items:center;justify-content:center" onclick="closeLightbox(event)">
+    <button onclick="closeLightbox(event)" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:white;font-size:2rem;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10000">×</button>
+    <button id="lightbox-prev" onclick="lightboxNav(-1);event.stopPropagation()" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:white;font-size:2rem;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">‹</button>
+    <button id="lightbox-next" onclick="lightboxNav(1);event.stopPropagation()" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:white;font-size:2rem;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">›</button>
+    <img id="lightbox-img" src="" alt="" style="max-width:90%;max-height:90%;object-fit:contain;border-radius:8px" onclick="event.stopPropagation()" />
+    <div id="lightbox-counter" style="position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:white;background:rgba(0,0,0,0.5);padding:8px 16px;border-radius:20px;font-size:0.9rem"></div>
+  </div>
+
+  <!-- Botón flotante de comparador -->
+  <div id="compare-float" style="position:fixed;bottom:24px;right:24px;display:none;z-index:1000">
+    <a href="/comparison.html" class="btn btn-primary" style="padding:14px 20px;border-radius:50px;box-shadow:0 4px 12px rgba(0,234,255,0.3);display:flex;align-items:center;gap:10px;text-decoration:none">
+      <span style="font-size:1.3rem">⚖️</span>
+      <span>Comparar (<span id="compare-count">0</span>)</span>
+    </a>
+  </div>
+
   <script src="/js/runtime-config.js"></script>
   <script src="/js/real-estate-data.js"></script>
   <script src="/js/real-estate-presenters.js"></script>
@@ -223,6 +257,99 @@
   <script src="/js/mortgage-calculator.js"></script>
   <script src="/js/zone-valuation.js"></script>
   <script>
+  function shareOnWhatsApp(){
+    var url=encodeURIComponent(window.location.href);
+    var text=encodeURIComponent(document.getElementById('listing-title').textContent+' - neuralgpt.store');
+    window.open('https://wa.me/?text='+text+'%20'+url,'_blank');
+  }
+  function shareOnTwitter(){
+    var url=encodeURIComponent(window.location.href);
+    var text=encodeURIComponent(document.getElementById('listing-title').textContent);
+    window.open('https://twitter.com/intent/tweet?url='+url+'&text='+text,'_blank');
+  }
+  function shareOnFacebook(){
+    var url=encodeURIComponent(window.location.href);
+    window.open('https://www.facebook.com/sharer/sharer.php?u='+url,'_blank');
+  }
+  function shareOnLinkedIn(){
+    var url=encodeURIComponent(window.location.href);
+    window.open('https://www.linkedin.com/sharing/share-offsite/?url='+url,'_blank');
+  }
+  function copyLink(){
+    navigator.clipboard.writeText(window.location.href).then(function(){
+      var btn=event.target;
+      var orig=btn.textContent;
+      btn.textContent='✓';
+      btn.style.color='var(--accent4)';
+      setTimeout(function(){btn.textContent=orig;btn.style.color='';},2000);
+    }).catch(function(){alert('No se pudo copiar el enlace');});
+  }
+  function toggleCompare(){
+    var query=window.RealEstateAdapters.getQueryParams();
+    var id=query.id||query.slug;
+    if(!id)return;
+    var list=JSON.parse(localStorage.getItem('compareList')||'[]');
+    var idx=list.indexOf(id);
+    if(idx>=0){
+      list.splice(idx,1);
+      document.getElementById('btn-add-to-compare').textContent='⚖️ Añadir a comparador';
+    }else{
+      if(list.length>=4){alert('Máximo 4 inmuebles para comparar');return;}
+      list.push(id);
+      document.getElementById('btn-add-to-compare').textContent='✓ Añadido al comparador';
+    }
+    localStorage.setItem('compareList',JSON.stringify(list));
+    updateCompareFloat();
+  }
+  function updateCompareFloat(){
+    var list=JSON.parse(localStorage.getItem('compareList')||'[]');
+    var floatDiv=document.getElementById('compare-float');
+    var countSpan=document.getElementById('compare-count');
+    if(list.length>0){
+      floatDiv.style.display='block';
+      countSpan.textContent=list.length;
+    }else{
+      floatDiv.style.display='none';
+    }
+    var query=window.RealEstateAdapters&&window.RealEstateAdapters.getQueryParams?window.RealEstateAdapters.getQueryParams():{};
+    var id=query.id||query.slug;
+    if(id&&list.indexOf(id)>=0){
+      document.getElementById('btn-add-to-compare').textContent='✓ Añadido al comparador';
+    }
+  }
+  var lightboxImages=[];
+  var lightboxIndex=0;
+  function openLightbox(images,index){
+    lightboxImages=images;
+    lightboxIndex=index;
+    var lb=document.getElementById('lightbox');
+    var img=document.getElementById('lightbox-img');
+    var counter=document.getElementById('lightbox-counter');
+    img.src=images[index];
+    counter.textContent=(index+1)+' / '+images.length;
+    lb.style.display='flex';
+    document.body.style.overflow='hidden';
+  }
+  function closeLightbox(e){
+    if(e)e.stopPropagation();
+    document.getElementById('lightbox').style.display='none';
+    document.body.style.overflow='';
+  }
+  function lightboxNav(dir){
+    lightboxIndex+=dir;
+    if(lightboxIndex<0)lightboxIndex=lightboxImages.length-1;
+    if(lightboxIndex>=lightboxImages.length)lightboxIndex=0;
+    document.getElementById('lightbox-img').src=lightboxImages[lightboxIndex];
+    document.getElementById('lightbox-counter').textContent=(lightboxIndex+1)+' / '+lightboxImages.length;
+  }
+  document.addEventListener('keydown',function(e){
+    var lb=document.getElementById('lightbox');
+    if(lb.style.display==='flex'){
+      if(e.key==='Escape')closeLightbox();
+      else if(e.key==='ArrowLeft')lightboxNav(-1);
+      else if(e.key==='ArrowRight')lightboxNav(1);
+    }
+  });
   (function(){
     var toggle=document.getElementById('nav-toggle'), nav=document.getElementById('main-nav');
     if(toggle&&nav) toggle.addEventListener('click',function(){ var o=nav.classList.toggle('open'); toggle.setAttribute('aria-expanded',o); });
@@ -230,6 +357,7 @@
       console.warn('[ListingPage]', error);
       renderState('No se ha podido cargar la ficha inmobiliaria.', 'Comprueba el slug o vuelve al portal inmobiliario para seguir navegando.');
     });
+    updateCompareFloat();
   })();
 
   async function initListingPage(){

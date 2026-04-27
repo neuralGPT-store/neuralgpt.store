@@ -125,6 +125,13 @@
               </select>
             </div>
           </div>
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+              <input type="checkbox" id="is-new-development" name="is_new_development" style="width:18px;height:18px;cursor:pointer" />
+              <span style="font-size:0.9rem">¿Es obra nueva?</span>
+            </label>
+            <small style="color:var(--muted);font-size:0.8rem;display:block;margin-top:4px">Muestra badge "OBRA NUEVA" en la ficha</small>
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label for="listing-country">PAÍS</label>
@@ -297,6 +304,7 @@
     if(document.getElementById('advertiser-professional').checked && document.getElementById('advertiser-id').value){
       fd.append('advertiser_id', (document.getElementById('advertiser-id').value || '').trim());
     }
+    fd.append('is_new_development', document.getElementById('is-new-development').checked ? 'true' : 'false');
     Array.prototype.slice.call(files || []).forEach(function(file){
       fd.append('images', file, file.name);
     });

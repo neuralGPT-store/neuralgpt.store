@@ -82,9 +82,10 @@ function renderListing(listing, detail, seo, settings, taxonomy){
   document.getElementById('listing-location').textContent = detail.locationLabel;
   document.getElementById('listing-verification').textContent = humanVerification(detail.verificationState).toUpperCase();
   document.getElementById('listing-description').innerHTML = '<p>' + escapeHtml(detail.description || detail.summary || '').replace(/\n\n/g, '</p><p style="margin-top:16px">') + '</p>';
-  document.getElementById('listing-main-image').innerHTML = '<img src="'+escapeHtml(detail.primaryImage || '')+'" alt="'+escapeHtml(detail.title)+'" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block">';
+  var allImages=(detail.images||[]).slice();
+  document.getElementById('listing-main-image').innerHTML = '<img src="'+escapeHtml(detail.primaryImage || '')+'" alt="'+escapeHtml(detail.title)+'" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;cursor:pointer" onclick="openLightbox('+JSON.stringify(allImages)+',0)">';
   document.getElementById('listing-gallery').innerHTML = (detail.images || []).map(function(image, index){
-    return '<button type="button" aria-label="Ver imagen '+(index+1)+' de '+escapeHtml(detail.title)+'" onclick="setListingImage(\''+escapeJs(image)+'\', \''+escapeJs(detail.title)+'\')" style="padding:0;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card-bg);cursor:pointer;min-height:86px"><img src="'+escapeHtml(image)+'" alt="'+escapeHtml(detail.title)+' imagen '+(index+1)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"></button>';
+    return '<button type="button" aria-label="Ver imagen '+(index+1)+' de '+escapeHtml(detail.title)+'" onclick="openLightbox('+JSON.stringify(allImages)+','+index+')" style="padding:0;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card-bg);cursor:pointer;min-height:86px"><img src="'+escapeHtml(image)+'" alt="'+escapeHtml(detail.title)+' imagen '+(index+1)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"></button>';
   }).join('');
   document.getElementById('listing-badges').innerHTML =
     '<span class="badge badge-verified">ACTIVO INMOBILIARIO</span>'
@@ -188,7 +189,9 @@ function humanBadge(badge){
     logistica:'Logística',
     suelo:'Suelo',
     oportunidad:'Oportunidad',
-    'activo-singular':'Activo singular'
+    'activo-singular':'Activo singular',
+    'obra-nueva':'OBRA NUEVA',
+    obra_nueva:'OBRA NUEVA'
   };
   return map[badge] || badge || 'Badge';
 }

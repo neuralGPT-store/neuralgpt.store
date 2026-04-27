@@ -949,6 +949,11 @@ function handleOpsApi(req, res, urlPath, authContext) {
           };
         });
 
+        const badges = [];
+        if (String(fields.is_new_development || '').toLowerCase() === 'true') {
+          badges.push('obra-nueva');
+        }
+
         const listing = {
           id: safeListingId,
           slug: cleanText(fields.slug, 120) || null,
@@ -971,7 +976,7 @@ function handleOpsApi(req, res, urlPath, authContext) {
             lat: Number(fields.lat || 0),
             lng: Number(fields.lng || 0)
           },
-          badges: [],
+          badges: badges,
           contact_cta: 'Solicitar información',
           contact_name: contactName,
           contact_email: contactEmail,
