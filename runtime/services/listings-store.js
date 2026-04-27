@@ -355,6 +355,84 @@ function hasActivePlan(record) {
   return sub.tier === 'basico' || sub.tier === 'premium' || sub.tier === 'enterprise';
 }
 
+function checkExpiredListings(filePath) {
+  const rows = readStore(filePath);
+  const now = Date.now();
+  const sevenDaysMs = 7 * 86400000;
+  let updated = false;
+
+  rows.forEach((listing) => {
+    if (!listing || !listing.expiration_at) return;
+
+    const expiresAt = new Date(listing.expiration_at).getTime();
+    const timeUntilExpiry = expiresAt - now;
+
+    // Expirado: marcar como expired
+    if (timeUntilExpiry <= 0 && listing.status === 'published') {
+      listing.status = 'expired';
+      listing.needs_reconfirmation = true;
+      listing.expired_at = nowIso();
+      updated = true;
+    }
+    // Quedan 7 días o menos: marcar needs_reconfirmation
+    else if (timeUntilExpiry > 0 && timeUntilExpiry <= sevenDaysMs && !listing.needs_reconfirmation) {
+      listing.needs_reconfirmation = true;
+      updated = true;
+    }
+  });
+
+  if (updated) {
+    writeStore(filePath, rows);
+  }
+
+  const expired = rows.filter((l) => l && l.status === 'expired').length;
+  const needsReconfirmation = rows.filter((l) => l && l.needs_reconfirmation && l.status !== 'expired').length;
+
+  return {
+    ok: true,
+    checked: rows.length,
+    expired,
+    needs_reconfirmation: needsReconfirmation,
+    updated
+  };
+}
+
+function reconfirmListing(filePath, listingId, editKey, pepper) {
+  if (!listingId || !editKey) {
+    return { ok: false, code: 'listing_id_and_edit_key_required' };
+  }
+
+  const listing = getListingById(filePath, listingId);
+  if (!listing) {
+    return { ok: false, code: 'listing_not_found' };
+  }
+
+  if (!verifyEditKey(listing, editKey, pepper)) {
+    return { ok: false, code: 'invalid_edit_key' };
+  }
+
+  if (!listing.needs_reconfirmation) {
+    return { ok: false, code: 'reconfirmation_not_needed' };
+  }
+
+  const now = nowIso();
+  const operation = listing.operation || 'sale';
+  const expirationDays = (operation === 'long_term_rent' || operation === 'room_rent') ? 60 : 90;
+
+  const result = updateListingById(filePath, listingId, (current) => {
+    return {
+      ...current,
+      needs_reconfirmation: false,
+      reconfirmed_at: now,
+      expiration_at: new Date(Date.now() + (expirationDays * 86400000)).toISOString(),
+      status: current.status === 'expired' ? 'published' : current.status,
+      updated_at: now
+    };
+  });
+
+  return result;
+}
+
 module.exports = {
   readStore,
   writeStore,
@@ -369,5 +447,7 @@ module.exports = {
   getPlanLimit,
   countUserListings,
   checkListingLimit,
-  hasActivePlan
+  hasActivePlan,
+  checkExpiredListings,
+  reconfirmListing
 };

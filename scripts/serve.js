@@ -987,7 +987,10 @@ function handleOpsApi(req, res, urlPath, authContext) {
           listing.verification_state = 'pending';
           listing.featured = false;
           listing.published_at = new Date().toISOString();
-          listing.expiration_at = new Date(Date.now() + (90 * 86400000)).toISOString();
+          // Expiración: venta=90 días, alquiler=60 días
+          const expirationDays = (listing.operation === 'long_term_rent' || listing.operation === 'room_rent') ? 60 : 90;
+          listing.expiration_at = new Date(Date.now() + (expirationDays * 86400000)).toISOString();
+          listing.needs_reconfirmation = false;
         }
 
         const result = await listingFlowEngine.upsertListing({
@@ -1109,6 +1112,69 @@ function handleOpsApi(req, res, urlPath, authContext) {
           ok: false,
           error: error && error.message ? error.message : 'listing_upsert_failed',
           details: error && error.details ? error.details : null
+        });
+      });
+  }
+
+  // reconfirmar anuncio antes de expiración
+  if (urlPath === '/api/listings/reconfirm') {
+    if (req.method !== 'POST') return send405(res);
+    const ip = normalizeIp(req);
+    const rate = checkStatusRateLimit(ip);
+    if (!rate.allowed) {
+      res.setHeader('Retry-After', String(rate.retry_after_seconds));
+      return send(res, 429, {
+        ok: false,
+        error: 'rate_limit_exceeded',
+        message: 'Demasiadas solicitudes. Intenta más tarde.',
+        retry_after_seconds: rate.retry_after_seconds
+      });
+    }
+
+    return parseJsonBody(req, 256 * 1024)
+      .then((body) => {
+        const listingId = cleanText((body && body.listing_id) || '', 120);
+        const editKey = cleanText((body && body.edit_key) || '', 256);
+
+        if (!listingId || !editKey) {
+          return send(res, 400, {
+            ok: false,
+            error: 'listing_id_and_edit_key_required',
+            message: 'Se requiere listing_id y edit_key.'
+          });
+        }
+
+        const listingsStorePath = path.join(root, 'data', 'listings.json');
+        const listingsStore = require(path.join(__dirname, '..', 'runtime', 'services', 'listings-store.js'));
+        const pepper = process.env.EDIT_KEY_PEPPER || 'neuralgpt-default-pepper';
+        const result = listingsStore.reconfirmListing(listingsStorePath, listingId, editKey, pepper);
+
+        if (!result.ok) {
+          const statusCode = result.code === 'listing_not_found' ? 404 : result.code === 'invalid_edit_key' ? 403 : 400;
+          return send(res, statusCode, {
+            ok: false,
+            error: result.code,
+            message: result.code === 'listing_not_found' ? 'Anuncio no encontrado.' :
+                     result.code === 'invalid_edit_key' ? 'Clave de edición inválida.' :
+                     result.code === 'reconfirmation_not_needed' ? 'Este anuncio no requiere reconfirmación.' :
+                     'No se pudo reconfirmar el anuncio.'
+          });
+        }
+
+        return send(res, 200, {
+          ok: true,
+          code: 'reconfirmed',
+          message: 'Anuncio reconfirmado exitosamente.',
+          listing_id: result.listing.id,
+          expiration_at: result.listing.expiration_at
+        });
+      })
+      .catch((error) => {
+        console.error('[API /api/listings/reconfirm]', error);
+        return send(res, 500, {
+          ok: false,
+          error: 'reconfirm_failed',
+          message: 'Error al reconfirmar el anuncio.'
         });
       });
   }
