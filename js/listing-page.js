@@ -1,0 +1,244 @@
+(function(){
+  var toggle=document.getElementById('nav-toggle'), nav=document.getElementById('main-nav');
+  if(toggle&&nav) toggle.addEventListener('click',function(){ var o=nav.classList.toggle('open'); toggle.setAttribute('aria-expanded',o); });
+  initListingPage().catch(function(error){
+    console.warn('[ListingPage]', error);
+    renderState('No se ha podido cargar la ficha inmobiliaria.', 'Comprueba el slug o vuelve al portal inmobiliario para seguir navegando.');
+  });
+})();
+
+async function initListingPage(){
+  if(!window.RealEstateData || !window.RealEstatePresenters || !window.RealEstateAdapters){
+    renderState('Detalle temporalmente no disponible.', 'No se ha podido mostrar esta ficha en este momento. Puedes continuar desde el índice inmobiliario.');
+    return;
+  }
+
+  var settings = await window.RealEstateData.loadSiteSettings();
+  var taxonomy = await window.RealEstateData.loadTaxonomy();
+  var listings = await window.RealEstateData.loadListings();
+  var query = window.RealEstateAdapters.getQueryParams();
+  var listing = window.RealEstateAdapters.resolveListingFromQuery(listings, query);
+
+  if(!listing){
+    renderState('Activo no encontrado.', 'El identificador solicitado no está disponible en el catálogo público actual.');
+    return;
+  }
+
+  renderListing(
+    listing,
+    window.RealEstatePresenters.toListingDetailViewModel(listing),
+    window.RealEstatePresenters.toListingSeoModel(listing, settings),
+    settings,
+    taxonomy
+  );
+}
+
+function renderState(title, description){
+  var state = document.getElementById('listing-state');
+  var shell = document.getElementById('listing-shell');
+  shell.style.display = 'none';
+  state.style.display = 'block';
+  state.innerHTML =
+    '<h1 style="font-family:var(--font-title);font-size:1.2rem;margin-bottom:10px">'+escapeHtml(title)+'</h1>'
+    +'<p style="color:var(--muted);line-height:1.7;margin-bottom:18px">'+escapeHtml(description)+'</p>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +'<a href="/real-estate-index.html" class="btn btn-primary">Volver al índice</a>'
+    +'<a href="/" class="btn">Ir al inicio</a>'
+    +'</div>';
+}
+
+function renderListing(listing, detail, seo, settings, taxonomy){
+  var currentPath = '/listing.html?slug=' + encodeURIComponent(detail.slug);
+  var canonicalUrl = location.origin + currentPath;
+  var ogImage = seo.ogImage && seo.ogImage.indexOf('http') === 0 ? seo.ogImage : location.origin + (seo.ogImage || '');
+  var collectionHref = operationHref(detail.operation);
+  var citySeo = taxonomy && taxonomy.city_seo ? taxonomy.city_seo[detail.city] : null;
+  var countrySeo = taxonomy && taxonomy.country_seo ? taxonomy.country_seo[detail.country] : null;
+  var operationSeo = taxonomy && taxonomy.operation_seo ? taxonomy.operation_seo[detail.operation] : null;
+
+  document.getElementById('listing-state').style.display = 'none';
+  document.getElementById('listing-shell').style.display = 'block';
+  document.title = seo.title;
+  document.getElementById('page-title').textContent = seo.title;
+  document.getElementById('page-desc').setAttribute('content', seo.description);
+  document.getElementById('og-title').setAttribute('content', seo.ogTitle);
+  document.getElementById('og-desc').setAttribute('content', seo.ogDescription);
+  document.getElementById('og-url').setAttribute('content', canonicalUrl);
+  document.getElementById('og-image').setAttribute('content', ogImage);
+  document.getElementById('twitter-title').setAttribute('content', seo.ogTitle);
+  document.getElementById('twitter-desc').setAttribute('content', seo.ogDescription);
+  document.getElementById('twitter-image').setAttribute('content', ogImage);
+
+  var canon = document.getElementById('canonical-tag') || document.querySelector('link[rel="canonical"]');
+  canon.href = canonicalUrl;
+
+  document.getElementById('breadcrumb-name').textContent = detail.title;
+  document.getElementById('breadcrumb-collection').href = collectionHref;
+  document.getElementById('listing-collection-link').href = collectionHref;
+  document.getElementById('listing-tag').textContent = (humanOperation(detail.operation) + ' · ' + humanAssetType(detail.assetType)).toUpperCase();
+  document.getElementById('listing-title').textContent = detail.title;
+  document.getElementById('listing-summary').textContent = detail.summary;
+  document.getElementById('listing-price').textContent = detail.priceLabel + ((detail.operation === 'long_term_rent' || detail.operation === 'room_rent') ? ' / mes' : '');
+  document.getElementById('listing-location').textContent = detail.locationLabel;
+  document.getElementById('listing-verification').textContent = humanVerification(detail.verificationState).toUpperCase();
+  document.getElementById('listing-description').innerHTML = '<p>' + escapeHtml(detail.description || detail.summary || '').replace(/\n\n/g, '</p><p style="margin-top:16px">') + '</p>';
+  document.getElementById('listing-main-image').innerHTML = '<img src="'+escapeHtml(detail.primaryImage || '')+'" alt="'+escapeHtml(detail.title)+'" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block">';
+  document.getElementById('listing-gallery').innerHTML = (detail.images || []).map(function(image, index){
+    return '<button type="button" aria-label="Ver imagen '+(index+1)+' de '+escapeHtml(detail.title)+'" onclick="setListingImage(\''+escapeJs(image)+'\', \''+escapeJs(detail.title)+'\')" style="padding:0;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card-bg);cursor:pointer;min-height:86px"><img src="'+escapeHtml(image)+'" alt="'+escapeHtml(detail.title)+' imagen '+(index+1)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"></button>';
+  }).join('');
+  document.getElementById('listing-badges').innerHTML =
+    '<span class="badge badge-verified">ACTIVO INMOBILIARIO</span>'
+    +(detail.featured ? '<span class="badge badge-hot">DESTACADO</span>' : '')
+    +(detail.badges || []).slice(0,3).map(function(badge){
+      return '<span class="badge" style="background:rgba(255,0,128,0.1);color:var(--accent3);border:1px solid rgba(255,0,128,0.3)">'+escapeHtml(humanBadge(badge))+'</span>';
+    }).join('');
+  document.getElementById('listing-facts').innerHTML = [
+    factRow('Operación', humanOperation(detail.operation)),
+    factRow('Tipo de activo', humanAssetType(detail.assetType)),
+    factRow('Ubicación', detail.locationLabel),
+    factRow('Superficie', String(detail.surfaceM2) + ' m2'),
+    Number.isInteger(detail.rooms) ? factRow('Habitaciones', String(detail.rooms)) : '',
+    Number.isInteger(detail.bathrooms) ? factRow('Baños', String(detail.bathrooms)) : '',
+    factRow('Estado', humanStatus(detail.status)),
+    factRow('Verificación', humanVerification(detail.verificationState)),
+    factRow('Publicado', String(detail.publishedAt || '').slice(0,10))
+  ].join('');
+  document.getElementById('listing-seo-note').innerHTML = '<span style="color:var(--muted);font-size:0.75rem">/listing.html?slug='+escapeHtml(detail.slug)+'</span><br><span style="color:var(--muted);font-size:0.75rem">El contacto directo del anunciante se libera tras pago del servicio de conexión.</span>';
+  document.getElementById('listing-seo-copy').innerHTML = [
+    operationSeo ? '<p style="margin-bottom:12px">'+escapeHtml(operationSeo.description)+'</p>' : '',
+    citySeo ? '<p style="margin-bottom:12px">'+escapeHtml(citySeo.description)+'</p>' : '',
+    countrySeo ? '<p>'+escapeHtml(countrySeo.description)+'</p>' : ''
+  ].join('');
+  document.getElementById('listing-collection-links').innerHTML =
+    '<a href="/real-estate-index.html" class="platform-pill">Portal inmobiliario</a>'
+    +'<a href="'+escapeHtml(operationHref(detail.operation))+'" class="platform-pill">'+escapeHtml(humanOperation(detail.operation))+'</a>'
+    +'<a href="/pais.html?country='+encodeURIComponent(String(detail.country || '').toLowerCase())+'" class="platform-pill">'+escapeHtml(detail.country)+'</a>'
+    +'<a href="/ciudad.html?city='+encodeURIComponent(normalizeSlug(detail.city))+'" class="platform-pill">'+escapeHtml(detail.city)+'</a>';
+
+  document.getElementById('listing-schema').textContent = JSON.stringify({
+    "@context":"https://schema.org",
+    "@type":"RealEstateListing",
+    "name": detail.title,
+    "description": seo.description,
+    "url": canonicalUrl,
+    "datePosted": String(listing.published_at || '').slice(0,10) || undefined,
+    "image": detail.images || [],
+    "offers": {
+      "@type":"Offer",
+      "price": detail.price,
+      "priceCurrency": detail.currency || "EUR",
+      "availability": "https://schema.org/InStock"
+    },
+    "floorSize": {
+      "@type":"QuantitativeValue",
+      "value": detail.surfaceM2,
+      "unitCode": "MTK"
+    },
+    "numberOfRooms": detail.rooms,
+    "address": {
+      "@type":"PostalAddress",
+      "addressCountry": detail.country,
+      "addressRegion": detail.region,
+      "addressLocality": detail.city
+    }
+  });
+}
+
+function factRow(label, value){
+  return '<div style="display:flex;justify-content:space-between;gap:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.06)"><span style="color:var(--muted)">'+escapeHtml(label)+'</span><strong style="text-align:right">'+escapeHtml(value)+'</strong></div>';
+}
+
+function operationHref(operation){
+  if(operation === 'sale') return '/venta.html';
+  if(operation === 'long_term_rent' || operation === 'room_rent') return '/alquiler.html';
+  return '/real-estate-index.html';
+}
+
+function setListingImage(image, title){
+  document.getElementById('listing-main-image').innerHTML = '<img src="'+escapeHtml(image)+'" alt="'+escapeHtml(title)+'" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block">';
+}
+
+function humanOperation(operation){
+  var map = { sale:'Venta', long_term_rent:'Alquiler larga duración', room_rent:'Habitación larga estancia' };
+  return map[operation] || operation || 'Sin definir';
+}
+
+function humanAssetType(assetType){
+  var map = { apartment:'Residencial', room:'Habitación', commercial_unit:'Local', warehouse:'Nave', land:'Suelo', singular_asset:'Activo singular' };
+  return map[assetType] || assetType || 'Activo';
+}
+
+function humanStatus(status){
+  var map = { published:'Publicado', reserved:'Reservado', draft:'Borrador', off_market:'Off market', expired:'Expirado' };
+  return map[status] || status || 'Publicado';
+}
+
+function humanVerification(state){
+  var map = { verified:'Verificado', in_review:'En revisión', pending:'Pendiente' };
+  return map[state] || state || 'Pendiente';
+}
+
+function humanBadge(badge){
+  var map = {
+    destacado:'Destacado',
+    verificado:'Verificado',
+    prime:'Prime',
+    'larga-estancia':'Larga estancia',
+    rentabilidad:'Rentabilidad',
+    logistica:'Logística',
+    suelo:'Suelo',
+    oportunidad:'Oportunidad',
+    'activo-singular':'Activo singular'
+  };
+  return map[badge] || badge || 'Badge';
+}
+
+function escapeHtml(s){
+  var d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+function escapeJs(s){
+  return String(s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+function normalizeSlug(value){
+  return String(value||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+}
+
+async function startCheckout(endpoint, label){
+  if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+    alert('El servicio de ' + label + ' se está gestionando por confirmación asistida. Contacta en neuralgpt.store@protonmail.com para activarlo.');
+    return;
+  }
+  try {
+    const res = await fetch(window.NeuralRuntime.api(endpoint.replace(/^\/api/, '')), {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ listing_id: new URLSearchParams(location.search).get('slug') })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.checkout_url) {
+      alert('El servicio de ' + label + ' no se ha podido iniciar ahora mismo. Contacta en neuralgpt.store@protonmail.com para tramitarlo.');
+      return;
+    }
+    location.href = data.checkout_url;
+  } catch (_) {
+    alert('No se ha podido iniciar el servicio de ' + label + ' en este momento. Contacta en neuralgpt.store@protonmail.com para asistencia.');
+  }
+}
+function boostVisibility(){ startCheckout('/api/stripe/checkout-mas-visibilidad', 'más visibilidad'); }
+function sensacional24h(){ startCheckout('/api/stripe/checkout-sensacional', 'sensacional 24h'); }
+
+(function(){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+})();

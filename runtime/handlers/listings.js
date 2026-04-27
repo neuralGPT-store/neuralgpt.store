@@ -8,15 +8,22 @@ const {
   verifyEditKey,
   getListingEditState
 } = require('../services/listings-store');
-const { parseUrl, readMultipartBody, sendError, sendJson } = require('../lib/http');
+const { parseUrl, readMultipartBody, readJsonBody, sendError, sendJson } = require('../lib/http');
 
 const MAX_MULTIPART_BYTES = 12 * 1024 * 1024;
+const MAX_JSON_BYTES = 256 * 1024;
 
 function createListingsHandlers(env) {
-  function getStatus(req, res) {
-    const url = parseUrl(req);
-    const listingId = String(url.searchParams.get('listing_id') || '').trim();
-    const editKey = String(url.searchParams.get('edit_key') || '').trim();
+  async function getStatus(req, res) {
+    let body;
+    try {
+      body = await readJsonBody(req, MAX_JSON_BYTES);
+    } catch (error) {
+      return sendError(res, 400, error.message || 'invalid_json_body');
+    }
+
+    const listingId = String(body.listing_id || '').trim();
+    const editKey = String(body.edit_key || '').trim();
 
     const state = getListingEditState(env.listingsStorePath, listingId, editKey, env.listingsEditKeyPepper);
     if (!state.ok) {
@@ -26,9 +33,45 @@ function createListingsHandlers(env) {
       return sendError(res, 400, state.code || 'invalid_status_request');
     }
 
+    const listing = state.listing;
+    const hasActivePlan = listing.commercial?.subscription?.active &&
+      ['basico', 'premium', 'enterprise'].includes(listing.commercial?.subscription?.tier);
+
+    const safeListing = {
+      id: listing.id,
+      slug: listing.slug,
+      operation: listing.operation,
+      asset_type: listing.asset_type,
+      country: listing.country,
+      region: listing.region,
+      city: listing.city,
+      zone: listing.zone,
+      title: listing.title,
+      summary: listing.summary,
+      description: listing.description,
+      price: listing.price,
+      surface_m2: listing.surface_m2,
+      rooms: listing.rooms,
+      bathrooms: listing.bathrooms,
+      lat: listing.lat,
+      lng: listing.lng,
+      status: listing.status,
+      files_count: listing.files_count,
+      updated_at: listing.updated_at,
+      created_at: listing.created_at,
+      meta: listing.meta
+    };
+
+    if (hasActivePlan) {
+      safeListing.contact_name = listing.contact_name;
+      safeListing.contact_phone = listing.contact_phone;
+      safeListing.contact_email = listing.contact_email;
+    }
+
     return sendJson(res, 200, {
       ok: true,
-      listing: state.listing
+      listing: safeListing,
+      has_active_plan: hasActivePlan
     });
   }
 

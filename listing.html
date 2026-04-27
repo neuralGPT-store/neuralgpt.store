@@ -16,7 +16,7 @@
   <meta name="twitter:title" content="Ficha de inmueble en Europa — neuralgpt.store" id="twitter-title" />
   <meta name="twitter:description" content="Consulta la ficha del inmueble con precio, ubicación y características verificadas." id="twitter-desc" />
   <meta name="twitter:image" content="https://neuralgpt.store/assets/img/og-real-estate-default.png" id="twitter-image" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -180,8 +180,8 @@
     </div>
     <div class="footer-bottom">
       <span>© 2025–2026 neuralgpt.store</span>
-      <span>Atención usuario: <a href="mailto:hola@neuralgpt.store" style="color:var(--accent)">hola@neuralgpt.store</a></span>
-      <span>Seguridad: <a href="mailto:security@neuralgpt.store" style="color:var(--accent2)">security@neuralgpt.store</a></span>
+      <span>Atención usuario: <a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a></span>
+      <span>Seguridad: <a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent2)">neuralgpt.store@protonmail.com</a></span>
     </div>
   </footer>
 
@@ -402,7 +402,7 @@
 <script>
 async function startCheckout(endpoint, label){
   if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
-    alert('El servicio de ' + label + ' se está gestionando por confirmación asistida. Contacta en hola@neuralgpt.store para activarlo.');
+    alert('El servicio de ' + label + ' se está gestionando por confirmación asistida. Contacta en neuralgpt.store@protonmail.com para activarlo.');
     return;
   }
   try {
@@ -413,12 +413,12 @@ async function startCheckout(endpoint, label){
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.checkout_url) {
-      alert('El servicio de ' + label + ' no se ha podido iniciar ahora mismo. Contacta en hola@neuralgpt.store para tramitarlo.');
+      alert('El servicio de ' + label + ' no se ha podido iniciar ahora mismo. Contacta en neuralgpt.store@protonmail.com para tramitarlo.');
       return;
     }
     location.href = data.checkout_url;
   } catch (_) {
-    alert('No se ha podido iniciar el servicio de ' + label + ' en este momento. Contacta en hola@neuralgpt.store para asistencia.');
+    alert('No se ha podido iniciar el servicio de ' + label + ' en este momento. Contacta en neuralgpt.store@protonmail.com para asistencia.');
   }
 }
 function boostVisibility(){ startCheckout('/api/stripe/checkout-mas-visibilidad', 'más visibilidad'); }

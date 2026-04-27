@@ -593,7 +593,7 @@ const LITERAL_TEXT = {
     'Introduce un teléfono de contacto válido.': 'Enter a valid contact phone number.',
     'Enviando anuncio...': 'Submitting listing...',
     'Error de red al publicar/editar el anuncio.': 'Network error while publishing/editing the listing.',
-    'Publicación no disponible en este despliegue estático (requiere backend /api/*). Escribe a hola@neuralgpt.store para asistencia manual.': 'Publishing is not available in this static deployment (requires /api/* backend). Email hola@neuralgpt.store for manual assistance.',
+    'Publicación no disponible en este despliegue estático (requiere backend /api/*). Escribe a neuralgpt.store@protonmail.com para asistencia manual.': 'Publishing is not available in this static deployment (requires /api/* backend). Email neuralgpt.store@protonmail.com for manual assistance.',
     'Selección premium de anuncios destacados.': 'Premium selection of featured listings.',
     'Conectando pasarela de pago segura...': 'Connecting to secure payment gateway...'
     ,'neuralgpt.store utiliza únicamente cookies técnicas estrictamente necesarias para el funcionamiento de la web. No utilizamos cookies de seguimiento ni publicidad de terceros.': 'neuralgpt.store uses only strictly necessary technical cookies for website operation. We do not use tracking or third-party advertising cookies.'

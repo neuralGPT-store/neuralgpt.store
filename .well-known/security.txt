@@ -1,7 +1,7 @@
 # neuralgpt.store — Security Contact
 # Política de divulgación responsable de vulnerabilidades
 
-Contact: mailto:security@neuralgpt.store
+Contact: mailto:neuralgpt.store@protonmail.com
 Expires: 2027-01-01T00:00:00Z
 Preferred-Languages: es, en
 Policy: https://neuralgpt.store/security.html

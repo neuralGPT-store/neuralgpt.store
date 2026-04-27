@@ -12,7 +12,7 @@ function createRouter(listingsHandlers, stripeHandlers) {
     }
 
     if (path === '/api/listings/status') {
-      if (method !== 'GET') return sendError(res, 405, 'method_not_allowed');
+      if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
       return listingsHandlers.getStatus(req, res);
     }
 

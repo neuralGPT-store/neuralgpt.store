@@ -7,7 +7,7 @@
   <title>Editar anuncio — neuralgpt.store</title>
   <meta name="robots" content="noindex,nofollow" />
   <meta name="description" content="Edita un anuncio publicado en neuralgpt.store con tu ID de anuncio y clave de edición." />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -210,7 +210,11 @@
         return;
       }
       try {
-        var res = await fetch(window.NeuralRuntime.api('/listings/status') + '?listing_id=' + encodeURIComponent(lid) + '&edit_key=' + encodeURIComponent(ek));
+        var res = await fetch(window.NeuralRuntime.api('/listings/status'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ listing_id: lid, edit_key: ek })
+        });
         var data = await res.json();
         if (res.status === 403) {
           accessMsg.textContent = 'Clave de edición incorrecta.';

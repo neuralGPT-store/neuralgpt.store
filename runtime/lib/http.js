@@ -11,13 +11,10 @@ function setSecurityHeaders(res) {
 
 function applyCors(req, res, corsOrigin) {
   const origin = req.headers.origin || '';
-  if (!corsOrigin) {
-    if (origin) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-      res.setHeader('Vary', 'Origin');
-    }
-  } else if (origin === corsOrigin) {
-    res.setHeader('Access-Control-Allow-Origin', corsOrigin);
+  const allowedOrigin = 'https://neuralgpt.store';
+
+  if (origin === allowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Vary', 'Origin');
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');

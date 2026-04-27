@@ -27,28 +27,28 @@
       placeholder: 'Escribe tu pregunta…',
       sub: 'Asistente inmobiliaria de neuralgpt.store',
       greeting_prefix: null, // usa KB greeting
-      fallback: 'No encontré una respuesta exacta. Escríbenos a hola@neuralgpt.store',
+      fallback: 'No encontré una respuesta exacta. Escríbenos a neuralgpt.store@protonmail.com',
       suggestions: ['Publicar inmueble', 'Editar anuncio', 'Ver venta', 'Ver alquiler'],
     },
     en: {
       placeholder: 'Type your question…',
       sub: 'neuralgpt.store assistant',
       greeting_prefix: '🏡 Hi! I\'m Chany, neuralgpt.store\'s real estate assistant. Our platform is in Spanish, but I\'ll help you in English!\n\n🏠 Browse properties for sale or rent on our portal.\n\nHow can I help you?',
-      fallback: 'I couldn\'t find an exact answer. Email us at hola@neuralgpt.store',
+      fallback: 'I couldn\'t find an exact answer. Email us at neuralgpt.store@protonmail.com',
       suggestions: ['Properties for sale', 'Properties for rent', 'Post a listing', 'Contact'],
     },
     fr: {
       placeholder: 'Tapez votre question…',
       sub: 'Assistant neuralgpt.store',
       greeting_prefix: '🏡 Bonjour! Je suis Chany, l\'assistant immobilier de neuralgpt.store. Notre plateforme est en espagnol, mais je vais vous aider en français!\n\n🏠 Parcourez les biens à vendre ou à louer sur notre portail.\n\nComment puis-je vous aider?',
-      fallback: 'Pas de réponse exacte. Écrivez-nous à hola@neuralgpt.store',
+      fallback: 'Pas de réponse exacte. Écrivez-nous à neuralgpt.store@protonmail.com',
       suggestions: ['Biens à vendre', 'Biens à louer', 'Publier une annonce', 'Contact'],
     },
     de: {
       placeholder: 'Ihre Frage eingeben…',
       sub: 'neuralgpt.store Assistent',
       greeting_prefix: '👋 Hallo! Ich bin Chany, der Immobilien-Assistent von neuralgpt.store. Unsere Plattform ist auf Spanisch, aber ich helfe Ihnen auf Deutsch!\n\n🏠 Entdecken Sie Immobilien zum Kauf oder zur Miete.\n\nWie kann ich helfen?',
-      fallback: 'Keine genaue Antwort gefunden. Schreiben Sie an hola@neuralgpt.store',
+      fallback: 'Keine genaue Antwort gefunden. Schreiben Sie an neuralgpt.store@protonmail.com',
       suggestions: ['Immobilien kaufen', 'Immobilien mieten', 'Anzeige aufgeben', 'Kontakt'],
     },
   };

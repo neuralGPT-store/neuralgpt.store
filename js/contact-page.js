@@ -1,0 +1,91 @@
+var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
+if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+
+document.getElementById('contact-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var out = document.getElementById('contact-msg');
+  var privacy = document.getElementById('contact-privacy').checked;
+  var mode = document.getElementById('listing-mode').value;
+  var files = document.getElementById('listing-images').files;
+  if(!privacy){ out.textContent='Debes aceptar la política de privacidad.'; out.style.color='var(--accent3)'; return; }
+  if(files && files.length > 6){ out.textContent='Máximo 6 fotos por anuncio.'; out.style.color='var(--accent3)'; return; }
+  var advertiserPhone = (document.getElementById('contact-phone').value || '').trim();
+  if(!advertiserPhone || advertiserPhone.length < 7){ out.textContent='Introduce un teléfono de contacto válido.'; out.style.color='var(--accent3)'; return; }
+
+  var fd = new FormData();
+  fd.append('privacy_accepted', 'true');
+  fd.append('mode', mode || 'create');
+  // hp_check vacío — se envía siempre vacío; si un bot lo rellena, el servidor lo bloquea
+  fd.append('hp_check', '');
+  [
+    'listing_id','slug','title','summary','description','operation','asset_type','country','region','city','zone',
+    'price','surface_m2','rooms','bathrooms','lat','lng','edit_key'
+  ].forEach(function(id){
+    var node = document.getElementById(id.replace(/_/g,'-')) || document.querySelector('[name="' + id + '"]');
+    if(node && node.value != null && String(node.value).trim() !== '') fd.append(id, String(node.value).trim());
+  });
+  fd.append('contact_email', (document.getElementById('contact-email').value || '').trim());
+  fd.append('contact_phone', advertiserPhone);
+  fd.append('contact_name', (document.getElementById('contact-name').value || '').trim());
+  Array.prototype.slice.call(files || []).forEach(function(file){
+    fd.append('images', file, file.name);
+  });
+
+  if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+    out.textContent='La publicación se gestiona con revisión editorial asistida. Escríbenos a neuralgpt.store@protonmail.com para activar tu alta.';
+    out.style.color='var(--accent3)';
+    return;
+  }
+
+  out.textContent='Enviando anuncio...';
+  out.style.color='var(--accent2)';
+  try{
+    var response = await fetch(window.NeuralRuntime.api('/listings/upsert'), { method:'POST', body: fd });
+    var data = await response.json();
+    if(!response.ok || !data || data.ok !== true){
+      var code = data && data.error ? String(data.error) : 'publicacion_fallida';
+      if (code === 'content_policy_blocked') {
+        out.textContent = 'El anuncio no supera la política de contenido inmobiliario. Revisa título, descripción e imágenes.';
+      } else if (code.indexOf('advertiser_contact_required_fields_missing') === 0) {
+        out.textContent = 'Debes informar nombre, teléfono y correo del anunciante.';
+      } else {
+        out.textContent = 'Error: ' + code;
+      }
+      out.style.color='var(--accent3)';
+      return;
+    }
+    var reviewReq = !!(
+      (data.duplicate_review && data.duplicate_review.review_required) ||
+      (data.content_policy && data.content_policy.review_required)
+    );
+    var abuseBlk = !!(data.duplicate_review && data.duplicate_review.duplicate_abuse_blocked);
+    try {
+      sessionStorage.setItem('neuralgpt_confirm', JSON.stringify({
+        listing_id:    data.listing_id   || '',
+        listing_slug:  data.listing_slug || '',
+        mode:          data.mode         || 'created',
+        edit_key:      data.edit_key     || null,
+        review_required: reviewReq,
+        abuse_blocked:   abuseBlk
+      }));
+      window.location.href = '/confirm.html';
+      return;
+    } catch(_) {
+      // sessionStorage no disponible — fallback inline
+      var editKey = data.edit_key ? String(data.edit_key) : '';
+      if(editKey){
+        out.innerHTML = '<strong style="color:var(--accent4)">✓ Anuncio recibido.</strong>'
+          +(reviewReq ? ' <span style="color:#ffb700">Pendiente de revisión.</span>' : '')
+          +(abuseBlk ? ' <span style="color:var(--accent3)">Bloqueado — revisión humana.</span>' : '')
+          +'<br><strong style="color:var(--accent)">Clave de edición (guárdala, no se volverá a mostrar):</strong><br>'
+          +'<code style="font-size:0.85rem;word-break:break-all;color:var(--accent4)">'+editKey+'</code>';
+      } else {
+        out.textContent = '✓ Solicitud procesada.'+(reviewReq ? ' Pendiente de revisión.' : '');
+      }
+      out.style.color='var(--accent4)';
+    }
+  }catch(error){
+    out.textContent='No se ha podido enviar la solicitud ahora mismo. Escríbenos a neuralgpt.store@protonmail.com y tramitamos tu alta.';
+    out.style.color='var(--accent3)';
+  }
+});
