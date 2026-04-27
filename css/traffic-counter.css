@@ -1,0 +1,62 @@
+/**
+ * Contador de tráfico discreto
+ * Solo visible en index.html
+ */
+
+.traffic-counter {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  padding: 8px 14px;
+  background: rgba(0, 4, 13, 0.8);
+  border: 1px solid rgba(0, 234, 255, 0.15);
+  border-radius: 20px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-family: var(--font-body);
+  opacity: 0.6;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: opacity 0.3s ease;
+  user-select: none;
+  pointer-events: none;
+}
+
+.traffic-counter:hover {
+  opacity: 0.9;
+}
+
+.traffic-counter-icon {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.traffic-counter-value {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Responsive móvil */
+@media (max-width: 768px) {
+  .traffic-counter {
+    bottom: 20px;
+    left: 20px;
+    padding: 6px 12px;
+    font-size: 0.7rem;
+  }
+
+  .traffic-counter-icon {
+    font-size: 0.85rem;
+  }
+}
+
+/* Si hay botón de compartir flotante, ajustar posición para no solapar */
+@media (max-width: 480px) {
+  .traffic-counter {
+    bottom: 80px; /* Evitar solapar con botón compartir en móviles */
+  }
+}
