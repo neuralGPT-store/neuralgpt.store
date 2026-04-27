@@ -310,6 +310,8 @@
     document.getElementById('listing-badges').innerHTML =
       '<span class="badge badge-verified">ACTIVO INMOBILIARIO</span>'
       +(detail.featured ? '<span class="badge badge-hot">DESTACADO</span>' : '')
+      +((listing.advertiser_type === 'professional' && listing.advertiser_id_ref) ? '<span class="badge" style="background:rgba(0,245,255,0.1);color:var(--accent);border:1px solid rgba(0,245,255,0.3)">✓ ANUNCIANTE VERIFICADO</span>' : '')
+      +((listing.advertiser_type === 'private' || !listing.advertiser_type) ? '<span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border)">PARTICULAR</span>' : '')
       +(detail.badges || []).slice(0,3).map(function(badge){
         return '<span class="badge" style="background:rgba(255,0,128,0.1);color:var(--accent3);border:1px solid rgba(255,0,128,0.3)">'+escapeHtml(humanBadge(badge))+'</span>';
       }).join('');

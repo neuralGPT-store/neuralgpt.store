@@ -70,6 +70,8 @@ function sanitizeListingInput(fields, files) {
   const contactName = sanitizeText(fields.contact_name || '', 80);
   const contactPhone = sanitizeText(fields.contact_phone || '', 40);
   const contactEmail = sanitizeText(fields.contact_email || '', 120).toLowerCase();
+  const advertiserProfessional = String(fields.advertiser_professional || '').toLowerCase() === 'true';
+  const advertiserId = sanitizeText(fields.advertiser_id || '', 20);
 
   return {
     mode: sanitizeText(fields.mode || 'create', 20) || 'create',
@@ -94,6 +96,8 @@ function sanitizeListingInput(fields, files) {
     contactName,
     contactPhone,
     contactEmail,
+    advertiserProfessional,
+    advertiserId,
     filesCount: Array.isArray(files) ? files.length : 0,
     privacyAccepted: String(fields.privacy_accepted || '').toLowerCase() === 'true',
     honeypot: sanitizeText(fields.hp_check || '', 16)
@@ -129,6 +133,8 @@ function buildListingRecord(input, existing, pepper) {
     contact_name: input.contactName,
     contact_phone: input.contactPhone,
     contact_email: input.contactEmail,
+    advertiser_type: input.advertiserProfessional ? 'professional' : 'private',
+    advertiser_id_ref: input.advertiserId || null,
     status: draft.status || 'published',
     files_count: input.filesCount,
     updated_at: now,

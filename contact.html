@@ -81,6 +81,17 @@
             <label for="contact-phone">TELÉFONO</label>
             <input type="tel" id="contact-phone" name="phone" class="form-control" placeholder="+34 600 000 000" required maxlength="40" />
           </div>
+          <div class="form-group" style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:16px">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:12px">
+              <input type="checkbox" id="advertiser-professional" name="advertiser_professional" style="width:18px;height:18px;cursor:pointer" />
+              <span style="font-size:0.9rem;font-weight:600">Soy agente profesional</span>
+            </label>
+            <div id="advertiser-id-container" style="display:none">
+              <label for="advertiser-id">CIF/NIF (opcional)</label>
+              <input type="text" id="advertiser-id" name="advertiser_id" class="form-control" placeholder="B12345678 o 12345678X" maxlength="20" />
+              <small style="color:var(--muted);font-size:0.8rem;display:block;margin-top:4px">Muestra badge "Anunciante verificado" en tu ficha</small>
+            </div>
+          </div>
           <div class="form-group">
             <label for="listing-title">TÍTULO</label>
             <input type="text" id="listing-title" name="title" class="form-control" placeholder="Ej: Piso premium en Madrid" required maxlength="160" />
@@ -251,6 +262,11 @@
   var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
   if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
 
+  // Toggle advertiser professional checkbox
+  document.getElementById('advertiser-professional').addEventListener('change', function(){
+    document.getElementById('advertiser-id-container').style.display = this.checked ? 'block' : 'none';
+  });
+
   document.getElementById('contact-form').addEventListener('submit', async function(e){
     e.preventDefault();
     var out = document.getElementById('contact-msg');
@@ -277,6 +293,10 @@
     fd.append('contact_email', (document.getElementById('contact-email').value || '').trim());
     fd.append('contact_phone', advertiserPhone);
     fd.append('contact_name', (document.getElementById('contact-name').value || '').trim());
+    fd.append('advertiser_professional', document.getElementById('advertiser-professional').checked ? 'true' : 'false');
+    if(document.getElementById('advertiser-professional').checked && document.getElementById('advertiser-id').value){
+      fd.append('advertiser_id', (document.getElementById('advertiser-id').value || '').trim());
+    }
     Array.prototype.slice.call(files || []).forEach(function(file){
       fd.append('images', file, file.name);
     });
