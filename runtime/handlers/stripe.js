@@ -113,6 +113,54 @@ function createStripeHandlers(env, stripe) {
     });
   }
 
+  async function billingPortal(req, res) {
+    if (!requireStripe(res)) return;
+
+    let body;
+    try {
+      body = await readJsonBody(req, JSON_MAX);
+    } catch (error) {
+      return sendError(res, 400, error.message || 'invalid_json_body');
+    }
+
+    const customerEmail = String((body && body.customer_email) || '').trim();
+    if (!customerEmail || !customerEmail.includes('@')) {
+      return sendError(res, 400, 'customer_email_required');
+    }
+
+    try {
+      // Buscar o crear customer en Stripe
+      const customers = await stripe.customers.list({
+        email: customerEmail,
+        limit: 1
+      });
+
+      let customerId;
+      if (customers.data && customers.data.length > 0) {
+        customerId = customers.data[0].id;
+      } else {
+        // Crear customer si no existe
+        const newCustomer = await stripe.customers.create({
+          email: customerEmail
+        });
+        customerId = newCustomer.id;
+      }
+
+      // Crear sesión del portal de billing
+      const session = await stripe.billingPortal.sessions.create({
+        customer: customerId,
+        return_url: env.stripeSuccessUrl || 'https://neuralgpt.store/pricing.html'
+      });
+
+      return sendJson(res, 200, {
+        ok: true,
+        portal_url: session.url
+      });
+    } catch (error) {
+      return sendError(res, 500, 'stripe_portal_error', error.message || 'portal_creation_failed');
+    }
+  }
+
   async function webhook(req, res) {
     if (!requireStripe(res)) return;
     if (!env.stripeWebhookSecret) return sendError(res, 503, 'stripe_webhook_not_configured', 'STRIPE_WEBHOOK_SECRET');
@@ -345,6 +393,7 @@ function createStripeHandlers(env, stripe) {
     checkoutPlanEnterprise,
     checkoutPublicacionAdicional,
     checkoutDonation,
+    billingPortal,
     webhook
   };
 }

@@ -211,6 +211,46 @@
 
     <div class="rgb-divider"></div>
 
+    <!-- GESTIONAR SUSCRIPCIÓN -->
+    <section class="section" style="padding:48px 0;background:rgba(0,234,255,0.02)">
+      <div class="wrap" style="max-width:700px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:16px">⚙️</div>
+        <h2 style="font-family:var(--font-title);font-size:1.5rem;margin-bottom:14px;color:var(--text)">¿Ya tienes una suscripción?</h2>
+        <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;margin-bottom:24px">
+          Gestiona tu plan, actualiza método de pago o cancela en cualquier momento sin penalización.
+        </p>
+
+        <div class="card" style="max-width:500px;margin:0 auto;padding:24px">
+          <label for="portal-email" style="display:block;font-family:var(--font-title);font-size:0.8rem;letter-spacing:1px;color:var(--accent);margin-bottom:8px;text-align:left">EMAIL DE TU CUENTA</label>
+          <input
+            type="email"
+            id="portal-email"
+            class="form-control"
+            placeholder="tu@email.com"
+            style="width:100%;margin-bottom:16px"
+            required
+          />
+          <button
+            id="portal-btn"
+            class="btn btn-primary btn-lg"
+            style="width:100%;justify-content:center"
+            onclick="openBillingPortal()"
+          >
+            Gestionar suscripción
+          </button>
+          <p id="portal-msg" style="font-size:0.75rem;color:var(--muted);margin-top:12px;min-height:20px"></p>
+        </div>
+
+        <div style="margin-top:24px;padding:16px;border-radius:12px;background:rgba(0,255,153,0.05);border:1px solid rgba(0,255,153,0.15)">
+          <p style="font-size:0.85rem;color:var(--muted);margin:0;line-height:1.6">
+            ✓ <strong style="color:var(--text)">Política de cancelación flexible:</strong> Puedes cancelar tu suscripción en cualquier momento sin penalización. El acceso continuará hasta el final del período pagado.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rgb-divider"></div>
+
     <!-- FAQ -->
     <section class="section" style="padding:48px 0">
       <h2 style="font-family:var(--font-title);font-size:1.6rem;text-align:center;margin-bottom:32px">Preguntas frecuentes</h2>
@@ -218,7 +258,7 @@
 
         <div class="card" style="padding:20px">
           <h3 style="font-family:var(--font-title);font-size:0.95rem;margin-bottom:8px;color:var(--accent)">¿Puedo cancelar mi suscripción en cualquier momento?</h3>
-          <p style="color:var(--muted);font-size:0.88rem;margin:0">Los planes de suscripción mensual están temporalmente no disponibles en esta fase pública. El portal mantiene publicación gratuita inicial y pagos únicos por contacto y visibilidad.</p>
+          <p style="color:var(--muted);font-size:0.88rem;margin:0">Sí, absolutamente. Puedes cancelar tu suscripción en cualquier momento sin penalización a través del portal de gestión. Tu acceso continuará hasta el final del período por el que pagaste. No hay compromisos de permanencia.</p>
         </div>
 
         <div class="card" style="padding:20px">
@@ -272,6 +312,59 @@
   <script>
   var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav');
   if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);});
+
+  async function openBillingPortal() {
+    const email = document.getElementById('portal-email').value.trim();
+    const btn = document.getElementById('portal-btn');
+    const msg = document.getElementById('portal-msg');
+
+    if (!email || !email.includes('@')) {
+      msg.textContent = 'Por favor introduce un email válido';
+      msg.style.color = 'var(--accent3)';
+      return;
+    }
+
+    if (!window.NeuralRuntime || window.NeuralRuntime.backendReady !== true) {
+      msg.textContent = 'Portal de gestión no disponible en despliegue estático. Escribe a neuralgpt.store@protonmail.com';
+      msg.style.color = 'var(--muted)';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Generando enlace...';
+    msg.textContent = '';
+
+    try {
+      const res = await fetch(window.NeuralRuntime.api('/stripe/billing-portal'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ customer_email: email })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.portal_url) {
+        msg.textContent = data.error || 'No se pudo generar el enlace. Contacta con soporte.';
+        msg.style.color = 'var(--accent3)';
+        btn.disabled = false;
+        btn.textContent = 'Gestionar suscripción';
+        return;
+      }
+
+      msg.textContent = 'Redirigiendo al portal de Stripe...';
+      msg.style.color = 'var(--accent)';
+
+      setTimeout(() => {
+        window.location.href = data.portal_url;
+      }, 500);
+
+    } catch (error) {
+      msg.textContent = 'Error de conexión. Por favor intenta de nuevo.';
+      msg.style.color = 'var(--accent3)';
+      btn.disabled = false;
+      btn.textContent = 'Gestionar suscripción';
+    }
+  }
   </script>
   <script src="/js/agent-chat.js" defer></script>
 </body>

@@ -56,6 +56,11 @@ function createRouter(listingsHandlers, stripeHandlers) {
       return stripeHandlers.checkoutDonation(req, res);
     }
 
+    if (path === '/api/stripe/billing-portal') {
+      if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      return stripeHandlers.billingPortal(req, res);
+    }
+
     if (path === '/api/stripe/webhook') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
       return stripeHandlers.webhook(req, res);
