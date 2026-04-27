@@ -13,14 +13,24 @@
   padding: 18px 0;
 }
 
-.listing-strip-wrapper.premium {
+.listing-strip-wrapper.alquiler {
+  background: linear-gradient(135deg, rgba(0, 168, 255, 0.08), rgba(0, 234, 255, 0.05));
+  border-color: rgba(0, 168, 255, 0.2);
+}
+
+.listing-strip-wrapper.venta-residencial {
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 140, 0, 0.05));
   border-color: rgba(255, 215, 0, 0.2);
 }
 
-.listing-strip-wrapper.standard {
-  background: linear-gradient(135deg, rgba(0, 234, 255, 0.06), rgba(127, 0, 255, 0.04));
-  border-color: rgba(0, 234, 255, 0.15);
+.listing-strip-wrapper.industrial {
+  background: linear-gradient(135deg, rgba(0, 255, 153, 0.08), rgba(0, 255, 153, 0.05));
+  border-color: rgba(0, 255, 153, 0.2);
+}
+
+.listing-strip-wrapper.servicios {
+  background: linear-gradient(135deg, rgba(191, 0, 255, 0.08), rgba(127, 0, 255, 0.05));
+  border-color: rgba(191, 0, 255, 0.2);
 }
 
 .listing-strip {
@@ -71,9 +81,24 @@
   box-shadow: 0 8px 24px rgba(0, 234, 255, 0.2);
 }
 
-.listing-strip-wrapper.premium .listing-strip-item:hover {
+.listing-strip-wrapper.alquiler .listing-strip-item:hover {
+  border-color: #00a8ff;
+  box-shadow: 0 8px 24px rgba(0, 168, 255, 0.25);
+}
+
+.listing-strip-wrapper.venta-residencial .listing-strip-item:hover {
   border-color: #ffd700;
   box-shadow: 0 8px 24px rgba(255, 215, 0, 0.25);
+}
+
+.listing-strip-wrapper.industrial .listing-strip-item:hover {
+  border-color: #00ff99;
+  box-shadow: 0 8px 24px rgba(0, 255, 153, 0.25);
+}
+
+.listing-strip-wrapper.servicios .listing-strip-item:hover {
+  border-color: #bf00ff;
+  box-shadow: 0 8px 24px rgba(191, 0, 255, 0.25);
 }
 
 .listing-strip-image {
@@ -110,8 +135,20 @@
   margin: 0 0 8px;
 }
 
-.listing-strip-wrapper.premium .listing-strip-price {
+.listing-strip-wrapper.alquiler .listing-strip-price {
+  color: #00a8ff;
+}
+
+.listing-strip-wrapper.venta-residencial .listing-strip-price {
   color: #ffd700;
+}
+
+.listing-strip-wrapper.industrial .listing-strip-price {
+  color: #00ff99;
+}
+
+.listing-strip-wrapper.servicios .listing-strip-price {
+  color: #bf00ff;
 }
 
 .listing-strip-location {

@@ -1,29 +1,13 @@
 /**
- * Franjas animadas de anuncios con prioridad comercial
+ * Franjas animadas temáticas de anuncios
  * Carga datos desde public-data/listings.public.json
+ * 4 franjas: Alquiler, Venta Residencial, Industrial, Servicios
  */
 (function () {
   'use strict';
 
   const LISTINGS_URL = '/public-data/listings.public.json';
-  const MIN_ITEMS_FOR_INFINITE = 4; // Mínimo de items para duplicar y crear efecto infinito
-
-  /**
-   * Determina la prioridad del anuncio basándose en los campos disponibles
-   * @param {Object} listing
-   * @returns {string} 'premium' | 'standard'
-   */
-  function getListingPriority(listing) {
-    // Premium: featured=true o badges incluyen "prime" o "destacado"
-    if (listing.featured) return 'premium';
-    if (listing.badges && Array.isArray(listing.badges)) {
-      const premiumBadges = ['prime', 'destacado', 'premium', 'enterprise'];
-      if (listing.badges.some(b => premiumBadges.includes(b.toLowerCase()))) {
-        return 'premium';
-      }
-    }
-    return 'standard';
-  }
+  const MIN_ITEMS_FOR_INFINITE = 4;
 
   /**
    * Formatea el precio según la operación y moneda
@@ -42,7 +26,16 @@
   }
 
   /**
-   * Renderiza un item de la franja
+   * Obtiene el badge de categoría
+   */
+  function getCategoryBadge(listing) {
+    if (listing.operation === 'long_term_rent' || listing.operation === 'room_rent') return 'ALQUILER';
+    if (listing.operation === 'sale') return 'VENTA';
+    return 'INMUEBLE';
+  }
+
+  /**
+   * Renderiza un item de listing
    */
   function renderListingItem(listing) {
     const image = listing.images && listing.images[0]
@@ -51,8 +44,7 @@
 
     const slug = listing.slug || listing.id;
     const href = `/listing.html?slug=${encodeURIComponent(slug)}`;
-    const priority = getListingPriority(listing);
-    const badge = priority === 'premium' ? 'PREMIUM' : (listing.featured ? 'DESTACADO' : '');
+    const badge = getCategoryBadge(listing);
 
     return `
       <a href="${escapeHtml(href)}" class="listing-strip-item" data-listing-id="${escapeHtml(listing.id)}">
@@ -63,13 +55,13 @@
             class="listing-strip-image"
             loading="lazy"
           />
-          ${badge ? `<span class="listing-strip-badge ${priority}">${badge}</span>` : ''}
+          <span class="listing-strip-badge">${badge}</span>
         </div>
         <div class="listing-strip-content">
           <h3 class="listing-strip-title">${escapeHtml(listing.title)}</h3>
           <div class="listing-strip-price">${escapeHtml(formatPrice(listing))}</div>
           <div class="listing-strip-location">
-            📍 ${escapeHtml(listing.city)}, ${escapeHtml(listing.country)}
+            📍 ${escapeHtml(listing.city || 'Europa')}, ${escapeHtml(listing.country || '')}
           </div>
         </div>
       </a>
@@ -77,33 +69,49 @@
   }
 
   /**
+   * Renderiza un item de servicio (estático)
+   */
+  function renderServiceItem(service) {
+    return `
+      <div class="listing-strip-item" style="cursor:default">
+        <div style="position: relative;background:linear-gradient(135deg, rgba(191,0,255,0.15), rgba(127,0,255,0.1));height:160px;display:flex;align-items:center;justify-content:center;font-size:3rem">
+          ${service.icon}
+        </div>
+        <div class="listing-strip-content">
+          <h3 class="listing-strip-title">${escapeHtml(service.name)}</h3>
+          <div style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin-top:8px">${escapeHtml(service.desc)}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
    * Renderiza una franja completa
    */
-  function renderStrip(listings, containerId, priority) {
+  function renderStrip(items, containerId, isServiceStrip = false) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    if (!listings || listings.length === 0) {
-      container.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--muted);">No hay anuncios disponibles</div>';
+    if (!items || items.length === 0) {
+      container.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--muted);">No hay contenido disponible</div>';
       return;
     }
 
-    // Duplicar items para crear efecto de bucle infinito
-    let itemsToRender = [...listings];
-    if (listings.length < MIN_ITEMS_FOR_INFINITE) {
-      // Si hay pocos items, duplicar varias veces
-      const times = Math.ceil(MIN_ITEMS_FOR_INFINITE / listings.length) + 1;
-      itemsToRender = Array(times).fill(listings).flat();
+    // Duplicar items para efecto infinito
+    let itemsToRender = [...items];
+    if (items.length < MIN_ITEMS_FOR_INFINITE) {
+      const times = Math.ceil(MIN_ITEMS_FOR_INFINITE / items.length) + 1;
+      itemsToRender = Array(times).fill(items).flat();
     } else {
-      // Duplicar una vez para el efecto infinito
-      itemsToRender = [...listings, ...listings];
+      itemsToRender = [...items, ...items];
     }
 
-    const stripClass = listings.length < 6 ? 'slow' : (listings.length > 12 ? 'fast' : '');
+    const stripClass = items.length < 6 ? 'slow' : (items.length > 12 ? 'fast' : '');
 
+    const renderer = isServiceStrip ? renderServiceItem : renderListingItem;
     const html = `
       <div class="listing-strip ${stripClass}">
-        ${itemsToRender.map(renderListingItem).join('')}
+        ${itemsToRender.map(renderer).join('')}
       </div>
     `;
 
@@ -111,7 +119,7 @@
   }
 
   /**
-   * Carga y distribuye los listings en las franjas
+   * Carga y distribuye los listings en las 4 franjas temáticas
    */
   async function loadAndRenderStrips() {
     try {
@@ -129,36 +137,48 @@
       // Filtrar solo publicados
       const published = allListings.filter(l => l.status === 'published');
 
-      // Separar por prioridad
-      const premiumListings = published.filter(l => getListingPriority(l) === 'premium');
-      const standardListings = published.filter(l => getListingPriority(l) === 'standard');
+      // Franja 1: ALQUILER
+      const alquilerListings = published.filter(l =>
+        l.operation === 'long_term_rent' || l.operation === 'room_rent' || l.operation === 'rent' || l.operation === 'alquiler'
+      );
 
-      // Si no hay suficientes premium, rellenar con standard
-      let topStripListings = premiumListings.length > 0 ? premiumListings : published.slice(0, 6);
+      // Franja 2: VENTA RESIDENCIAL
+      const residentialTypes = ['apartment', 'house', 'villa', 'chalet', 'duplex', 'penthouse', 'studio'];
+      const ventaResidencialListings = published.filter(l =>
+        l.operation === 'sale' && residentialTypes.includes(l.asset_type)
+      );
 
-      // Si no hay suficientes standard, usar los restantes
-      let bottomStripListings = standardListings.length > 0
-        ? standardListings
-        : published.filter(l => !topStripListings.includes(l));
+      // Franja 3: FINCAS, TERRENOS Y NEGOCIOS
+      const industrialTypes = ['land', 'finca', 'warehouse', 'garage', 'office', 'business', 'transfer', 'commercial', 'commercial_unit'];
+      const industrialListings = published.filter(l =>
+        industrialTypes.includes(l.asset_type)
+      );
 
-      // Si aún no hay suficientes para la franja inferior, usar todos menos los de arriba
-      if (bottomStripListings.length === 0 && published.length > topStripListings.length) {
-        bottomStripListings = published.slice(topStripListings.length);
-      }
+      // Franja 4: SERVICIOS (contenido estático)
+      const servicios = [
+        { icon: '🏛️', name: 'Gestoría Inmobiliaria', desc: 'Tramitación completa de documentación y registro de la propiedad.' },
+        { icon: '💰', name: 'Préstamos Hipotecarios', desc: 'Financiación adaptada con las mejores condiciones del mercado.' },
+        { icon: '🛡️', name: 'Seguros de Hogar', desc: 'Protección integral para tu inmueble y contenido.' },
+        { icon: '📊', name: 'Valoraciones Oficiales', desc: 'Tasación certificada por profesionales homologados.' },
+        { icon: '🔑', name: 'Administración de Fincas', desc: 'Gestión profesional de comunidades de propietarios.' },
+        { icon: '⚖️', name: 'Asesoría Legal', desc: 'Consultoría jurídica especializada en derecho inmobiliario.' }
+      ];
 
-      // Renderizar ambas franjas
-      renderStrip(topStripListings, 'listing-strip-premium', 'premium');
-      renderStrip(bottomStripListings, 'listing-strip-standard', 'standard');
+      // Renderizar las 4 franjas
+      renderStrip(alquilerListings.length > 0 ? alquilerListings : published.slice(0, 4), 'listing-strip-alquiler');
+      renderStrip(ventaResidencialListings.length > 0 ? ventaResidencialListings : published.slice(0, 4), 'listing-strip-venta-residencial');
+      renderStrip(industrialListings.length > 0 ? industrialListings : published.slice(0, 4), 'listing-strip-industrial');
+      renderStrip(servicios, 'listing-strip-servicios', true);
 
     } catch (error) {
       console.warn('[ListingStrips] Error loading listings:', error);
 
       // Mostrar mensaje de error amigable
       const errorMsg = '<div style="padding: 20px; text-align: center; color: var(--muted);">No se pudieron cargar los anuncios en este momento</div>';
-      const premium = document.getElementById('listing-strip-premium');
-      const standard = document.getElementById('listing-strip-standard');
-      if (premium) premium.innerHTML = errorMsg;
-      if (standard) standard.innerHTML = errorMsg;
+      ['listing-strip-alquiler', 'listing-strip-venta-residencial', 'listing-strip-industrial', 'listing-strip-servicios'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = errorMsg;
+      });
     }
   }
 
