@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#00040D" />
+  <title>Dar de baja alerta — neuralgpt.store</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/theme-override.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
+  </header>
+  <div class="rgb-divider"></div>
+
+  <main class="wrap" style="padding-top:80px;padding-bottom:80px;max-width:600px;text-align:center">
+    <div id="loading-state">
+      <div style="font-size:2.5rem;margin-bottom:16px">⏳</div>
+      <h1 class="section-title" style="margin-bottom:12px">Procesando baja...</h1>
+      <p style="color:var(--muted)">Espera un momento mientras cancelamos tu alerta.</p>
+    </div>
+
+    <div id="success-state" style="display:none">
+      <div style="font-size:3rem;margin-bottom:16px">✓</div>
+      <h1 class="section-title" style="margin-bottom:12px">Alerta cancelada</h1>
+      <p style="color:var(--muted);line-height:1.8;margin-bottom:24px">
+        Tu alerta ha sido cancelada con éxito. No recibirás más notificaciones de búsqueda.
+      </p>
+      <a href="/real-estate-index.html" class="btn btn-primary">Ver inmuebles</a>
+      <a href="/alert.html" class="btn">Crear nueva alerta</a>
+    </div>
+
+    <div id="error-state" style="display:none">
+      <div style="font-size:3rem;margin-bottom:16px">✗</div>
+      <h1 class="section-title" style="margin-bottom:12px">Error</h1>
+      <p id="error-message" style="color:var(--muted);line-height:1.8;margin-bottom:24px"></p>
+      <a href="/real-estate-index.html" class="btn btn-primary">Ver inmuebles</a>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a>
+        <p>Portal inmobiliario premium. Anuncios verificados en venta y alquiler.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025–2026 neuralgpt.store</span>
+      <span><a href="/privacy.html">Privacidad</a> · <a href="/terms.html">Términos</a></span>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    const loadingState = document.getElementById('loading-state');
+    const successState = document.getElementById('success-state');
+    const errorState = document.getElementById('error-state');
+    const errorMessage = document.getElementById('error-message');
+
+    // Obtener parámetros de URL
+    const params = new URLSearchParams(window.location.search);
+    const alertId = params.get('id');
+    const token = params.get('token');
+
+    if (!alertId || !token) {
+      showError('Enlace de baja inválido. Faltan parámetros necesarios.');
+      return;
+    }
+
+    // Procesar baja
+    unsubscribeAlert(alertId, token);
+
+    async function unsubscribeAlert(id, token) {
+      try {
+        const response = await fetch('/api/alerts/unsubscribe', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            alert_id: id,
+            token: token
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+          showSuccess();
+        } else {
+          showError(getErrorMessage(result.error));
+        }
+      } catch (error) {
+        console.error('[Unsubscribe]', error);
+        showError('Error de conexión. Inténtalo de nuevo más tarde.');
+      }
+    }
+
+    function showSuccess() {
+      loadingState.style.display = 'none';
+      successState.style.display = 'block';
+    }
+
+    function showError(message) {
+      loadingState.style.display = 'none';
+      errorState.style.display = 'block';
+      errorMessage.textContent = message;
+    }
+
+    function getErrorMessage(code) {
+      const messages = {
+        'alert_not_found': 'La alerta no existe o ya fue cancelada previamente.',
+        'invalid_unsubscribe_token': 'El enlace de baja no es válido. Verifica que uses el enlace correcto del email.',
+        'alert_id_and_token_required': 'Faltan parámetros necesarios en el enlace de baja.'
+      };
+      return messages[code] || 'No se pudo cancelar la alerta. Contacta con soporte si el problema persiste.';
+    }
+  })();
+  </script>
+</body>
+</html>

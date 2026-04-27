@@ -5,13 +5,15 @@ const { env } = require('./config/env');
 const { applyCors, parseUrl, sendError } = require('./lib/http');
 const { createListingsHandlers } = require('./handlers/listings');
 const { createStripeHandlers } = require('./handlers/stripe');
+const { createAlertsHandlers } = require('./handlers/alerts');
 const { createStripeClient } = require('./services/stripe-client');
 const { createRouter } = require('./router');
 
 const stripe = createStripeClient(env.stripeSecretKey);
 const listingsHandlers = createListingsHandlers(env);
 const stripeHandlers = createStripeHandlers(env, stripe);
-const route = createRouter(listingsHandlers, stripeHandlers);
+const alertsHandlers = createAlertsHandlers(env);
+const route = createRouter(listingsHandlers, stripeHandlers, alertsHandlers);
 
 const server = http.createServer(async (req, res) => {
   try {

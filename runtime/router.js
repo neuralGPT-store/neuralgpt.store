@@ -2,13 +2,24 @@
 
 const { sendError, sendJson } = require('./lib/http');
 
-function createRouter(listingsHandlers, stripeHandlers) {
+function createRouter(listingsHandlers, stripeHandlers, alertsHandlers) {
   return async function route(req, res, url) {
     const method = String(req.method || 'GET').toUpperCase();
     const path = url.pathname;
 
     if (path === '/api/health' && method === 'GET') {
       return sendJson(res, 200, { ok: true, runtime: 'ready' });
+    }
+
+    // Rutas de alertas
+    if (path === '/api/alerts/subscribe') {
+      if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      return alertsHandlers.subscribe(req, res);
+    }
+
+    if (path === '/api/alerts/unsubscribe') {
+      if (method !== 'DELETE') return sendError(res, 405, 'method_not_allowed');
+      return alertsHandlers.unsubscribe(req, res);
     }
 
     if (path === '/api/listings/status') {
