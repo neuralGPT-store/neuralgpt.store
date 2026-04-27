@@ -1,0 +1,199 @@
+/**
+ * Franjas animadas de anuncios con prioridad comercial
+ * Animación CSS pura sin librerías externas
+ */
+
+.listing-strip-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: var(--card-bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+}
+
+.listing-strip-wrapper.premium {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 140, 0, 0.05));
+  border-color: rgba(255, 215, 0, 0.2);
+}
+
+.listing-strip-wrapper.standard {
+  background: linear-gradient(135deg, rgba(0, 234, 255, 0.06), rgba(127, 0, 255, 0.04));
+  border-color: rgba(0, 234, 255, 0.15);
+}
+
+.listing-strip {
+  display: flex;
+  gap: 16px;
+  animation: scrollStrip 60s linear infinite;
+  will-change: transform;
+}
+
+.listing-strip:hover {
+  animation-play-state: paused;
+}
+
+/* Ajuste de velocidad según cantidad de elementos */
+.listing-strip.fast {
+  animation-duration: 40s;
+}
+
+.listing-strip.slow {
+  animation-duration: 80s;
+}
+
+@keyframes scrollStrip {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.listing-strip-item {
+  flex-shrink: 0;
+  width: 280px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+}
+
+.listing-strip-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(0, 234, 255, 0.2);
+}
+
+.listing-strip-wrapper.premium .listing-strip-item:hover {
+  border-color: #ffd700;
+  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.25);
+}
+
+.listing-strip-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, rgba(233, 226, 214, 0.4), rgba(201, 188, 171, 0.45));
+}
+
+.listing-strip-content {
+  padding: 14px;
+}
+
+.listing-strip-title {
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.listing-strip-price {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+
+.listing-strip-wrapper.premium .listing-strip-price {
+  color: #ffd700;
+}
+
+.listing-strip-location {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.listing-strip-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 215, 0, 0.95);
+  color: #000;
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.listing-strip-badge.premium {
+  background: linear-gradient(135deg, #ffd700, #ffb800);
+}
+
+.listing-strip-badge.featured {
+  background: linear-gradient(135deg, #00eaff, #7f00ff);
+  color: #fff;
+}
+
+/* Responsive móvil */
+@media (max-width: 768px) {
+  .listing-strip-item {
+    width: 240px;
+  }
+
+  .listing-strip-image {
+    height: 140px;
+  }
+
+  .listing-strip-title {
+    font-size: 0.85rem;
+  }
+
+  .listing-strip-price {
+    font-size: 1rem;
+  }
+
+  .listing-strip {
+    gap: 12px;
+  }
+
+  .listing-strip-wrapper {
+    padding: 14px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .listing-strip-item {
+    width: 200px;
+  }
+
+  .listing-strip-image {
+    height: 120px;
+  }
+
+  .listing-strip-content {
+    padding: 12px;
+  }
+}
+
+/* Prevención de parpadeo en animación */
+.listing-strip-wrapper {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.listing-strip {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

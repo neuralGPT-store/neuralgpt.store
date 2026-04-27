@@ -28,6 +28,7 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
+  <link rel="stylesheet" href="/css/listing-strips.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebSite","name":"neuralgpt.store","url":"https://neuralgpt.store","potentialAction":{"@type":"SearchAction","target":"https://neuralgpt.store/real-estate-index.html?search={search_term_string}","query-input":"required name=search_term_string"}}
   </script>
@@ -92,6 +93,11 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
     </div>
   </section>
 
+  <!-- ── FRANJA PREMIUM ── -->
+  <div class="listing-strip-wrapper premium" aria-label="Anuncios premium destacados">
+    <div id="listing-strip-premium"></div>
+  </div>
+
   <!-- ── TRUST BAR ── -->
   <section class="stats-bar">
     <div class="wrap stats-grid">
@@ -113,6 +119,11 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
       </div>
     </div>
   </section>
+
+  <!-- ── FRANJA STANDARD ── -->
+  <div class="listing-strip-wrapper standard" aria-label="Anuncios destacados" style="margin-top: 24px;">
+    <div id="listing-strip-standard"></div>
+  </div>
 
   <section class="section" style="padding-top:28px">
     <div class="wrap">
@@ -605,5 +616,6 @@ document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : '
   })();
   </script>
   <script src="/js/agent-chat.js" defer></script>
+  <script src="/js/listing-strips.js"></script>
 </body>
 </html>
