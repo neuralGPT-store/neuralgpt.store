@@ -23,6 +23,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="icon" href="/favicon.ico">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="neuralgpt.store">
+  <link rel="apple-touch-icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
   <link rel="stylesheet" href="/css/mortgage-calculator.css">
@@ -30,6 +35,17 @@
   <link rel="canonical" id="canonical-tag" href="https://neuralgpt.store/listing.html">
   <script type="application/ld+json" id="listing-schema">{}</script>
   <script src="/js/i18n.js"></script>
+  <script>
+    if('serviceWorker'in navigator){
+      window.addEventListener('load',()=>{
+        navigator.serviceWorker.register('/sw.js').then(reg=>{
+          console.log('[PWA] Service Worker registrado:',reg.scope);
+        }).catch(err=>{
+          console.warn('[PWA] Error al registrar Service Worker:',err);
+        });
+      });
+    }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
