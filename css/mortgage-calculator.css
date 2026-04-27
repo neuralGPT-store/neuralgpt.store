@@ -1,0 +1,117 @@
+/**
+ * mortgage-calculator.css — Estilos para calculadora de hipoteca
+ */
+
+.mortgage-calculator {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 24px 0;
+}
+
+.mortgage-toggle {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease;
+}
+
+.mortgage-toggle:hover {
+  color: var(--accent);
+}
+
+.mortgage-content {
+  margin-top: 20px;
+}
+
+.mortgage-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.mortgage-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.mortgage-form-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.mortgage-form-input {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  color: var(--text);
+  font-family: var(--font-body);
+  transition: border-color 0.2s ease;
+}
+
+.mortgage-form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.mortgage-form-input::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.mortgage-calculate-btn {
+  grid-column: 1 / -1;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mortgage-calculate-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.3);
+}
+
+.mortgage-calculate-btn:active {
+  transform: translateY(0);
+}
+
+#mortgage-results {
+  display: none;
+}
+
+/* Responsive móvil */
+@media (max-width: 640px) {
+  .mortgage-form {
+    grid-template-columns: 1fr;
+  }
+
+  .mortgage-toggle {
+    font-size: 1rem;
+  }
+
+  .mortgage-calculator {
+    padding: 16px;
+  }
+}

@@ -25,6 +25,7 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/theme-override.css">
+  <link rel="stylesheet" href="/css/mortgage-calculator.css">
   <link rel="canonical" id="canonical-tag" href="https://neuralgpt.store/listing.html">
   <script type="application/ld+json" id="listing-schema">{}</script>
   <script src="/js/i18n.js"></script>
@@ -120,6 +121,35 @@
             <div id="listing-facts" style="display:grid;gap:10px"></div>
           </div>
 
+          <!-- Calculadora de hipoteca -->
+          <div class="mortgage-calculator" id="mortgage-calculator" style="display:none">
+            <button class="mortgage-toggle" id="mortgage-toggle" aria-expanded="false">
+              ▼ Calculadora de hipoteca
+            </button>
+            <div class="mortgage-content" id="mortgage-content" style="display:none">
+              <div class="mortgage-form">
+                <div class="mortgage-form-group">
+                  <label class="mortgage-form-label" for="mortgage-price">Precio inmueble (€)</label>
+                  <input type="number" class="mortgage-form-input" id="mortgage-price" min="0" step="1000" placeholder="300000" />
+                </div>
+                <div class="mortgage-form-group">
+                  <label class="mortgage-form-label" for="mortgage-down-payment">Entrada (%)</label>
+                  <input type="number" class="mortgage-form-input" id="mortgage-down-payment" min="0" max="99" step="1" value="20" placeholder="20" />
+                </div>
+                <div class="mortgage-form-group">
+                  <label class="mortgage-form-label" for="mortgage-years">Plazo (años)</label>
+                  <input type="number" class="mortgage-form-input" id="mortgage-years" min="1" max="40" step="1" value="30" placeholder="30" />
+                </div>
+                <div class="mortgage-form-group">
+                  <label class="mortgage-form-label" for="mortgage-interest">Interés anual (%)</label>
+                  <input type="number" class="mortgage-form-input" id="mortgage-interest" min="0" max="20" step="0.1" value="3.5" placeholder="3.5" />
+                </div>
+                <button type="button" class="mortgage-calculate-btn" id="mortgage-calculate">Calcular hipoteca</button>
+              </div>
+              <div id="mortgage-results"></div>
+            </div>
+          </div>
+
           <div style="padding:22px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
             <h2 style="font-family:var(--font-title);font-size:0.78rem;letter-spacing:1px;color:var(--accent);margin-bottom:14px">Contexto SEO</h2>
             <div id="listing-seo-copy" style="color:var(--muted);line-height:1.7;font-size:0.84rem"></div>
@@ -187,6 +217,7 @@
   <script src="/js/real-estate-data.js"></script>
   <script src="/js/real-estate-presenters.js"></script>
   <script src="/js/real-estate-adapters.js"></script>
+  <script src="/js/mortgage-calculator.js"></script>
   <script>
   (function(){
     var toggle=document.getElementById('nav-toggle'), nav=document.getElementById('main-nav');
@@ -332,6 +363,12 @@
         "addressLocality": detail.city
       }
     });
+
+    // Mostrar calculadora de hipoteca solo para venta
+    if (detail.operation === 'sale' && detail.price && window.initMortgageCalculator) {
+      document.getElementById('mortgage-calculator').style.display = 'block';
+      initMortgageCalculator(detail.price);
+    }
   }
 
   function factRow(label, value){
