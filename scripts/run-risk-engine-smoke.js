@@ -1,66 +1,23 @@
-#!/usr/bin/env node
-
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-
-const root = path.resolve(__dirname, '..');
+#!/usr/bin/env node 'use strict'; const fs = require('fs');
+const path = require('path'); const root = path.resolve(__dirname, '..');
 const listingsPath = path.join(root, 'data', 'listings.json');
 const fraudRulesPath = path.join(root, 'data', 'fraud-rules.json');
 const moderationRulesPath = path.join(root, 'data', 'moderation-rules.json');
-const riskEngine = require(path.join(root, 'js', 'real-estate-risk-engine.js'));
-
-function readJson(filePath, label) {
-  try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch (error) {
-    console.error('[ERROR] No se pudo cargar ' + label + ': ' + error.message);
-    process.exit(1);
-  }
-}
-
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
-function compactFlags(flags) {
-  return (Array.isArray(flags) ? flags : []).map((flag) => ({
-    code: flag.code,
-    severity: flag.severity,
-    weight: flag.weight,
-    message: flag.message
-  }));
-}
-
-const listings = readJson(listingsPath, 'data/listings.json');
+const riskEngine = require(path.join(root, 'js', 'real-estate-risk-engine.js')); function readJson(filePath, label) { try { return JSON.parse(fs.readFileSync(filePath, 'utf8')); } catch (error) { console.error('[ERROR] No se pudo cargar ' + label + ': ' + error.message); process.exit(1); }
+} function clone(obj) { return JSON.parse(JSON.stringify(obj));
+} function compactFlags(flags) { return (Array.isArray(flags) ? flags : []).map((flag) => ({ code: flag.code, severity: flag.severity, weight: flag.weight, message: flag.message }));
+} const listings = readJson(listingsPath, 'data/listings.json');
 const fraudRules = readJson(fraudRulesPath, 'data/fraud-rules.json');
-const moderationRules = readJson(moderationRulesPath, 'data/moderation-rules.json');
-
-if (!Array.isArray(listings) || listings.length < 2) {
-  console.error('[ERROR] El smoke test requiere al menos 2 listings en data/listings.json');
-  process.exit(1);
-}
-
-const madrid = clone(listings.find((item) => item.slug === 'piso-senorial-reformado-barrio-salamanca-madrid'));
-const lisboa = clone(listings.find((item) => item.slug === 'apartamento-ejecutivo-larga-duracion-estrela-lisboa'));
-
-if (!madrid || !lisboa) {
-  console.error('[ERROR] No se encontraron listings base esperados para el smoke test.');
-  process.exit(1);
-}
-
-madrid.advertiser_id = 'adv-madrid-001';
+const moderationRules = readJson(moderationRulesPath, 'data/moderation-rules.json'); if (!Array.isArray(listings) || listings.length < 2) { console.error('[ERROR] El smoke test requiere al menos 2 listings en data/listings.json'); process.exit(1);
+} const madrid = clone(listings.find((item) => item.slug === 'piso-senorial-reformado-barrio-salamanca-madrid'));
+const = clone(listings.find((item) => item.slug === 'apartamento-ejecutivo-larga-duracion-estrela-')); if (!madrid || !) { console.error('[ERROR] No se encontraron listings base esperados para el smoke test.'); process.exit(1);
+} madrid.advertiser_id = 'adv-madrid-001';
 madrid.contact_email = 'owner.madrid@premiumassets.es';
 madrid.contact_phone = '+34 600 111 111';
-madrid.plan_tier = 'premium';
-
-lisboa.advertiser_id = 'adv-lisboa-007';
-lisboa.contact_email = 'owner.lisboa@executivehomes.pt';
-lisboa.contact_phone = '+351 910 222 222';
-lisboa.plan_tier = 'free';
-
-const duplicateMadrid = clone(madrid);
+madrid.plan_tier = 'premium'; .advertiser_id = 'adv--007';
+.contact_email = 'owner.@executivehomes.pt';
+.contact_phone = '+351 910 222 222';
+.plan_tier = 'free'; const duplicateMadrid = clone(madrid);
 duplicateMadrid.id = 're-sale-madrid-salamanca-dup-901';
 duplicateMadrid.slug = 'piso-senorial-reformado-barrio-salamanca-madrid-nueva-publicacion';
 duplicateMadrid.title = 'Piso señorial reformado en Salamanca Madrid';
@@ -70,66 +27,22 @@ duplicateMadrid.status = 'published';
 duplicateMadrid.advertiser_id = madrid.advertiser_id;
 duplicateMadrid.contact_email = madrid.contact_email;
 duplicateMadrid.contact_phone = madrid.contact_phone;
-duplicateMadrid.plan_tier = 'free';
-
-const riskyLisboa = clone(lisboa);
-riskyLisboa.id = 're-rent-lisboa-estrela-risk-777';
-riskyLisboa.slug = 'apartamento-ejecutivo-estrela-lisboa-publicacion-intensiva';
-riskyLisboa.title = 'Apartamento ejecutivo en Estrela Lisboa oferta inmediata';
-riskyLisboa.description = lisboa.description;
-riskyLisboa.price = 4200;
-riskyLisboa.plan_tier = 'free';
-riskyLisboa.verification_state = 'pending';
-riskyLisboa.contact_email = 'rapidlist@riskmail.test';
-riskyLisboa.contact_phone = '+351 910 222 222';
-riskyLisboa.advertiser_id = 'adv-lisboa-rapid-bot';
-
-const baselineContext = {
-  fraudRules,
-  moderationRules,
-  previousListings: [],
-  actor: {
-    active_free_listings: 0,
-    new_free_listings_30d: 0
-  },
-  activity: {
-    publish_actions_7d: 1,
-    status_changes_14d: 1,
-    creations_per_hour_per_ip: 1,
-    accounts_per_device_24h: 1
-  },
-  reputation: {
-    reused_phone_count: 1,
-    repeated_quarantine_events_30d: 0,
-    confirmed_fraud_events_90d: 0
-  },
-  marketStats: {
-    median_price_per_m2: 10500
-  },
-  highRiskEmailDomains: ['riskmail.test']
-};
-
-const duplicateContext = clone(baselineContext);
-duplicateContext.previousListings = [
-  {
-    id: 'old-madrid-001',
-    slug: 'piso-senorial-reformado-barrio-salamanca-madrid-archive',
-    operation: madrid.operation,
-    asset_type: madrid.asset_type,
-    country: madrid.country,
-    city: madrid.city,
-    zone: madrid.zone,
-    surface_m2: madrid.surface_m2,
-    rooms: madrid.rooms,
-    bathrooms: madrid.bathrooms,
-    status: 'off_market',
-    expiration_at: new Date(Date.now() - 5 * 86400000).toISOString()
-  }
+duplicateMadrid.plan_tier = 'free'; const risky = clone();
+risky.id = 're-rent--estrela-risk-777';
+risky.slug = 'apartamento-ejecutivo-estrela--publicacion-intensiva';
+risky.title = 'Apartamento ejecutivo en Estrela oferta inmediata';
+risky.description = .description;
+risky.price = 4200;
+risky.plan_tier = 'free';
+risky.verification_state = 'pending';
+risky.contact_email = 'rapidlist@riskmail.test';
+risky.contact_phone = '+351 910 222 222';
+risky.advertiser_id = 'adv--rapid-bot'; const baselineContext = { fraudRules, moderationRules, previousListings: [], actor: { active_free_listings: 0, new_free_listings_30d: 0 }, activity: { publish_actions_7d: 1, status_changes_14d: 1, creations_per_hour_per_ip: 1, accounts_per_device_24h: 1 }, reputation: { reused_phone_count: 1, repeated_quarantine_events_30d: 0, confirmed_fraud_events_90d: 0 }, marketStats: { median_price_per_m2: 10500 }, highRiskEmailDomains: ['riskmail.test']
+}; const duplicateContext = clone(baselineContext);
+duplicateContext.previousListings = [ { id: 'old-madrid-001', slug: 'piso-senorial-reformado-barrio-salamanca-madrid-archive', operation: madrid.operation, asset_type: madrid.asset_type, country: madrid.country, city: madrid.city, zone: madrid.zone, surface_m2: madrid.surface_m2, rooms: madrid.rooms, bathrooms: madrid.bathrooms, status: 'off_market', expiration_at: new Date(Date.now() - 5 * 86400000).toISOString() }
 ];
 duplicateContext.actor.active_free_listings = 3;
-duplicateContext.actor.new_free_listings_30d = 8;
-
-const riskyContext = clone(baselineContext);
+duplicateContext.actor.new_free_listings_30d = 8; const riskyContext = clone(baselineContext);
 riskyContext.actor.active_free_listings = 6;
 riskyContext.actor.new_free_listings_30d = 12;
 riskyContext.activity.publish_actions_7d = 9;
@@ -138,72 +51,11 @@ riskyContext.activity.creations_per_hour_per_ip = 11;
 riskyContext.activity.accounts_per_device_24h = 6;
 riskyContext.reputation.reused_phone_count = 5;
 riskyContext.reputation.repeated_quarantine_events_30d = 2;
-riskyContext.marketStats.median_price_per_m2 = 3700;
-
-const scenarios = [
-  {
-    name: 'baseline_real_listing_madrid',
-    listing: madrid,
-    pool: listings,
-    context: baselineContext
-  },
-  {
-    name: 'duplicate_candidate_madrid',
-    listing: duplicateMadrid,
-    pool: listings,
-    context: duplicateContext
-  },
-  {
-    name: 'fraud_candidate_lisboa',
-    listing: riskyLisboa,
-    pool: listings,
-    context: riskyContext
-  }
-];
-
-console.log('RISK ENGINE SMOKE TEST');
+riskyContext.marketStats.median_price_per_m2 = 3700; const scenarios = [ { name: 'baseline_real_listing_madrid', listing: madrid, pool: listings, context: baselineContext }, { name: 'duplicate_candidate_madrid', listing: duplicateMadrid, pool: listings, context: duplicateContext }, { name: 'fraud_candidate_', listing: risky, pool: listings, context: riskyContext }
+]; console.log('RISK ENGINE SMOKE TEST');
 console.log('model_version=' + fraudRules.model_version + ' workflow=' + moderationRules.workflow_version);
-console.log('listings_dataset=' + listings.length);
-
-let detectedSignalCount = 0;
-
-scenarios.forEach((scenario) => {
-  const scored = riskEngine.scoreListingRisk(scenario.listing, scenario.pool, scenario.context);
-  const summary = riskEngine.buildModerationSummary(scenario.listing, scored);
-  const duplicatePeerSignals = scored.duplicate.peers.reduce((acc, peer) => acc + peer.peer_signals.length, 0);
-  const signalCount = scored.duplicate.flags.length + scored.fraud.flags.length + duplicatePeerSignals;
-
-  detectedSignalCount += signalCount;
-
-  console.log('');
-  console.log('[' + scenario.name + ']');
-  console.log('score=' + scored.score + ' band=' + scored.classification.band + ' outcome=' + scored.classification.outcome);
-  console.log('duplicate_score=' + scored.duplicate.score + ' strong_matches=' + scored.duplicate.strong_match_count + ' peers=' + scored.duplicate.peers.length);
-  console.log('fraud_score=' + scored.fraud.score + ' fraud_flags=' + scored.fraud.flags.length);
-  console.log('signals_total=' + signalCount);
-
-  if (scored.duplicate.top_peer) {
-    console.log('top_duplicate_peer=' + scored.duplicate.top_peer.peer_id + ' top_peer_score=' + scored.duplicate.top_peer.peer_score);
-  }
-
-  console.log('duplicate_flags=' + JSON.stringify(compactFlags(scored.duplicate.flags)));
-  console.log('fraud_flags=' + JSON.stringify(compactFlags(scored.fraud.flags)));
-  console.log('summary=' + JSON.stringify({
-    listing_id: summary.listing_id,
-    outcome: summary.outcome,
-    risk_band: summary.risk_band,
-    top_peer_id: summary.duplicate_summary.top_peer_id,
-    top_flags: summary.fraud_summary.top_flags
-  }));
-});
-
-console.log('');
-console.log('detected_signals_total=' + detectedSignalCount);
-
-if (detectedSignalCount <= 0) {
-  console.error('[ERROR] El smoke test no detectó señales de riesgo/duplicado.');
-  process.exit(1);
-}
-
-console.log('SMOKE_STATUS=OK');
+console.log('listings_dataset=' + listings.length); let detectedSignalCount = 0; scenarios.forEach((scenario) => { const scored = riskEngine.scoreListingRisk(scenario.listing, scenario.pool, scenario.context); const summary = riskEngine.buildModerationSummary(scenario.listing, scored); const duplicatePeerSignals = scored.duplicate.peers.reduce((acc, peer) => acc + peer.peer_signals.length, 0); const signalCount = scored.duplicate.flags.length + scored.fraud.flags.length + duplicatePeerSignals; detectedSignalCount += signalCount; console.log(''); console.log('[' + scenario.name + ']'); console.log('score=' + scored.score + ' band=' + scored.classification.band + ' outcome=' + scored.classification.outcome); console.log('duplicate_score=' + scored.duplicate.score + ' strong_matches=' + scored.duplicate.strong_match_count + ' peers=' + scored.duplicate.peers.length); console.log('fraud_score=' + scored.fraud.score + ' fraud_flags=' + scored.fraud.flags.length); console.log('signals_total=' + signalCount); if (scored.duplicate.top_peer) { console.log('top_duplicate_peer=' + scored.duplicate.top_peer.peer_id + ' top_peer_score=' + scored.duplicate.top_peer.peer_score); } console.log('duplicate_flags=' + JSON.stringify(compactFlags(scored.duplicate.flags))); console.log('fraud_flags=' + JSON.stringify(compactFlags(scored.fraud.flags))); console.log('summary=' + JSON.stringify({ listing_id: summary.listing_id, outcome: summary.outcome, risk_band: summary.risk_band, top_peer_id: summary.duplicate_summary.top_peer_id, top_flags: summary.fraud_summary.top_flags }));
+}); console.log('');
+console.log('detected_signals_total=' + detectedSignalCount); if (detectedSignalCount <= 0) { console.error('[ERROR] El smoke test no detectó señales de riesgo/duplicado.'); process.exit(1);
+} console.log('SMOKE_STATUS=OK');
 process.exit(0);

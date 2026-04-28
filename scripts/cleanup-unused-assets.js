@@ -9,16 +9,6 @@ const ts = new Date().toISOString().replace(/[:.]/g,'-')
 const outDir = path.join('backups','unused-'+ts)
 fs.mkdirSync(outDir, { recursive: true })
 let moved = 0
-unused.forEach(rel =>{
-  const src = path.join(rel)
-  if(fs.existsSync(src)){
-    try{
-      const dest = path.join(outDir, rel.replace(/^assets[\\/]/,'assets-'))
-      const destDir = path.dirname(dest)
-      fs.mkdirSync(destDir, { recursive: true })
-      fs.renameSync(src, dest)
-      moved++
-    }catch(e){ console.error('move failed', src, e.message) }
-  }
+unused.forEach(rel =>{ const src = path.join(rel) if(fs.existsSync(src)){ try{ const dest = path.join(outDir, rel.replace(/^assets[\\/]/,'assets-')) const destDir = path.dirname(dest) fs.mkdirSync(destDir, { recursive: true }) fs.renameSync(src, dest) moved++ }catch(e){ console.error('move failed', src, e.message) } }
 })
 console.log('Moved', moved, 'files to', outDir)

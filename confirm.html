@@ -1,72 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pago Confirmado | neuralgpt.store</title>
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="stylesheet" href="/css/main.css">
-  <style>
-    .confirm-hero {
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, rgba(0,234,255,0.08), rgba(127,0,255,0.08));
-      padding: 48px 0;
-    }
-    .confirm-card {
-      max-width: 600px;
-      text-align: center;
-      padding: 48px 32px;
-      background: var(--surface);
-      border: 2px solid var(--accent);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(0,234,255,0.15);
-    }
-    .confirm-icon {
-      font-size: 5rem;
-      margin-bottom: 24px;
-      animation: bounce 0.6s ease-out;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-  </style>
-  <script src="/js/i18n.js"></script>
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Pago Confirmado | neuralgpt.store</title> <meta name="robots" content="noindex, nofollow"> <link rel="stylesheet" href="/css/main.css"> <style> .confirm-hero { min-height: 60vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0,234,255,0.08), rgba(127,0,255,0.08)); padding: 48px 0; } .confirm-card { max-width: 600px; text-align: center; padding: 48px 32px; background: var(--surface); border: 2px solid var(--accent); border-radius: 24px; box-shadow: 0 8px 32px rgba(0,234,255,0.15); } .confirm-icon { font-size: 5rem; margin-bottom: 24px; animation: bounce 0.6s ease-out; } @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } } </style> <script src="/js/i18n.js"></script>
 </head>
-<body>
-  <header class="site-header">
-    <div class="wrap header-content">
-      <a class="brand" href="/">neural<span>GPT</span>.store</a>
-      <nav class="nav">
-        <a href="/venta.html">Venta</a>
-        <a href="/alquiler.html">Alquiler</a>
-      </nav>
-    </div>
-  </header>
-  <div class="rgb-divider"></div>
-  <main class="confirm-hero">
-    <div class="wrap">
-      <div class="confirm-card">
-        <div class="confirm-icon" id="icon">✅</div>
-        <h1 style="font-family:var(--font-title);font-size:2rem;margin-bottom:16px" id="title">¡Pago Confirmado!</h1>
-        <p style="color:var(--muted);font-size:1.1rem;margin-bottom:32px" id="subtitle">Tu transacción se ha procesado correctamente.</p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-          <a href="/real-estate-index.html" class="btn btn-primary btn-lg">Ver inmuebles</a>
-          <a href="/contact.html" class="btn btn-lg">Publicar otro</a>
-        </div>
-      </div>
-    </div>
-  </main>
-  <div class="rgb-divider"></div>
-  <footer class="site-footer"><div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span>🔒 <a href="/privacy.html" style="color:var(--text)">No compartimos tus datos con terceros</a></span></div></footer>
-  <script>
-  const p=new URLSearchParams(location.search),u=p.get('upgrade');
-  if(u==='visibilidad'){document.getElementById('icon').textContent='🚀';document.getElementById('title').textContent='¡Anuncio destacado!';document.getElementById('subtitle').textContent='Posición prioritaria 30 días activa.';}
-  else if(u==='sensacional'){document.getElementById('icon').textContent='⭐';document.getElementById('title').textContent='¡Badge premium!';document.getElementById('subtitle').textContent='SENSACIONAL activado 24h.';}
-  else if(p.get('unlocked')==='true'){document.getElementById('icon').textContent='🔓';document.getElementById('title').textContent='¡Contacto desbloqueado!';document.getElementById('subtitle').textContent='Información visible en la ficha.';}
-  </script>
+<body> <header class="site-header"> <div class="wrap header-content"> <a class="brand" href="/">neural<span>GPT</span>.store</a> <nav class="nav"> <a href="/venta.html">Venta</a> <a href="/alquiler.html">Alquiler</a> </nav> </div> </header> <div class="rgb-divider"></div> <main class="confirm-hero"> <div class="wrap"> <div class="confirm-card"> <div class="confirm-icon" id="icon">✅</div> <h1 style="font-family:var(--font-title);font-size:2rem;margin-bottom:16px" id="title">¡Pago Confirmado!</h1> <p style="color:var(--muted);font-size:1.1rem;margin-bottom:32px" id="subtitle">Tu transacción se ha procesado correctamente.</p> <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"> <a href="/real-estate-index.html" class="btn btn-primary btn-lg">Ver inmuebles</a> <a href="/contact.html" class="btn btn-lg">Publicar otro</a> </div> </div> </div> </main> <div class="rgb-divider"></div> <footer class="site-footer"><div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span>🔒 <a href="/privacy.html" style="color:var(--text)">No compartimos tus datos con terceros</a></span></div></footer> <script> const p=new URLSearchParams(location.search),u=p.get('upgrade'); if(u==='visibilidad'){document.getElementById('icon').textContent='🚀';document.getElementById('title').textContent='¡Anuncio destacado!';document.getElementById('subtitle').textContent='Posición prioritaria 30 días activa.';} else if(u==='sensacional'){document.getElementById('icon').textContent='⭐';document.getElementById('title').textContent='¡Badge premium!';document.getElementById('subtitle').textContent='SENSACIONAL activado 24h.';} else if(p.get('unlocked')==='true'){document.getElementById('icon').textContent='🔓';document.getElementById('title').textContent='¡Contacto desbloqueado!';document.getElementById('subtitle').textContent='Información visible en la ficha.';} </script>
 </body>
 </html>

@@ -1,3 +1,2 @@
-(()=>{
-  if(window.__once) return; window.__once=true;
+(()=>{ if(window.__once) return; window.__once=true;
 })();

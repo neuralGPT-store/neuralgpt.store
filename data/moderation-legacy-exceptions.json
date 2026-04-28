@@ -1,14 +1,2 @@
-{
-  "schema_version": 1,
-  "generated_at": "2026-04-16T17:35:00.000Z",
-  "accepted_sensitive_transition_exceptions": [
-    {
-      "moderation_event_id": "evt_seed_20260416_004",
-      "code": "sensitive_without_override",
-      "status": "accepted_legacy_exception",
-      "reason": "Evento seed legacy previo al hardening de override en Fase 24; mantenido por trazabilidad histórica sin reescritura.",
-      "approved_by": "compliance_gate_phase26",
-      "approved_at": "2026-04-16T17:35:00.000Z"
-    }
-  ]
+{ "schema_version": 1, "generated_at": "2026-04-16T17:35:00.000Z", "accepted_sensitive_transition_exceptions": [ { "moderation_event_id": "evt_seed_20260416_004", "code": "sensitive_without_override", "status": "accepted_legacy_exception", "reason": "Evento seed legacy previo al hardening de override en Fase 24; mantenido por trazabilidad histórica sin reescritura.", "approved_by": "compliance_gate_phase26", "approved_at": "2026-04-16T17:35:00.000Z" } ]
 }

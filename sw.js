@@ -1,82 +1,9 @@
 const CACHE_VERSION = 'ngpt-v2.1';
-const OFFLINE_URL = '/offline.html';
-
-const CRITICAL_ASSETS = [
-  '/',
-  '/offline.html',
-  '/css/main.css',
-  '/css/design-tokens.css',
-  '/css/theme-override.css',
-  '/js/i18n.js',
-  '/js/runtime-config.js',
-  '/js/real-estate-data.js',
-  '/js/real-estate-presenters.js',
-  '/js/real-estate-adapters.js',
-  '/favicon.ico'
-];
-
-// Install: cachear assets críticos
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_VERSION).then((cache) => {
-      return cache.addAll(CRITICAL_ASSETS).catch((error) => {
-        console.warn('[SW] Error cacheando assets críticos:', error);
-      });
-    }).then(() => self.skipWaiting())
-  );
-});
-
-// Activate: limpiar cachés viejos
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_VERSION) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
-  );
-});
-
-// Fetch: estrategia Network First con fallback a cache y offline
-self.addEventListener('fetch', (event) => {
-  // Solo interceptar GET requests
-  if (event.request.method !== 'GET') return;
-
-  // Ignorar requests a /ops/ y /api/
-  const url = new URL(event.request.url);
-  if (url.pathname.startsWith('/ops/') || url.pathname.startsWith('/api/')) {
-    return;
-  }
-
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Si la respuesta es OK, cachearla
-        if (response && response.status === 200 && response.type === 'basic') {
-          const responseToCache = response.clone();
-          caches.open(CACHE_VERSION).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return response;
-      })
-      .catch(() => {
-        // Network falló, intentar cache
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-          // Si es navegación HTML y no hay cache, mostrar offline.html
-          if (event.request.mode === 'navigate' || event.request.headers.get('accept').includes('text/html')) {
-            return caches.match(OFFLINE_URL);
-          }
-          // Para otros recursos, retornar respuesta vacía
-          return new Response('', { status: 408, statusText: 'Offline' });
-        });
-      })
-  );
+const OFFLINE_URL = '/offline.html'; const CRITICAL_ASSETS = [ '/', '/offline.html', '/css/main.css', '/css/design-tokens.css', '/css/theme-override.css', '/js/i18n.js', '/js/runtime-config.js', '/js/real-estate-data.js', '/js/real-estate-presenters.js', '/js/real-estate-adapters.js', '/favicon.ico'
+]; // Install: cachear assets críticos
+self.addEventListener('install', (event) => { event.waitUntil( caches.open(CACHE_VERSION).then((cache) => { return cache.addAll(CRITICAL_ASSETS).catch((error) => { console.warn('[SW] Error cacheando assets críticos:', error); }); }).then(() => self.skipWaiting()) );
+}); // Activate: limpiar cachés viejos
+self.addEventListener('activate', (event) => { event.waitUntil( caches.keys().then((cacheNames) => { return Promise.all( cacheNames.map((cacheName) => { if (cacheName !== CACHE_VERSION) { return caches.delete(cacheName); } }) ); }).then(() => self.clients.claim()) );
+}); // Fetch: estrategia Network First con fallback a cache y offline
+self.addEventListener('fetch', (event) => { // Solo interceptar GET requests if (event.request.method !== 'GET') return; // Ignorar requests a /ops/ y /api/ const url = new URL(event.request.url); if (url.pathname.startsWith('/ops/') || url.pathname.startsWith('/api/')) { return; } event.respondWith( fetch(event.request) .then((response) => { // Si la respuesta es OK, cachearla if (response && response.status === 200 && response.type === 'basic') { const responseToCache = response.clone(); caches.open(CACHE_VERSION).then((cache) => { cache.put(event.request, responseToCache); }); } return response; }) .catch(() => { // Network falló, intentar cache return caches.match(event.request).then((cachedResponse) => { if (cachedResponse) { return cachedResponse; } // Si es navegación HTML y no hay cache, mostrar offline.html if (event.request.mode === 'navigate' || event.request.headers.get('accept').includes('text/html')) { return caches.match(OFFLINE_URL); } // Para otros recursos, retornar respuesta vacía return new Response('', { status: 408, statusText: 'Offline' }); }); }) );
 });

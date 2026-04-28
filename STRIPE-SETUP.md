@@ -66,7 +66,7 @@
 | **Sin comisión venta** | ✅ 0% | ❌ 3-5% | ❌ 2-4% |
 | **Desbloqueo contacto** | 19,95 € | Incluido (pero pagas 200€/mes) | Incluido (pero pagas 150€/mes) |
 | **Verificación manual** | ✅ Todas | ❌ Solo premium | ❌ Solo premium |
-| **Cobertura europea** | ✅ 12+ países | ❌ Solo España | ❌ Solo España |
+| **Cobertura nacional** | ✅ 12+ países | ❌ Solo España | ❌ Solo España |
 | **Tech stack** | 🚀 Modern | 💩 Legacy | 💩 Legacy |
 | **Checkout rápido** | Stripe (1 clic) | Transferencia/formulario | Transferencia/formulario |
 | **Páginas de carga** | <1s (WebP, SSG) | 3-5s | 3-5s |

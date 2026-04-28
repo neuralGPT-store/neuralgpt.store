@@ -1,4 +1,2 @@
-(() => {
-  console.info('SECURITY: ok');
-  console.info('PERF: ok');
+(() => { console.info('SECURITY: ok'); console.info('PERF: ok');
 })();
