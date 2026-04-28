@@ -40,7 +40,7 @@ function requireApiKey(req) {
   return { authenticated: true };
 }
 
-function createRouter(listingsHandlers, stripeHandlers, alertsHandlers) {
+function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, chatHandlers) {
   return async function route(req, res, url) {
     const method = String(req.method || 'GET').toUpperCase();
     const path = url.pathname;
@@ -48,6 +48,11 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers) {
     // Health check (público)
     if (path === '/api/health' && method === 'GET') {
       return sendJson(res, 200, { ok: true, runtime: 'ready' });
+    }
+
+    // Chat con Chany (público - protegido por rate limiting)
+    if (path === '/api/chat' && method === 'POST') {
+      return chatHandlers.chat(req, res);
     }
 
     // Rutas de alertas (públicas - protegidas por rate limiting y validación)
