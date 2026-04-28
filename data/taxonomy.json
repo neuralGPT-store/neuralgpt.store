@@ -22,10 +22,6 @@
       "name": "España"
     },
     {
-      "code": "PT",
-      "name": "Portugal"
-    },
-    {
       "code": "DE",
       "name": "Alemania"
     },
@@ -62,13 +58,117 @@
       "name": "Groenlandia"
     }
   ],
+  "regions": [
+    {
+      "code": "MD",
+      "name": "Comunidad de Madrid",
+      "country": "ES"
+    },
+    {
+      "code": "CT",
+      "name": "Cataluña",
+      "country": "ES",
+      "languages": ["es", "ca"]
+    },
+    {
+      "code": "VC",
+      "name": "Comunidad Valenciana",
+      "country": "ES",
+      "languages": ["es", "ca"]
+    },
+    {
+      "code": "AN",
+      "name": "Andalucía",
+      "country": "ES"
+    },
+    {
+      "code": "GA",
+      "name": "Galicia",
+      "country": "ES",
+      "languages": ["es", "gl"]
+    },
+    {
+      "code": "PV",
+      "name": "País Vasco",
+      "country": "ES",
+      "languages": ["es", "eu"]
+    },
+    {
+      "code": "CL",
+      "name": "Castilla y León",
+      "country": "ES"
+    },
+    {
+      "code": "CM",
+      "name": "Castilla-La Mancha",
+      "country": "ES"
+    },
+    {
+      "code": "AR",
+      "name": "Aragón",
+      "country": "ES"
+    },
+    {
+      "code": "EX",
+      "name": "Extremadura",
+      "country": "ES"
+    },
+    {
+      "code": "AS",
+      "name": "Principado de Asturias",
+      "country": "ES"
+    },
+    {
+      "code": "MU",
+      "name": "Región de Murcia",
+      "country": "ES"
+    },
+    {
+      "code": "IB",
+      "name": "Illes Balears",
+      "country": "ES",
+      "languages": ["es", "ca"]
+    },
+    {
+      "code": "IC",
+      "name": "Islas Canarias",
+      "country": "ES"
+    },
+    {
+      "code": "NA",
+      "name": "Comunidad Foral de Navarra",
+      "country": "ES"
+    },
+    {
+      "code": "CB",
+      "name": "Cantabria",
+      "country": "ES"
+    },
+    {
+      "code": "RI",
+      "name": "La Rioja",
+      "country": "ES"
+    },
+    {
+      "code": "CE",
+      "name": "Ceuta",
+      "country": "ES"
+    },
+    {
+      "code": "ML",
+      "name": "Melilla",
+      "country": "ES"
+    }
+  ],
   "languages": [
     "es",
+    "ca",
+    "gl",
+    "eu",
     "en",
     "fr",
     "de",
-    "it",
-    "pt"
+    "it"
   ],
   "listing_statuses": [
     "draft",
@@ -122,10 +222,6 @@
       "title": "Activos en España",
       "description": "Oferta seleccionada en mercados españoles con foco en Madrid, Valencia y enclaves urbanos de alta liquidez."
     },
-    "PT": {
-      "title": "Activos en Portugal",
-      "description": "Base inicial para Portugal con atención a Lisboa y corredores de demanda estable e internacional."
-    },
     "DE": {
       "title": "Activos en Alemania",
       "description": "Inventario de partida para Alemania con énfasis en ocupación estable, gestión profesional y ubicaciones consolidadas."
@@ -168,10 +264,6 @@
       "title": "Activos en Madrid",
       "description": "Presencia inicial en Madrid con localizaciones prime y productos aptos para reposicionamiento patrimonial."
     },
-    "Lisboa": {
-      "title": "Activos en Lisboa",
-      "description": "Oferta estable en Lisboa orientada a relocalización, estancia ejecutiva y demanda internacional solvente."
-    },
     "Berlín": {
       "title": "Activos en Berlín",
       "description": "Base inmobiliaria en Berlín para larga estancia y ocupación profesional con gestión cuidada."
@@ -213,7 +305,6 @@
   },
   "country_editorial": {
     "ES": "Mercado de referencia para activo urbano, producto patrimonial y suelo con recorrido de reposicionamiento.",
-    "PT": "Cobertura inicial pensada para demanda internacional estable y perfiles ejecutivos con foco en Lisboa.",
     "DE": "Base editorial orientada a ocupación profesional, larga estancia y gestión contenida del riesgo operativo.",
     "IT": "Entorno apto para retail prime, presencia de marca y activos representativos en núcleos consolidados.",
     "NL": "Mercado especialmente útil para lectura logística, distribución y conectividad metropolitana europea.",
@@ -226,7 +317,6 @@
   },
   "city_editorial": {
     "Madrid": "Madrid funciona como nodo prime para capital patrimonial, reposicionamiento residencial y visibilidad internacional.",
-    "Lisboa": "Lisboa combina estabilidad de demanda, componente internacional y un relato claro para alquiler de larga duración.",
     "Berlín": "Berlín mantiene atractivo para estancia prolongada y soluciones gestionadas para perfiles profesionales desplazados.",
     "Milán": "Milán concentra una lectura muy clara de retail selectivo, presencia de marca y producto urbano representativo.",
     "Róterdam": "Róterdam permite una narrativa sólida para logística, maniobra y distribución próxima a corredor portuario.",
