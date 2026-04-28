@@ -6,6 +6,7 @@
 .listing-strip-wrapper {
   width: 100%;
   overflow: hidden;
+  overflow-x: hidden;
   position: relative;
   background: var(--card-bg);
   border-top: 1px solid var(--border);
@@ -36,8 +37,10 @@
 .listing-strip {
   display: flex;
   gap: 16px;
-  animation: scrollStrip 60s linear infinite;
+  animation: scrollStrip 36s linear infinite;
   will-change: transform;
+  width: fit-content;
+  min-width: 100%;
 }
 
 .listing-strip:hover {
@@ -46,11 +49,11 @@
 
 /* Ajuste de velocidad según cantidad de elementos */
 .listing-strip.fast {
-  animation-duration: 40s;
+  animation-duration: 24s;
 }
 
 .listing-strip.slow {
-  animation-duration: 80s;
+  animation-duration: 48s;
 }
 
 @keyframes scrollStrip {
