@@ -4,33 +4,20 @@ const { sendError, sendJson } = require('./lib/http');
 const { env } = require('./config/env');
 
 /**
- * Middleware de autenticación para endpoints /api/*
- * Excepciones: /api/health y /api/stripe/webhook
+ * Middleware de autenticación para endpoints internos del servidor
+ * Solo aplica a endpoints que NO son llamados directamente desde el frontend público
  */
-function authenticateApiRequest(req, path) {
-  // Excepciones: endpoints públicos
-  if (path === '/api/health' || path === '/api/stripe/webhook') {
-    return { authenticated: true };
-  }
-
+function requireApiKey(req) {
   // Verificar que la API key esté configurada
   if (!env.apiSecretKey || env.apiSecretKey.trim() === '') {
-    return {
-      authenticated: false,
-      error: 'api_key_not_configured',
-      message: 'API authentication is not configured on the server'
-    };
+    return { authenticated: false, error: 'api_key_not_configured' };
   }
 
   // Obtener el header X-API-Key
   const apiKey = req.headers['x-api-key'] || req.headers['X-API-Key'];
 
   if (!apiKey) {
-    return {
-      authenticated: false,
-      error: 'missing_api_key',
-      message: 'Missing X-API-Key header'
-    };
+    return { authenticated: false, error: 'missing_api_key' };
   }
 
   // Comparación constante en tiempo para prevenir timing attacks
@@ -38,11 +25,7 @@ function authenticateApiRequest(req, path) {
   const expectedKey = env.apiSecretKey;
 
   if (providedKey.length !== expectedKey.length) {
-    return {
-      authenticated: false,
-      error: 'invalid_api_key',
-      message: 'Invalid API key'
-    };
+    return { authenticated: false, error: 'invalid_api_key' };
   }
 
   let mismatch = 0;
@@ -51,11 +34,7 @@ function authenticateApiRequest(req, path) {
   }
 
   if (mismatch !== 0) {
-    return {
-      authenticated: false,
-      error: 'invalid_api_key',
-      message: 'Invalid API key'
-    };
+    return { authenticated: false, error: 'invalid_api_key' };
   }
 
   return { authenticated: true };
@@ -66,20 +45,12 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers) {
     const method = String(req.method || 'GET').toUpperCase();
     const path = url.pathname;
 
-    // Autenticación para todos los endpoints /api/* (excepto excepciones)
-    if (path.startsWith('/api/')) {
-      const authResult = authenticateApiRequest(req, path);
-      if (!authResult.authenticated) {
-        return sendError(res, 401, authResult.error);
-      }
-    }
-
     // Health check (público)
     if (path === '/api/health' && method === 'GET') {
       return sendJson(res, 200, { ok: true, runtime: 'ready' });
     }
 
-    // Rutas de alertas
+    // Rutas de alertas (públicas - protegidas por rate limiting y validación)
     if (path === '/api/alerts/subscribe') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
       return alertsHandlers.subscribe(req, res);
@@ -90,7 +61,7 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers) {
       return alertsHandlers.unsubscribe(req, res);
     }
 
-    // Rutas de listings
+    // Rutas de listings (públicas - protegidas por honeypot, rate limiting y validación)
     if (path === '/api/listings/status') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
       return listingsHandlers.getStatus(req, res);
@@ -101,39 +72,53 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers) {
       return listingsHandlers.upsert(req, res);
     }
 
-    // Rutas de Stripe checkout
+    // Rutas de Stripe checkout (protegidas con API key - solo servidor)
     if (path === '/api/stripe/checkout-mas-visibilidad') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      const auth = requireApiKey(req);
+      if (!auth.authenticated) return sendError(res, 401, auth.error);
       return stripeHandlers.checkoutMasVisibilidad(req, res);
     }
 
     if (path === '/api/stripe/checkout-sensacional') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      const auth = requireApiKey(req);
+      if (!auth.authenticated) return sendError(res, 401, auth.error);
       return stripeHandlers.checkoutSensacional(req, res);
     }
 
     if (path === '/api/stripe/checkout-plan-basico') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      const auth = requireApiKey(req);
+      if (!auth.authenticated) return sendError(res, 401, auth.error);
       return stripeHandlers.checkoutPlanBasico(req, res);
     }
 
     if (path === '/api/stripe/checkout-plan-premium') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      const auth = requireApiKey(req);
+      if (!auth.authenticated) return sendError(res, 401, auth.error);
       return stripeHandlers.checkoutPlanPremium(req, res);
     }
 
     if (path === '/api/stripe/checkout-plan-enterprise') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      const auth = requireApiKey(req);
+      if (!auth.authenticated) return sendError(res, 401, auth.error);
       return stripeHandlers.checkoutPlanEnterprise(req, res);
     }
 
     if (path === '/api/stripe/checkout-publicacion-adicional') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      const auth = requireApiKey(req);
+      if (!auth.authenticated) return sendError(res, 401, auth.error);
       return stripeHandlers.checkoutPublicacionAdicional(req, res);
     }
 
     if (path === '/api/stripe/billing-portal') {
       if (method !== 'POST') return sendError(res, 405, 'method_not_allowed');
+      const auth = requireApiKey(req);
+      if (!auth.authenticated) return sendError(res, 401, auth.error);
       return stripeHandlers.billingPortal(req, res);
     }
 
