@@ -1,0 +1,331 @@
+/**
+ * Barra de búsqueda inteligente
+ * Features: autocompletado, voz, filtros, historial
+ */
+
+.smart-search-container {
+  max-width: 900px;
+  margin: 0 auto 48px;
+  position: relative;
+  z-index: 100;
+}
+
+.smart-search-wrapper {
+  position: relative;
+  background: var(--card-bg);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 8px 32px rgba(0, 234, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.smart-search-wrapper:focus-within {
+  border-color: var(--accent2);
+  box-shadow: 0 12px 48px rgba(0, 234, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.smart-search-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px;
+}
+
+.smart-search-icon {
+  font-size: 1.5rem;
+  color: var(--accent);
+  padding: 0 8px;
+  flex-shrink: 0;
+}
+
+.smart-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-family: var(--font-body);
+  padding: 12px 8px;
+  min-width: 0;
+}
+
+.smart-search-input::placeholder {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.smart-search-voice-btn,
+.smart-search-clear-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.smart-search-voice-btn:hover,
+.smart-search-clear-btn:hover {
+  background: rgba(0, 234, 255, 0.1);
+  color: var(--accent);
+}
+
+.smart-search-voice-btn.listening {
+  color: var(--accent3);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+.smart-search-submit {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none;
+  color: #fff;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.smart-search-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 234, 255, 0.3);
+}
+
+.smart-search-submit:active {
+  transform: translateY(0);
+}
+
+/* Filtros rápidos */
+.smart-search-filters {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.smart-search-filter-label {
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.smart-search-filter-btn {
+  background: rgba(0, 234, 255, 0.08);
+  border: 1px solid rgba(0, 234, 255, 0.2);
+  color: var(--text);
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
+}
+
+.smart-search-filter-btn:hover {
+  background: rgba(0, 234, 255, 0.15);
+  border-color: var(--accent);
+}
+
+.smart-search-filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  font-weight: 600;
+}
+
+.smart-search-filter-input {
+  background: rgba(0, 234, 255, 0.06);
+  border: 1px solid rgba(0, 234, 255, 0.2);
+  color: var(--text);
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  outline: none;
+  width: 100px;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+}
+
+.smart-search-filter-input:focus {
+  border-color: var(--accent);
+  background: rgba(0, 234, 255, 0.1);
+}
+
+/* Sugerencias (autocomplete) */
+.smart-search-suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: var(--card-bg);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 12px 48px rgba(0, 234, 255, 0.2);
+  z-index: 1000;
+  display: none;
+}
+
+.smart-search-suggestions.show {
+  display: block;
+}
+
+.smart-search-suggestion-group {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.smart-search-suggestion-group:last-child {
+  border-bottom: none;
+}
+
+.smart-search-suggestion-header {
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  color: var(--muted);
+  padding: 0 16px 8px;
+  text-transform: uppercase;
+}
+
+.smart-search-suggestion-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+}
+
+.smart-search-suggestion-item:hover {
+  background: rgba(0, 234, 255, 0.1);
+}
+
+.smart-search-suggestion-item.active {
+  background: rgba(0, 234, 255, 0.15);
+}
+
+.smart-search-suggestion-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.smart-search-suggestion-text {
+  flex: 1;
+  font-size: 0.95rem;
+}
+
+.smart-search-suggestion-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Historial */
+.smart-search-history-clear {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s ease;
+}
+
+.smart-search-history-clear:hover {
+  color: var(--accent3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .smart-search-main {
+    flex-wrap: wrap;
+  }
+
+  .smart-search-input {
+    width: 100%;
+    order: 1;
+  }
+
+  .smart-search-icon {
+    order: 0;
+  }
+
+  .smart-search-voice-btn,
+  .smart-search-clear-btn {
+    order: 2;
+  }
+
+  .smart-search-submit {
+    order: 3;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .smart-search-filters {
+    font-size: 0.8rem;
+  }
+
+  .smart-search-filter-input {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .smart-search-wrapper {
+    border-radius: 12px;
+  }
+
+  .smart-search-input {
+    font-size: 1rem;
+  }
+
+  .smart-search-submit {
+    font-size: 0.9rem;
+    padding: 12px 24px;
+  }
+
+  .smart-search-filters {
+    gap: 6px;
+  }
+
+  .smart-search-filter-btn,
+  .smart-search-filter-input {
+    font-size: 0.8rem;
+  }
+}
+
+/* Estados de carga */
+.smart-search-loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.smart-search-empty {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}

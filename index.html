@@ -36,6 +36,7 @@
 <link rel="stylesheet" href="/css/listing-strips.css">
 <link rel="stylesheet" href="/css/share-button.css">
 <link rel="stylesheet" href="/css/traffic-counter.css">
+<link rel="stylesheet" href="/css/smart-search.css">
 <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebSite","name":"neuralgpt.store","url":"https://neuralgpt.store","potentialAction":{"@type":"SearchAction","target":"https://neuralgpt.store/real-estate-index.html?search={search_term_string}","query-input":"required name=search_term_string"}} </script>
 <script> window.__AUTO_LANG__ = (navigator.language || navigator.userLanguage || 'es').toLowerCase(); document.documentElement.lang = window.__AUTO_LANG__.startsWith('es') ? 'es' : 'en'; </script>
 <script src="/js/i18n.js"></script>
@@ -92,6 +93,53 @@
 <a href="/alquiler.html" class="btn btn-lg" data-i18n="btn_alquiler">Ver en alquiler</a>
 </div>
 </div>
+</section>
+<!-- ── BARRA DE BÚSQUEDA INTELIGENTE ── -->
+<section class="smart-search-container" style="padding-top:32px">
+  <form id="smart-search-form" class="smart-search-wrapper">
+    <div class="smart-search-main">
+      <span class="smart-search-icon" aria-hidden="true">🔍</span>
+      <input
+        type="text"
+        id="smart-search-input"
+        class="smart-search-input"
+        placeholder="Busca por ciudad, tipo de inmueble, precio..."
+        autocomplete="off"
+        aria-label="Búsqueda inteligente"
+      />
+      <button
+        type="button"
+        id="smart-search-voice"
+        class="smart-search-voice-btn"
+        aria-label="Búsqueda por voz"
+        title="Búsqueda por voz"
+      >🎤</button>
+      <button
+        type="button"
+        id="smart-search-clear"
+        class="smart-search-clear-btn"
+        aria-label="Limpiar búsqueda"
+        title="Limpiar"
+      >✕</button>
+      <button
+        type="submit"
+        id="smart-search-submit"
+        class="smart-search-submit"
+      >Buscar</button>
+    </div>
+
+    <div class="smart-search-filters">
+      <span class="smart-search-filter-label">FILTROS:</span>
+      <button type="button" class="smart-search-filter-btn active" data-operation="all">Todos</button>
+      <button type="button" class="smart-search-filter-btn" data-operation="sale">Venta</button>
+      <button type="button" class="smart-search-filter-btn" data-operation="rent">Alquiler</button>
+      <input type="number" id="filter-maxPrice" class="smart-search-filter-input" placeholder="Precio máx." min="0" step="1000" />
+      <input type="number" id="filter-minSurface" class="smart-search-filter-input" placeholder="m² mín." min="0" step="10" />
+      <input type="number" id="filter-rooms" class="smart-search-filter-input" placeholder="Habitaciones" min="0" max="10" />
+    </div>
+  </form>
+
+  <div class="smart-search-suggestions"></div>
 </section>
 <!-- ── FRANJAS TEMÁTICAS ── -->
 <!-- Franja 1: ALQUILER -->
@@ -379,5 +427,6 @@
 <script src="/js/listing-strips.js"></script>
 <script src="/js/share-button.js"></script>
 <script src="/js/traffic-counter.js"></script>
+<script src="/js/smart-search.js"></script>
 </body>
 </html> 
