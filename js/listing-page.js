@@ -104,7 +104,7 @@ function renderListing(listing, detail, seo, settings, taxonomy){
     factRow('Verificación', humanVerification(detail.verificationState)),
     factRow('Publicado', String(detail.publishedAt || '').slice(0,10))
   ].join('');
-  document.getElementById('listing-seo-note').innerHTML = '<span style="color:var(--muted);font-size:0.75rem">/listing.html?slug='+escapeHtml(detail.slug)+'</span><br><span style="color:var(--muted);font-size:0.75rem">El contacto directo del anunciante se libera tras pago del servicio de conexión.</span>';
+  document.getElementById('listing-seo-note').innerHTML = '<span style="color:var(--muted);font-size:0.75rem">/listing.html?slug='+escapeHtml(detail.slug)+'</span><br><span style="color:var(--muted);font-size:0.75rem">Los datos de contacto del anunciante son públicos y gratuitos.</span>';
   document.getElementById('listing-seo-copy').innerHTML = [
     operationSeo ? '<p style="margin-bottom:12px">'+escapeHtml(operationSeo.description)+'</p>' : '',
     citySeo ? '<p style="margin-bottom:12px">'+escapeHtml(citySeo.description)+'</p>' : '',

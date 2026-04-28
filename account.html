@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#00040D" />
   <title>Mi Cuenta — neuralgpt.store</title>
-  <meta name="description" content="Gestiona tus anuncios, plan activo y contactos desbloqueados en neuralgpt.store" />
+  <meta name="description" content="Gestiona tus anuncios inmobiliarios y plan activo en neuralgpt.store" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="canonical" href="https://neuralgpt.store/account.html" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
@@ -99,10 +99,11 @@
         <div id="my-listings" style="display:flex;flex-direction:column;gap:12px"></div>
       </section>
 
-      <!-- Contactos desbloqueados (solo con plan activo) -->
-      <section id="unlocked-contacts-section" style="display:none;padding:28px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card-bg)">
-        <h2 style="font-family:var(--font-title);font-size:0.9rem;letter-spacing:1px;color:var(--accent);margin-bottom:18px">CONTACTOS DESBLOQUEADOS</h2>
-        <div id="unlocked-contacts"></div>
+      <!-- Info adicional -->
+      <section style="padding:20px;border:1.5px solid rgba(0,234,255,0.2);border-radius:var(--radius);background:rgba(0,234,255,0.05)">
+        <p style="color:var(--muted);line-height:1.7;margin:0;font-size:0.88rem">
+          💡 <strong style="color:var(--text)">Contactos gratuitos:</strong> Los datos de contacto de todos los anunciantes son públicos y gratuitos. Cualquier persona puede ver teléfono y email en las fichas.
+        </p>
       </section>
 
     </div>
@@ -217,7 +218,6 @@
 
     if (hasActivePlan) {
       document.getElementById('manage-sub-btn').style.display = 'inline-flex';
-      document.getElementById('unlocked-contacts-section').style.display = 'block';
     }
 
     // Renderizar mis anuncios
@@ -236,20 +236,6 @@
     `).join('');
 
     document.getElementById('my-listings').innerHTML = myListingsHTML || '<p style="color:var(--muted)">No tienes anuncios todavía</p>';
-
-    // Nota sobre contactos desbloqueados
-    if (hasActivePlan) {
-      document.getElementById('unlocked-contacts').innerHTML = `
-        <p style="color:var(--muted);font-size:0.88rem;line-height:1.7">
-          Con tu plan <strong style="color:var(--text)">${planTitles[tier]}</strong>, puedes acceder a los datos de contacto de otros anunciantes directamente desde sus fichas.
-        </p>
-        <div style="margin-top:16px;padding:14px;border-radius:10px;background:rgba(0,234,255,0.05);border:1px solid rgba(0,234,255,0.15)">
-          <p style="font-size:0.8rem;color:var(--muted);margin:0">
-            Al ver un anuncio con plan activo, los datos de contacto (nombre, teléfono, email) se desbloquearán automáticamente.
-          </p>
-        </div>
-      `;
-    }
   }
 
   function logout() {

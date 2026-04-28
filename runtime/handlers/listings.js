@@ -35,8 +35,6 @@ function createListingsHandlers(env) {
     }
 
     const listing = state.listing;
-    const hasActivePlan = listing.commercial?.subscription?.active &&
-      ['basico', 'premium', 'enterprise'].includes(listing.commercial?.subscription?.tier);
 
     const safeListing = {
       id: listing.id,
@@ -60,39 +58,36 @@ function createListingsHandlers(env) {
       files_count: listing.files_count,
       updated_at: listing.updated_at,
       created_at: listing.created_at,
-      meta: listing.meta
+      meta: listing.meta,
+      // Contactos siempre visibles - monetización por publicación, no por acceso
+      contact_name: listing.contact_name,
+      contact_phone: listing.contact_phone,
+      contact_email: listing.contact_email
     };
 
-    if (hasActivePlan) {
-      safeListing.contact_name = listing.contact_name;
-      safeListing.contact_phone = listing.contact_phone;
-      safeListing.contact_email = listing.contact_email;
-
-      // Registrar lead si se proporciona viewer_email (RGPD-compliant tracking)
-      const viewerEmail = String(body.viewer_email || '').trim();
-      if (viewerEmail && env.cfAccountId && env.cfKvNamespaceId && env.cfKvApiToken) {
-        // Tracking en background (no bloquea la respuesta)
-        registerContactView(
-          {
-            accountId: env.cfAccountId,
-            namespaceId: env.cfKvNamespaceId,
-            apiToken: env.cfKvApiToken
-          },
-          {
-            listing_id: listing.id,
-            viewer_email: viewerEmail,
-            country: body.viewer_country || 'unknown'
-          }
-        ).catch(() => {
-          // Error silencioso: el tracking no debe fallar la petición principal
-        });
-      }
+    // Registrar lead si se proporciona viewer_email (RGPD-compliant tracking)
+    const viewerEmail = String(body.viewer_email || '').trim();
+    if (viewerEmail && env.cfAccountId && env.cfKvNamespaceId && env.cfKvApiToken) {
+      // Tracking en background (no bloquea la respuesta)
+      registerContactView(
+        {
+          accountId: env.cfAccountId,
+          namespaceId: env.cfKvNamespaceId,
+          apiToken: env.cfKvApiToken
+        },
+        {
+          listing_id: listing.id,
+          viewer_email: viewerEmail,
+          country: body.viewer_country || 'unknown'
+        }
+      ).catch(() => {
+        // Error silencioso: el tracking no debe fallar la petición principal
+      });
     }
 
     return sendJson(res, 200, {
       ok: true,
-      listing: safeListing,
-      has_active_plan: hasActivePlan
+      listing: safeListing
     });
   }
 
