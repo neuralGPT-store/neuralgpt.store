@@ -44,7 +44,7 @@
     var query=window.RealEstateAdapters.getQueryParams();
     var countryCode=String(query.country||'').trim().toUpperCase();
     if(!countryCode){ showEmpty('Debes indicar un país con el parámetro `?country=` para cargar el hub editorial correspondiente.'); return; }
-    var fallbackCountryNames={ ES:'España', PT:'Portugal', DE:'Alemania', IT:'Italia', NL:'Países Bajos', FR:'Francia', GB:'Reino Unido', IE:'Irlanda', TR:'Turquía', IS:'Islandia', GL:'Groenlandia' };
+    var fallbackCountryNames={ ES:'España',  DE:'Alemania', IT:'Italia', NL:'Países Bajos', FR:'Francia', GB:'Reino Unido', IE:'Irlanda', TR:'Turquía', IS:'Islandia', GL:'Groenlandia' };
     var countryMeta=(taxonomy.countries||[]).find(function(item){ return String(item.code).toUpperCase()===countryCode; }) || (fallbackCountryNames[countryCode] ? { code:countryCode, name:fallbackCountryNames[countryCode] } : null);
     var items=listings.filter(function(listing){ return String(listing.country).toUpperCase()===countryCode; });
     if(!countryMeta || !items.length){ showEmpty('No hay datos suficientes para este país en la base actual.'); return; }

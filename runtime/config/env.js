@@ -49,7 +49,7 @@ const env = {
   cfAccountId: text('CF_ACCOUNT_ID', ''),
   cfKvNamespaceId: text('CF_KV_NAMESPACE_ID', ''),
   cfKvApiToken: text('CF_KV_API_TOKEN', ''),
-  freeListingsPerUser: Number(text('FREE_LISTINGS_PER_USER', '10')),
+  freeListingsPerUser: Number(text('FREE_LISTINGS_PER_USER', '5')),
   stripeSuccessUrl: text('STRIPE_SUCCESS_URL', 'https://neuralgpt.store/confirm.html'),
   stripeCancelUrl: text('STRIPE_CANCEL_URL', 'https://neuralgpt.store/pricing.html')
 };
