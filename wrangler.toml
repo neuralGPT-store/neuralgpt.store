@@ -1,0 +1,32 @@
+# Cloudflare Workers configuration for neuralgpt.store API
+
+name = "neuralgpt-api"
+main = "workers/api/index.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# KV Namespace for listings storage
+[[kv_namespaces]]
+binding = "LISTINGS_KV"
+id = "e2a73e9b7f1942099f31507aef0f8469"
+
+# Environment variables (non-sensitive)
+[vars]
+NODE_ENV = "production"
+PUBLIC_BASE_URL = "https://neuralgpt.store"
+FREE_LISTINGS_PER_USER = "5"
+
+# Secrets (set via: wrangler secret put <SECRET_NAME>)
+# - API_SECRET_KEY
+# - LISTINGS_EDIT_KEY_PEPPER
+# - STRIPE_SECRET_KEY
+# - STRIPE_WEBHOOK_SECRET
+# - STRIPE_PRICE_MAS_VISIBILIDAD
+# - STRIPE_PRICE_SENSACIONAL
+# - STRIPE_PRICE_PLAN_BASICO
+# - STRIPE_PRICE_PLAN_PREMIUM
+# - STRIPE_PRICE_PLAN_ENTERPRISE
+# - STRIPE_PRICE_PUBLICACION_ADICIONAL
+# - CF_ACCOUNT_ID (for alerts KV)
+# - CF_KV_NAMESPACE_ID (for alerts)
+# - CF_KV_API_TOKEN (for alerts)

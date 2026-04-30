@@ -1,6 +1,14 @@
 /**
  * Runtime API config for environments with/without backend support.
  * Default is safe for static deploys: backendReady = false.
+ *
+ * For production with Cloudflare Workers:
+ * Set meta tag: <meta name="neural-api-base" content="https://neuralgpt-api.pokerprofe.workers.dev">
+ * Set meta tag: <meta name="neural-backend-ready" content="true">
+ *
+ * Or via globals before this script loads:
+ * window.NEURAL_API_BASE = 'https://neuralgpt-api.pokerprofe.workers.dev';
+ * window.NEURAL_BACKEND_READY = true;
  */
 (function () {
   'use strict';
