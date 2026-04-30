@@ -125,11 +125,21 @@ ul, ol { list-style: none; }
 }
 .brand {
   font-family: var(--font-title);
-  font-size: 1.15rem; font-weight: 900;
-  color: var(--accent); letter-spacing: 1px;
+  font-size: 1.38rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #FFD700 0%, #C9A84C 50%, #FFD700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
   flex-shrink: 0;
 }
-.brand span { color: var(--accent3); }
+.brand span {
+  background: linear-gradient(135deg, #FFB347 0%, #C9A84C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 .brand em { color: var(--accent4); font-style: normal; }
 
 .main-nav ul { display: flex; gap: 24px; align-items: center; }
