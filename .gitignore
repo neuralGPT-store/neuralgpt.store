@@ -54,6 +54,9 @@ build/
 *.bak
 *.bak-*
 
+# Cloudflare Workers
+.wrangler/
+
 # Documentation policy: versionar solo migración/auditoría
 docs/*
 !docs/migration-plan/
