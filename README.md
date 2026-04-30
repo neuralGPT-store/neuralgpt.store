@@ -1,74 +1,70 @@
-# neuralgpt.store — Portal Inmobiliario Fase 1
+# neuralgpt.store — Portal Inmobiliario España
 
-Repositorio del portal inmobiliario estático de `neuralgpt.store`.
+Portal inmobiliario premium con cobertura nacional en España (península, Baleares, Canarias, Ceuta y Melilla).
 
-## Identidad del proyecto
+## Descripción
 
-- Única identidad pública: portal inmobiliario premium europeo.
-- Operación pública de fase 1: catálogo en venta y alquiler estable, fichas de activo y contacto tras pago.
-- Sin vertical vacacional visible.
-- Sin exposición pública de superficies operativas.
+neuralgpt.store es un portal de publicación de anuncios inmobiliarios verificados para venta y alquiler estable. No actúa como agencia, intermediario, mediador, representante, asesor inmobiliario ni parte en ninguna operación.
 
-## Superficie pública activa
+## Características
 
-- `/`
-- `/real-estate-index.html`
-- `/venta.html`
-- `/alquiler.html`
-- `/listing.html?slug=...`
-- `/pais.html?country=...`
-- `/ciudad.html?city=...`
-- `/hub-pais.html?country=...`
-- `/hub-ciudad.html?city=...`
-- `/contact.html`
-- `/sponsors.html`
-- `/about.html`
-- `/terms.html`
-- `/privacy.html`
-- `/legal.html`
-- `/security.html`
-- `/sitemap-real-estate.html`
-- `/sitemap-real-estate.xml`
-- `/sitemap.xml`
-- `/robots.txt`
+- **Verificación manual** de cada anuncio antes de publicar
+- **Contacto directo** con anunciantes (datos visibles GRATIS para compradores)
+- **Cobertura nacional** en toda España
+- **Moderación de imágenes** client-side con NSFWJS
+- **Política comercial transparente**: hasta 5 anuncios gratis, anuncios adicionales 5€
 
-## Datos
+## Estructura del proyecto
 
-- Dataset público de frontend: `public-data/*.public.json`
-- Dataset privado completo y operativo: `data/*`
-- El frontend público solo debe consumir `public-data/`.
+```
+/
+├── index.html              # Página principal
+├── contact.html            # Formulario de publicación
+├── edit.html               # Edición de anuncios
+├── real-estate-index.html  # Índice de inmuebles
+├── pricing.html            # Planes y precios
+├── runtime/                # Backend Node.js
+│   ├── handlers/          # API handlers (listings, stripe)
+│   └── services/          # Servicios (store, KV, moderación)
+├── js/                     # JavaScript frontend
+│   └── image-moderation.js # Moderación NSFWJS
+└── css/                    # Estilos
 
-## Seguridad de rutas
+```
 
-Bloqueadas en acceso público real:
+## Tecnología
+
+- **Frontend**: HTML5, CSS3 (variables CSS), JavaScript vanilla
+- **Backend**: Node.js (runtime opcional para /api/*)
+- **Moderación**: NSFWJS + TensorFlow.js (client-side)
+- **Pagos**: Stripe (opcional)
+- **Deployment**: Estático (Netlify/Cloudflare Pages compatible)
+
+## Rutas bloqueadas
+
+Las siguientes rutas están bloqueadas en robots.txt y con X-Robots-Tag noindex:
 
 - `/data/*`
 - `/ops/*`
-- `/scripts/*`
-- `/reports/*`
-- `/deploy/*`
-- `/test/*`
-- `/_lab_clean_routes/*`
-- `/autosys/*`
-- `/core/*`
-- `/build/*`
+- `/runtime/*`
+- `/confirm.html`
+- `/edit.html`
+- `/hub-pais*`
+- `/hub-ciudad*`
 
-## Desarrollo local
+## Contacto
 
-```bash
-npm run serve
-```
+**Email**: neuralgpt.store@protonmail.com
 
-Checks principales:
+**Soporte**: 1-2 días laborables  
+**Seguridad**: hasta 48h laborables
 
-```bash
-npm run validate:data
-npm run check:static
-npm run check:risk
-```
+## Legal
 
-## Documentación de control
+- [Términos de Servicio](/terms.html)
+- [Política de Privacidad](/privacy.html)
+- [Aviso Legal](/legal.html)
 
-- `docs/active-surface-manifest.md`
-- `docs/deprecation-map.md`
-- `docs/release/phase1-predeploy-manifest.md`
+---
+
+© 2025–2026 neuralgpt.store · Portal inmobiliario premium
