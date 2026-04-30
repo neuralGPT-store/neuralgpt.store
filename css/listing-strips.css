@@ -37,7 +37,7 @@
 .listing-strip {
   display: flex;
   gap: 16px;
-  animation: scrollStrip 36s linear infinite;
+  animation: scrollStrip 35s linear infinite;
   will-change: transform;
   width: fit-content;
   min-width: 100%;
