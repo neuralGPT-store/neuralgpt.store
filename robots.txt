@@ -16,5 +16,7 @@ Disallow: /build/
 Disallow: /_lab_clean_routes/
 Disallow: /confirm.html
 Disallow: /edit.html
+Disallow: /hub-pais
+Disallow: /hub-ciudad
 Sitemap: https://neuralgpt.store/sitemap.xml
 Sitemap: https://neuralgpt.store/sitemap-real-estate.xml

@@ -16,6 +16,12 @@
 /edit.html
   X-Robots-Tag: noindex, nofollow
 
+/hub-pais.html
+  X-Robots-Tag: noindex, nofollow
+
+/hub-ciudad.html
+  X-Robots-Tag: noindex, nofollow
+
 /inmobiliario/
   X-Robots-Tag: noindex, follow
 
