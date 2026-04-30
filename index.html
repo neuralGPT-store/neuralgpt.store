@@ -471,7 +471,18 @@
 <span>
 <a href="/privacy.html" style="color:var(--muted)">Privacidad</a> · <a href="/terms.html" style="color:var(--muted)">Términos</a>
 </span>
+<span id="visit-counter" style="color:var(--muted);font-size:0.8rem"></span>
+<span style="color:var(--muted);font-size:0.8rem">🚀 Lanzamiento oficial: Mayo 2026</span>
 </div>
+<script>
+(function(){
+  var key = 'neuralgpt_visits';
+  var count = parseInt(localStorage.getItem(key) || '0', 10) + 1;
+  localStorage.setItem(key, count);
+  var counter = document.getElementById('visit-counter');
+  if(counter) counter.textContent = '👁 ' + count + ' visitas';
+})();
+</script>
 </footer>
 <!-- ── SCRIPTS ── -->
 <script src="/js/runtime-config.js"></script>
