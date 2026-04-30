@@ -11,11 +11,11 @@ workers/
 │   ├── router.js                # Rutas /api/*
 │   ├── handlers/
 │   │   ├── listings.js          # ✅ Migrado completamente
-│   │   ├── stripe-placeholder.js   # ⚠️ Pendiente migración completa
-│   │   └── alerts-placeholder.js   # ⚠️ Pendiente migración completa
+│   │   ├── stripe.js            # ✅ Migrado completamente (fetch nativo)
+│   │   └── alerts.js            # ✅ Migrado completamente (KV directo)
 │   ├── services/
 │   │   ├── listings-store.js    # ✅ Adaptado para KV + Web Crypto
-│   │   └── stripe-client.js     # ✅ Compatible Workers
+│   │   └── stripe-client.js     # ✅ Fetch nativo (sin npm Stripe)
 │   ├── lib/
 │   │   └── http.js              # ✅ Web APIs estándar (Request/Response)
 │   └── config/
@@ -35,10 +35,10 @@ workers/
 - **Router**: Todas las rutas mapeadas
 - **CORS**: Headers configurados
 - **API Key auth**: Protección endpoints sensibles
-
-### ⚠️ Pendiente
-- **Stripe handlers completos**: Actualmente placeholders (503)
-- **Alerts handlers completos**: Actualmente placeholders (503)
+- **Stripe handlers**: Completamente migrados con fetch() nativo (sin npm Stripe)
+- **Alerts handlers**: Completamente migrados usando KV directamente
+- **Stripe REST API**: createCheckoutSession, constructWebhookEvent, listLineItems, billing portal
+- **Webhook signature verification**: HMAC SHA256 con Web Crypto API
 
 ## Configuración
 
@@ -139,5 +139,6 @@ O antes de cargar `js/runtime-config.js`:
 1. ✅ Migrar handlers/stripe.js completo (reconcileStripeEvent, etc.)
 2. ✅ Migrar handlers/alerts.js completo (createAlert, cancelAlert con KV)
 3. ✅ Migrar services/alerts.js para usar KV directamente
-4. ⚠️ Testing en wrangler dev
-5. ⚠️ Deploy a producción
+4. ✅ Reemplazar npm Stripe library con fetch() nativo
+5. ⚠️ Testing en wrangler dev --local
+6. ⚠️ Deploy a producción

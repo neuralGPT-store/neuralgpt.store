@@ -5,9 +5,8 @@
 
 import { createRouter } from './router.js';
 import { createListingsHandlers } from './handlers/listings.js';
-import { createStripeHandlers } from './handlers/stripe-placeholder.js';
-import { createAlertsHandlers } from './handlers/alerts-placeholder.js';
-import { createStripeClient } from './services/stripe-client.js';
+import { createStripeHandlers } from './handlers/stripe.js';
+import { createAlertsHandlers } from './handlers/alerts.js';
 import { getEnv } from './config/env.js';
 import { applyCors, setSecurityHeaders } from './lib/http.js';
 
@@ -25,12 +24,9 @@ export default {
       // Get config from environment
       const config = getEnv(env);
 
-      // Initialize Stripe client
-      const stripe = createStripeClient(config.stripeSecretKey);
-
-      // Create handlers
+      // Create handlers (Stripe client now uses direct fetch() calls)
       const listingsHandlers = createListingsHandlers(env);
-      const stripeHandlers = createStripeHandlers(env, stripe);
+      const stripeHandlers = createStripeHandlers(env);
       const alertsHandlers = createAlertsHandlers(env);
 
       // Create router
