@@ -383,7 +383,10 @@ ul, ol { list-style: none; }
   background-clip: text;
 }
 .hero p {
-  font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: #FFFFFF;
+  opacity: 1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
   max-width: 580px; margin: 0 auto 36px; line-height: 1.75;
 }
 
