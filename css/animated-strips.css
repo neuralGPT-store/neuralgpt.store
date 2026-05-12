@@ -1,0 +1,177 @@
+/* ============================================================
+   FRANJAS ANIMADAS TEMÁTICAS — neuralgpt.store
+   Banners horizontales tipo ticker/carousel para categorías
+   ============================================================ */
+
+.animated-strip {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
+  background: linear-gradient(135deg, rgba(0, 234, 255, 0.03), rgba(127, 0, 255, 0.03));
+  border-top: 1px solid rgba(0, 234, 255, 0.2);
+  border-bottom: 1px solid rgba(127, 0, 255, 0.2);
+}
+
+.animated-strip.strip-residential {
+  background: linear-gradient(135deg, rgba(0, 234, 255, 0.05), rgba(0, 255, 153, 0.03));
+  border-color: rgba(0, 234, 255, 0.25);
+}
+
+.animated-strip.strip-commercial {
+  background: linear-gradient(135deg, rgba(255, 0, 128, 0.05), rgba(127, 0, 255, 0.03));
+  border-color: rgba(255, 0, 128, 0.25);
+}
+
+.animated-strip.strip-services {
+  background: linear-gradient(135deg, rgba(0, 255, 153, 0.05), rgba(0, 234, 255, 0.03));
+  border-color: rgba(0, 255, 153, 0.25);
+}
+
+.strip-header {
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 0 20px;
+}
+
+.strip-title {
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00eaff;
+  margin: 0 0 6px 0;
+}
+
+.strip-residential .strip-title { color: #00eaff; }
+.strip-commercial .strip-title { color: #ff0080; }
+.strip-services .strip-title { color: #00ff99; }
+
+.strip-subtitle {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.strip-track {
+  display: flex;
+  gap: 16px;
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+
+.strip-track:hover {
+  animation-play-state: paused;
+}
+
+.strip-item {
+  flex: 0 0 auto;
+  width: 320px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(0, 234, 255, 0.15);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.strip-residential .strip-item {
+  border-color: rgba(0, 234, 255, 0.2);
+}
+
+.strip-commercial .strip-item {
+  border-color: rgba(255, 0, 128, 0.2);
+}
+
+.strip-services .strip-item {
+  border-color: rgba(0, 255, 153, 0.2);
+}
+
+.strip-item:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 234, 255, 0.15);
+}
+
+.strip-residential .strip-item:hover {
+  border-color: #00eaff;
+  box-shadow: 0 8px 24px rgba(0, 234, 255, 0.25);
+}
+
+.strip-commercial .strip-item:hover {
+  border-color: #ff0080;
+  box-shadow: 0 8px 24px rgba(255, 0, 128, 0.25);
+}
+
+.strip-services .strip-item:hover {
+  border-color: #00ff99;
+  box-shadow: 0 8px 24px rgba(0, 255, 153, 0.25);
+}
+
+.strip-item-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.strip-item-title {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 6px 0;
+}
+
+.strip-item-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+.strip-item-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(0, 234, 255, 0.15);
+  color: #00eaff;
+  border: 1px solid rgba(0, 234, 255, 0.3);
+}
+
+.strip-residential .strip-item-badge {
+  background: rgba(0, 234, 255, 0.15);
+  color: #00eaff;
+  border-color: rgba(0, 234, 255, 0.3);
+}
+
+.strip-commercial .strip-item-badge {
+  background: rgba(255, 0, 128, 0.15);
+  color: #ff0080;
+  border-color: rgba(255, 0, 128, 0.3);
+}
+
+.strip-services .strip-item-badge {
+  background: rgba(0, 255, 153, 0.15);
+  color: #00ff99;
+  border-color: rgba(0, 255, 153, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .strip-item {
+    width: 280px;
+  }
+
+  .strip-track {
+    animation-duration: 30s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip-track {
+    animation: none;
+  }
+}
