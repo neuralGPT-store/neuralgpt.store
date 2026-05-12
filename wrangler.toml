@@ -30,3 +30,8 @@ FREE_LISTINGS_PER_USER = "5"
 # - CF_ACCOUNT_ID (for alerts KV)
 # - CF_KV_NAMESPACE_ID (for alerts)
 # - CF_KV_API_TOKEN (for alerts)
+
+# Route: conectar Worker al dominio principal
+[[routes]]
+pattern = "neuralgpt.store/api/*"
+zone_name = "neuralgpt.store"
