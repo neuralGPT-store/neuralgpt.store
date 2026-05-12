@@ -12,5 +12,5 @@ staticUrls.forEach(url => { xml += ` <url><loc>${url.loc}</loc><changefreq>${url
 cities.forEach(city => { xml += ` <url><loc>https://neuralgpt.store/ciudad/${city}/</loc><changefreq>weekly</changefreq><priority>0.75</priority></url>\n`;
 }); xml += '</urlset>\n'; // Guardar sitemap
 const sitemapPath = path.join(__dirname, '..', 'sitemap.xml');
-fs.writeFileSync(sitemapPath, xml, 'utf8'); console.log(`✅ Sitemap generado con ${staticUrls.length} URLs estáticas + ${cities.length} ciudades españolas`);
-console.log(`📍 Total: ${staticUrls.length + cities.length} URLs`);
+fs.writeFileSync(sitemapPath, xml, 'utf8'); console.log(` Sitemap generado con ${staticUrls.length} URLs estáticas + ${cities.length} ciudades españolas`);
+console.log(` Total: ${staticUrls.length + cities.length} URLs`);

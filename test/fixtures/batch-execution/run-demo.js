@@ -54,5 +54,5 @@ console.log('Preflight : batch_executable=true, 0 blockers');
 console.log('Dry-run : result_status=' + (dryExec && dryExec.result_status));
 console.log('Ejecución real: result_status=' + (realExec && realExec.result_status) + ', executed_items=' + (realExec && realExec.executed_items));
 console.log('Idempotencia : idempotent=' + idempotentResult.idempotent + ', already_executed=' + idempotentResult.already_executed);
-console.log('Producción : listings.json operativo INTACTO ✓');
+console.log('Producción : listings.json operativo INTACTO ');
 console.log('\nPhase 4C — happy path completo. Listo para cierre.');

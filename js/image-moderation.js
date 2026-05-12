@@ -224,7 +224,7 @@
       result.errors.forEach(error => {
         const errorMsg = document.createElement('div');
         errorMsg.style.cssText = 'color:var(--accent3);font-size:0.75rem;margin-top:4px';
-        errorMsg.textContent = '⚠ ' + error;
+        errorMsg.textContent = ' ' + error;
         info.appendChild(errorMsg);
       });
     }
@@ -232,7 +232,7 @@
     // Status badge
     const badge = document.createElement('div');
     badge.style.cssText = 'font-size:1.5rem;flex-shrink:0';
-    badge.textContent = result.valid ? '✅' : '❌';
+    badge.textContent = result.valid ? '' : '';
 
     card.appendChild(thumb);
     card.appendChild(info);
@@ -265,7 +265,7 @@
   // Update moderation status message
   function updateStatusMessage(statusContainer, results, isProcessing) {
     if (isProcessing) {
-      statusContainer.innerHTML = '<span style="color:var(--accent2)">⏳ Verificando imágenes...</span>';
+      statusContainer.innerHTML = '<span style="color:var(--accent2)"> Verificando imágenes...</span>';
       return;
     }
 
@@ -278,9 +278,9 @@
     const validCount = Array.from(results.values()).filter(r => r.valid).length;
 
     if (allValid) {
-      statusContainer.innerHTML = `<span style="color:var(--accent4)">✅ Todas las imágenes son válidas (${validCount}/${results.size})</span>`;
+      statusContainer.innerHTML = `<span style="color:var(--accent4)"> Todas las imágenes son válidas (${validCount}/${results.size})</span>`;
     } else {
-      statusContainer.innerHTML = `<span style="color:var(--accent3)">❌ ${validCount}/${results.size} imágenes válidas. Corrige los errores antes de publicar.</span>`;
+      statusContainer.innerHTML = `<span style="color:var(--accent3)"> ${validCount}/${results.size} imágenes válidas. Corrige los errores antes de publicar.</span>`;
     }
   }
 
@@ -297,7 +297,7 @@
     }
 
     if (files.length > MAX_IMAGES) {
-      statusContainer.innerHTML = `<span style="color:var(--accent3)">❌ Máximo ${MAX_IMAGES} imágenes permitidas</span>`;
+      statusContainer.innerHTML = `<span style="color:var(--accent3)"> Máximo ${MAX_IMAGES} imágenes permitidas</span>`;
       submitButton.disabled = true;
       return;
     }
@@ -359,7 +359,7 @@
     form.addEventListener('submit', (e) => {
       if (!allImagesPassed()) {
         e.preventDefault();
-        statusContainer.innerHTML = '<span style="color:var(--accent3)">❌ Todas las imágenes deben pasar la validación antes de publicar</span>';
+        statusContainer.innerHTML = '<span style="color:var(--accent3)"> Todas las imágenes deben pasar la validación antes de publicar</span>';
         return false;
       }
     }, true);

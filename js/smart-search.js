@@ -268,14 +268,14 @@
     cities.forEach(city => {
       if (city.toLowerCase().includes(query)) {
         suggestions.push({
-          icon: '🏙️',
+          icon: '',
           text: `Todos los inmuebles en ${city}`,
           action: () => navigateToSearch({ city })
         });
 
         types.forEach(type => {
           suggestions.push({
-            icon: '🏠',
+            icon: '',
             text: `${type.label} en ${city}`,
             action: () => navigateToSearch({ city, asset_type: type.value })
           });
@@ -301,7 +301,7 @@
         </div>
         ${searchHistory.map(query => `
           <div class="smart-search-suggestion-item" onclick="window.SmartSearch.selectQuery('${escapeHtml(query)}')">
-            <span class="smart-search-suggestion-icon">🕒</span>
+            <span class="smart-search-suggestion-icon"></span>
             <span class="smart-search-suggestion-text">${escapeHtml(query)}</span>
           </div>
         `).join('')}
@@ -343,7 +343,7 @@
             const price = formatPrice(listing);
             return `
               <div class="smart-search-suggestion-item" data-slug="${escapeHtml(listing.slug || listing.id)}">
-                <span class="smart-search-suggestion-icon">🏠</span>
+                <span class="smart-search-suggestion-icon"></span>
                 <span class="smart-search-suggestion-text">${escapeHtml(listing.title)}</span>
                 <span class="smart-search-suggestion-meta">${price} · ${escapeHtml(listing.city || '')}</span>
               </div>

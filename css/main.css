@@ -305,7 +305,7 @@ ul, ol { list-style: none; }
   background: rgba(0,255,153,0.12); color: var(--accent4);
   border: 1px solid rgba(0,255,153,0.3);
 }
-.badge-verified::before { content: '✓'; font-weight: 900; }
+.badge-verified::before { content: ''; font-weight: 900; }
 .badge-new { background: rgba(0,234,255,0.12); color: var(--accent); border: 1px solid rgba(0,234,255,0.3); }
 .badge-hot { background: rgba(255,0,128,0.12); color: var(--accent3); border: 1px solid rgba(255,0,128,0.3); }
 .badge-own { background: rgba(127,0,255,0.12); color: var(--accent2); border: 1px solid rgba(127,0,255,0.3); }
@@ -889,7 +889,7 @@ select.form-control { cursor: pointer; }
 .pricing-period { font-size: 0.85rem; color: var(--muted); }
 .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .pricing-features li { font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
-.pricing-features li::before { content: '✓'; color: var(--accent4); font-weight: 900; flex-shrink: 0; }
+.pricing-features li::before { content: ''; color: var(--accent4); font-weight: 900; flex-shrink: 0; }
 
 /* ============================================================
    AI CHAT WIDGET — Chany Premium v2
