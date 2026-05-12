@@ -42,3 +42,5 @@
     }
   };
 })();
+
+window.NEURAL_MAINTENANCE = false;
