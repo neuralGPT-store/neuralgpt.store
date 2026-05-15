@@ -1,22 +1,40 @@
 /* ============================================================
-   Loventy — Design Tokens v1.0
+   Loventy — Design Tokens v2.0
    ============================================================ */
 
 :root {
 
-  /* --- Colores --- */
-  --color-bg:              #F8F5F0;
-  --color-bg-secondary:    #EDE8E0;
-  --color-sage:            #7C9A7E;
-  --color-sage-dark:       #5E7D60;
-  --color-terracotta:      #A67C6D;
-  --color-terracotta-dark: #8A6358;
-  --color-text:            #2C2C2C;
-  --color-text-muted:      #6B6B6B;
-  --color-border:          #D4CFC8;
-  --color-white:           #FFFFFF;
-  --color-error:           #C0392B;
-  --color-success:         #27AE60;
+  /* --- Fondo --- */
+  --color-bg:           #0a0e1a;
+  --color-bg-secondary: #0d1225;
+  --color-bg-card:      #111827;
+  --color-bg-card-hover:#1a2236;
+
+  /* --- Azul UE y acento --- */
+  --color-eu-blue:       #003399;
+  --color-eu-blue-light: #1a4db5;
+  --color-eu-gold:       #FFCC00;
+  --color-accent:        #003399;
+  --color-accent-light:  #4d7fff;
+
+  /* --- Terracota suave — botones secundarios --- */
+  --color-terracotta:      #c47c6d;
+  --color-terracotta-dark: #a86355;
+
+  /* --- Texto --- */
+  --color-text:       #e8eaf0;
+  --color-text-muted: #8892a4;
+  --color-border:     rgba(255,255,255,0.08);
+  --color-white:      #ffffff;
+  --color-error:      #ff4d4d;
+  --color-success:    #00cc88;
+
+  /* --- RGB glow --- */
+  --rgb-1: #003399;
+  --rgb-2: #4d7fff;
+  --rgb-3: #FFCC00;
+  --glow-border:  linear-gradient(135deg, var(--rgb-1), var(--rgb-2), var(--rgb-3), var(--rgb-2), var(--rgb-1));
+  --glow-shadow:  0 0 12px rgba(77,127,255,0.25), 0 0 24px rgba(0,51,153,0.15);
 
   /* --- Tipografía --- */
   --font-heading:   Georgia, 'Times New Roman', serif;
@@ -49,9 +67,9 @@
   --border:      1px solid var(--color-border);
 
   /* --- Sombras --- */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: var(--glow-shadow);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5), var(--glow-shadow);
 
   /* --- Transiciones --- */
   --transition:      0.2s ease;
