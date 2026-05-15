@@ -1,9 +1,217 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="neural-api-base" content="https://neuralgpt-api.pokerprofe.workers.dev">
-  <meta name="neural-backend-ready" content="true"> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width,initial-scale=1" /> <meta name="theme-color" content="#00040D" /> <title>Seguridad — neuralgpt.store</title> <meta name="description" content="Compromiso de seguridad de neuralgpt.store, medidas técnicas aplicadas y canal responsable de reporte de vulnerabilidades." /> <meta name="robots" content="index,follow" /> <link rel="canonical" href="https://neuralgpt.store/security.html" /> <link rel="icon" href="/favicon.ico" /> <link rel="stylesheet" href="/css/main.css" /> <link rel="stylesheet" href="/css/theme-override.css" /> <script src="/js/i18n.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="neural-api-base" content="https://neuralgpt.store/api" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com; frame-src https://js.stripe.com" />
+  <title>Seguridad — Loventy</title>
+  <meta name="description" content="Como protegemos los datos en Loventy y como reportar vulnerabilidades de forma responsable." />
+  <link rel="alternate" hreflang="es" href="https://neuralgpt.store/security.html" />
+  <link rel="alternate" hreflang="x-default" href="https://neuralgpt.store/security.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Seguridad — Loventy" />
+  <meta property="og:url" content="https://neuralgpt.store/security.html" />
+  <meta property="og:locale" content="es_ES" />
+  <link rel="canonical" href="https://neuralgpt.store/security.html" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/design-tokens.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    .legal-body { max-width:760px; margin:0 auto; }
+    .legal-body h2 { font-family:var(--font-heading); font-size:var(--font-size-lg); color:var(--color-sage-dark); margin:var(--space-8) 0 var(--space-2); }
+    .legal-body p, .legal-body li { font-size:var(--font-size-sm); color:var(--color-text-muted); line-height:1.8; margin-bottom:var(--space-2); }
+    .legal-body ul { padding-left:var(--space-6); margin-bottom:var(--space-4); }
+    .legal-body ul li { list-style:disc; }
+    .legal-meta { font-size:var(--font-size-xs); color:var(--color-text-muted); margin-bottom:var(--space-8); }
+    .legal-meta a { color:var(--color-sage-dark); }
+    .security-highlight {
+      background:var(--color-bg-secondary);
+      border:var(--border);
+      border-left:4px solid var(--color-sage);
+      border-radius:var(--radius-sm);
+      padding:var(--space-4) var(--space-6);
+      margin:var(--space-4) 0;
+    }
+  </style>
 </head>
-<body> <a class="skip-link" href="#main-content">Saltar al contenido</a> <header class="site-header" role="banner"> <a class="brand" href="/">neural<span>GPT</span>.store</a> <nav class="main-nav" id="main-nav" aria-label="Principal"> <ul> <li><a href="/">Inicio</a></li> <li><a href="/venta.html">Venta</a></li> <li><a href="/alquiler.html">Alquiler</a></li> <li><a href="/contact.html">Contacto</a></li> </ul> </nav> <div class="header-actions"> <a href="/real-estate-index.html" class="btn">Ver inmuebles</a> <a href="/contact.html" class="btn btn-primary">Publicar</a> <button class="nav-toggle" id="nav-toggle" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button> </div> </header> <div class="rgb-divider"></div> <main id="main-content" class="wrap" style="padding-top:40px;padding-bottom:80px;max-width:920px"> <section class="card" style="padding:28px"> <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px"> <span class="badge badge-verified">POLÍTICA OFICIAL</span> </div> <h1 class="section-title" style="text-align:left;margin-bottom:24px">Política de divulgación responsable</h1> <section style="margin-bottom:28px"> <h2 style="font-family:var(--font-title);font-size:1.05rem;margin-bottom:10px;color:var(--accent)">Objetivo</h2> <p style="color:var(--muted);line-height:1.8;margin:0 0 14px 0">neuralgpt.store aplica una política activa de seguridad con controles técnicos de cabeceras, separación estricta entre superficie pública y operativa, y revisión periódica de riesgos sobre rutas y datos expuestos.</p> <p style="color:var(--muted);line-height:1.8;margin:0">El portal mantiene cifrado HTTPS, restricciones de indexación en rutas sensibles y prácticas de mínima exposición de datos en frontend. Animamos a investigadores de seguridad y usuarios a reportar vulnerabilidades de forma responsable.</p> </section> <section style="margin-bottom:28px"> <h2 style="font-family:var(--font-title);font-size:1.05rem;margin-bottom:10px;color:var(--accent)">Alcance</h2> <p style="color:var(--muted);line-height:1.8;margin:0 0 10px 0">Esta política cubre:</p> <ul style="color:var(--muted);line-height:1.8;margin:0 0 14px 20px"> <li>Dominio principal: <strong style="color:var(--text)">neuralgpt.store</strong></li> <li>Subdominios oficiales bajo neuralgpt.store</li> <li>APIs públicas documentadas</li> </ul> </section> <section style="margin-bottom:28px"> <h2 style="font-family:var(--font-title);font-size:1.05rem;margin-bottom:10px;color:var(--accent)">Cómo reportar</h2> <div style="padding:18px;background:rgba(0,255,153,0.05);border:1px solid rgba(0,255,153,0.2);border-radius:8px;margin-bottom:14px"> <p style="color:var(--text);line-height:1.8;margin:0 0 6px 0"> <strong>Email de seguridad:</strong> <a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a> </p> <p style="color:var(--muted);line-height:1.8;margin:0;font-size:0.88rem"> Tiempo de respuesta inicial: <strong style="color:var(--text)">hasta 48 horas laborables</strong> desde la recepción del reporte. </p> </div> <p style="color:var(--muted);line-height:1.8;margin:0 0 10px 0">Por favor, incluye:</p> <ul style="color:var(--muted);line-height:1.8;margin:0 0 14px 20px"> <li>Descripción clara de la vulnerabilidad</li> <li>Pasos para reproducir el problema</li> <li>Impacto potencial y severidad estimada</li> <li>Información de contacto para seguimiento</li> </ul> </section> <section style="margin-bottom:28px"> <h2 style="font-family:var(--font-title);font-size:1.05rem;margin-bottom:10px;color:var(--accent)">Conducta responsable</h2> <p style="color:var(--muted);line-height:1.8;margin:0 0 10px 0">Para mantener un proceso seguro:</p> <ul style="color:var(--muted);line-height:1.8;margin:0 0 14px 20px"> <li>No acceder, modificar o eliminar datos sin consentimiento</li> <li>No realizar ataques de denegación de servicio</li> <li>No divulgar públicamente antes de la resolución coordinada</li> <li>Limitar las pruebas al mínimo necesario</li> </ul> <p style="color:var(--muted);line-height:1.8;margin:0">Los reportes realizados de buena fe se evaluarán de forma coordinada y responsable conforme al marco legal aplicable.</p> </section> <section> <h2 style="font-family:var(--font-title);font-size:1.05rem;margin-bottom:10px;color:var(--accent)">Contacto</h2> <p style="color:var(--text);line-height:1.8;margin:0"> <strong>Email:</strong> <a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a><br> <strong>Tiempo de respuesta:</strong> hasta 48 horas laborables </p> </section> </section> </main> <div class="rgb-divider"></div> <footer class="site-footer" role="contentinfo"> <div class="footer-grid"> <div class="footer-brand-col"><a class="brand" href="/">neural<span>GPT</span>.store</a><p>Portal inmobiliario premium.</p></div> <div class="footer-col"><h4>LEGAL</h4><ul><li><a href="/legal.html">Aviso legal</a></li><li><a href="/privacy.html">Privacidad</a></li><li><a href="/terms.html">Términos</a></li></ul></div> </div> <div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span><a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--accent)">neuralgpt.store@protonmail.com</a></span><span><a href="mailto:neuralgpt.store@protonmail.com" style="color:var(--muted)">neuralgpt.store@protonmail.com</a></span></div> </footer> <script> var toggle=document.getElementById('nav-toggle'),nav=document.getElementById('main-nav'); if(toggle&&nav) toggle.addEventListener('click',function(){var o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o);}); </script>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<header class="site-header">
+  <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+    <a href="/" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:var(--color-sage-dark)">Loventy</a>
+    <span style="font-size:var(--font-size-xs);color:var(--color-text-muted)">El cuidado que todo mayor merece</span>
+  </div>
+  <nav class="main-nav" id="main-nav" aria-label="Principal">
+    <ul class="nav-links">
+      <li><a href="#">Directorio</a></li>
+      <li><a href="#">Voluntariado</a></li>
+      <li><a href="#">Loventy Talks</a></li>
+      <li><a href="/sponsors.html">Sponsors</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+    </ul>
+    <div style="display:flex;gap:var(--space-1);margin-left:var(--space-4)">
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="es">ES</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="en">EN</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="fr">FR</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="de">DE</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="it">IT</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="pt">PT</button>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="#" class="btn btn-primary">Publicar ficha</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu movil">
+  <ul style="display:flex;flex-direction:column;gap:var(--space-4)">
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Voluntariado</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Loventy Talks</a></li>
+    <li><a href="/sponsors.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Sponsors</a></li>
+    <li><a href="/pricing.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Pricing</a></li>
+  </ul>
+  <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
+    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="#" class="btn btn-primary">Publicar ficha</a>
+  </div>
+</nav>
+
+<main id="main">
+  <section class="section">
+    <div class="container">
+      <div class="legal-body">
+
+        <h1>Seguridad y privacidad</h1>
+        <p class="legal-meta">
+          Ultima actualizacion: 15 de mayo de 2026 &mdash;
+          <a href="/privacy.html">Privacidad</a> &middot;
+          <a href="/legal.html">Aviso Legal</a>
+        </p>
+
+        <h2>Como protegemos los datos</h2>
+        <p>Loventy aplica medidas tecnicas y organizativas para proteger los datos de usuarios y proveedores:</p>
+        <ul>
+          <li><strong>Cloudflare:</strong> todo el trafico pasa por la red de Cloudflare, que proporciona cifrado TLS, proteccion DDoS y cabeceras de seguridad HTTP.</li>
+          <li><strong>HTTPS obligatorio:</strong> el sitio funciona exclusivamente sobre HTTPS. No se sirve contenido por HTTP sin cifrar.</li>
+          <li><strong>Sin almacenamiento de conversaciones:</strong> el asistente Chany no almacena ni registra el contenido de las conversaciones de los usuarios.</li>
+          <li><strong>Sin fotos reales de usuarios:</strong> Loventy no solicita ni almacena fotografias de identificacion personal de las familias.</li>
+          <li><strong>Minima superficie de datos:</strong> recogemos unicamente los datos estrictamente necesarios para el funcionamiento del servicio.</li>
+          <li><strong>Plausible Analytics:</strong> las estadisticas de uso son anonimas por diseno. No hay cookies de rastreo ni identificacion de usuarios individuales.</li>
+          <li><strong>Pagos por Stripe:</strong> los datos de pago son gestionados exclusivamente por Stripe. Loventy no almacena numeros de tarjeta ni datos bancarios.</li>
+        </ul>
+
+        <h2>Politica de divulgacion responsable</h2>
+        <p>Si descubres una vulnerabilidad de seguridad en Loventy, te pedimos que la reportes de forma responsable antes de divulgarla publicamente.</p>
+
+        <div class="security-highlight">
+          <p style="margin-bottom:var(--space-1)"><strong>Email de seguridad:</strong> <a href="mailto:wilfreyera@gmail.com" style="color:var(--color-sage-dark)">wilfreyera@gmail.com</a></p>
+          <p style="margin-bottom:0"><strong>Tiempo de respuesta:</strong> hasta 48 horas laborables desde la recepcion del reporte.</p>
+        </div>
+
+        <p>Por favor, incluye en tu reporte:</p>
+        <ul>
+          <li>Descripcion clara de la vulnerabilidad</li>
+          <li>Pasos para reproducir el problema</li>
+          <li>Impacto potencial y severidad estimada</li>
+          <li>Datos de contacto para el seguimiento</li>
+        </ul>
+
+        <h2>Conducta responsable</h2>
+        <p>Para mantener un proceso seguro y justo, pedimos que los investigadores:</p>
+        <ul>
+          <li>No accedan, modifiquen ni eliminen datos sin consentimiento</li>
+          <li>No realicen ataques de denegacion de servicio (DoS/DDoS)</li>
+          <li>No divulguen publicamente la vulnerabilidad antes de que sea resuelta</li>
+          <li>Limiten las pruebas al minimo necesario para demostrar el problema</li>
+        </ul>
+        <p>Los reportes realizados de buena fe seran evaluados de forma coordinada y responsable. Agradecemos la colaboracion de la comunidad de seguridad.</p>
+
+        <h2>Alcance</h2>
+        <ul>
+          <li>Dominio principal: neuralgpt.store</li>
+          <li>API del worker: neuralgpt.store/api/*</li>
+          <li>Subdominios oficiales bajo neuralgpt.store</li>
+        </ul>
+
+        <h2>Contacto</h2>
+        <p>Para reportar cualquier problema de seguridad: <a href="mailto:wilfreyera@gmail.com" style="color:var(--color-sage-dark)">wilfreyera@gmail.com</a></p>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="/" class="footer-logo">Loventy</a>
+        <p class="footer-brand-desc">La plataforma europea de cuidado para personas mayores. Conectamos familias con los mejores profesionales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Directorio</h4>
+        <ul>
+          <li><a href="#">Cuidadores</a></li>
+          <li><a href="#">Residencias</a></li>
+          <li><a href="#">Servicios sanitarios</a></li>
+          <li><a href="#">Voluntariado</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/legal.html">Aviso legal</a></li>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Terminos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:loventy@neuralgpt.store">loventy@neuralgpt.store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var currentLang = params.get('lang') || 'es';
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      if (btn.dataset.lang === currentLang) {
+        btn.style.fontWeight = '700';
+        btn.style.color = 'var(--color-sage-dark)';
+        btn.setAttribute('aria-pressed', 'true');
+      }
+      btn.addEventListener('click', function () {
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', btn.dataset.lang);
+        window.location.href = url.toString();
+      });
+    });
+    var toggle = document.getElementById('nav-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function () {
+        var open = mobileMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  })();
+</script>
+
 </body>
 </html>
