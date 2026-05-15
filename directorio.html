@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="neural-api-base" content="https://neuralgpt.store/api" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com https://neuralgpt.store; frame-src https://js.stripe.com" />
+  <title>Directorio de cuidadores y servicios — Loventy</title>
+  <meta name="description" content="Encuentra cuidadores, residencias y servicios de atencion para personas mayores en toda Europa." />
+  <link rel="canonical" href="https://neuralgpt.store/directorio.html" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/core.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<header class="site-header">
+  <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+    <a href="/" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:var(--color-sage-dark)">Loventy</a>
+    <span style="font-size:var(--font-size-xs);color:var(--color-text-muted)">El cuidado que todo mayor merece</span>
+  </div>
+  <nav class="main-nav" id="main-nav" aria-label="Principal">
+    <ul class="nav-links">
+      <li><a href="/directorio.html">Directorio</a></li>
+      <li><a href="#">Voluntariado</a></li>
+      <li><a href="#">Loventy Talks</a></li>
+      <li><a href="#">Sponsors</a></li>
+      <li><a href="#">Pricing</a></li>
+    </ul>
+    <div style="display:flex;gap:var(--space-1);margin-left:var(--space-4)">
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="es">ES</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="en">EN</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="fr">FR</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="de">DE</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="it">IT</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="pt">PT</button>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu movil">
+  <ul style="display:flex;flex-direction:column;gap:var(--space-4)">
+    <li><a href="/directorio.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Voluntariado</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Loventy Talks</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Sponsors</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Pricing</a></li>
+  </ul>
+  <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
+    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <section class="hero" style="padding-top:var(--space-12);padding-bottom:var(--space-12)">
+    <div class="container" style="text-align:center">
+      <h1>Directorio de servicios</h1>
+      <p style="color:var(--color-text-muted);max-width:480px;margin:var(--space-3) auto 0">Encuentra el cuidado adecuado para tu familiar.</p>
+    </div>
+  </section>
+
+  <div class="filters-bar" id="filters-bar">
+    <div class="container">
+      <div class="filters-inner">
+        <select id="filter-category" class="form-select" aria-label="Filtrar por categoria">
+          <option value="">Todos</option>
+          <option value="cuidador">Cuidadores</option>
+          <option value="residencia">Residencias</option>
+          <option value="sanitario">Servicios sanitarios</option>
+          <option value="hogar">Adaptacion del hogar</option>
+          <option value="transporte">Transporte adaptado</option>
+          <option value="voluntariado">Voluntariado</option>
+          <option value="legal">Legal</option>
+          <option value="farmacia">Farmacia</option>
+        </select>
+        <input type="text" id="filter-zone" class="form-input" placeholder="Ciudad o region..." aria-label="Filtrar por ciudad o region" />
+        <select id="filter-country" class="form-select" aria-label="Filtrar por pais">
+          <option value="">Todos</option>
+          <option value="ES">Espana</option>
+          <option value="FR">Francia</option>
+          <option value="DE">Alemania</option>
+          <option value="IT">Italia</option>
+          <option value="PT">Portugal</option>
+          <option value="PL">Polonia</option>
+          <option value="NL">Paises Bajos</option>
+        </select>
+        <button id="btn-search" class="btn btn-primary" type="button">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <div id="directory-loading" style="display:none">Buscando proveedores...</div>
+      <div id="directory-empty" style="display:none">No se encontraron resultados. Prueba con otros filtros.</div>
+
+      <div id="directory-grid" class="auto-grid">
+
+        <article class="card-provider" data-category="cuidador" data-zone="madrid" data-country="ES">
+          <div class="card-provider-header">
+            <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" fill="#d4e6d9" />
+              <text x="24" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#2d6a4f">M</text>
+            </svg>
+            <div class="provider-info">
+              <p class="provider-name">Maria Fernandez</p>
+              <p class="provider-location">Madrid &bull; ES</p>
+            </div>
+          </div>
+          <span class="badge badge-sage">Cuidadora</span>
+          <p class="provider-desc">Cuidadora profesional con 12 anos de experiencia en atencion a domicilio para personas con Alzheimer y movilidad reducida.</p>
+          <div class="provider-footer">
+            <span class="provider-price">14 EUR/hora</span>
+            <a href="#" class="btn btn-secondary btn-sm">Ver ficha</a>
+          </div>
+        </article>
+
+        <article class="card-provider" data-category="residencia" data-zone="barcelona" data-country="ES">
+          <div class="card-provider-header">
+            <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" fill="#dbe8f5" />
+              <text x="24" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1e4d8c">R</text>
+            </svg>
+            <div class="provider-info">
+              <p class="provider-name">Residencia Los Pinos</p>
+              <p class="provider-location">Barcelona &bull; ES</p>
+            </div>
+          </div>
+          <span class="badge badge-sage">Residencia</span>
+          <p class="provider-desc">Centro residencial con 48 habitaciones individuales, jardin terapeutico y equipo medico permanente las 24 horas.</p>
+          <div class="provider-footer">
+            <span class="provider-price">Desde 1.800 EUR/mes</span>
+            <a href="#" class="btn btn-secondary btn-sm">Ver ficha</a>
+          </div>
+        </article>
+
+        <article class="card-provider" data-category="sanitario" data-zone="lyon" data-country="FR">
+          <div class="card-provider-header">
+            <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" fill="#f5e6db" />
+              <text x="24" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#8c4a1e">P</text>
+            </svg>
+            <div class="provider-info">
+              <p class="provider-name">Physio Leblanc</p>
+              <p class="provider-location">Lyon &bull; FR</p>
+            </div>
+          </div>
+          <span class="badge badge-sage">Sanitario</span>
+          <p class="provider-desc">Fisioterapeuta especializado en rehabilitacion geriatrica y prevencion de caidas. Visitas a domicilio en toda el area metropolitana.</p>
+          <div class="provider-footer">
+            <span class="provider-price">60 EUR/sesion</span>
+            <a href="#" class="btn btn-secondary btn-sm">Ver ficha</a>
+          </div>
+        </article>
+
+        <article class="card-provider" data-category="hogar" data-zone="berlin" data-country="DE">
+          <div class="card-provider-header">
+            <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" fill="#e8e6f5" />
+              <text x="24" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#4a2d8c">A</text>
+            </svg>
+            <div class="provider-info">
+              <p class="provider-name">Accesibilidad Muller</p>
+              <p class="provider-location">Berlin &bull; DE</p>
+            </div>
+          </div>
+          <span class="badge badge-sage">Hogar</span>
+          <p class="provider-desc">Reformas de accesibilidad certificadas: barras de apoyo, rampas, ascensores y adaptacion de banos para personas mayores.</p>
+          <div class="provider-footer">
+            <span class="provider-price">Presupuesto sin compromiso</span>
+            <a href="#" class="btn btn-secondary btn-sm">Ver ficha</a>
+          </div>
+        </article>
+
+        <article class="card-provider" data-category="transporte" data-zone="lisboa" data-country="PT">
+          <div class="card-provider-header">
+            <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" fill="#e6f5e6" />
+              <text x="24" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1a6b1a">T</text>
+            </svg>
+            <div class="provider-info">
+              <p class="provider-name">TransSenior Lisboa</p>
+              <p class="provider-location">Lisboa &bull; PT</p>
+            </div>
+          </div>
+          <span class="badge badge-sage">Transporte</span>
+          <p class="provider-desc">Servicio de transporte adaptado para citas medicas, hospitales y centros de dia. Conductores especializados en atencion a mayores.</p>
+          <div class="provider-footer">
+            <span class="provider-price">25 EUR/trayecto</span>
+            <a href="#" class="btn btn-secondary btn-sm">Ver ficha</a>
+          </div>
+        </article>
+
+        <article class="card-provider" data-category="farmacia" data-zone="roma" data-country="IT">
+          <div class="card-provider-header">
+            <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" fill="#f5f0db" />
+              <text x="24" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#8c7a1e">F</text>
+            </svg>
+            <div class="provider-info">
+              <p class="provider-name">Farmacia Neri</p>
+              <p class="provider-location">Roma &bull; IT</p>
+            </div>
+          </div>
+          <span class="badge badge-sage">Farmacia</span>
+          <p class="provider-desc">Dispensacion, preparacion de pastilleros y entrega a domicilio de medicamentos para mayores. Atencion personalizada garantizada.</p>
+          <div class="provider-footer">
+            <span class="provider-price">Entrega gratuita</span>
+            <a href="#" class="btn btn-secondary btn-sm">Ver ficha</a>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section-sm" style="background:var(--color-bg-secondary)">
+    <div class="container" style="text-align:center">
+      <p style="font-size:var(--font-size-lg);color:var(--color-text);margin:0 0 var(--space-4)">Eres profesional? Publica tu ficha gratis</p>
+      <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="/" class="footer-logo">Loventy</a>
+        <p class="footer-brand-desc">La plataforma europea de cuidado para personas mayores. Conectamos familias con los mejores profesionales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Directorio</h4>
+        <ul>
+          <li><a href="#">Cuidadores</a></li>
+          <li><a href="#">Residencias</a></li>
+          <li><a href="#">Servicios sanitarios</a></li>
+          <li><a href="#">Voluntariado</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/legal.html">Aviso legal</a></li>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Terminos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:loventy@neuralgpt.store">loventy@neuralgpt.store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    function filterDirectory() {
+      var cat = document.getElementById('filter-category').value;
+      var zone = document.getElementById('filter-zone').value.trim().toLowerCase();
+      var country = document.getElementById('filter-country').value;
+      var cards = document.querySelectorAll('#directory-grid .card-provider');
+      var visible = 0;
+
+      cards.forEach(function (card) {
+        var matchCat = !cat || card.dataset.category === cat;
+        var matchZone = !zone || card.dataset.zone.indexOf(zone) !== -1;
+        var matchCountry = !country || card.dataset.country === country;
+        if (matchCat && matchZone && matchCountry) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      document.getElementById('directory-empty').style.display = visible === 0 ? '' : 'none';
+    }
+
+    document.getElementById('btn-search').addEventListener('click', filterDirectory);
+    document.getElementById('filter-zone').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') filterDirectory();
+    });
+    document.getElementById('filter-category').addEventListener('change', filterDirectory);
+    document.getElementById('filter-country').addEventListener('change', filterDirectory);
+
+    var params = new URLSearchParams(window.location.search);
+    var currentLang = params.get('lang') || 'es';
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      if (btn.dataset.lang === currentLang) {
+        btn.style.fontWeight = '700';
+        btn.style.color = 'var(--color-sage-dark)';
+        btn.setAttribute('aria-pressed', 'true');
+      }
+      btn.addEventListener('click', function () {
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', btn.dataset.lang);
+        window.location.href = url.toString();
+      });
+    });
+
+    var toggle = document.getElementById('nav-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function () {
+        var open = mobileMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
