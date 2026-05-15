@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="neural-api-base" content="https://neuralgpt.store/api" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com; frame-src https://js.stripe.com" />
+  <title>Ficha de proveedor — Loventy</title>
+  <meta name="description" content="Ficha de proveedor en el directorio de cuidado para mayores de Loventy." />
+  <link rel="canonical" href="https://neuralgpt.store/listing-provider.html" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/core.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <style>
+    .listing-grid {
+      display: grid;
+      grid-template-columns: minmax(0,2fr) minmax(0,1fr);
+      gap: var(--space-8);
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .listing-grid { grid-template-columns: 1fr; }
+    }
+    .lp-divider { border: none; border-top: var(--border); margin: var(--space-6) 0; }
+    .lp-services-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: var(--space-2) var(--space-4);
+    }
+    @media (max-width: 600px) {
+      .lp-services-list { grid-template-columns: 1fr; }
+    }
+    .lp-services-list li {
+      font-size: var(--font-size-sm);
+      color: var(--color-text);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+    .lp-services-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-eu-gold);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .lp-info-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 600px) {
+      .lp-info-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .lp-info-item { display: flex; flex-direction: column; gap: var(--space-1); }
+    .lp-info-label {
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+    }
+    .lp-info-value { font-size: var(--font-size-sm); color: var(--color-text); }
+    .lp-disclaimer {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--color-border);
+      line-height: 1.6;
+    }
+    .lp-form-success {
+      display: none;
+      padding: var(--space-4);
+      background: rgba(39,174,96,0.1);
+      border: 1px solid rgba(39,174,96,0.3);
+      border-radius: var(--radius-sm);
+      color: var(--color-success);
+      font-size: var(--font-size-sm);
+      text-align: center;
+    }
+    .breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-6);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+    .breadcrumb li + li::before {
+      content: '/';
+      margin-right: var(--space-1);
+      color: var(--color-text-muted);
+    }
+    .breadcrumb a { color: var(--color-text-muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--color-text); }
+  </style>
+</head>
+<body>
+
+<!-- Datos mock: se carga antes del header para redirigir si id no es valido -->
+<script>
+  var PROVIDERS = {
+    '1': {
+      id: '1',
+      name: 'Maria Fernandez',
+      category: 'cuidador',
+      categoryLabel: 'Cuidadora',
+      country: 'ES',
+      zone: 'Madrid',
+      initial: 'M',
+      avatarBg: '#d4e6d9',
+      avatarColor: '#2d6a4f',
+      description: 'Cuidadora profesional con 12 anos de experiencia en atencion a domicilio para personas con Alzheimer, demencia y movilidad reducida. Formacion como auxiliar de enfermeria y certificacion en cuidados paliativos por la Universidad Complutense. Discreta, empatica y comprometida con el bienestar de las personas a su cargo. Disponible para turnos de dia, noche y fines de semana bajo acuerdo previo.',
+      services: ['Aseo e higiene personal', 'Administracion de medicacion', 'Acompanamiento medico', 'Estimulacion cognitiva', 'Preparacion de comidas adaptadas', 'Compania y apoyo emocional', 'Movilizaciones y traslados internos', 'Control de constantes vitales'],
+      languages: ['Espanol', 'Catalan'],
+      availability: 'Lunes a viernes, 8h - 20h. Urgencias disponible.',
+      price: '14 EUR/hora'
+    },
+    '2': {
+      id: '2',
+      name: 'Residencia Los Pinos',
+      category: 'residencia',
+      categoryLabel: 'Residencia',
+      country: 'ES',
+      zone: 'Barcelona',
+      initial: 'R',
+      avatarBg: '#dbe8f5',
+      avatarColor: '#1e4d8c',
+      description: 'Centro residencial con 48 habitaciones individuales y dobles, jardin terapeutico y equipo medico permanente las 24 horas. Especializado en cuidados de larga estancia, deterioro cognitivo y rehabilitacion funcional. Acreditado por el Departament de Salut de Catalunya. Cuenta con protocolo de atencion centrada en la persona y programa de visitas familiares sin restriccion horaria.',
+      services: ['Habitaciones individuales y dobles', 'Atencion medica 24 horas', 'Fisioterapia y rehabilitacion', 'Terapia ocupacional', 'Jardin terapeutico', 'Servicio de peluqueria', 'Actividades culturales y ocio', 'Nutricion y dietologia especializada'],
+      languages: ['Espanol', 'Catalan', 'Ingles'],
+      availability: 'Admision permanente. Visitas familiares sin restriccion horaria.',
+      price: 'Desde 1.800 EUR/mes'
+    },
+    '3': {
+      id: '3',
+      name: 'Physio Leblanc',
+      category: 'sanitario',
+      categoryLabel: 'Sanitario',
+      country: 'FR',
+      zone: 'Lyon',
+      initial: 'P',
+      avatarBg: '#f5e6db',
+      avatarColor: '#8c4a1e',
+      description: 'Fisioterapeuta diplomado especializado en rehabilitacion geriatrica, prevencion de caidas y reeducacion postural. Visitas a domicilio en toda el area metropolitana de Lyon. Colabora con el sistema de salud frances (Assurance Maladie) para reduccion de copago para pacientes con mutua complementaria. Miembro del Conseil National de l\'Ordre des Masseurs-Kinesitherapeutes.',
+      services: ['Rehabilitacion tras fractura de cadera', 'Prevencion de caidas', 'Reeducacion postural', 'Masaje terapeutico y drenaje', 'Ejercicios de equilibrio y marcha', 'Electroterapia domiciliaria', 'Informe medico para compañias de seguros', 'Telesesiones de seguimiento'],
+      languages: ['Frances', 'Espanol', 'Ingles'],
+      availability: 'Lunes a sabado, 9h - 18h. Visitas domiciliarias concertadas.',
+      price: '60 EUR/sesion'
+    },
+    '4': {
+      id: '4',
+      name: 'Accesibilidad Muller',
+      category: 'hogar',
+      categoryLabel: 'Adaptacion del hogar',
+      country: 'DE',
+      zone: 'Berlin',
+      initial: 'A',
+      avatarBg: '#e8e6f5',
+      avatarColor: '#4a2d8c',
+      description: 'Empresa especializada en reformas de accesibilidad para personas mayores y con movilidad reducida. Certificada segun normativa DIN 18040 y homologada por el KfW para tramitacion de subvenciones. Proyectos llave en mano: desde el diseno tecnico hasta la ejecucion y la tramitacion de ayudas publicas. Mas de 400 viviendas adaptadas en Berlin y area metropolitana desde 2009.',
+      services: ['Barras de apoyo y asideros certificados', 'Rampas de acceso y nivelacion', 'Elevadores y sillas salvaescaleras', 'Adaptacion de banos sin barreras', 'Ampliacion de puertas para silla de ruedas', 'Domótica y sistemas de alerta', 'Tramitacion de subvenciones KfW', 'Certificado de accesibilidad DIN 18040'],
+      languages: ['Aleman', 'Ingles', 'Turco'],
+      availability: 'Lunes a viernes. Presupuesto sin compromiso en 48h.',
+      price: 'Presupuesto personalizado'
+    },
+    '5': {
+      id: '5',
+      name: 'TransSenior Lisboa',
+      category: 'transporte',
+      categoryLabel: 'Transporte adaptado',
+      country: 'PT',
+      zone: 'Lisboa',
+      initial: 'T',
+      avatarBg: '#e6f5e6',
+      avatarColor: '#1a6b1a',
+      description: 'Servicio de transporte no urgente adaptado para personas mayores en Lisboa y area metropolitana. Flota de vehiculos con rampa hidraulica, aire acondicionado y conductor formado en primeros auxilios y atencion al mayor. Convenio con varios hospitales y centros de dia publicos del municipio. Servicio de acompanamiento opcional con auxiliar formada.',
+      services: ['Traslados a consultas medicas', 'Transporte a centros de dia', 'Salidas de ocio y compras', 'Traslados aeropuerto y estacion', 'Acompanamiento con auxiliar opcional', 'Reserva online o por telefono', 'Factura para reembolso de seguros', 'Servicio puntual y periodico'],
+      languages: ['Portugues', 'Espanol', 'Ingles'],
+      availability: 'Todos los dias, 7h - 21h. Reserva con 24h de antelacion.',
+      price: '25 EUR/trayecto'
+    },
+    '6': {
+      id: '6',
+      name: 'Farmacia Neri',
+      category: 'farmacia',
+      categoryLabel: 'Farmacia y ortopedia',
+      country: 'IT',
+      zone: 'Roma',
+      initial: 'F',
+      avatarBg: '#f5f0db',
+      avatarColor: '#8c7a1e',
+      description: 'Farmacia fundada en 1987 especializada en geriatria y ortopedia en el barrio Prati de Roma. Servicio de entrega a domicilio en todo el municipio, preparacion de pastilleros semanales y atencion farmaceutica personalizada. Amplio catalogo de material ortopedico en alquiler y venta. Colaboracion con el Servizio Sanitario Nazionale para dispensacion de medicamentos cronicos con receta electronica.',
+      services: ['Entrega de medicamentos a domicilio', 'Preparacion de pastilleros semanales', 'Alquiler de sillas de ruedas y camas articuladas', 'Atencion farmaceutica personalizada', 'Productos de higiene y cuidado geriatrico', 'Seguimiento de tratamientos cronicos', 'Dispensacion con receta electronica SSN', 'Oxigenoterapia y material respiratorio'],
+      languages: ['Italiano', 'Ingles', 'Arabe'],
+      availability: 'Lunes a sabado, 8h30 - 19h30.',
+      price: 'Entrega gratuita (pedido minimo 20 EUR)'
+    }
+  };
+
+  var _pid = new URLSearchParams(window.location.search).get('id') || '';
+  if (!PROVIDERS[_pid]) window.location.replace('/directorio.html');
+</script>
+
+<!-- Skip link -->
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- Header -->
+<header class="site-header">
+  <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+    <a href="/" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:var(--color-sage-dark)">Loventy</a>
+    <span style="font-size:var(--font-size-xs);color:var(--color-text-muted)">El cuidado que todo mayor merece</span>
+  </div>
+  <nav class="main-nav" id="main-nav" aria-label="Principal">
+    <ul class="nav-links">
+      <li><a href="/directorio.html">Directorio</a></li>
+      <li><a href="/about.html#voluntariado">Voluntariado</a></li>
+      <li><a href="/about.html#talks">Loventy Talks</a></li>
+      <li><a href="/sponsors.html">Sponsors</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+    </ul>
+    <div style="display:flex;gap:var(--space-1);margin-left:var(--space-4)">
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="es">ES</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="en">EN</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="fr">FR</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="de">DE</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="it">IT</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="pt">PT</button>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu movil">
+  <ul style="display:flex;flex-direction:column;gap:var(--space-4)">
+    <li><a href="/directorio.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
+    <li><a href="/about.html#voluntariado">Voluntariado</a></li>
+    <li><a href="/about.html#talks">Loventy Talks</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/pricing.html">Pricing</a></li>
+  </ul>
+  <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main id="main">
+  <div class="container" style="padding-top:var(--space-6);padding-bottom:var(--space-12)">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/directorio.html">Directorio</a></li>
+        <li id="lp-breadcrumb-name" aria-current="page">Cargando...</li>
+      </ol>
+    </nav>
+
+    <!-- 2-col grid -->
+    <div class="listing-grid">
+
+      <!-- Columna izquierda -->
+      <div>
+
+        <!-- Avatar + nombre + badges -->
+        <div style="display:flex;align-items:flex-start;gap:var(--space-5);margin-bottom:var(--space-6)">
+          <svg id="lp-avatar" width="80" height="80" viewBox="0 0 80 80" aria-hidden="true" style="flex-shrink:0">
+            <circle id="lp-avatar-circle" cx="40" cy="40" r="40" fill="#e0e0e0"/>
+            <text id="lp-avatar-text" x="40" y="53" text-anchor="middle" font-family="Georgia,serif" font-size="36" fill="#555"></text>
+          </svg>
+          <div style="flex:1;min-width:0">
+            <h1 id="lp-name" style="font-family:var(--font-heading);font-size:var(--font-size-2xl);font-weight:normal;margin:0 0 var(--space-2)">Cargando...</h1>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+              <span id="lp-cat-badge" class="badge badge-sage"></span>
+              <span id="lp-country-badge" class="badge badge-neutral"></span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="lp-divider" />
+
+        <!-- Descripcion -->
+        <div style="margin-bottom:var(--space-6)">
+          <h2 style="font-family:var(--font-heading);font-size:var(--font-size-lg);font-weight:normal;margin:0 0 var(--space-3)">Sobre este proveedor</h2>
+          <p id="lp-description" style="font-size:var(--font-size-base);line-height:1.75;color:var(--color-text);margin:0"></p>
+        </div>
+
+        <hr class="lp-divider" />
+
+        <!-- Servicios -->
+        <div style="margin-bottom:var(--space-6)">
+          <h2 style="font-family:var(--font-heading);font-size:var(--font-size-lg);font-weight:normal;margin:0 0 var(--space-3)">Servicios ofrecidos</h2>
+          <ul id="lp-services" class="lp-services-list"></ul>
+        </div>
+
+        <hr class="lp-divider" />
+
+        <!-- Info: idiomas, disponibilidad, precio -->
+        <div class="lp-info-grid" style="margin-bottom:var(--space-6)">
+          <div class="lp-info-item">
+            <span class="lp-info-label">Idiomas</span>
+            <span id="lp-languages" class="lp-info-value">—</span>
+          </div>
+          <div class="lp-info-item">
+            <span class="lp-info-label">Disponibilidad</span>
+            <span id="lp-availability" class="lp-info-value">—</span>
+          </div>
+          <div class="lp-info-item">
+            <span class="lp-info-label">Precio orientativo</span>
+            <span id="lp-price" class="lp-info-value">—</span>
+          </div>
+        </div>
+
+        <hr class="lp-divider" />
+
+        <!-- Disclaimer -->
+        <p class="lp-disclaimer">
+          Loventy es un directorio informativo. La contratacion es responsabilidad exclusiva del usuario. Loventy no interviene en los acuerdos entre usuario y proveedor, no verifica identidades ni garantiza la disponibilidad de los servicios listados.
+        </p>
+
+      </div>
+
+      <!-- Columna derecha (sticky) -->
+      <div>
+        <div class="card" style="position:sticky;top:calc(var(--header-height,64px) + var(--space-4));padding:var(--space-6)">
+
+          <h3 style="font-family:var(--font-heading);font-size:var(--font-size-base);font-weight:normal;margin:0 0 var(--space-4)">Contactar con este proveedor</h3>
+
+          <!-- Formulario -->
+          <form id="lp-form" novalidate>
+            <div class="form-group">
+              <label class="form-label form-label-required" for="lp-contact-name">Tu nombre</label>
+              <input type="text" id="lp-contact-name" class="form-input" placeholder="Maria Lopez" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label form-label-required" for="lp-contact-email">Tu email</label>
+              <input type="email" id="lp-contact-email" class="form-input" placeholder="maria@ejemplo.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label form-label-required" for="lp-contact-msg">Mensaje</label>
+              <textarea id="lp-contact-msg" class="form-textarea" rows="4" placeholder="Hola, me gustaria obtener mas informacion sobre..." required></textarea>
+            </div>
+            <div class="form-group" style="flex-direction:row;align-items:flex-start;gap:var(--space-3)">
+              <input type="checkbox" id="lp-contact-accept" style="margin-top:3px;flex-shrink:0" />
+              <label for="lp-contact-accept" style="font-size:var(--font-size-xs);color:var(--color-text-muted);line-height:1.5;cursor:pointer">
+                Acepto que Loventy no es parte de esta contratacion y que la comunicacion es directa con el proveedor.
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%">Enviar mensaje</button>
+          </form>
+
+          <!-- Exito -->
+          <div id="lp-form-success" class="lp-form-success">
+            Mensaje enviado. El proveedor se pondra en contacto contigo en breve.
+          </div>
+
+          <hr class="lp-divider" />
+
+          <!-- Acciones secundarias -->
+          <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+            <button id="lp-share-btn" class="btn btn-ghost" onclick="shareNetwork('copy')" style="width:100%;justify-content:center">
+              Compartir ficha
+            </button>
+            <button id="lp-report-btn" class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;color:var(--color-error)">
+              Reportar este perfil
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Proveedores similares -->
+  <section class="section animate-on-scroll" style="background:var(--color-bg-secondary)">
+    <div class="container">
+      <h2 class="section-title">Otros proveedores similares</h2>
+      <div id="lp-similar" class="auto-grid" style="margin-top:var(--space-6)"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="/" class="footer-logo">Loventy</a>
+        <p class="footer-brand-desc">La plataforma europea para el cuidado de personas mayores.</p>
+        <div class="footer-social" style="display:flex;gap:var(--space-3);margin-top:var(--space-4)">
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://x.com" target="_blank" rel="noopener" aria-label="X" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://tiktok.com/@loventy" target="_blank" rel="noopener" aria-label="TikTok" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+          </a>
+          <a href="https://youtube.com/@loventy" target="_blank" rel="noopener" aria-label="YouTube" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="var(--color-bg)"/></svg>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Directorio</h4>
+        <ul>
+          <li><a href="/directorio.html?cat=cuidador">Cuidadores</a></li>
+          <li><a href="/directorio.html?cat=residencia">Residencias</a></li>
+          <li><a href="/directorio.html?cat=sanitario">Servicios sanitarios</a></li>
+          <li><a href="/directorio.html?cat=voluntariado">Voluntariado</a></li>
+          <li><a href="/directorio.html?cat=legal">Servicios legales</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/legal.html">Aviso legal</a></li>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Terminos</a></li>
+          <li><a href="/security.html">Seguridad</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Loventy</h4>
+        <ul>
+          <li><a href="/about.html">Quienes somos</a></li>
+          <li><a href="/sponsors.html">Anunciarse</a></li>
+          <li><a href="/pricing.html">Precios</a></li>
+          <li><a href="/contact.html">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+      <span style="margin-left:var(--space-4);font-size:var(--font-size-xs)">La plataforma para el cuidado de mayores en Europa.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+  (function() {
+    var id = new URLSearchParams(window.location.search).get('id') || '';
+    var p = PROVIDERS[id];
+    if (!p) return;
+
+    // Titulo de pagina
+    document.title = p.name + ' — Loventy';
+
+    // Breadcrumb
+    document.getElementById('lp-breadcrumb-name').textContent = p.name;
+
+    // Avatar
+    document.getElementById('lp-avatar-circle').setAttribute('fill', p.avatarBg);
+    document.getElementById('lp-avatar-text').setAttribute('fill', p.avatarColor);
+    document.getElementById('lp-avatar-text').textContent = p.initial;
+
+    // Nombre y badges
+    document.getElementById('lp-name').textContent = p.name;
+    document.getElementById('lp-cat-badge').textContent = p.categoryLabel;
+    document.getElementById('lp-country-badge').textContent = p.country + ' · ' + p.zone;
+
+    // Descripcion
+    document.getElementById('lp-description').textContent = p.description;
+
+    // Servicios
+    var ul = document.getElementById('lp-services');
+    p.services.forEach(function(s) {
+      var li = document.createElement('li');
+      li.textContent = s;
+      ul.appendChild(li);
+    });
+
+    // Detalles
+    document.getElementById('lp-languages').textContent = p.languages.join(', ');
+    document.getElementById('lp-availability').textContent = p.availability;
+    document.getElementById('lp-price').textContent = p.price;
+
+    // Proveedores similares (3 distintos al actual)
+    var similar = Object.keys(PROVIDERS)
+      .filter(function(k) { return k !== id; })
+      .slice(0, 3)
+      .map(function(k) { return PROVIDERS[k]; });
+
+    var grid = document.getElementById('lp-similar');
+    similar.forEach(function(sp) {
+      var art = document.createElement('article');
+      art.className = 'card-provider';
+      art.dataset.id = sp.id;
+      art.style.cursor = 'pointer';
+      art.innerHTML =
+        '<div class="card-provider-header">'
+        + '<svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">'
+        + '<circle cx="24" cy="24" r="24" fill="' + sp.avatarBg + '"/>'
+        + '<text x="24" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="' + sp.avatarColor + '">' + sp.initial + '</text>'
+        + '</svg>'
+        + '<div class="provider-info">'
+        + '<p class="provider-name">' + sp.name + '</p>'
+        + '<p class="provider-location">' + sp.zone + ' &bull; ' + sp.country + '</p>'
+        + '</div></div>'
+        + '<span class="badge badge-sage">' + sp.categoryLabel + '</span>'
+        + '<p class="provider-desc">' + sp.description.slice(0, 130) + '...</p>'
+        + '<div class="provider-footer">'
+        + '<span class="provider-price">' + sp.price + '</span>'
+        + '<a href="/listing-provider.html?id=' + sp.id + '" class="btn btn-secondary btn-sm">Ver ficha</a>'
+        + '</div>';
+      art.addEventListener('click', function(e) {
+        if (!e.target.closest('a')) {
+          window.location.href = '/listing-provider.html?id=' + sp.id;
+        }
+      });
+      grid.appendChild(art);
+    });
+
+    // Formulario de contacto
+    var form = document.getElementById('lp-form');
+    var success = document.getElementById('lp-form-success');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name = document.getElementById('lp-contact-name').value.trim();
+      var email = document.getElementById('lp-contact-email').value.trim();
+      var msg = document.getElementById('lp-contact-msg').value.trim();
+      var accept = document.getElementById('lp-contact-accept').checked;
+
+      if (!name || !email || !msg) {
+        return;
+      }
+      if (!accept) {
+        alert('Debes aceptar las condiciones antes de enviar.');
+        return;
+      }
+
+      fetch('/api/listings/status', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ id: id, action: 'contact', name: name, email: email })
+      }).catch(function(){});
+
+      form.style.display = 'none';
+      success.style.display = '';
+    });
+
+    // Reportar
+    document.getElementById('lp-report-btn').addEventListener('click', function() {
+      alert('Gracias por tu reporte. Lo revisaremos en menos de 48h.');
+    });
+
+    // Nav toggle
+    var toggle = document.getElementById('nav-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        var open = mobileMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    // Lang selector
+    var currentLang = new URLSearchParams(window.location.search).get('lang') || 'es';
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      if (btn.dataset.lang === currentLang) {
+        btn.style.fontWeight = '700';
+        btn.style.color = 'var(--color-eu-gold)';
+        btn.setAttribute('aria-pressed', 'true');
+      }
+      btn.addEventListener('click', function() {
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', btn.dataset.lang);
+        window.location.href = url.toString();
+      });
+    });
+
+    // IntersectionObserver
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.animate-on-scroll').forEach(function(el) { observer.observe(el); });
+    }
+  })();
+
+  function shareNetwork(net) {
+    var url = encodeURIComponent(window.location.href);
+    var txt = encodeURIComponent('Mira este proveedor en Loventy');
+    var links = {
+      whatsapp: 'https://wa.me/?text=' + txt + '%20' + url,
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + url,
+      twitter: 'https://twitter.com/intent/tweet?text=' + txt + '&url=' + url
+    };
+    if (net === 'copy') {
+      navigator.clipboard.writeText(window.location.href).then(function() {
+        var btn = document.getElementById('lp-share-btn');
+        if (btn) {
+          btn.textContent = 'Enlace copiado';
+          setTimeout(function() { btn.textContent = 'Compartir ficha'; }, 2000);
+        }
+      }).catch(function() {});
+    } else {
+      window.open(links[net], '_blank', 'noopener,width=600,height=400');
+    }
+  }
+</script>
+
+</body>
+</html>

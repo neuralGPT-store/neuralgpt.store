@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="neural-api-base" content="https://neuralgpt.store/api" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com; frame-src https://js.stripe.com" />
+  <title>Registro — Loventy</title>
+  <meta name="description" content="Crea tu cuenta en Loventy o inicia sesion para acceder al directorio de cuidado para personas mayores." />
+  <link rel="canonical" href="https://neuralgpt.store/register.html" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/core.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <style>
+    .register-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      max-width: 860px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .register-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+    }
+    .register-panel {
+      background: var(--color-white);
+      border: var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+    }
+    .register-panel h2 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      font-weight: normal;
+      margin: 0 0 var(--space-6);
+    }
+    .register-divider {
+      border: none;
+      border-top: var(--border);
+      margin: var(--space-5) 0;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .checkbox-row input[type="checkbox"] {
+      margin-top: 3px;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .checkbox-row label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      line-height: 1.55;
+      cursor: pointer;
+    }
+    .checkbox-row label a {
+      color: var(--color-sage-dark);
+      text-decoration: underline;
+    }
+    .checkbox-row label a:hover { color: var(--color-eu-gold); }
+    .field-error {
+      font-size: var(--font-size-xs);
+      color: var(--color-error);
+      margin-top: var(--space-1);
+      display: none;
+    }
+    .field-error.visible { display: block; }
+    .form-input.error,
+    .form-select.error,
+    .form-textarea.error { border-color: var(--color-error); }
+    .reg-success {
+      display: none;
+      padding: var(--space-6);
+      text-align: center;
+    }
+    .reg-success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(39,174,96,0.12);
+      border: 2px solid rgba(39,174,96,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+    }
+    .reg-success h3 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      font-weight: normal;
+      margin: 0 0 var(--space-2);
+    }
+    .reg-success p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--color-bg);
+      border: var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      max-width: 560px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal-box h2 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      font-weight: normal;
+      margin: 0 0 var(--space-5);
+    }
+    .modal-close {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      line-height: 1;
+      padding: var(--space-1);
+      transition: color var(--transition);
+    }
+    .modal-close:hover { color: var(--color-text); }
+    .modal-rules {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .modal-rules li {
+      display: flex;
+      gap: var(--space-3);
+      font-size: var(--font-size-sm);
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+    .modal-rules li .rule-num {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-bg-secondary);
+      border: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      color: var(--color-text-muted);
+      margin-top: 1px;
+    }
+    .pwd-hint {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .forgot-link {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: var(--space-1);
+    }
+    .forgot-link:hover { color: var(--color-text); }
+  </style>
+</head>
+<body>
+
+<!-- Skip link -->
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- Header -->
+<header class="site-header">
+  <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+    <a href="/" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:var(--color-sage-dark)">Loventy</a>
+    <span style="font-size:var(--font-size-xs);color:var(--color-text-muted)">El cuidado que todo mayor merece</span>
+  </div>
+  <nav class="main-nav" id="main-nav" aria-label="Principal">
+    <ul class="nav-links">
+      <li><a href="/directorio.html">Directorio</a></li>
+      <li><a href="/about.html#voluntariado">Voluntariado</a></li>
+      <li><a href="/about.html#talks">Loventy Talks</a></li>
+      <li><a href="/sponsors.html">Sponsors</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+    </ul>
+    <div style="display:flex;gap:var(--space-1);margin-left:var(--space-4)">
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="es">ES</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="en">EN</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="fr">FR</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="de">DE</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="it">IT</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="pt">PT</button>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu movil">
+  <ul style="display:flex;flex-direction:column;gap:var(--space-4)">
+    <li><a href="/directorio.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
+    <li><a href="/about.html#voluntariado">Voluntariado</a></li>
+    <li><a href="/about.html#talks">Loventy Talks</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/pricing.html">Pricing</a></li>
+  </ul>
+  <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main id="main">
+
+  <!-- Hero pequeno -->
+  <section style="background:var(--color-bg-secondary);padding:var(--space-10) var(--space-6) var(--space-8);text-align:center">
+    <div class="container">
+      <h1 style="font-family:var(--font-heading);font-size:var(--font-size-2xl);font-weight:normal;margin:0 0 var(--space-2)">Tu cuenta en Loventy</h1>
+      <p style="color:var(--color-text-muted);font-size:var(--font-size-base);margin:0">Crea una cuenta nueva o accede si ya eres parte de la comunidad.</p>
+    </div>
+  </section>
+
+  <!-- Paneles -->
+  <section class="section">
+    <div class="container">
+      <div class="register-grid">
+
+        <!-- Panel izquierdo: Registro -->
+        <div class="register-panel">
+          <h2>Crear cuenta</h2>
+
+          <!-- Formulario de registro -->
+          <form id="reg-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="reg-name">Nombre completo</label>
+              <input type="text" id="reg-name" class="form-input" placeholder="Maria Lopez" autocomplete="name" />
+              <span class="field-error" id="err-reg-name"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="reg-email">Email</label>
+              <input type="email" id="reg-email" class="form-input" placeholder="maria@ejemplo.com" autocomplete="email" />
+              <span class="field-error" id="err-reg-email"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="reg-pwd">Contrasena</label>
+              <input type="password" id="reg-pwd" class="form-input" placeholder="Minimo 8 caracteres" autocomplete="new-password" />
+              <p class="pwd-hint">Debe tener al menos 8 caracteres.</p>
+              <span class="field-error" id="err-reg-pwd"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="reg-pwd-confirm">Confirmar contrasena</label>
+              <input type="password" id="reg-pwd-confirm" class="form-input" placeholder="Repite la contrasena" autocomplete="new-password" />
+              <span class="field-error" id="err-reg-pwd-confirm"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="reg-type">Tipo de cuenta</label>
+              <select id="reg-type" class="form-select">
+                <option value="">Selecciona una opcion</option>
+                <option value="familiar">Familiar (busco cuidado para un mayor)</option>
+                <option value="profesional">Profesional (ofrezco servicios)</option>
+                <option value="voluntario">Voluntario</option>
+              </select>
+              <span class="field-error" id="err-reg-type"></span>
+            </div>
+
+            <hr class="register-divider" />
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="reg-terms" />
+              <label for="reg-terms">
+                He leido y acepto las
+                <a href="#" id="open-rules-modal">normas de la comunidad Loventy</a>
+              </label>
+            </div>
+            <span class="field-error" id="err-reg-terms"></span>
+
+            <div class="checkbox-row" style="margin-top:var(--space-2)">
+              <input type="checkbox" id="reg-privacy" />
+              <label for="reg-privacy">
+                Acepto la
+                <a href="/privacy.html" target="_blank" rel="noopener">politica de privacidad</a>
+              </label>
+            </div>
+            <span class="field-error" id="err-reg-privacy"></span>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:var(--space-4)">Crear cuenta</button>
+
+          </form>
+
+          <!-- Estado de exito -->
+          <div id="reg-success" class="reg-success">
+            <div class="reg-success-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" aria-hidden="true">
+                <path d="M20 6L9 17l-5-5"/>
+              </svg>
+            </div>
+            <h3>Cuenta creada</h3>
+            <p>Revisa tu email para confirmar tu direccion y activar tu cuenta.</p>
+          </div>
+
+        </div>
+
+        <!-- Panel derecho: Login -->
+        <div class="register-panel">
+          <h2>Iniciar sesion</h2>
+
+          <form id="login-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="login-email">Email</label>
+              <input type="email" id="login-email" class="form-input" placeholder="maria@ejemplo.com" autocomplete="email" />
+              <span class="field-error" id="err-login-email"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label form-label-required" for="login-pwd">Contrasena</label>
+              <input type="password" id="login-pwd" class="form-input" placeholder="Tu contrasena" autocomplete="current-password" />
+              <a href="#" class="forgot-link">¿Olvidaste tu contrasena?</a>
+              <span class="field-error" id="err-login-pwd"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:var(--space-2)">Entrar</button>
+
+          </form>
+
+          <hr class="register-divider" />
+
+          <p style="font-size:var(--font-size-sm);color:var(--color-text-muted);text-align:center;margin:0">
+            ¿No tienes cuenta todavia?
+            <a href="#reg-form" style="color:var(--color-sage-dark);text-decoration:none" onclick="document.getElementById('reg-name').focus();return false;">Registrate gratis</a>
+          </p>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Modal normas de comunidad -->
+<div class="modal-overlay" id="rules-modal" role="dialog" aria-modal="true" aria-labelledby="rules-modal-title">
+  <div class="modal-box" id="rules-modal-box">
+    <button class="modal-close" id="close-rules-modal" aria-label="Cerrar">&#x2715;</button>
+    <h2 id="rules-modal-title">Normas de la comunidad Loventy</h2>
+    <ol class="modal-rules">
+      <li>
+        <span class="rule-num">1</span>
+        <span>Trato respetuoso en todo momento. Cualquier mensaje ofensivo, discriminatorio o de acoso conlleva la suspension inmediata de la cuenta.</span>
+      </li>
+      <li>
+        <span class="rule-num">2</span>
+        <span>No compartas datos personales sensibles (DNI, datos bancarios, domicilio) con ningun proveedor antes de verificar su identidad por canales oficiales.</span>
+      </li>
+      <li>
+        <span class="rule-num">3</span>
+        <span>Loventy es un directorio informativo. No verificamos profesionalmente a ningun proveedor. La contratacion y la relacion con el profesional es responsabilidad exclusiva del usuario.</span>
+      </li>
+      <li>
+        <span class="rule-num">4</span>
+        <span>Reporta cualquier conducta inapropiada usando el boton de reporte en cada ficha. Lo revisaremos en menos de 48 horas.</span>
+      </li>
+      <li>
+        <span class="rule-num">5</span>
+        <span>Los menores de 18 anos necesitan la supervision de un adulto responsable para usar la plataforma y contratar cualquier servicio.</span>
+      </li>
+      <li>
+        <span class="rule-num">6</span>
+        <span>Queda prohibido el spam, la publicacion de contenido ofensivo y la publicidad no autorizada por Loventy. Las cuentas que incumplan esta norma seran eliminadas sin previo aviso.</span>
+      </li>
+    </ol>
+    <button id="accept-rules-btn" class="btn btn-primary" style="width:100%">Entendido y acepto</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="/" class="footer-logo">Loventy</a>
+        <p class="footer-brand-desc">La plataforma europea para el cuidado de personas mayores.</p>
+        <div class="footer-social" style="display:flex;gap:var(--space-3);margin-top:var(--space-4)">
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://x.com" target="_blank" rel="noopener" aria-label="X" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://tiktok.com/@loventy" target="_blank" rel="noopener" aria-label="TikTok" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+          </a>
+          <a href="https://youtube.com/@loventy" target="_blank" rel="noopener" aria-label="YouTube" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="var(--color-bg)"/></svg>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Directorio</h4>
+        <ul>
+          <li><a href="/directorio.html?cat=cuidador">Cuidadores</a></li>
+          <li><a href="/directorio.html?cat=residencia">Residencias</a></li>
+          <li><a href="/directorio.html?cat=sanitario">Servicios sanitarios</a></li>
+          <li><a href="/directorio.html?cat=voluntariado">Voluntariado</a></li>
+          <li><a href="/directorio.html?cat=legal">Servicios legales</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/legal.html">Aviso legal</a></li>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Terminos</a></li>
+          <li><a href="/security.html">Seguridad</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Loventy</h4>
+        <ul>
+          <li><a href="/about.html">Quienes somos</a></li>
+          <li><a href="/sponsors.html">Anunciarse</a></li>
+          <li><a href="/pricing.html">Precios</a></li>
+          <li><a href="/contact.html">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+      <span style="margin-left:var(--space-4);font-size:var(--font-size-xs)">La plataforma para el cuidado de mayores en Europa.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+  (function() {
+
+    /* ---- Utilidades ---- */
+    function showError(id, msg) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.add('visible');
+    }
+    function clearError(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = '';
+      el.classList.remove('visible');
+    }
+    function setFieldState(inputId, hasError) {
+      var el = document.getElementById(inputId);
+      if (!el) return;
+      if (hasError) el.classList.add('error');
+      else el.classList.remove('error');
+    }
+    function clearAllErrors() {
+      var ids = ['err-reg-name','err-reg-email','err-reg-pwd','err-reg-pwd-confirm',
+        'err-reg-type','err-reg-terms','err-reg-privacy','err-login-email','err-login-pwd'];
+      ids.forEach(clearError);
+      ['reg-name','reg-email','reg-pwd','reg-pwd-confirm','reg-type',
+        'login-email','login-pwd'].forEach(function(id) { setFieldState(id, false); });
+    }
+
+    /* ---- Formulario de registro ---- */
+    var regForm = document.getElementById('reg-form');
+    var regSuccess = document.getElementById('reg-success');
+
+    regForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearAllErrors();
+
+      var name    = document.getElementById('reg-name').value.trim();
+      var email   = document.getElementById('reg-email').value.trim();
+      var pwd     = document.getElementById('reg-pwd').value;
+      var pwdC    = document.getElementById('reg-pwd-confirm').value;
+      var type    = document.getElementById('reg-type').value;
+      var terms   = document.getElementById('reg-terms').checked;
+      var privacy = document.getElementById('reg-privacy').checked;
+      var valid   = true;
+
+      if (!name) {
+        showError('err-reg-name', 'El nombre es obligatorio.');
+        setFieldState('reg-name', true);
+        valid = false;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('err-reg-email', 'Introduce un email valido.');
+        setFieldState('reg-email', true);
+        valid = false;
+      }
+      if (pwd.length < 8) {
+        showError('err-reg-pwd', 'La contrasena debe tener al menos 8 caracteres.');
+        setFieldState('reg-pwd', true);
+        valid = false;
+      }
+      if (pwd !== pwdC) {
+        showError('err-reg-pwd-confirm', 'Las contrasenas no coinciden.');
+        setFieldState('reg-pwd-confirm', true);
+        valid = false;
+      }
+      if (!type) {
+        showError('err-reg-type', 'Selecciona un tipo de cuenta.');
+        setFieldState('reg-type', true);
+        valid = false;
+      }
+      if (!terms) {
+        showError('err-reg-terms', 'Debes aceptar las normas de la comunidad.');
+        valid = false;
+      }
+      if (!privacy) {
+        showError('err-reg-privacy', 'Debes aceptar la politica de privacidad.');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      /* Placeholder: POST a /api/register cuando exista */
+      regForm.style.display = 'none';
+      regSuccess.style.display = '';
+    });
+
+    /* ---- Formulario de login ---- */
+    var loginForm = document.getElementById('login-form');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearAllErrors();
+
+      var email = document.getElementById('login-email').value.trim();
+      var pwd   = document.getElementById('login-pwd').value;
+      var valid = true;
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('err-login-email', 'Introduce un email valido.');
+        setFieldState('login-email', true);
+        valid = false;
+      }
+      if (!pwd) {
+        showError('err-login-pwd', 'Introduce tu contrasena.');
+        setFieldState('login-pwd', true);
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      /* Placeholder: POST a /api/login cuando exista */
+      window.location.href = '/account.html';
+    });
+
+    /* ---- Modal normas ---- */
+    var modal    = document.getElementById('rules-modal');
+    var modalBox = document.getElementById('rules-modal-box');
+
+    function openModal() {
+      modal.classList.add('open');
+      document.getElementById('accept-rules-btn').focus();
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+    }
+
+    document.getElementById('open-rules-modal').addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+
+    document.getElementById('close-rules-modal').addEventListener('click', closeModal);
+
+    document.getElementById('accept-rules-btn').addEventListener('click', function() {
+      document.getElementById('reg-terms').checked = true;
+      clearError('err-reg-terms');
+      closeModal();
+      document.getElementById('reg-terms').focus();
+    });
+
+    /* Click fuera del modal box */
+    modal.addEventListener('click', function(e) {
+      if (!modalBox.contains(e.target)) closeModal();
+    });
+
+    /* Escape */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    /* ---- Nav toggle ---- */
+    var toggle     = document.getElementById('nav-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        var open = mobileMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    /* ---- Lang selector ---- */
+    var currentLang = new URLSearchParams(window.location.search).get('lang') || 'es';
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      if (btn.dataset.lang === currentLang) {
+        btn.style.fontWeight = '700';
+        btn.style.color = 'var(--color-eu-gold)';
+        btn.setAttribute('aria-pressed', 'true');
+      }
+      btn.addEventListener('click', function() {
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', btn.dataset.lang);
+        window.location.href = url.toString();
+      });
+    });
+
+  })();
+</script>
+
+</body>
+</html>

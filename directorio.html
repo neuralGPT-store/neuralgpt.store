@@ -42,7 +42,7 @@
     </div>
   </nav>
   <div class="header-actions">
-    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
     <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
@@ -59,7 +59,7 @@
     <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Pricing</a></li>
   </ul>
   <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
-    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
     <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
   </div>
 </nav>
@@ -76,7 +76,7 @@
   <div class="filters-bar" id="filters-bar">
     <div class="container">
       <div class="filters-inner">
-        <select id="filter-category" class="form-select" aria-label="Filtrar por categoria">
+        <select id="filter-cat" class="form-select" aria-label="Filtrar por categoria">
           <option value="">Todos</option>
           <option value="cuidador">Cuidadores</option>
           <option value="residencia">Residencias</option>
@@ -98,7 +98,7 @@
           <option value="PL">Polonia</option>
           <option value="NL">Paises Bajos</option>
         </select>
-        <button id="btn-search" class="btn btn-primary" type="button">Buscar</button>
+        <button id="filter-btn" class="btn btn-primary" type="button">Buscar</button>
       </div>
     </div>
   </div>
@@ -111,7 +111,7 @@
 
       <div id="directory-grid" class="auto-grid">
 
-        <article class="card-provider" data-category="cuidador" data-zone="madrid" data-country="ES">
+        <article class="card-provider" data-id="1" data-category="cuidador" data-zone="madrid" data-country="es">
           <div class="card-provider-header">
             <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
               <circle cx="24" cy="24" r="24" fill="#d4e6d9" />
@@ -130,7 +130,7 @@
           </div>
         </article>
 
-        <article class="card-provider" data-category="residencia" data-zone="barcelona" data-country="ES">
+        <article class="card-provider" data-id="2" data-category="residencia" data-zone="barcelona" data-country="es">
           <div class="card-provider-header">
             <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
               <circle cx="24" cy="24" r="24" fill="#dbe8f5" />
@@ -149,7 +149,7 @@
           </div>
         </article>
 
-        <article class="card-provider" data-category="sanitario" data-zone="lyon" data-country="FR">
+        <article class="card-provider" data-id="3" data-category="sanitario" data-zone="lyon" data-country="fr">
           <div class="card-provider-header">
             <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
               <circle cx="24" cy="24" r="24" fill="#f5e6db" />
@@ -168,7 +168,7 @@
           </div>
         </article>
 
-        <article class="card-provider" data-category="hogar" data-zone="berlin" data-country="DE">
+        <article class="card-provider" data-id="4" data-category="hogar" data-zone="berlin" data-country="de">
           <div class="card-provider-header">
             <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
               <circle cx="24" cy="24" r="24" fill="#e8e6f5" />
@@ -187,7 +187,7 @@
           </div>
         </article>
 
-        <article class="card-provider" data-category="transporte" data-zone="lisboa" data-country="PT">
+        <article class="card-provider" data-id="5" data-category="transporte" data-zone="lisboa" data-country="pt">
           <div class="card-provider-header">
             <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
               <circle cx="24" cy="24" r="24" fill="#e6f5e6" />
@@ -206,7 +206,7 @@
           </div>
         </article>
 
-        <article class="card-provider" data-category="farmacia" data-zone="roma" data-country="IT">
+        <article class="card-provider" data-id="6" data-category="farmacia" data-zone="roma" data-country="it">
           <div class="card-provider-header">
             <svg class="provider-avatar" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
               <circle cx="24" cy="24" r="24" fill="#f5f0db" />
@@ -277,60 +277,92 @@
 </footer>
 
 <script>
-  (function () {
-    function filterDirectory() {
-      var cat = document.getElementById('filter-category').value;
-      var zone = document.getElementById('filter-zone').value.trim().toLowerCase();
-      var country = document.getElementById('filter-country').value;
-      var cards = document.querySelectorAll('#directory-grid .card-provider');
-      var visible = 0;
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var catParam = params.get('cat') || '';
+  var qParam = params.get('q') || '';
 
-      cards.forEach(function (card) {
-        var matchCat = !cat || card.dataset.category === cat;
-        var matchZone = !zone || card.dataset.zone.indexOf(zone) !== -1;
-        var matchCountry = !country || card.dataset.country === country;
-        if (matchCat && matchZone && matchCountry) {
-          card.style.display = '';
-          visible++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
+  var catSelect = document.getElementById('filter-cat');
+  var zoneInput = document.getElementById('filter-zone');
+  var searchBtn = document.getElementById('filter-btn');
 
-      document.getElementById('directory-empty').style.display = visible === 0 ? '' : 'none';
-    }
+  if (catParam && catSelect) catSelect.value = catParam;
+  if (qParam && zoneInput) zoneInput.value = qParam;
 
-    document.getElementById('btn-search').addEventListener('click', filterDirectory);
-    document.getElementById('filter-zone').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') filterDirectory();
+  function filterDirectory() {
+    var cat = catSelect ? catSelect.value : '';
+    var zone = zoneInput ? zoneInput.value.toLowerCase().trim() : '';
+    var country = document.getElementById('filter-country');
+    var countryVal = country ? country.value : '';
+    var cards = document.querySelectorAll('.card-provider');
+    var visible = 0;
+
+    cards.forEach(function(card) {
+      var cardCat = (card.dataset.category || '').toLowerCase();
+      var cardZone = (card.dataset.zone || '').toLowerCase();
+      var cardCountry = (card.dataset.country || '').toLowerCase();
+
+      var matchCat = !cat || cat === 'todos' || cardCat === cat;
+      var matchZone = !zone || cardZone.includes(zone) || (card.textContent || '').toLowerCase().includes(zone);
+      var matchCountry = !countryVal || countryVal === 'todos' || cardCountry === countryVal.toLowerCase();
+
+      var show = matchCat && matchZone && matchCountry;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
     });
-    document.getElementById('filter-category').addEventListener('change', filterDirectory);
+
+    var empty = document.getElementById('directory-empty');
+    var loading = document.getElementById('directory-loading');
+    if (empty) empty.style.display = visible === 0 ? '' : 'none';
+    if (loading) loading.style.display = 'none';
+  }
+
+  if (searchBtn) searchBtn.addEventListener('click', filterDirectory);
+  if (catSelect) catSelect.addEventListener('change', filterDirectory);
+  if (document.getElementById('filter-country')) {
     document.getElementById('filter-country').addEventListener('change', filterDirectory);
+  }
+  if (zoneInput) zoneInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') filterDirectory();
+  });
 
-    var params = new URLSearchParams(window.location.search);
-    var currentLang = params.get('lang') || 'es';
-    document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      if (btn.dataset.lang === currentLang) {
-        btn.style.fontWeight = '700';
-        btn.style.color = 'var(--color-sage-dark)';
-        btn.setAttribute('aria-pressed', 'true');
-      }
-      btn.addEventListener('click', function () {
-        var url = new URL(window.location.href);
-        url.searchParams.set('lang', btn.dataset.lang);
-        window.location.href = url.toString();
-      });
+  // Aplica filtros al cargar si vienen por URL
+  if (catParam || qParam) filterDirectory();
+
+  // Cada card lleva a su ficha
+  document.querySelectorAll('.card-provider').forEach(function(card) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function() {
+      var id = card.dataset.id || '';
+      if (id) window.location.href = '/listing-provider.html?id=' + id;
     });
+  });
 
-    var toggle = document.getElementById('nav-toggle');
-    var mobileMenu = document.getElementById('mobile-menu');
-    if (toggle && mobileMenu) {
-      toggle.addEventListener('click', function () {
-        var open = mobileMenu.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(open));
-      });
+  // Nav toggle mobile
+  var toggle = document.getElementById('nav-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      var open = mobileMenu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+
+  // Lang selector
+  var currentLang = new URLSearchParams(window.location.search).get('lang') || 'es';
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    if (btn.dataset.lang === currentLang) {
+      btn.style.fontWeight = '700';
+      btn.style.color = 'var(--color-eu-gold)';
+      btn.setAttribute('aria-pressed', 'true');
     }
-  })();
+    btn.addEventListener('click', function() {
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', btn.dataset.lang);
+      window.location.href = url.toString();
+    });
+  });
+})();
 </script>
 
 </body>
