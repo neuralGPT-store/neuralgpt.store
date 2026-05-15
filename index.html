@@ -61,8 +61,8 @@
     </div>
   </nav>
   <div class="header-actions">
-    <a href="#" class="btn btn-ghost">Entrar</a>
-    <a href="#" class="btn btn-primary">Publicar ficha</a>
+    <a href="/account.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
     </button>
@@ -79,8 +79,8 @@
     <li><a href="/pricing.html">Pricing</a></li>
   </ul>
   <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
-    <a href="#" class="btn btn-ghost">Entrar</a>
-    <a href="#" class="btn btn-primary">Publicar ficha</a>
+    <a href="/account.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
   </div>
 </nav>
 
@@ -111,6 +111,12 @@
         <input type="search" id="hero-search" placeholder="Ciudad, tipo de servicio..." aria-label="Buscar servicios" />
         <button type="submit">Buscar</button>
       </form>
+      <div class="share-bar" style="display:flex;justify-content:center;gap:var(--space-3);margin-top:var(--space-4)">
+        <button class="btn btn-ghost btn-sm" onclick="shareNetwork('whatsapp')" aria-label="Compartir en WhatsApp">WhatsApp</button>
+        <button class="btn btn-ghost btn-sm" onclick="shareNetwork('facebook')" aria-label="Compartir en Facebook">Facebook</button>
+        <button class="btn btn-ghost btn-sm" onclick="shareNetwork('twitter')" aria-label="Compartir en Twitter">Twitter</button>
+        <button class="btn btn-ghost btn-sm" onclick="shareNetwork('copy')" aria-label="Copiar enlace" id="copy-btn">Copiar enlace</button>
+      </div>
     </div>
   </section>
 
@@ -264,7 +270,7 @@
     <div class="container text-center">
       <h2 class="section-title">Publica tu ficha hoy</h2>
       <p class="section-sub" style="margin:0 auto var(--space-8)">Llega a miles de familias que buscan exactamente lo que ofreces.</p>
-      <a href="#" class="btn btn-primary btn-lg">Publicar ficha gratuita</a>
+      <a href="/edit.html" class="btn btn-primary btn-lg">Publicar ficha gratuita</a>
     </div>
   </section>
 
@@ -274,7 +280,7 @@
       <span class="badge badge-sage" style="margin-bottom:var(--space-4)">Comunidad</span>
       <h2 class="section-title mt-4">Loventy Talks</h2>
       <p class="section-sub" style="margin:0 auto var(--space-8)">Conversaciones y recursos de expertos en cuidado de mayores. Gratuito y abierto a toda la comunidad.</p>
-      <a href="#" class="btn btn-secondary">Unirme como voluntario</a>
+      <a href="/contact.html?tipo=voluntario" class="btn btn-secondary">Unirme como voluntario</a>
     </div>
   </section>
 
@@ -286,15 +292,30 @@
     <div class="footer-grid">
       <div class="footer-brand-col">
         <a href="/" class="footer-logo">Loventy</a>
-        <p class="footer-brand-desc">La plataforma europea de cuidado para personas mayores. Conectamos familias con los mejores profesionales.</p>
+        <p class="footer-brand-desc">La plataforma europea para el cuidado de personas mayores.</p>
+        <div class="footer-social" style="display:flex;gap:var(--space-3);margin-top:var(--space-4)">
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 8v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Directorio</h4>
         <ul>
-          <li><a href="#">Cuidadores</a></li>
-          <li><a href="#">Residencias</a></li>
-          <li><a href="#">Servicios sanitarios</a></li>
-          <li><a href="/about.html#voluntariado">Voluntariado</a></li>
+          <li><a href="/directorio.html?cat=cuidador">Cuidadores</a></li>
+          <li><a href="/directorio.html?cat=residencia">Residencias</a></li>
+          <li><a href="/directorio.html?cat=sanitario">Servicios sanitarios</a></li>
+          <li><a href="/directorio.html?cat=voluntariado">Voluntariado</a></li>
+          <li><a href="/directorio.html?cat=legal">Servicios legales</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -302,18 +323,23 @@
         <ul>
           <li><a href="/legal.html">Aviso legal</a></li>
           <li><a href="/privacy.html">Privacidad</a></li>
-          <li><a href="/terms.html">Términos</a></li>
+          <li><a href="/terms.html">Terminos</a></li>
+          <li><a href="/security.html">Seguridad</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contacto</h4>
+        <h4>Loventy</h4>
         <ul>
-          <li><a href="mailto:loventy@neuralgpt.store">loventy@neuralgpt.store</a></li>
+          <li><a href="/about.html">Quienes somos</a></li>
+          <li><a href="/sponsors.html">Anunciarse</a></li>
+          <li><a href="/pricing.html">Precios</a></li>
+          <li><a href="/contact.html">Contacto</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+      <span style="margin-left:var(--space-4);font-size:var(--font-size-xs)">La plataforma para el cuidado de mayores en Europa.</span>
     </div>
   </div>
 </footer>
@@ -345,10 +371,6 @@
       });
     }
 
-    document.getElementById('hero-search-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-    });
-
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
@@ -358,6 +380,39 @@
       document.querySelectorAll('.animate-on-scroll').forEach(function (el) { observer.observe(el); });
     }
   })();
+
+  function shareNetwork(net) {
+    var url = encodeURIComponent('https://neuralgpt.store');
+    var txt = encodeURIComponent('Encuentra cuidado para tus mayores en Loventy');
+    var links = {
+      whatsapp: 'https://wa.me/?text=' + txt + '%20' + url,
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + url,
+      twitter: 'https://twitter.com/intent/tweet?text=' + txt + '&url=' + url
+    };
+    if (net === 'copy') {
+      navigator.clipboard.writeText('https://neuralgpt.store').then(function() {
+        var btn = document.getElementById('copy-btn');
+        btn.textContent = 'Copiado';
+        setTimeout(function(){ btn.textContent = 'Copiar enlace'; }, 2000);
+      });
+    } else {
+      window.open(links[net], '_blank', 'noopener,width=600,height=400');
+    }
+  }
+
+  document.querySelectorAll('.card-service').forEach(function(card) {
+    var cat = card.dataset.category || '';
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function() {
+      window.location.href = '/directorio.html' + (cat ? '?cat=' + cat : '');
+    });
+  });
+
+  document.getElementById('hero-search-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var q = document.getElementById('hero-search').value.trim();
+    if (q) window.location.href = '/directorio.html?q=' + encodeURIComponent(q);
+  });
 
   function trackStripClick(el) {
     var sponsor = el.dataset.sponsor || 'unknown';
