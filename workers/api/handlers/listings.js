@@ -34,7 +34,7 @@ function createListingsHandlers(env) {
     const editKey = String(body.edit_key || '').trim();
 
     const state = await getListingEditState(
-      env.LISTINGS_KV,
+      env.LOVENTY_KV,
       listingId,
       editKey,
       env.LISTINGS_EDIT_KEY_PEPPER
@@ -120,7 +120,7 @@ function createListingsHandlers(env) {
       return sendError(400, 'image_moderation_required', null, request);
     }
 
-    const rows = await readStore(env.LISTINGS_KV);
+    const rows = await readStore(env.LOVENTY_KV);
     const isEdit = input.mode === 'edit' || Boolean(input.editKey);
 
     if (isEdit) {
@@ -143,7 +143,7 @@ function createListingsHandlers(env) {
       const built = await buildListingRecord(input, rows[idx], env.LISTINGS_EDIT_KEY_PEPPER);
       rows[idx] = built.record;
 
-      await writeStore(env.LISTINGS_KV, rows);
+      await writeStore(env.LOVENTY_KV, rows);
 
       return sendJson(200, {
         ok: true,
@@ -156,7 +156,7 @@ function createListingsHandlers(env) {
     const built = await buildListingRecord(input, null, env.LISTINGS_EDIT_KEY_PEPPER);
     rows.push(built.record);
 
-    await writeStore(env.LISTINGS_KV, rows);
+    await writeStore(env.LOVENTY_KV, rows);
 
     return sendJson(200, {
       ok: true,

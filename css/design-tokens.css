@@ -1,105 +1,64 @@
 /* ============================================================
-   neuralgpt.store — Design Tokens v1.0
-   Fuente de verdad única para toda la paleta del ecosistema.
-   Importar este archivo antes de cualquier otra hoja de estilos.
-   Nunca escribir colores hardcodeados fuera de este archivo.
+   Loventy — Design Tokens v1.0
    ============================================================ */
-
-/* @property permite interpolar --rgb-angle en conic-gradient */
-@property --rgb-angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
 
 :root {
-  /* --- Fondos --- */
-  --bg:            #00040D;
-  --bg2:           #00060f;
-  --card-bg:       rgba(0, 10, 25, 0.75);
-  --surface:       rgba(0, 10, 25, 0.75);
 
-  /* --- Bordes --- */
-  --border:        rgba(0, 234, 255, 0.18);
-  --border-muted:  rgba(122, 139, 160, 0.24);
-  --input-border:  rgba(122, 139, 160, 0.28);
-
-  /* --- Colores principales --- */
-  --accent:        #00eaff;
-  --accent-cyan:   #00eaff;
-  --accent2:       #7f00ff;
-  --accent3:       #ff0080;
-  --accent4:       #00ff99;
-  --text:          #e6f0ff;
-  --muted:         #7a8ba0;
-  --warn:          #f7d774;
-
-  /* --- Superficies semitransparentes --- */
-  --surface-dark:  rgba(0, 4, 12, 0.45);
-  --input-bg:      rgba(0, 4, 12, 0.65);
-  --overlay-bg:    rgba(0, 4, 12, 0.82);
-
-  /* --- Superficies ops --- */
-  --ops-header-bg: rgba(0, 8, 20, 0.82);
-  --ops-card-bg:   rgba(0, 10, 24, 0.86);
-  --ops-modal-bg:  rgba(0, 10, 24, 0.96);
-
-  /* --- Accent glow (radial gradients de fondo) --- */
-  --accent-glow:   rgba(0, 234, 255, 0.1);
-  --accent2-glow:  rgba(127, 0, 255, 0.1);
-
-  /* --- Accent4 (verde) pills y badges --- */
-  --accent4-border: rgba(0, 255, 153, 0.35);
-  --accent4-surface: rgba(0, 255, 153, 0.08);
-
-  /* --- Accent3 (rosa) pills y badges --- */
-  --accent3-border: rgba(255, 0, 128, 0.35);
-  --accent3-surface: rgba(255, 0, 128, 0.08);
-
-  /* --- Gradientes RGB animados --- */
-  --rgb:      linear-gradient(90deg,#00eaff,#7f00ff,#ff0080,#00ff99,#00eaff);
-  --rgb-diag: linear-gradient(135deg,#00eaff,#7f00ff,#ff0080,#00ff99,#00eaff);
-
-  /* --- Sombras --- */
-  --shadow:    0 8px 32px rgba(0,234,255,0.10);
-  --shadow-lg: 0 16px 64px rgba(0,234,255,0.15);
-
-  /* --- Geometría --- */
-  --radius:    16px;
-  --radius-lg: 24px;
-  --header-h:  68px;
+  /* --- Colores --- */
+  --color-bg:              #F8F5F0;
+  --color-bg-secondary:    #EDE8E0;
+  --color-sage:            #7C9A7E;
+  --color-sage-dark:       #5E7D60;
+  --color-terracotta:      #A67C6D;
+  --color-terracotta-dark: #8A6358;
+  --color-text:            #2C2C2C;
+  --color-text-muted:      #6B6B6B;
+  --color-border:          #D4CFC8;
+  --color-white:           #FFFFFF;
+  --color-error:           #C0392B;
+  --color-success:         #27AE60;
 
   /* --- Tipografía --- */
-  --font-title: 'Orbitron', system-ui, sans-serif;
-  --font-body:  system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-heading:   Georgia, 'Times New Roman', serif;
+  --font-body:      Arial, Helvetica, sans-serif;
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg:   1.125rem;
+  --font-size-xl:   1.25rem;
+  --font-size-2xl:  1.5rem;
+  --font-size-3xl:  2rem;
+  --font-size-4xl:  2.75rem;
 
-  /* --- Animación --- */
-  --transition: 0.22s cubic-bezier(.4,0,.2,1);
-  --rgb-angle:  0deg;
-}
+  /* --- Espaciado --- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
 
-/* ============================================================
-   RGB ACTIVO — Animación rotatoria aplicable vía ::before
-   ============================================================ */
-@keyframes rgb-rotate {
-  from { --rgb-angle: 0deg; }
-  to   { --rgb-angle: 360deg; }
-}
+  /* --- Bordes --- */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-full: 9999px;
+  --border:      1px solid var(--color-border);
 
-/* Clase auxiliar para aplicar RGB activo a cualquier elemento */
-.rgb-border {
-  position: relative;
-  overflow: hidden;
-}
+  /* --- Sombras --- */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
 
-.rgb-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: conic-gradient(from var(--rgb-angle), #00eaff, #7f00ff, #ff0080, #00ff99, #00eaff);
-  animation: rgb-rotate 8s linear infinite;
-  opacity: 0.35;
-  z-index: -1;
-  pointer-events: none;
+  /* --- Transiciones --- */
+  --transition:      0.2s ease;
+  --transition-slow: 0.4s ease;
+
+  /* --- Layout --- */
+  --max-width:     1200px;
+  --header-height: 64px;
+
 }

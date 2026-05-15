@@ -29,18 +29,18 @@ function createStripeHandlers(env) {
   async function createCheckout(request, opts) {
     const stripeCheck = requireStripe();
     if (!stripeCheck.ok) {
-      return sendError(null, 503, stripeCheck.error, stripeCheck.message);
+      return sendError(503, stripeCheck.error, stripeCheck.message, request);
     }
 
     let body;
     try {
       body = await readJsonBody(request, JSON_MAX);
     } catch (error) {
-      return sendError(null, 400, 'invalid_json_body', error.message);
+      return sendError(400, 'invalid_json_body', error.message, request);
     }
 
     if (!opts.priceId) {
-      return sendError(null, 503, 'stripe_price_not_configured', opts.priceEnv);
+      return sendError(503, 'stripe_price_not_configured', opts.priceEnv, request);
     }
 
     const metadata = {
@@ -60,7 +60,7 @@ function createStripeHandlers(env) {
     );
 
     if (!result.ok) {
-      return sendError(null, 500, result.error || 'stripe_error', result.message || 'checkout_create_failed');
+      return sendError(500, result.error || 'stripe_error', result.message || 'checkout_create_failed', request);
     }
 
     return sendJson(null, 200, {
@@ -130,19 +130,19 @@ function createStripeHandlers(env) {
   async function billingPortal(request) {
     const stripeCheck = requireStripe();
     if (!stripeCheck.ok) {
-      return sendError(null, 503, stripeCheck.error, stripeCheck.message);
+      return sendError(503, stripeCheck.error, stripeCheck.message, request);
     }
 
     let body;
     try {
       body = await readJsonBody(request, JSON_MAX);
     } catch (error) {
-      return sendError(null, 400, 'invalid_json_body', error.message);
+      return sendError(400, 'invalid_json_body', error.message, request);
     }
 
     const customerEmail = String((body && body.customer_email) || '').trim();
     if (!customerEmail || !customerEmail.includes('@')) {
-      return sendError(null, 400, 'customer_email_required');
+      return sendError(400, 'customer_email_required', null, request);
     }
 
     try {
@@ -155,7 +155,7 @@ function createStripeHandlers(env) {
       } else {
         const createResult = await createCustomer(customerEmail, env.STRIPE_SECRET_KEY);
         if (!createResult.ok) {
-          return sendError(null, 500, 'stripe_create_customer_failed', createResult.message);
+          return sendError(500, 'stripe_create_customer_failed', createResult.message, request);
         }
         customerId = createResult.customer.id;
       }
@@ -165,7 +165,7 @@ function createStripeHandlers(env) {
       const portalResult = await createBillingPortalSession(customerId, returnUrl, env.STRIPE_SECRET_KEY);
 
       if (!portalResult.ok) {
-        return sendError(null, 500, 'stripe_portal_error', portalResult.message || 'portal_creation_failed');
+        return sendError(500, 'stripe_portal_error', portalResult.message || 'portal_creation_failed', request);
       }
 
       return sendJson(null, 200, {
@@ -173,36 +173,36 @@ function createStripeHandlers(env) {
         portal_url: portalResult.session.url
       });
     } catch (error) {
-      return sendError(null, 500, 'stripe_portal_error', error.message || 'portal_creation_failed');
+      return sendError(500, 'stripe_portal_error', error.message || 'portal_creation_failed', request);
     }
   }
 
   async function webhook(request) {
     const stripeCheck = requireStripe();
     if (!stripeCheck.ok) {
-      return sendError(null, 503, stripeCheck.error, stripeCheck.message);
+      return sendError(503, stripeCheck.error, stripeCheck.message, request);
     }
 
     if (!env.STRIPE_WEBHOOK_SECRET) {
-      return sendError(null, 503, 'stripe_webhook_not_configured', 'STRIPE_WEBHOOK_SECRET not set');
+      return sendError(503, 'stripe_webhook_not_configured', 'STRIPE_WEBHOOK_SECRET not set', request);
     }
 
     let raw;
     try {
       raw = await readRawBody(request, RAW_MAX);
     } catch (error) {
-      return sendError(null, 400, 'invalid_webhook_body', error.message);
+      return sendError(400, 'invalid_webhook_body', error.message, request);
     }
 
     const signature = request.headers.get('stripe-signature');
     if (!signature) {
-      return sendError(null, 400, 'stripe_signature_missing');
+      return sendError(400, 'stripe_signature_missing', null, request);
     }
 
     const eventResult = await constructWebhookEvent(raw, signature, env.STRIPE_WEBHOOK_SECRET);
 
     if (!eventResult.ok) {
-      return sendError(null, 400, 'webhook_signature_invalid', eventResult.error || 'construct_event_failed');
+      return sendError(400, 'webhook_signature_invalid', eventResult.error || 'construct_event_failed', request);
     }
 
     const event = eventResult.event;
@@ -346,7 +346,7 @@ async function reconcileCheckoutCompleted(event, env) {
   }
 
   const txKey = paymentIntentId || sessionId || String(event.id || '');
-  const result = await applyCommercialEffect(env.LISTINGS_KV, {
+  const result = await applyCommercialEffect(env.LOVENTY_KV, {
     listingId,
     effectKey,
     transactionKey: txKey,
@@ -411,7 +411,7 @@ async function reconcilePaymentIntentSucceeded(event, env) {
   }
 
   const txKey = paymentIntentId || sessionId || String(event.id || '');
-  const result = await applyCommercialEffect(env.LISTINGS_KV, {
+  const result = await applyCommercialEffect(env.LOVENTY_KV, {
     listingId,
     effectKey,
     transactionKey: txKey,
@@ -456,7 +456,7 @@ async function reconcileSubscriptionCreated(event, env) {
   const effectKey = tier === 'premium' ? 'plan_premium' : tier === 'enterprise' ? 'plan_enterprise' : 'plan_basico';
   const txKey = subscriptionId || String(event.id || '');
 
-  const result = await applyCommercialEffect(env.LISTINGS_KV, {
+  const result = await applyCommercialEffect(env.LOVENTY_KV, {
     listingId,
     effectKey,
     transactionKey: txKey,

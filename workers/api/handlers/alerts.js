@@ -53,19 +53,19 @@ function createAlertsHandlers(env) {
     try {
       body = await readJsonBody(request, MAX_JSON_BYTES);
     } catch (error) {
-      return sendError(null, 400, 'invalid_json_body', error.message);
+      return sendError(400, 'invalid_json_body', error.message, request);
     }
 
     const { email, operation, country, city, price_max, surface_min, asset_type } = body;
 
     if (!email || !operation) {
-      return sendError(null, 400, 'email_and_operation_required');
+      return sendError(400, 'email_and_operation_required', null, request);
     }
 
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return sendError(null, 400, 'invalid_email');
+      return sendError(400, 'invalid_email', null, request);
     }
 
     // Generate unique ID and unsubscribe token
@@ -94,7 +94,7 @@ function createAlertsHandlers(env) {
     const ttl = 90 * 24 * 60 * 60; // 90 days in seconds
 
     try {
-      await env.LISTINGS_KV.put(key, JSON.stringify(alertData), {
+      await env.LOVENTY_KV.put(key, JSON.stringify(alertData), {
         expirationTtl: ttl
       });
 
@@ -107,7 +107,7 @@ function createAlertsHandlers(env) {
         unsubscribe_url: `${publicBaseUrl}/alert-unsubscribe.html?id=${alertId}&token=${unsubscribeToken}`
       });
     } catch (error) {
-      return sendError(null, 500, 'kv_write_failed', error.message);
+      return sendError(500, 'kv_write_failed', error.message, request);
     }
   }
 
@@ -120,28 +120,28 @@ function createAlertsHandlers(env) {
     try {
       body = await readJsonBody(request, MAX_JSON_BYTES);
     } catch (error) {
-      return sendError(null, 400, 'invalid_json_body', error.message);
+      return sendError(400, 'invalid_json_body', error.message, request);
     }
 
     const { alert_id, token } = body;
 
     if (!alert_id || !token) {
-      return sendError(null, 400, 'alert_id_and_token_required');
+      return sendError(400, 'alert_id_and_token_required', null, request);
     }
 
     const key = `alert:${alert_id}`;
 
     try {
       // Read current alert
-      const current = await env.LISTINGS_KV.get(key, 'json');
+      const current = await env.LOVENTY_KV.get(key, 'json');
 
       if (!current) {
-        return sendError(null, 404, 'alert_not_found');
+        return sendError(404, 'alert_not_found', null, request);
       }
 
       // Verify token
       if (current.unsubscribe_token !== token) {
-        return sendError(null, 403, 'invalid_unsubscribe_token');
+        return sendError(403, 'invalid_unsubscribe_token', null, request);
       }
 
       // Mark as inactive instead of deleting (for audit trail)
@@ -150,7 +150,7 @@ function createAlertsHandlers(env) {
 
       // Keep for 30 more days
       const ttl = 30 * 24 * 60 * 60; // 30 days in seconds
-      await env.LISTINGS_KV.put(key, JSON.stringify(current), {
+      await env.LOVENTY_KV.put(key, JSON.stringify(current), {
         expirationTtl: ttl
       });
 
@@ -159,7 +159,7 @@ function createAlertsHandlers(env) {
         message: 'Alerta cancelada con éxito. No recibirás más notificaciones.'
       });
     } catch (error) {
-      return sendError(null, 500, 'kv_operation_failed', error.message);
+      return sendError(500, 'kv_operation_failed', error.message, request);
     }
   }
 
