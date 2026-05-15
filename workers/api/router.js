@@ -35,7 +35,7 @@ function requireApiKey(request, env) {
   return { authenticated: true };
 }
 
-function createRouter(listingsHandlers, stripeHandlers, alertsHandlers) {
+function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers) {
   return async function route(request, env) {
     const url = new URL(request.url);
     const method = request.method;
@@ -107,6 +107,20 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers) {
     if (path === '/api/stripe/webhook') {
       if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
       return stripeHandlers.webhook(request);
+    }
+
+    // Sponsor click tracking (public)
+    if (path === '/api/sponsor/click') {
+      if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
+      return sponsorsHandlers.sponsorClick(request);
+    }
+
+    // Sponsor stats (protected with API key)
+    if (path === '/api/sponsor/stats') {
+      if (method !== 'GET') return sendError(405, 'method_not_allowed', null, request);
+      const auth = requireApiKey(request, env);
+      if (!auth.authenticated) return sendError(401, auth.error, null, request);
+      return sponsorsHandlers.sponsorStats(request);
     }
 
     return sendError(404, 'route_not_found', null, request);
