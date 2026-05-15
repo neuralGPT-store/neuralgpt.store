@@ -147,3 +147,55 @@
     align-items: center;
   }
 }
+
+/* Franjas rotativas */
+.strips-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  padding: var(--space-8) 0;
+  background: var(--color-bg-secondary);
+}
+
+.strip {
+  overflow: hidden;
+  padding: var(--space-2) 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.strip-top { background: rgba(0,51,153,0.3); }
+.strip-mid { background: rgba(102,0,204,0.2); }
+.strip-bot { background: rgba(0,51,153,0.15); }
+
+.strip-track {
+  display: flex;
+  gap: var(--space-12);
+  width: max-content;
+  animation: strip-scroll 18s linear infinite;
+  white-space: nowrap;
+}
+
+.strip-track-reverse {
+  animation: strip-scroll-reverse 22s linear infinite;
+}
+
+.strip-track span {
+  font-size: var(--font-size-sm);
+  color: var(--color-eu-gold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-4);
+  border-left: 1px solid rgba(255,204,0,0.3);
+}
+
+@keyframes strip-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes strip-scroll-reverse {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}

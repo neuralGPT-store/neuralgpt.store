@@ -748,19 +748,53 @@
   position: relative;
 }
 
+@keyframes rainbow-rotate {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
 .card::before, .card-service::before, .card-provider::before, .pricing-card::before {
   content: '';
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: var(--glow-border);
+  background: linear-gradient(135deg, #ff0000, #ff6600, #ffcc00, #00cc44, #003399, #6600cc, #ff0099, #ff0000);
+  background-size: 200% 200%;
+  animation: rainbow-rotate 3s linear infinite;
   z-index: -1;
-  opacity: 0.4;
-  transition: opacity var(--transition);
+  opacity: 0.5;
 }
 
 .card:hover::before, .card-service:hover::before, .card-provider:hover::before {
-  opacity: 0.8;
+  opacity: 1;
+}
+
+/* Reflejo brillante en cards */
+.card-service, .card-provider, .card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-service::after, .card-provider::after, .card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+  transform: skewX(-15deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.card-service:hover::after, .card-provider:hover::after, .card:hover::after {
+  left: 120%;
+}
+
+/* Texto crema global */
+body, p, li, span, a, h1, h2, h3, h4, label {
+  color: var(--color-text);
 }
 
 /* Botones con glow */

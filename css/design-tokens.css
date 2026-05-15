@@ -22,8 +22,8 @@
   --color-terracotta-dark: #a86355;
 
   /* --- Texto --- */
-  --color-text:       #e8eaf0;
-  --color-text-muted: #8892a4;
+  --color-text:       #f0ead6;
+  --color-text-muted: #b8a99a;
   --color-border:     rgba(255,255,255,0.08);
   --color-white:      #ffffff;
   --color-error:      #ff4d4d;
@@ -33,7 +33,7 @@
   --rgb-1: #003399;
   --rgb-2: #4d7fff;
   --rgb-3: #FFCC00;
-  --glow-border:  linear-gradient(135deg, var(--rgb-1), var(--rgb-2), var(--rgb-3), var(--rgb-2), var(--rgb-1));
+  --glow-border:  linear-gradient(135deg, #ff0000, #ff6600, #ffcc00, #00cc44, #003399, #6600cc, #ff0099, #ff0000);
   --glow-shadow:  0 0 12px rgba(77,127,255,0.25), 0 0 24px rgba(0,51,153,0.15);
 
   /* --- Tipografía --- */
