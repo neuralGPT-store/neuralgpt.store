@@ -1,10 +1,9 @@
-/**
- * Listings store service for Cloudflare Workers
- * Uses Cloudflare KV instead of filesystem
- * Uses Web Crypto API instead of Node crypto
- */
-
 const KV_KEY = 'listings';
+
+const VALID_CATEGORIES = new Set([
+  'cuidador', 'residencia', 'sanitario', 'hogar',
+  'transporte', 'voluntariado', 'legal', 'farmacia'
+]);
 
 // ── Web Crypto helpers ──
 
@@ -65,93 +64,78 @@ function sanitizeText(value, maxLen) {
   return String(value || '').replace(/[\x00-\x1F\x7F]/g, '').trim().slice(0, maxLen);
 }
 
-function toNumber(value, fallback) {
-  const n = Number(value);
-  return Number.isFinite(n) ? n : fallback;
-}
+function sanitizeListingInput(fields) {
+  const providerName = sanitizeText(fields.provider_name || fields.title || '', 160);
 
-function sanitizeListingInput(fields, files) {
-  const operation = sanitizeText(fields.operation || 'sale', 40) || 'sale';
-  const assetType = sanitizeText(fields.asset_type || 'apartment', 40) || 'apartment';
-  const country = sanitizeText(fields.country || 'ES', 2).toUpperCase();
-  const region = sanitizeText(fields.region || '', 80);
-  const city = sanitizeText(fields.city || '', 80);
-  const zone = sanitizeText(fields.zone || '', 120);
-  const title = sanitizeText(fields.title || '', 160);
-  const summary = sanitizeText(fields.summary || '', 400);
+  const rawCategory = sanitizeText(fields.category || fields.asset_type || '', 40).toLowerCase();
+  const category = VALID_CATEGORIES.has(rawCategory) ? rawCategory : '';
+
   const description = sanitizeText(fields.description || '', 4000);
+  const zone = sanitizeText(fields.zone || fields.city || '', 120);
+  const country = sanitizeText(fields.country || 'ES', 5).toUpperCase().slice(0, 5);
+
+  let languages = [];
+  const rawLangs = String(fields.languages || '');
+  if (rawLangs) {
+    try {
+      const parsed = JSON.parse(rawLangs);
+      languages = Array.isArray(parsed)
+        ? parsed.map(l => sanitizeText(l, 10)).filter(Boolean).slice(0, 10)
+        : [sanitizeText(String(parsed), 10)].filter(Boolean);
+    } catch (_) {
+      languages = rawLangs.split(',').map(l => sanitizeText(l.trim(), 10)).filter(Boolean).slice(0, 10);
+    }
+  }
+
+  const priceInfo = sanitizeText(fields.price_info || fields.summary || '', 200);
+  const availability = sanitizeText(fields.availability || fields.region || '', 120);
   const contactName = sanitizeText(fields.contact_name || '', 80);
-  const contactPhone = sanitizeText(fields.contact_phone || '', 40);
   const contactEmail = sanitizeText(fields.contact_email || '', 120).toLowerCase();
-  const advertiserProfessional = String(fields.advertiser_professional || '').toLowerCase() === 'true';
-  const advertiserId = sanitizeText(fields.advertiser_id || '', 20);
+  const website = sanitizeText(fields.website || '', 200);
 
   return {
     mode: sanitizeText(fields.mode || 'create', 20) || 'create',
     listingId: sanitizeText(fields.listing_id || '', 120),
     editKey: sanitizeText(fields.edit_key || '', 256),
-    slug: sanitizeText(fields.slug || '', 160),
-    operation,
-    assetType,
-    country,
-    region,
-    city,
-    zone,
-    title,
-    summary,
+    providerName,
+    category,
     description,
-    price: toNumber(fields.price, 0),
-    surfaceM2: toNumber(fields.surface_m2, 0),
-    rooms: toNumber(fields.rooms, 0),
-    bathrooms: toNumber(fields.bathrooms, 0),
-    lat: toNumber(fields.lat, 0),
-    lng: toNumber(fields.lng, 0),
+    zone,
+    country,
+    languages,
+    priceInfo,
+    availability,
     contactName,
-    contactPhone,
     contactEmail,
-    advertiserProfessional,
-    advertiserId,
-    filesCount: Array.isArray(files) ? files.length : 0,
+    website,
     privacyAccepted: String(fields.privacy_accepted || '').toLowerCase() === 'true',
-    honeypot: sanitizeText(fields.hp_check || '', 16),
-    moderationClientChecked: String(fields.moderation_client_checked || '').toLowerCase() === 'true'
+    termsAccepted: String(fields.terms_accepted || '').toLowerCase() === 'true',
+    honeypot: sanitizeText(fields.hp_check || '', 16)
   };
 }
 
 async function buildListingRecord(input, existing, pepper) {
   const draft = existing || {};
   const now = nowIso();
-  const listingId = draft.id || input.listingId || ('re-' + randomToken(8));
-  const slugBase = input.slug || normalizeSlug(input.title || listingId) || listingId;
+  const listingId = draft.id || input.listingId || ('lo-' + randomToken(8));
+  const slugBase = normalizeSlug(input.providerName || listingId) || listingId;
   const slug = slugBase.slice(0, 140);
 
   const record = {
     id: listingId,
     slug,
-    operation: input.operation,
-    asset_type: input.assetType,
-    country: input.country,
-    region: input.region,
-    city: input.city,
-    zone: input.zone,
-    title: input.title,
-    summary: input.summary,
+    provider_name: input.providerName,
+    category: input.category,
     description: input.description,
-    price: input.price,
-    surface_m2: input.surfaceM2,
-    rooms: input.rooms,
-    bathrooms: input.bathrooms,
-    lat: input.lat,
-    lng: input.lng,
+    zone: input.zone,
+    country: input.country,
+    languages: input.languages,
+    price_info: input.priceInfo,
+    availability: input.availability,
     contact_name: input.contactName,
-    contact_phone: input.contactPhone,
     contact_email: input.contactEmail,
-    advertiser_type: input.advertiserProfessional ? 'professional' : 'private',
-    advertiser_id_ref: input.advertiserId || null,
+    website: input.website || null,
     status: draft.status || 'published',
-    files_count: input.filesCount,
-    moderation_status: input.filesCount > 0 && input.moderationClientChecked ? 'approved' : (draft.moderation_status || null),
-    moderation_client_checked: input.filesCount > 0 ? input.moderationClientChecked : (draft.moderation_client_checked || false),
     updated_at: now,
     created_at: draft.created_at || now,
     edit_key_hash: draft.edit_key_hash || null,
@@ -296,8 +280,7 @@ async function applyCommercialEffect(kvBinding, input) {
   effect.last_product_id = productId || null;
 
   if (effectKey === 'mas_visibilidad') {
-    const prev = Number(record.visibility_rank || 0);
-    record.visibility_rank = prev + 1;
+    record.visibility_rank = Number(record.visibility_rank || 0) + 1;
   } else if (effectKey === 'sensacional_24h') {
     const currentUntil = new Date(String(commercial.sensacional_until || 0)).getTime();
     const nextUntil = new Date(toIsoPlusHours(now, 24)).getTime();
@@ -344,7 +327,7 @@ function getPlanLimit(tier) {
   if (tier === 'enterprise') return Infinity;
   if (tier === 'premium') return 100;
   if (tier === 'basico') return 50;
-  return 5; // free
+  return 5;
 }
 
 async function countUserListings(kvBinding, contactEmail) {

@@ -1,7 +1,3 @@
-/**
- * Listings handlers for Cloudflare Workers
- */
-
 import {
   readStore,
   writeStore,
@@ -18,7 +14,7 @@ import {
   sendJson
 } from '../lib/http.js';
 
-const MAX_MULTIPART_BYTES = 12 * 1024 * 1024;
+const MAX_MULTIPART_BYTES = 512 * 1024;
 const MAX_JSON_BYTES = 256 * 1024;
 
 function createListingsHandlers(env) {
@@ -58,29 +54,21 @@ function createListingsHandlers(env) {
     const safeListing = {
       id: listing.id,
       slug: listing.slug,
-      operation: listing.operation,
-      asset_type: listing.asset_type,
-      country: listing.country,
-      region: listing.region,
-      city: listing.city,
-      zone: listing.zone,
-      title: listing.title,
-      summary: listing.summary,
+      provider_name: listing.provider_name,
+      category: listing.category,
       description: listing.description,
-      price: listing.price,
-      surface_m2: listing.surface_m2,
-      rooms: listing.rooms,
-      bathrooms: listing.bathrooms,
-      lat: listing.lat,
-      lng: listing.lng,
+      zone: listing.zone,
+      country: listing.country,
+      languages: listing.languages,
+      price_info: listing.price_info,
+      availability: listing.availability,
+      contact_name: listing.contact_name,
+      contact_email: listing.contact_email,
+      website: listing.website,
       status: listing.status,
-      files_count: listing.files_count,
       updated_at: listing.updated_at,
       created_at: listing.created_at,
-      meta: listing.meta,
-      contact_name: listing.contact_name,
-      contact_phone: listing.contact_phone,
-      contact_email: listing.contact_email
+      meta: listing.meta
     };
 
     return sendJson(200, { ok: true, listing: safeListing }, request);
@@ -97,7 +85,7 @@ function createListingsHandlers(env) {
       return sendError(400, error.message || 'invalid_multipart_body', null, request);
     }
 
-    const input = sanitizeListingInput(parsed.fields, parsed.files);
+    const input = sanitizeListingInput(parsed.fields);
 
     if (input.honeypot) {
       return sendError(400, 'honeypot_rejected', null, request);
@@ -107,21 +95,20 @@ function createListingsHandlers(env) {
       return sendError(400, 'privacy_required', null, request);
     }
 
-    if (!input.title || !input.summary || !input.description) {
-      return sendError(400, 'listing_required_fields_missing', null, request);
+    if (!input.termsAccepted) {
+      return sendError(400, 'terms_required', null, request);
     }
 
-    if (!input.contactName || !input.contactPhone || !input.contactEmail) {
-      return sendError(400, 'advertiser_contact_required_fields_missing', null, request);
+    if (!input.providerName || !input.category || !input.description || !input.zone || !input.country) {
+      return sendError(400, 'provider_required_fields_missing', null, request);
     }
 
-    // Verify client-side image moderation if images are uploaded
-    if (input.filesCount > 0 && !input.moderationClientChecked) {
-      return sendError(400, 'image_moderation_required', null, request);
+    if (!input.contactName || !input.contactEmail) {
+      return sendError(400, 'contact_required_fields_missing', null, request);
     }
 
     const rows = await readStore(env.LOVENTY_KV);
-    const isEdit = input.mode === 'edit' || Boolean(input.editKey);
+    const isEdit = input.mode === 'edit' || input.mode === 'update' || Boolean(input.editKey);
 
     if (isEdit) {
       const listingId = input.listingId;
@@ -163,9 +150,7 @@ function createListingsHandlers(env) {
       mode: 'created',
       listing_id: built.record.id,
       listing_slug: built.record.slug,
-      edit_key: built.plainEditKey,
-      duplicate_review: { review_required: false },
-      content_policy: { review_required: false }
+      edit_key: built.plainEditKey
     }, request);
   }
 
