@@ -786,7 +786,7 @@
 }
 
 .hero-stars span {
-  color: var(--color-eu-gold);
+  color: #FFCC00 !important;
   font-size: 1rem;
   animation: star-pulse 2s ease-in-out infinite;
   animation-delay: calc(var(--i) * 0.15s);
