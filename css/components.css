@@ -718,22 +718,6 @@
 body { text-shadow: 0 0 20px rgba(240,234,214,0.1); }
 h1, h2, h3 { text-shadow: 0 0 30px rgba(240,234,214,0.2); }
 
-/* RGB en botones destacados */
-.btn-primary, .btn-secondary {
-  position: relative;
-  z-index: 0;
-}
-.btn-primary::before, .btn-secondary::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, #ff0000, #ff6600, #ffcc00, #00cc44, #003399, #6600cc, #ff0099, #ff0000);
-  background-size: 200% 200%;
-  animation: rainbow-rotate 2s linear infinite;
-  z-index: -1;
-}
-
 /* Social links footer */
 .social-link {
   color: var(--color-text-muted);
@@ -823,14 +807,22 @@ body, p, li, span, a, h1, h2, h3, h4, label {
 .btn-primary {
   background: var(--color-eu-blue);
   color: var(--color-white);
-  border-color: var(--color-eu-blue);
   box-shadow: 0 0 16px rgba(0,51,153,0.5);
+  border: 1px solid rgba(77,127,255,0.4);
 }
-
 .btn-primary:hover {
   background: var(--color-eu-blue-light);
-  border-color: var(--color-eu-blue-light);
-  box-shadow: 0 0 24px rgba(77,127,255,0.6);
+  box-shadow: 0 0 24px rgba(77,127,255,0.7);
+}
+.btn-secondary {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  box-shadow: 0 0 12px rgba(196,124,109,0.4);
+  border: 1px solid rgba(196,124,109,0.4);
+}
+.btn-secondary:hover {
+  background: var(--color-terracotta-dark);
+  box-shadow: 0 0 20px rgba(196,124,109,0.6);
 }
 
 /* Estrellas UE */
