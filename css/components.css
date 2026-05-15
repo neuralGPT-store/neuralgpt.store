@@ -157,7 +157,8 @@
   background: var(--color-white);
   border: var(--border);
   border-radius: var(--radius-md);
-  padding: var(--space-6);
+  padding: var(--space-4);
+  min-height: 140px;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -170,23 +171,25 @@
 }
 
 .card-service-icon {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   background: var(--color-bg-secondary);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: var(--space-2);
 }
 
 .card-service-title {
   font-family: var(--font-heading);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
   font-weight: normal;
+  margin-bottom: var(--space-1);
 }
 
 .card-service-desc {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   line-height: 1.6;
 }

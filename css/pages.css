@@ -216,3 +216,13 @@
   color: #ffffff;
   text-shadow: 0 0 12px var(--color-eu-gold);
 }
+
+@media (max-width: 1024px) {
+  .services-grid-12 { grid-template-columns: repeat(3,1fr) !important; }
+}
+@media (max-width: 768px) {
+  .services-grid-12 { grid-template-columns: repeat(2,1fr) !important; }
+}
+@media (max-width: 480px) {
+  .services-grid-12 { grid-template-columns: 1fr !important; }
+}
