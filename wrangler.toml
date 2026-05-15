@@ -14,6 +14,7 @@ id = "e2a73e9b7f1942099f31507aef0f8469"
 [vars]
 NODE_ENV = "production"
 PUBLIC_BASE_URL = "https://neuralgpt.store"
+GOOGLE_CLIENT_ID = "TU_GOOGLE_CLIENT_ID_AQUI"
 
 # Secrets (set via: wrangler secret put <SECRET_NAME>)
 # - API_SECRET_KEY

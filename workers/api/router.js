@@ -35,7 +35,7 @@ function requireApiKey(request, env) {
   return { authenticated: true };
 }
 
-function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers) {
+function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers, authHandlers) {
   return async function route(request, env) {
     const url = new URL(request.url);
     const method = request.method;
@@ -44,6 +44,32 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsors
     // Health check
     if (path === '/api/health' && method === 'GET') {
       return sendJson(200, { ok: true, runtime: 'cloudflare_workers' }, request);
+    }
+
+    // Auth routes (public)
+    if (path === '/api/auth/register') {
+      if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
+      return authHandlers.register(request);
+    }
+
+    if (path === '/api/auth/login') {
+      if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
+      return authHandlers.login(request);
+    }
+
+    if (path === '/api/auth/logout') {
+      if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
+      return authHandlers.logout(request);
+    }
+
+    if (path === '/api/auth/me') {
+      if (method !== 'GET') return sendError(405, 'method_not_allowed', null, request);
+      return authHandlers.me(request);
+    }
+
+    if (path === '/api/auth/google') {
+      if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
+      return authHandlers.googleCallback(request);
     }
 
     // Listings routes (public - protected by honeypot and validation)
