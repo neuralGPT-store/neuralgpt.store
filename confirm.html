@@ -1,9 +1,144 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="neural-api-base" content="https://neuralgpt-api.pokerprofe.workers.dev">
-  <meta name="neural-backend-ready" content="true"> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Pago Confirmado | neuralgpt.store</title> <meta name="robots" content="noindex, nofollow"> <link rel="stylesheet" href="/css/main.css"> <style> .confirm-hero { min-height: 60vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0,234,255,0.08), rgba(127,0,255,0.08)); padding: 48px 0; } .confirm-card { max-width: 600px; text-align: center; padding: 48px 32px; background: var(--surface); border: 2px solid var(--accent); border-radius: 24px; box-shadow: 0 8px 32px rgba(0,234,255,0.15); } .confirm-icon { font-size: 5rem; margin-bottom: 24px; animation: bounce 0.6s ease-out; } @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } } </style> <script src="/js/i18n.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="neural-api-base" content="https://neuralgpt.store/api" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com; frame-src https://js.stripe.com" />
+  <title>Confirmacion — Loventy</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/design-tokens.css" />
+  <link rel="stylesheet" href="/css/main.css" />
 </head>
-<body> <header class="site-header"> <div class="wrap header-content"> <a class="brand" href="/">neural<span>GPT</span>.store</a> <nav class="nav"> <a href="/venta.html">Venta</a> <a href="/alquiler.html">Alquiler</a> </nav> </div> </header> <div class="rgb-divider"></div> <main class="confirm-hero"> <div class="wrap"> <div class="confirm-card"> <div class="confirm-icon" id="icon"></div> <h1 style="font-family:var(--font-title);font-size:2rem;margin-bottom:16px" id="title">¡Pago Confirmado!</h1> <p style="color:var(--muted);font-size:1.1rem;margin-bottom:32px" id="subtitle">Tu transacción se ha procesado correctamente.</p> <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"> <a href="/real-estate-index.html" class="btn btn-primary btn-lg">Ver inmuebles</a> <a href="/contact.html" class="btn btn-lg">Publicar otro</a> </div> </div> </div> </main> <div class="rgb-divider"></div> <footer class="site-footer"><div class="footer-bottom"><span>© 2025–2026 neuralgpt.store</span><span> <a href="/privacy.html" style="color:var(--text)">No compartimos tus datos con terceros</a></span></div></footer> <script> const p=new URLSearchParams(location.search),u=p.get('upgrade'); if(u==='visibilidad'){document.getElementById('icon').textContent='';document.getElementById('title').textContent='¡Anuncio destacado!';document.getElementById('subtitle').textContent='Posición prioritaria 30 días activa.';} else if(u==='sensacional'){document.getElementById('icon').textContent='';document.getElementById('title').textContent='¡Badge premium!';document.getElementById('subtitle').textContent='SENSACIONAL activado 24h.';} else if(p.get('unlocked')==='true'){document.getElementById('icon').textContent='';document.getElementById('title').textContent='¡Contacto desbloqueado!';document.getElementById('subtitle').textContent='Información visible en la ficha.';} </script>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<header class="site-header">
+  <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+    <a href="/" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:var(--color-sage-dark)">Loventy</a>
+    <span style="font-size:var(--font-size-xs);color:var(--color-text-muted)">El cuidado que todo mayor merece</span>
+  </div>
+  <nav class="main-nav" id="main-nav" aria-label="Principal">
+    <ul class="nav-links">
+      <li><a href="#">Directorio</a></li>
+      <li><a href="#">Voluntariado</a></li>
+      <li><a href="#">Loventy Talks</a></li>
+      <li><a href="/sponsors.html">Sponsors</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+    </ul>
+    <div style="display:flex;gap:var(--space-1);margin-left:var(--space-4)">
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="es">ES</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="en">EN</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="fr">FR</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="de">DE</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="it">IT</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="pt">PT</button>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="#" class="btn btn-primary">Publicar ficha</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu movil">
+  <ul style="display:flex;flex-direction:column;gap:var(--space-4)">
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Voluntariado</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Loventy Talks</a></li>
+    <li><a href="/sponsors.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Sponsors</a></li>
+    <li><a href="/pricing.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Pricing</a></li>
+  </ul>
+  <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
+    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="#" class="btn btn-primary">Publicar ficha</a>
+  </div>
+</nav>
+
+<main id="main" style="min-height:calc(100vh - var(--header-height) - 120px);display:flex;align-items:center;justify-content:center;padding:var(--space-12) var(--space-4)">
+  <div style="text-align:center;max-width:520px">
+    <div style="width:64px;height:64px;border-radius:50%;background:var(--color-success);margin:0 auto var(--space-6);display:flex;align-items:center;justify-content:center">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h1 style="font-family:var(--font-heading);font-size:var(--font-size-3xl);margin-bottom:var(--space-4)">Todo listo</h1>
+    <p style="color:var(--color-text-muted);line-height:1.7;margin-bottom:var(--space-2)">Tu suscripcion esta activa. Ya puedes publicar tu ficha en el directorio.</p>
+    <p id="session-info" style="font-size:var(--font-size-xs);color:var(--color-text-muted);margin-bottom:var(--space-8)"></p>
+    <a href="/account.html" class="btn btn-primary btn-lg">Ir a mi cuenta</a>
+  </div>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="/" class="footer-logo">Loventy</a>
+        <p class="footer-brand-desc">La plataforma europea de cuidado para personas mayores. Conectamos familias con los mejores profesionales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Directorio</h4>
+        <ul>
+          <li><a href="#">Cuidadores</a></li>
+          <li><a href="#">Residencias</a></li>
+          <li><a href="#">Servicios sanitarios</a></li>
+          <li><a href="#">Voluntariado</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/legal.html">Aviso legal</a></li>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Terminos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:loventy@neuralgpt.store">loventy@neuralgpt.store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var sessionId = params.get('session_id');
+    if (sessionId) {
+      document.getElementById('session-info').textContent = 'Referencia: ' + sessionId;
+    }
+    var currentLang = params.get('lang') || 'es';
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      if (btn.dataset.lang === currentLang) {
+        btn.style.fontWeight = '700';
+        btn.style.color = 'var(--color-sage-dark)';
+        btn.setAttribute('aria-pressed', 'true');
+      }
+      btn.addEventListener('click', function () {
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', btn.dataset.lang);
+        window.location.href = url.toString();
+      });
+    });
+    var toggle = document.getElementById('nav-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function () {
+        var open = mobileMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  })();
+</script>
+
 </body>
 </html>

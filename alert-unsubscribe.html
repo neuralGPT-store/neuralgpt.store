@@ -1,9 +1,184 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="neural-api-base" content="https://neuralgpt-api.pokerprofe.workers.dev">
-  <meta name="neural-backend-ready" content="true"> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width,initial-scale=1" /> <meta name="theme-color" content="#00040D" /> <title>Dar de baja alerta — neuralgpt.store</title> <meta name="robots" content="noindex,nofollow" /> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet"> <link rel="icon" href="/favicon.ico"> <link rel="stylesheet" href="/css/main.css"> <link rel="stylesheet" href="/css/theme-override.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="neural-api-base" content="https://neuralgpt.store/api" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com https://neuralgpt.store; frame-src https://js.stripe.com" />
+  <title>Cancelar alerta — Loventy</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/design-tokens.css" />
+  <link rel="stylesheet" href="/css/main.css" />
 </head>
-<body> <header class="site-header" role="banner"> <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a> </header> <div class="rgb-divider"></div> <main class="wrap" style="padding-top:80px;padding-bottom:80px;max-width:600px;text-align:center"> <div id="loading-state"> <div style="font-size:2.5rem;margin-bottom:16px"></div> <h1 class="section-title" style="margin-bottom:12px">Procesando baja...</h1> <p style="color:var(--muted)">Espera un momento mientras cancelamos tu alerta.</p> </div> <div id="success-state" style="display:none"> <div style="font-size:3rem;margin-bottom:16px"></div> <h1 class="section-title" style="margin-bottom:12px">Alerta cancelada</h1> <p style="color:var(--muted);line-height:1.8;margin-bottom:24px"> Tu alerta ha sido cancelada con éxito. No recibirás más notificaciones de búsqueda. </p> <a href="/real-estate-index.html" class="btn btn-primary">Ver inmuebles</a> <a href="/alert.html" class="btn">Crear nueva alerta</a> </div> <div id="error-state" style="display:none"> <div style="font-size:3rem;margin-bottom:16px"></div> <h1 class="section-title" style="margin-bottom:12px">Error</h1> <p id="error-message" style="color:var(--muted);line-height:1.8;margin-bottom:24px"></p> <a href="/real-estate-index.html" class="btn btn-primary">Ver inmuebles</a> </div> </main> <footer class="site-footer" role="contentinfo"> <div class="footer-grid"> <div class="footer-brand-col"> <a class="brand" href="/" aria-label="neuralgpt.store">neural<span>GPT</span>.store</a> <p>Portal inmobiliario premium. Anuncios verificados en venta y alquiler.</p> </div> </div> <div class="footer-bottom"> <span>© 2025–2026 neuralgpt.store</span> <span><a href="/privacy.html">Privacidad</a> · <a href="/terms.html">Términos</a></span> </div> </footer> <script> (function(){ const loadingState = document.getElementById('loading-state'); const successState = document.getElementById('success-state'); const errorState = document.getElementById('error-state'); const errorMessage = document.getElementById('error-message'); // Obtener parámetros de URL const params = new URLSearchParams(window.location.search); const alertId = params.get('id'); const token = params.get('token'); if (!alertId || !token) { showError('Enlace de baja inválido. Faltan parámetros necesarios.'); return; } // Procesar baja unsubscribeAlert(alertId, token); async function unsubscribeAlert(id, token) { try { const response = await fetch('/api/alerts/unsubscribe', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ alert_id: id, token: token }) }); const result = await response.json(); if (result.ok) { showSuccess(); } else { showError(getErrorMessage(result.error)); } } catch (error) { console.error('[Unsubscribe]', error); showError('Error de conexión. Inténtalo de nuevo más tarde.'); } } function showSuccess() { loadingState.style.display = 'none'; successState.style.display = 'block'; } function showError(message) { loadingState.style.display = 'none'; errorState.style.display = 'block'; errorMessage.textContent = message; } function getErrorMessage(code) { const messages = { 'alert_not_found': 'La alerta no existe o ya fue cancelada previamente.', 'invalid_unsubscribe_token': 'El enlace de baja no es válido. Verifica que uses el enlace correcto del email.', 'alert_id_and_token_required': 'Faltan parámetros necesarios en el enlace de baja.' }; return messages[code] || 'No se pudo cancelar la alerta. Contacta con soporte si el problema persiste.'; } })(); </script>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<header class="site-header">
+  <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+    <a href="/" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:var(--color-sage-dark)">Loventy</a>
+    <span style="font-size:var(--font-size-xs);color:var(--color-text-muted)">El cuidado que todo mayor merece</span>
+  </div>
+  <nav class="main-nav" id="main-nav" aria-label="Principal">
+    <ul class="nav-links">
+      <li><a href="#">Directorio</a></li>
+      <li><a href="#">Voluntariado</a></li>
+      <li><a href="#">Loventy Talks</a></li>
+      <li><a href="/sponsors.html">Sponsors</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+    </ul>
+    <div style="display:flex;gap:var(--space-1);margin-left:var(--space-4)">
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="es">ES</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="en">EN</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="fr">FR</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="de">DE</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="it">IT</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="pt">PT</button>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="#" class="btn btn-primary">Publicar ficha</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu movil">
+  <ul style="display:flex;flex-direction:column;gap:var(--space-4)">
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Voluntariado</a></li>
+    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Loventy Talks</a></li>
+    <li><a href="/sponsors.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Sponsors</a></li>
+    <li><a href="/pricing.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Pricing</a></li>
+  </ul>
+  <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
+    <a href="#" class="btn btn-ghost">Entrar</a>
+    <a href="#" class="btn btn-primary">Publicar ficha</a>
+  </div>
+</nav>
+
+<main id="main" style="min-height:calc(100vh - var(--header-height) - 120px);display:flex;align-items:center;justify-content:center;padding:var(--space-12) var(--space-4)">
+  <div style="text-align:center;max-width:480px">
+    <div id="state-loading">
+      <p style="color:var(--color-text-muted)">Cancelando alerta...</p>
+    </div>
+    <div id="state-ok" style="display:none">
+      <div style="width:64px;height:64px;border-radius:50%;background:var(--color-success);margin:0 auto var(--space-6);display:flex;align-items:center;justify-content:center">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h1 style="font-family:var(--font-heading);font-size:var(--font-size-2xl);margin-bottom:var(--space-4)">Alerta cancelada</h1>
+      <p style="color:var(--color-text-muted);line-height:1.7;margin-bottom:var(--space-8)">No recibiras mas notificaciones de esta alerta.</p>
+      <a href="/" class="btn btn-secondary">Volver al inicio</a>
+    </div>
+    <div id="state-error" style="display:none">
+      <h1 style="font-family:var(--font-heading);font-size:var(--font-size-2xl);margin-bottom:var(--space-4)">No se pudo cancelar</h1>
+      <p id="error-msg" style="color:var(--color-text-muted);line-height:1.7;margin-bottom:var(--space-8)"></p>
+      <a href="/contact.html" class="btn btn-secondary">Contactar soporte</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="/" class="footer-logo">Loventy</a>
+        <p class="footer-brand-desc">La plataforma europea de cuidado para personas mayores. Conectamos familias con los mejores profesionales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Directorio</h4>
+        <ul>
+          <li><a href="#">Cuidadores</a></li>
+          <li><a href="#">Residencias</a></li>
+          <li><a href="#">Servicios sanitarios</a></li>
+          <li><a href="#">Voluntariado</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/legal.html">Aviso legal</a></li>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Terminos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:loventy@neuralgpt.store">loventy@neuralgpt.store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var API_BASE = (document.querySelector('meta[name="neural-api-base"]') || {}).content || '/api';
+    var params = new URLSearchParams(window.location.search);
+    var alertId = params.get('alertId') || params.get('id');
+    var token = params.get('token');
+
+    function show(stateId, errorText) {
+      ['state-loading', 'state-ok', 'state-error'].forEach(function (id) {
+        document.getElementById(id).style.display = id === stateId ? '' : 'none';
+      });
+      if (errorText) document.getElementById('error-msg').textContent = errorText;
+    }
+
+    async function unsubscribe() {
+      if (!alertId || !token) {
+        show('state-error', 'Enlace de cancelacion invalido. Los parametros alertId y token son obligatorios.');
+        return;
+      }
+      try {
+        var res = await fetch(API_BASE + '/alerts/unsubscribe', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ alert_id: alertId, token: token })
+        });
+        var data = await res.json();
+        if (res.ok && data.ok) {
+          show('state-ok');
+        } else {
+          show('state-error', (data && data.error) ? data.error : 'No se pudo cancelar la alerta. Es posible que ya haya sido cancelada.');
+        }
+      } catch (_) {
+        show('state-error', 'Error de conexion. Comprueba tu red e intentalo de nuevo, o contacta con soporte.');
+      }
+    }
+
+    unsubscribe();
+
+    var currentLang = params.get('lang') || 'es';
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      if (btn.dataset.lang === currentLang) {
+        btn.style.fontWeight = '700';
+        btn.style.color = 'var(--color-sage-dark)';
+        btn.setAttribute('aria-pressed', 'true');
+      }
+      btn.addEventListener('click', function () {
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', btn.dataset.lang);
+        window.location.href = url.toString();
+      });
+    });
+    var toggle = document.getElementById('nav-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function () {
+        var open = mobileMenu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  })();
+</script>
+
 </body>
 </html>
