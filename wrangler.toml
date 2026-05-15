@@ -1,6 +1,6 @@
 # Cloudflare Workers configuration for neuralgpt.store API
 
-name = "loventy-api"
+name = "neuralgpt-api"
 main = "workers/api/index.js"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
