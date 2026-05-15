@@ -82,18 +82,20 @@
 
         <div class="form-group">
           <label for="field-name">Nombre o razon social</label>
-          <input type="text" id="field-name" name="title" class="form-input" placeholder="Nombre de tu servicio o empresa" required maxlength="160" />
+          <input type="text" id="field-name" name="provider_name" class="form-input" placeholder="Nombre de tu servicio o empresa" required maxlength="160" />
         </div>
         <div class="form-group">
           <label for="field-category">Categoria</label>
-          <select id="field-category" name="asset_type" class="form-select" required>
+          <select id="field-category" name="category" class="form-select" required>
             <option value="" disabled selected>Selecciona una categoria</option>
-            <option value="cuidadores">Cuidadores</option>
-            <option value="residencias">Residencias</option>
-            <option value="servicios_sanitarios">Servicios sanitarios</option>
-            <option value="adaptacion_hogar">Adaptacion del hogar</option>
-            <option value="transporte_adaptado">Transporte adaptado</option>
+            <option value="cuidador">Cuidador</option>
+            <option value="residencia">Residencia</option>
+            <option value="sanitario">Sanitario</option>
+            <option value="hogar">Hogar</option>
+            <option value="transporte">Transporte</option>
             <option value="voluntariado">Voluntariado</option>
+            <option value="legal">Legal</option>
+            <option value="farmacia">Farmacia</option>
           </select>
         </div>
         <div class="form-group">
@@ -102,19 +104,57 @@
         </div>
         <div class="form-group">
           <label for="field-zone">Zona o ciudad</label>
-          <input type="text" id="field-zone" name="city" class="form-input" placeholder="Ej: Madrid, Barcelona, toda Espana..." maxlength="80" />
+          <input type="text" id="field-zone" name="zone" class="form-input" placeholder="Ej: Madrid, Barcelona, toda Espana..." maxlength="80" />
         </div>
         <div class="form-group">
-          <label for="field-price">Precio orientativo</label>
-          <input type="text" id="field-price" name="summary" class="form-input" placeholder="Ej: Desde 15 EUR/hora, Consultar..." maxlength="200" />
+          <label for="field-country">Pais</label>
+          <select id="field-country" name="country" class="form-select">
+            <option value="" disabled selected>Selecciona un pais</option>
+            <option value="ES">Espana</option>
+            <option value="FR">Francia</option>
+            <option value="DE">Alemania</option>
+            <option value="IT">Italia</option>
+            <option value="PT">Portugal</option>
+            <option value="PL">Polonia</option>
+            <option value="NL">Paises Bajos</option>
+            <option value="otros">Otros</option>
+          </select>
         </div>
         <div class="form-group">
           <label for="field-languages">Idiomas</label>
-          <input type="text" id="field-languages" name="zone" class="form-input" placeholder="Ej: Espanol, ingles, catalan..." maxlength="120" />
+          <input type="text" id="field-languages" name="languages" class="form-input" placeholder="Ej: Espanol, ingles, catalan..." maxlength="120" />
+        </div>
+        <div class="form-group">
+          <label for="field-price">Precio orientativo</label>
+          <input type="text" id="field-price" name="price_info" class="form-input" placeholder="Ej: Desde 15 EUR/hora, Consultar..." maxlength="200" />
         </div>
         <div class="form-group">
           <label for="field-availability">Disponibilidad</label>
-          <input type="text" id="field-availability" name="region" class="form-input" placeholder="Ej: Lunes a viernes 8-20h, 24h..." maxlength="120" />
+          <input type="text" id="field-availability" name="availability" class="form-input" placeholder="Ej: Lunes a viernes 8-20h, 24h..." maxlength="120" />
+        </div>
+        <div class="form-group">
+          <label for="field-contact-name">Nombre de contacto</label>
+          <input type="text" id="field-contact-name" name="contact_name" class="form-input" placeholder="Nombre de la persona de contacto" maxlength="120" />
+        </div>
+        <div class="form-group">
+          <label for="field-contact-email">Email de contacto</label>
+          <input type="email" id="field-contact-email" name="contact_email" class="form-input" placeholder="email@ejemplo.com" maxlength="200" />
+        </div>
+        <div class="form-group">
+          <label for="field-website">Sitio web <span style="color:var(--color-text-muted)">(opcional)</span></label>
+          <input type="url" id="field-website" name="website" class="form-input" placeholder="https://..." maxlength="300" />
+        </div>
+        <div class="form-group">
+          <label style="display:flex;align-items:flex-start;gap:var(--space-2);cursor:pointer">
+            <input type="checkbox" name="terms_accepted" required style="margin-top:2px;flex-shrink:0" />
+            <span>Acepto las normas de la comunidad Loventy</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label style="display:flex;align-items:flex-start;gap:var(--space-2);cursor:pointer">
+            <input type="checkbox" name="privacy_accepted" required style="margin-top:2px;flex-shrink:0" />
+            <span>Acepto la <a href="/privacy.html">politica de privacidad</a></span>
+          </label>
         </div>
 
         <div style="display:flex;gap:var(--space-3);align-items:center;flex-wrap:wrap">
@@ -191,14 +231,27 @@
       var btn = this.querySelector('button[type="submit"]');
 
       var body = { mode: 'update', listing_id: listingId, edit_key: editKey };
-      var fields = ['title', 'asset_type', 'description', 'city', 'summary', 'zone', 'region'];
+      var fields = ['provider_name', 'category', 'description', 'zone', 'country', 'languages', 'price_info', 'availability', 'contact_name', 'contact_email', 'website'];
       fields.forEach(function (name) {
         var el = this.elements[name];
         if (el && el.value.trim()) body[name] = el.value.trim();
       }, this);
 
-      if (!body.title) {
+      if (!body.provider_name) {
         msg.textContent = 'El nombre es obligatorio.';
+        msg.style.color = 'var(--color-error)';
+        return;
+      }
+
+      var terms = this.elements['terms_accepted'];
+      var privacy = this.elements['privacy_accepted'];
+      if (!terms || !terms.checked) {
+        msg.textContent = 'Debes aceptar las normas de la comunidad.';
+        msg.style.color = 'var(--color-error)';
+        return;
+      }
+      if (!privacy || !privacy.checked) {
+        msg.textContent = 'Debes aceptar la politica de privacidad.';
         msg.style.color = 'var(--color-error)';
         return;
       }
