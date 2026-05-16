@@ -237,15 +237,27 @@ Responde SOLO con este JSON sin ningun texto adicional:
         })
       });
 
-      if (!response.ok) return { status: 'pending_review', reason: 'api_error', confidence: 0 };
+      if (!response.ok) {
+        const errText = await response.text().catch(() => '');
+        console.error('[autoModerate] API error', response.status, errText);
+        return { status: 'pending_review', reason: 'api_error_' + response.status, confidence: 0 };
+      }
 
       const data = await response.json();
-      const text = data.content?.[0]?.text || '';
-      const parsed = JSON.parse(text);
+      const raw = data.content?.[0]?.text || '';
+      // Extrae JSON aunque venga envuelto en markdown
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (!match) {
+        console.error('[autoModerate] no JSON in response:', raw);
+        return { status: 'pending_review', reason: 'no_json_en_respuesta', confidence: 0 };
+      }
+      const parsed = JSON.parse(match[0]);
 
       if (!['active','rejected','pending_review'].includes(parsed.decision)) return { status: 'pending_review', reason: 'decision_invalida', confidence: 0 };
+      console.log('[autoModerate] decision:', parsed.decision, 'confidence:', parsed.confidence);
       return { status: parsed.decision, reason: parsed.reason, confidence: parsed.confidence };
-    } catch {
+    } catch(e) {
+      console.error('[autoModerate] catch:', e?.message);
       return { status: 'pending_review', reason: 'error_en_moderacion_automatica', confidence: 0 };
     }
   }
