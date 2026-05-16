@@ -170,6 +170,10 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsors
       return sponsorsHandlers.sponsorStats(request);
     }
 
+    if (path === '/admin.html' || path === '/admin') {
+      return sendError(404, 'not_found', null, request);
+    }
+
     return sendError(404, 'route_not_found', null, request);
   };
 }

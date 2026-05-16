@@ -84,12 +84,25 @@ function createProvidersHandlers(env) {
     if (!catList.includes(providerId)) catList.push(providerId);
     await env.LOVENTY_KV.put(catKey, JSON.stringify(catList));
 
+    // Moderacion automatica con IA
+    if (env.ANTHROPIC_API_KEY) {
+      const modResult = await autoModerate(provider, env);
+      provider.status = modResult.status || 'pending_review';
+      provider.auto_moderation = {
+        decision: modResult.status,
+        reason: modResult.reason,
+        confidence: modResult.confidence,
+        moderated_at: new Date().toISOString()
+      };
+      await env.LOVENTY_KV.put('provider:' + providerId, JSON.stringify(provider), { expirationTtl: 365 * 24 * 3600 });
+    }
+
     return sendJson(isEdit ? 200 : 201, {
       ok: true,
       mode: isEdit ? 'updated' : 'created',
       provider_id: providerId,
       edit_key: isEdit ? undefined : editKey,
-      status: 'pending_review'
+      status: provider.status
     }, request);
   }
 
@@ -185,6 +198,56 @@ function createProvidersHandlers(env) {
     await env.LOVENTY_KV.put('provider:' + id, JSON.stringify(provider), { expirationTtl: 365 * 24 * 3600 });
 
     return sendJson(200, { ok: true, provider_id: id, status }, request);
+  }
+
+  async function autoModerate(provider, env) {
+    const prompt = `Eres el sistema de moderacion automatica de Loventy, una plataforma europea de cuidado para personas mayores.
+
+Analiza esta ficha de proveedor y decide si aprobarla, rechazarla o marcarla para revision humana.
+
+FICHA:
+- Nombre: ${provider.provider_name}
+- Categoria: ${provider.category}
+- Descripcion: ${provider.description}
+- Zona: ${provider.zone}
+- Pais: ${provider.country}
+- Precio: ${provider.price_info || 'no indicado'}
+- Web: ${provider.website || 'no indicada'}
+
+CRITERIOS:
+APROBAR si: informacion coherente, descripcion profesional y relevante para cuidado de mayores, sin contenido ofensivo, sin spam, sin datos personales expuestos innecesariamente.
+RECHAZAR si: contenido ofensivo, spam, servicios ilegales, contenido sexual, contenido violento, publicidad no relacionada con cuidado de mayores.
+REVISION si: informacion incompleta, descripcion muy vaga, precio sospechosamente bajo o alto, necesita verificacion adicional.
+
+Responde SOLO con este JSON sin ningun texto adicional:
+{"decision":"active|rejected|pending_review","reason":"motivo breve en español","confidence":0.0-1.0}`;
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': env.ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 200,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      if (!response.ok) return { status: 'pending_review', reason: 'api_error', confidence: 0 };
+
+      const data = await response.json();
+      const text = data.content?.[0]?.text || '';
+      const parsed = JSON.parse(text);
+
+      if (!['active','rejected','pending_review'].includes(parsed.decision)) return { status: 'pending_review', reason: 'decision_invalida', confidence: 0 };
+      return { status: parsed.decision, reason: parsed.reason, confidence: parsed.confidence };
+    } catch {
+      return { status: 'pending_review', reason: 'error_en_moderacion_automatica', confidence: 0 };
+    }
   }
 
   return { upsert, list, getProvider, moderate };
