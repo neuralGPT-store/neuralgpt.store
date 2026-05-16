@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com https://neuralgpt.store; frame-src https://js.stripe.com" />
   <title>Mi cuenta — Loventy</title>
   <meta name="robots" content="noindex,nofollow" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/design-tokens.css">
   <link rel="stylesheet" href="/css/core.css">
   <link rel="stylesheet" href="/css/layout.css">
@@ -75,11 +75,12 @@
 
       <div style="display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-8);padding:var(--space-6);background:var(--color-bg-secondary);border-radius:var(--radius-md)">
         <div style="width:64px;height:64px;border-radius:50%;background:var(--color-sage);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <span id="avatar-initial" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:#fff">M</span>
+          <span id="user-avatar" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:#fff">M</span>
         </div>
         <div>
-          <p id="account-email" style="font-weight:600;margin:0 0 var(--space-1)">maria@email.com</p>
-          <span id="plan-badge" style="display:inline-block;font-size:var(--font-size-xs);background:var(--color-sage);color:#fff;padding:2px 10px;border-radius:99px">Profesional</span>
+          <p id="user-name" style="font-weight:700;margin:0 0 2px;font-size:var(--font-size-base)">—</p>
+          <p id="user-email" style="font-weight:600;margin:0 0 var(--space-1);color:var(--color-text-muted);font-size:var(--font-size-sm)">maria@email.com</p>
+          <span id="user-plan" style="display:inline-block;font-size:var(--font-size-xs);background:var(--color-sage);color:#fff;padding:2px 10px;border-radius:99px">Profesional</span>
         </div>
       </div>
 
@@ -170,7 +171,7 @@
           </div>
           <hr style="border:none;border-top:1px solid var(--color-border)" />
           <div>
-            <button class="btn btn-ghost" onclick="window.location.href='/'">Cerrar sesion</button>
+            <button id="logout-btn" class="btn btn-ghost">Cerrar sesion</button>
           </div>
         </div>
       </div>
@@ -293,6 +294,56 @@
       });
     }
   })();
+
+  async function loadUserData() {
+    const token = localStorage.getItem('lv_token');
+    const userRaw = localStorage.getItem('lv_user');
+
+    if (!token || !userRaw) {
+      window.location.href = '/register.html';
+      return;
+    }
+
+    const user = JSON.parse(userRaw);
+
+    try {
+      const res = await fetch('/api/auth/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (!res.ok) {
+        localStorage.removeItem('lv_token');
+        localStorage.removeItem('lv_user');
+        window.location.href = '/register.html';
+        return;
+      }
+      const data = await res.json();
+
+      const nameEl = document.getElementById('user-name');
+      const emailEl = document.getElementById('user-email');
+      const planEl = document.getElementById('user-plan');
+      const avatarEl = document.getElementById('user-avatar');
+
+      if (nameEl) nameEl.textContent = data.user.name || user.name || '';
+      if (emailEl) emailEl.textContent = data.user.email || user.email || '';
+      if (planEl) planEl.textContent = data.user.account_type === 'profesional' ? 'Profesional' : data.user.account_type === 'voluntario' ? 'Voluntario' : 'Familiar';
+      if (avatarEl) avatarEl.textContent = (data.user.name || user.name || 'U')[0].toUpperCase();
+
+    } catch(e) {
+      console.error('Error cargando datos de usuario:', e);
+    }
+  }
+
+  document.getElementById('logout-btn') && document.getElementById('logout-btn').addEventListener('click', async function() {
+    const token = localStorage.getItem('lv_token');
+    if (token) {
+      await fetch('/api/auth/logout', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token } }).catch(()=>{});
+    }
+    localStorage.removeItem('lv_token');
+    localStorage.removeItem('lv_user');
+    window.location.href = '/';
+  });
+
+  loadUserData();
 </script>
 
 <script src="/js/chany.js"></script>

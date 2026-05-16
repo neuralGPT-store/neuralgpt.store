@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com; frame-src https://js.stripe.com" />
   <title>Pagina no encontrada — Loventy</title>
   <meta name="robots" content="noindex,follow" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/design-tokens.css">
   <link rel="stylesheet" href="/css/core.css">
   <link rel="stylesheet" href="/css/layout.css">
@@ -64,10 +64,15 @@
 </nav>
 
 <main id="main" style="min-height:calc(100vh - var(--header-height) - 120px);display:flex;align-items:center;justify-content:center;padding:var(--space-12) var(--space-4)">
-  <div style="text-align:center;max-width:480px">
-    <div style="font-family:var(--font-heading);font-size:clamp(5rem,18vw,8rem);color:var(--color-border);line-height:1;margin-bottom:var(--space-4)">404</div>
-    <h1 style="font-size:var(--font-size-2xl);margin-bottom:var(--space-4)">Esta pagina no existe</h1>
-    <p style="color:var(--color-text-muted);line-height:1.7;margin-bottom:var(--space-8)">La URL que buscas no existe o ha sido movida. Comprueba la direccion o vuelve al inicio.</p>
+  <div style="text-align:center;max-width:520px">
+    <div style="font-family:var(--font-heading);font-size:clamp(5rem,20vw,9rem);color:#c9a84c;line-height:1;margin-bottom:var(--space-4);text-shadow:0 0 40px rgba(201,168,76,0.4),0 0 80px rgba(201,168,76,0.15)">404</div>
+    <h1 style="font-size:var(--font-size-2xl);margin-bottom:var(--space-3)">Esta pagina no existe o fue movida</h1>
+    <p style="color:var(--color-text-muted);line-height:1.7;margin-bottom:var(--space-8)">La URL que buscas no esta disponible. Prueba con uno de estos accesos directos:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:center;margin-bottom:var(--space-8)">
+      <a href="/directorio.html" class="btn btn-secondary">Directorio de servicios</a>
+      <a href="/edit.html" class="btn btn-secondary">Publicar ficha</a>
+      <a href="/contact.html" class="btn btn-secondary">Contacto</a>
+    </div>
     <a href="/" class="btn btn-primary btn-lg">Volver al inicio</a>
   </div>
 </main>
