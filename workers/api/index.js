@@ -9,6 +9,7 @@ import { createStripeHandlers } from './handlers/stripe.js';
 import { createAlertsHandlers } from './handlers/alerts.js';
 import { createSponsorsHandlers } from './handlers/sponsors.js';
 import { createAuthHandlers } from './handlers/auth.js';
+import { createProvidersHandlers } from './handlers/providers.js';
 import { getEnv } from './config/env.js';
 import { applyCors, setSecurityHeaders } from './lib/http.js';
 
@@ -32,9 +33,10 @@ export default {
       const alertsHandlers = createAlertsHandlers(env);
       const sponsorsHandlers = createSponsorsHandlers(env);
       const authHandlers = createAuthHandlers(env);
+      const providersHandlers = createProvidersHandlers(env);
 
       // Create router
-      const router = createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers, authHandlers);
+      const router = createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers, authHandlers, providersHandlers);
 
       // Route request
       const response = await router(request, env);

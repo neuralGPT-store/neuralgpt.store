@@ -4,15 +4,371 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="neural-api-base" content="https://neuralgpt.store/api" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com https://neuralgpt.store; frame-src https://js.stripe.com" />
-  <title>Editar ficha — Loventy</title>
-  <meta name="robots" content="noindex,nofollow" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://api.anthropic.com https://js.stripe.com; frame-src https://js.stripe.com" />
+  <title>Publicar ficha — Loventy</title>
+  <meta name="description" content="Publica tu ficha como cuidador, residencia o servicio de atencion para personas mayores en Loventy." />
+  <link rel="canonical" href="https://neuralgpt.store/edit.html" />
   <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="/css/design-tokens.css">
   <link rel="stylesheet" href="/css/core.css">
   <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/pages.css">
+  <style>
+    .wizard-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-4) var(--space-12);
+    }
+    .wizard-progress {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: var(--space-8);
+    }
+    .wizard-step-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      gap: var(--space-2);
+      position: relative;
+    }
+    .wizard-step-label:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background: var(--color-border);
+      z-index: 0;
+    }
+    .wizard-step-label.done::after,
+    .wizard-step-label.active::after {
+      background: var(--color-sage-dark);
+    }
+    .step-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--color-border);
+      background: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: var(--color-text-muted);
+      position: relative;
+      z-index: 1;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .wizard-step-label.active .step-dot {
+      border-color: var(--color-sage-dark);
+      background: var(--color-sage-dark);
+      color: var(--color-white);
+    }
+    .wizard-step-label.done .step-dot {
+      border-color: var(--color-sage-dark);
+      background: var(--color-sage-dark);
+      color: var(--color-white);
+    }
+    .step-name {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+    .wizard-step-label.active .step-name {
+      color: var(--color-sage-dark);
+      font-weight: 600;
+    }
+    .progress-bar-track {
+      height: 4px;
+      background: var(--color-border);
+      border-radius: 2px;
+      margin-bottom: var(--space-6);
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--color-sage-dark);
+      border-radius: 2px;
+      transition: width 0.35s ease;
+    }
+    .wizard-panel {
+      background: var(--color-white);
+      border: var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+    }
+    .wizard-panel h2 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      font-weight: normal;
+      margin: 0 0 var(--space-6);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      margin-bottom: var(--space-4);
+    }
+    .field label {
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      padding: var(--space-3) var(--space-3);
+      border: var(--border);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+      transition: border-color 0.15s;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--color-sage-dark);
+    }
+    .field input.error,
+    .field select.error,
+    .field textarea.error {
+      border-color: var(--color-error, #c0392b);
+    }
+    .field-error {
+      font-size: var(--font-size-xs);
+      color: var(--color-error, #c0392b);
+      display: none;
+    }
+    .char-counter {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      text-align: right;
+    }
+    .photo-slots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    @media (max-width: 500px) {
+      .photo-slots { grid-template-columns: 1fr; }
+    }
+    .photo-slot {
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.15s, background 0.15s;
+      background: var(--color-bg);
+    }
+    .photo-slot:hover,
+    .photo-slot.drag-over {
+      border-color: var(--color-sage-dark);
+      background: var(--color-bg-secondary);
+    }
+    .photo-slot .slot-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+      pointer-events: none;
+    }
+    .photo-slot .slot-placeholder svg {
+      opacity: 0.5;
+    }
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+    .photo-slot .slot-remove {
+      position: absolute;
+      top: var(--space-1);
+      right: var(--space-1);
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 24px;
+      text-align: center;
+      display: none;
+      z-index: 2;
+    }
+    .photo-slot input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      font-size: 0;
+    }
+    .photo-slot.has-image .slot-placeholder { display: none; }
+    .photo-slot.has-image .slot-remove { display: block; }
+    .photo-slot.has-image input[type="file"] { pointer-events: none; }
+    .volunteer-note {
+      background: var(--color-bg-secondary);
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+      display: none;
+    }
+    .step3-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      align-items: start;
+    }
+    @media (max-width: 700px) {
+      .step3-grid { grid-template-columns: 1fr; }
+    }
+    .preview-card {
+      border: var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      background: var(--color-bg);
+      position: sticky;
+      top: var(--space-6);
+    }
+    .preview-card-title {
+      font-size: var(--font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .preview-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-sage-dark);
+      color: var(--color-white);
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-3);
+    }
+    .preview-name {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-1);
+    }
+    .preview-badge {
+      display: inline-block;
+      font-size: var(--font-size-xs);
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-sm);
+      background: var(--color-eu-blue);
+      color: #fff;
+      margin-bottom: var(--space-3);
+    }
+    .preview-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .preview-meta {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .checkbox-row input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; }
+    .checkbox-row label { font-size: var(--font-size-sm); color: var(--color-text); }
+    .wizard-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-6);
+      gap: var(--space-3);
+    }
+    .btn-back {
+      background: none;
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-5);
+      font-size: var(--font-size-base);
+      cursor: pointer;
+      color: var(--color-text);
+    }
+    .btn-back:hover { background: var(--color-bg-secondary); }
+    .success-screen {
+      text-align: center;
+      padding: var(--space-12) var(--space-4);
+    }
+    .success-screen h2 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--space-4);
+    }
+    .success-screen p {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-muted);
+      max-width: 440px;
+      margin: 0 auto var(--space-6);
+    }
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-sage-dark);
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+    }
+    .global-error {
+      background: #fdf0ef;
+      border: 1px solid #e8b4b0;
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--font-size-sm);
+      color: #a93226;
+      margin-top: var(--space-4);
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -41,8 +397,8 @@
     </div>
   </nav>
   <div class="header-actions">
-    <a href="#" class="btn btn-ghost">Entrar</a>
-    <a href="#" class="btn btn-primary">Publicar ficha</a>
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
     </button>
@@ -51,123 +407,248 @@
 
 <nav class="mobile-menu" id="mobile-menu" aria-label="Menu movil">
   <ul style="display:flex;flex-direction:column;gap:var(--space-4)">
-    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
-    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Voluntariado</a></li>
-    <li><a href="#" style="font-size:var(--font-size-lg);color:var(--color-text)">Loventy Talks</a></li>
-    <li><a href="/sponsors.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Sponsors</a></li>
-    <li><a href="/pricing.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Pricing</a></li>
+    <li><a href="/directorio.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
+    <li><a href="/about.html#voluntariado">Voluntariado</a></li>
+    <li><a href="/about.html#talks">Loventy Talks</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/pricing.html">Pricing</a></li>
   </ul>
   <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
-    <a href="#" class="btn btn-ghost">Entrar</a>
-    <a href="#" class="btn btn-primary">Publicar ficha</a>
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
   </div>
 </nav>
 
 <main id="main">
-  <section class="hero">
-    <div class="container" style="text-align:center">
-      <h1>Editar ficha</h1>
-      <p id="edit-subtitle" style="color:var(--color-text-muted)">Actualiza los datos de tu ficha en el directorio.</p>
+<div class="wizard-wrap">
+
+  <div class="wizard-progress" id="wizard-progress" aria-label="Pasos del formulario">
+    <div class="wizard-step-label active" id="dot-1">
+      <div class="step-dot">1</div>
+      <span class="step-name">Tu perfil</span>
     </div>
-  </section>
+    <div class="wizard-step-label" id="dot-2">
+      <div class="step-dot">2</div>
+      <span class="step-name">Fotos</span>
+    </div>
+    <div class="wizard-step-label" id="dot-3">
+      <div class="step-dot">3</div>
+      <span class="step-name">Revision</span>
+    </div>
+  </div>
+  <div class="progress-bar-track" id="progress-track">
+    <div class="progress-bar-fill" id="progress-fill" style="width:33%"></div>
+  </div>
 
-  <section class="section">
-    <div class="container" style="max-width:640px;margin:0 auto">
+  <!-- PASO 1 -->
+  <div class="wizard-panel" id="step-1">
+    <h2>Cuentanos sobre ti</h2>
 
-      <div id="edit-error-banner" style="display:none;margin-bottom:var(--space-6);padding:var(--space-4);background:#fef2f2;border:1px solid #fca5a5;border-radius:var(--radius-md)">
-        <p id="edit-error-text" style="font-size:var(--font-size-sm);color:var(--color-error);margin:0"></p>
+    <div class="field">
+      <label for="f-categoria">Categoria <span aria-hidden="true">*</span></label>
+      <select id="f-categoria" required>
+        <option value="">Selecciona una categoria</option>
+        <option value="cuidador">Cuidador profesional</option>
+        <option value="residencia">Residencia o centro de dia</option>
+        <option value="sanitario">Servicio sanitario</option>
+        <option value="hogar">Adaptacion del hogar</option>
+        <option value="transporte">Transporte adaptado</option>
+        <option value="legal">Servicio legal</option>
+        <option value="farmacia">Farmacia y ortopedia</option>
+        <option value="voluntario">Voluntario</option>
+      </select>
+      <span class="field-error" id="err-categoria">Selecciona una categoria.</span>
+    </div>
+
+    <div class="field">
+      <label for="f-nombre">Nombre del proveedor <span aria-hidden="true">*</span></label>
+      <input type="text" id="f-nombre" placeholder="Tu nombre o nombre del centro" maxlength="120" required />
+      <span class="field-error" id="err-nombre">El nombre es obligatorio.</span>
+    </div>
+
+    <div class="field">
+      <label for="f-descripcion">Descripcion del servicio <span aria-hidden="true">*</span></label>
+      <textarea id="f-descripcion" rows="4" maxlength="500" placeholder="Describe tu servicio, experiencia y lo que ofreces" required></textarea>
+      <div class="char-counter"><span id="desc-count">0</span>/500</div>
+      <span class="field-error" id="err-descripcion">La descripcion es obligatoria.</span>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="f-zona">Zona <span aria-hidden="true">*</span></label>
+        <input type="text" id="f-zona" placeholder="Ciudad o region" maxlength="100" required />
+        <span class="field-error" id="err-zona">La zona es obligatoria.</span>
+      </div>
+      <div class="field">
+        <label for="f-pais">Pais <span aria-hidden="true">*</span></label>
+        <select id="f-pais" required>
+          <option value="">Selecciona un pais</option>
+          <option value="ES">Espana</option>
+          <option value="FR">Francia</option>
+          <option value="DE">Alemania</option>
+          <option value="IT">Italia</option>
+          <option value="PT">Portugal</option>
+          <option value="PL">Polonia</option>
+          <option value="NL">Paises Bajos</option>
+        </select>
+        <span class="field-error" id="err-pais">Selecciona un pais.</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="f-idiomas">Idiomas</label>
+        <input type="text" id="f-idiomas" placeholder="Espanol, Frances, Ingles..." maxlength="200" />
+      </div>
+      <div class="field">
+        <label for="f-precio">Precio orientativo</label>
+        <input type="text" id="f-precio" placeholder="12 EUR/hora, consultar..." maxlength="100" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="f-disponibilidad">Disponibilidad</label>
+      <input type="text" id="f-disponibilidad" placeholder="Lunes a viernes 8h-20h, urgencias 24h..." maxlength="150" />
+    </div>
+
+    <div class="wizard-actions">
+      <span></span>
+      <button class="btn btn-primary" id="btn-next-1">Siguiente</button>
+    </div>
+  </div>
+
+  <!-- PASO 2 -->
+  <div class="wizard-panel" id="step-2" style="display:none">
+    <h2>Anade hasta 3 fotos</h2>
+
+    <div class="volunteer-note" id="volunteer-note">
+      Las fichas de voluntario no requieren fotos. Puedes continuar sin anadir ninguna.
+    </div>
+
+    <div class="photo-slots">
+      <div class="photo-slot" id="slot-0" tabindex="0" role="button" aria-label="Foto 1">
+        <input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Seleccionar foto 1" />
+        <div class="slot-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>Foto 1</span>
+          <span style="font-size:var(--font-size-xs)">Click o arrastra</span>
+        </div>
+        <button class="slot-remove" type="button" aria-label="Eliminar foto 1">&#x2715;</button>
+      </div>
+      <div class="photo-slot" id="slot-1" tabindex="0" role="button" aria-label="Foto 2">
+        <input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Seleccionar foto 2" />
+        <div class="slot-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>Foto 2</span>
+          <span style="font-size:var(--font-size-xs)">Click o arrastra</span>
+        </div>
+        <button class="slot-remove" type="button" aria-label="Eliminar foto 2">&#x2715;</button>
+      </div>
+      <div class="photo-slot" id="slot-2" tabindex="0" role="button" aria-label="Foto 3">
+        <input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Seleccionar foto 3" />
+        <div class="slot-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>Foto 3</span>
+          <span style="font-size:var(--font-size-xs)">Click o arrastra</span>
+        </div>
+        <button class="slot-remove" type="button" aria-label="Eliminar foto 3">&#x2715;</button>
+      </div>
+    </div>
+
+    <p style="font-size:var(--font-size-xs);color:var(--color-text-muted)">Maximo 3 fotos. Cada foto max 2 MB. Formatos: JPG, PNG, WEBP.</p>
+    <span class="field-error" id="err-fotos"></span>
+
+    <div class="wizard-actions">
+      <button class="btn-back" id="btn-back-2">Atras</button>
+      <button class="btn btn-primary" id="btn-next-2">Siguiente</button>
+    </div>
+  </div>
+
+  <!-- PASO 3 -->
+  <div class="wizard-panel" id="step-3" style="display:none">
+    <h2>Revisa tu ficha antes de publicar</h2>
+
+    <div class="step3-grid">
+      <div>
+        <div class="field">
+          <label for="f-contact-name">Nombre de contacto <span aria-hidden="true">*</span></label>
+          <input type="text" id="f-contact-name" maxlength="100" required />
+          <span class="field-error" id="err-contact-name">El nombre de contacto es obligatorio.</span>
+        </div>
+        <div class="field">
+          <label for="f-contact-email">Email de contacto <span aria-hidden="true">*</span></label>
+          <input type="email" id="f-contact-email" maxlength="254" required />
+          <span class="field-error" id="err-contact-email">Introduce un email valido.</span>
+        </div>
+        <div class="field">
+          <label for="f-website">Sitio web</label>
+          <input type="url" id="f-website" placeholder="https://..." maxlength="200" />
+          <span class="field-error" id="err-website">La URL debe comenzar por https://</span>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="terms-check" />
+          <label for="terms-check">Acepto las <a href="/terms.html">normas de la comunidad</a></label>
+        </div>
+        <span class="field-error" id="err-terms">Debes aceptar las normas de la comunidad.</span>
+
+        <div class="checkbox-row" style="margin-top:var(--space-2)">
+          <input type="checkbox" id="privacy-check" />
+          <label for="privacy-check">Acepto la <a href="/privacy.html">politica de privacidad</a></label>
+        </div>
+        <span class="field-error" id="err-privacy">Debes aceptar la politica de privacidad.</span>
+
+        <div class="checkbox-row" style="margin-top:var(--space-2)">
+          <input type="checkbox" id="veraz-check" />
+          <label for="veraz-check">Confirmo que la informacion es veraz y soy responsable de este anuncio</label>
+        </div>
+        <span class="field-error" id="err-veraz">Debes confirmar la veracidad de la informacion.</span>
+
+        <div class="global-error" id="global-error"></div>
       </div>
 
-      <form id="edit-form" novalidate>
-        <input type="hidden" id="field-id" name="listing_id" />
-        <input type="hidden" id="field-key" name="edit_key" />
-        <input type="hidden" name="mode" value="update" />
-
-        <div class="form-group">
-          <label for="field-name">Nombre o razon social</label>
-          <input type="text" id="field-name" name="provider_name" class="form-input" placeholder="Nombre de tu servicio o empresa" required maxlength="160" />
+      <div>
+        <div class="preview-card" id="preview-card" aria-live="polite" aria-label="Vista previa de tu ficha">
+          <p class="preview-card-title">Vista previa</p>
+          <div class="preview-avatar" id="preview-avatar">?</div>
+          <div class="preview-name" id="preview-name">Tu nombre</div>
+          <span class="preview-badge" id="preview-badge">Categoria</span>
+          <p class="preview-desc" id="preview-desc">Tu descripcion aparecera aqui...</p>
+          <div class="preview-meta">
+            <span id="preview-zona"></span>
+            <span id="preview-precio"></span>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="field-category">Categoria</label>
-          <select id="field-category" name="category" class="form-select" required>
-            <option value="" disabled selected>Selecciona una categoria</option>
-            <option value="cuidador">Cuidador</option>
-            <option value="residencia">Residencia</option>
-            <option value="sanitario">Sanitario</option>
-            <option value="hogar">Hogar</option>
-            <option value="transporte">Transporte</option>
-            <option value="voluntariado">Voluntariado</option>
-            <option value="legal">Legal</option>
-            <option value="farmacia">Farmacia</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="field-description">Descripcion</label>
-          <textarea id="field-description" name="description" class="form-textarea" placeholder="Describe tu servicio..." rows="5" maxlength="4000"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="field-zone">Zona o ciudad</label>
-          <input type="text" id="field-zone" name="zone" class="form-input" placeholder="Ej: Madrid, Barcelona, toda Espana..." maxlength="80" />
-        </div>
-        <div class="form-group">
-          <label for="field-country">Pais</label>
-          <select id="field-country" name="country" class="form-select">
-            <option value="" disabled selected>Selecciona un pais</option>
-            <option value="ES">Espana</option>
-            <option value="FR">Francia</option>
-            <option value="DE">Alemania</option>
-            <option value="IT">Italia</option>
-            <option value="PT">Portugal</option>
-            <option value="PL">Polonia</option>
-            <option value="NL">Paises Bajos</option>
-            <option value="otros">Otros</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="field-languages">Idiomas</label>
-          <input type="text" id="field-languages" name="languages" class="form-input" placeholder="Ej: Espanol, ingles, catalan..." maxlength="120" />
-        </div>
-        <div class="form-group">
-          <label for="field-price">Precio orientativo</label>
-          <input type="text" id="field-price" name="price_info" class="form-input" placeholder="Ej: Desde 15 EUR/hora, Consultar..." maxlength="200" />
-        </div>
-        <div class="form-group">
-          <label for="field-availability">Disponibilidad</label>
-          <input type="text" id="field-availability" name="availability" class="form-input" placeholder="Ej: Lunes a viernes 8-20h, 24h..." maxlength="120" />
-        </div>
-        <div class="form-group">
-          <label for="field-contact-name">Nombre de contacto</label>
-          <input type="text" id="field-contact-name" name="contact_name" class="form-input" placeholder="Nombre de la persona de contacto" maxlength="120" />
-        </div>
-        <div class="form-group">
-          <label for="field-contact-email">Email de contacto</label>
-          <input type="email" id="field-contact-email" name="contact_email" class="form-input" placeholder="email@ejemplo.com" maxlength="200" />
-        </div>
-        <div class="form-group">
-          <label for="field-website">Sitio web <span style="color:var(--color-text-muted)">(opcional)</span></label>
-          <input type="url" id="field-website" name="website" class="form-input" placeholder="https://..." maxlength="300" />
-        </div>
-        <div class="form-group">
-          <label style="display:flex;align-items:flex-start;gap:var(--space-2);cursor:pointer">
-            <input type="checkbox" name="terms_accepted" required style="margin-top:2px;flex-shrink:0" />
-            <span>Acepto las normas de la comunidad Loventy</span>
-          </label>
-        </div>
-        <div class="form-group">
-          <label style="display:flex;align-items:flex-start;gap:var(--space-2);cursor:pointer">
-            <input type="checkbox" name="privacy_accepted" required style="margin-top:2px;flex-shrink:0" />
-            <span>Acepto la <a href="/privacy.html">politica de privacidad</a></span>
-          </label>
-        </div>
-
-        <div style="display:flex;gap:var(--space-3);align-items:center;flex-wrap:wrap">
-          <button type="submit" class="btn btn-primary btn-lg">Guardar cambios</button>
-          <p id="edit-msg" style="font-size:var(--font-size-sm);margin:0" role="status" aria-live="polite"></p>
-        </div>
-      </form>
-
+      </div>
     </div>
-  </section>
+
+    <div class="wizard-actions">
+      <button class="btn-back" id="btn-back-3">Atras</button>
+      <button class="btn btn-primary" id="btn-submit">Publicar ficha</button>
+    </div>
+  </div>
+
+  <!-- Exito -->
+  <div id="step-success" style="display:none">
+    <div class="wizard-panel success-screen">
+      <div class="success-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2>Ficha enviada correctamente</h2>
+      <p>Tu ficha esta siendo revisada. Te avisaremos por email en menos de 24h.</p>
+      <a href="/directorio.html" class="btn btn-primary">Ver directorio</a>
+    </div>
+  </div>
+
+</div>
 </main>
 
 <footer class="site-footer" role="contentinfo">
@@ -175,15 +656,36 @@
     <div class="footer-grid">
       <div class="footer-brand-col">
         <a href="/" class="footer-logo">Loventy</a>
-        <p class="footer-brand-desc">La plataforma europea de cuidado para personas mayores. Conectamos familias con los mejores profesionales.</p>
+        <p class="footer-brand-desc">La plataforma europea para el cuidado de personas mayores.</p>
+        <div class="footer-social" style="display:flex;gap:var(--space-3);margin-top:var(--space-4)">
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://x.com" target="_blank" rel="noopener" aria-label="X" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://tiktok.com/@loventy" target="_blank" rel="noopener" aria-label="TikTok" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+          </a>
+          <a href="https://youtube.com/@loventy" target="_blank" rel="noopener" aria-label="YouTube" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="var(--color-bg)"/></svg>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Directorio</h4>
         <ul>
-          <li><a href="#">Cuidadores</a></li>
-          <li><a href="#">Residencias</a></li>
-          <li><a href="#">Servicios sanitarios</a></li>
-          <li><a href="/about.html#voluntariado">Voluntariado</a></li>
+          <li><a href="/directorio.html?cat=cuidador">Cuidadores</a></li>
+          <li><a href="/directorio.html?cat=residencia">Residencias</a></li>
+          <li><a href="/directorio.html?cat=sanitario">Servicios sanitarios</a></li>
+          <li><a href="/directorio.html?cat=voluntariado">Voluntariado</a></li>
+          <li><a href="/directorio.html?cat=legal">Servicios legales</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -192,120 +694,301 @@
           <li><a href="/legal.html">Aviso legal</a></li>
           <li><a href="/privacy.html">Privacidad</a></li>
           <li><a href="/terms.html">Terminos</a></li>
+          <li><a href="/security.html">Seguridad</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contacto</h4>
+        <h4>Loventy</h4>
         <ul>
-          <li><a href="mailto:loventy@neuralgpt.store">loventy@neuralgpt.store</a></li>
+          <li><a href="/about.html">Quienes somos</a></li>
+          <li><a href="/sponsors.html">Anunciarse</a></li>
+          <li><a href="/pricing.html">Precios</a></li>
+          <li><a href="/contact.html">Contacto</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+      <span style="margin-left:var(--space-4);font-size:var(--font-size-xs)">La plataforma para el cuidado de mayores en Europa.</span>
     </div>
   </div>
 </footer>
 
 <script>
-  (function () {
-    var API_BASE = (document.querySelector('meta[name="neural-api-base"]') || {}).content || '/api';
-    var params = new URLSearchParams(window.location.search);
-    var listingId = params.get('id');
-    var editKey = params.get('key');
-
-    function showBanner(text) {
-      document.getElementById('edit-error-text').textContent = text;
-      document.getElementById('edit-error-banner').style.display = '';
+(function () {
+  /* ---- Nav ---- */
+  var toggle = document.getElementById('nav-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+  var params = new URLSearchParams(window.location.search);
+  var currentLang = params.get('lang') || 'es';
+  document.querySelectorAll('.lang-btn').forEach(function (btn) {
+    if (btn.dataset.lang === currentLang) {
+      btn.style.fontWeight = '700';
+      btn.style.color = 'var(--color-sage-dark)';
     }
+    btn.addEventListener('click', function () {
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', btn.dataset.lang);
+      window.location.href = url.toString();
+    });
+  });
 
-    if (!listingId || !editKey) {
-      showBanner('Enlace de edicion invalido. Se requieren los parametros id y key en la URL.');
-      document.getElementById('edit-form').style.display = 'none';
-    } else {
-      document.getElementById('field-id').value = listingId;
-      document.getElementById('field-key').value = editKey;
-      document.getElementById('edit-subtitle').textContent = 'Ficha: ' + listingId;
-    }
+  /* ---- State ---- */
+  var currentStep = 1;
+  var photoFiles = [null, null, null];
+  var editId = params.get('id');
+  var editKey = params.get('key');
+  var editMode = !!(editId && editKey);
 
-    document.getElementById('edit-form').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      var msg = document.getElementById('edit-msg');
-      var btn = this.querySelector('button[type="submit"]');
+  var CAT_LABELS = {
+    cuidador: 'Cuidador profesional', residencia: 'Residencia o centro de dia',
+    sanitario: 'Servicio sanitario', hogar: 'Adaptacion del hogar',
+    transporte: 'Transporte adaptado', legal: 'Servicio legal',
+    farmacia: 'Farmacia y ortopedia', voluntario: 'Voluntario'
+  };
 
-      var body = { mode: 'update', listing_id: listingId, edit_key: editKey };
-      var fields = ['provider_name', 'category', 'description', 'zone', 'country', 'languages', 'price_info', 'availability', 'contact_name', 'contact_email', 'website'];
-      fields.forEach(function (name) {
-        var el = this.elements[name];
-        if (el && el.value.trim()) body[name] = el.value.trim();
-      }, this);
+  /* ---- Edit mode ---- */
+  if (editMode) {
+    fetch('/api/listings/status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: editId, key: editKey })
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (!data.ok || !data.listing) return;
+      var l = data.listing;
+      var fields = ['categoria','nombre_proveedor','descripcion','zona','pais','idiomas','precio_info','disponibilidad','contact_name','contact_email','website'];
+      var ids    = ['f-categoria','f-nombre','f-descripcion','f-zona','f-pais','f-idiomas','f-precio','f-disponibilidad','f-contact-name','f-contact-email','f-website'];
+      fields.forEach(function (k, i) {
+        var el = document.getElementById(ids[i]);
+        if (el && l[k] != null) el.value = l[k];
+      });
+      updateDescCount();
+      updatePreview();
+    }).catch(function () {});
+  }
 
-      if (!body.provider_name) {
-        msg.textContent = 'El nombre es obligatorio.';
-        msg.style.color = 'var(--color-error)';
-        return;
-      }
+  /* ---- Char counter ---- */
+  var descArea = document.getElementById('f-descripcion');
+  var descCount = document.getElementById('desc-count');
+  function updateDescCount() { descCount.textContent = descArea.value.length; }
+  descArea.addEventListener('input', updateDescCount);
 
-      var terms = this.elements['terms_accepted'];
-      var privacy = this.elements['privacy_accepted'];
-      if (!terms || !terms.checked) {
-        msg.textContent = 'Debes aceptar las normas de la comunidad.';
-        msg.style.color = 'var(--color-error)';
-        return;
-      }
-      if (!privacy || !privacy.checked) {
-        msg.textContent = 'Debes aceptar la politica de privacidad.';
-        msg.style.color = 'var(--color-error)';
-        return;
-      }
+  /* ---- Live preview ---- */
+  function updatePreview() {
+    var name  = document.getElementById('f-nombre').value.trim() || 'Tu nombre';
+    var cat   = document.getElementById('f-categoria').value;
+    var desc  = document.getElementById('f-descripcion').value.trim();
+    var zona  = document.getElementById('f-zona').value.trim();
+    var pais  = document.getElementById('f-pais').value;
+    var precio = document.getElementById('f-precio').value.trim();
 
-      btn.disabled = true;
-      btn.textContent = 'Guardando...';
-      msg.textContent = '';
+    document.getElementById('preview-avatar').textContent = name.charAt(0).toUpperCase() || '?';
+    document.getElementById('preview-name').textContent = name;
+    document.getElementById('preview-badge').textContent = CAT_LABELS[cat] || 'Categoria';
+    document.getElementById('preview-desc').textContent = desc.length > 120 ? desc.slice(0, 120) + '...' : (desc || 'Tu descripcion aparecera aqui...');
+    document.getElementById('preview-zona').textContent = [zona, pais].filter(Boolean).join(', ');
+    document.getElementById('preview-precio').textContent = precio ? 'Precio: ' + precio : '';
+  }
 
-      try {
-        var fd = new FormData();
-        Object.keys(body).forEach(function (k) { fd.append(k, body[k]); });
-        var res = await fetch(API_BASE + '/listings/upsert', { method: 'POST', body: fd });
-        var data = await res.json();
-        if (res.ok && data.ok) {
-          msg.textContent = 'Cambios guardados correctamente.';
-          msg.style.color = 'var(--color-success)';
-        } else {
-          msg.textContent = (data && data.error) ? data.error : 'No se pudieron guardar los cambios.';
-          msg.style.color = 'var(--color-error)';
-        }
-      } catch (_) {
-        msg.textContent = 'Error de conexion. Intentalo de nuevo.';
-        msg.style.color = 'var(--color-error)';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Guardar cambios';
+  ['f-nombre','f-categoria','f-descripcion','f-zona','f-pais','f-precio'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', updatePreview);
+  });
+
+  /* ---- Volunteer note ---- */
+  document.getElementById('f-categoria').addEventListener('change', function () {
+    document.getElementById('volunteer-note').style.display = this.value === 'voluntario' ? '' : 'none';
+  });
+
+  /* ---- Photo slots ---- */
+  [0, 1, 2].forEach(function (i) {
+    var slot  = document.getElementById('slot-' + i);
+    var input = slot.querySelector('input[type="file"]');
+
+    input.addEventListener('change', function () {
+      if (input.files[0]) handleFile(i, input.files[0]);
+    });
+    slot.addEventListener('keydown', function (e) {
+      if ((e.key === 'Enter' || e.key === ' ') && !slot.classList.contains('has-image')) {
+        e.preventDefault(); input.click();
       }
     });
-
-    var currentLang = params.get('lang') || 'es';
-    document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      if (btn.dataset.lang === currentLang) {
-        btn.style.fontWeight = '700';
-        btn.style.color = 'var(--color-sage-dark)';
-        btn.setAttribute('aria-pressed', 'true');
-      }
-      btn.addEventListener('click', function () {
-        var url = new URL(window.location.href);
-        url.searchParams.set('lang', btn.dataset.lang);
-        window.location.href = url.toString();
-      });
+    slot.querySelector('.slot-remove').addEventListener('click', function (e) {
+      e.stopPropagation(); removePhoto(i);
     });
-    var toggle = document.getElementById('nav-toggle');
-    var mobileMenu = document.getElementById('mobile-menu');
-    if (toggle && mobileMenu) {
-      toggle.addEventListener('click', function () {
-        var open = mobileMenu.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(open));
-      });
+    slot.addEventListener('dragover', function (e) { e.preventDefault(); slot.classList.add('drag-over'); });
+    slot.addEventListener('dragleave', function () { slot.classList.remove('drag-over'); });
+    slot.addEventListener('drop', function (e) {
+      e.preventDefault(); slot.classList.remove('drag-over');
+      if (e.dataTransfer.files[0]) handleFile(i, e.dataTransfer.files[0]);
+    });
+  });
+
+  function handleFile(idx, file) {
+    var errEl = document.getElementById('err-fotos');
+    errEl.style.display = 'none';
+    if (!['image/jpeg','image/png','image/webp'].includes(file.type)) {
+      errEl.textContent = 'Formato no permitido. Usa JPG, PNG o WEBP.'; errEl.style.display = ''; return;
     }
-  })();
+    if (file.size > 2 * 1024 * 1024) {
+      errEl.textContent = 'La foto ' + (idx + 1) + ' supera los 2 MB.'; errEl.style.display = ''; return;
+    }
+    photoFiles[idx] = file;
+    var slot = document.getElementById('slot-' + idx);
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var old = slot.querySelector('img'); if (old) old.remove();
+      var img = document.createElement('img');
+      img.src = e.target.result; img.alt = 'Foto ' + (idx + 1);
+      slot.appendChild(img); slot.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removePhoto(idx) {
+    photoFiles[idx] = null;
+    var slot = document.getElementById('slot-' + idx);
+    var img = slot.querySelector('img'); if (img) img.remove();
+    slot.classList.remove('has-image');
+    slot.querySelector('input[type="file"]').value = '';
+  }
+
+  /* ---- Helpers ---- */
+  function showErr(id, msg) { var el = document.getElementById(id); if (!el) return; if (msg) el.textContent = msg; el.style.display = ''; }
+  function hideErr(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; }
+  function setErr(fid, eid, msg) { var f = document.getElementById(fid); if (f) f.classList.add('error'); showErr(eid, msg); }
+  function clrErr(fid, eid) { var f = document.getElementById(fid); if (f) f.classList.remove('error'); hideErr(eid); }
+
+  /* ---- Progress ---- */
+  function updateProgress(step) {
+    document.getElementById('progress-fill').style.width = ({ 1:33, 2:66, 3:100 }[step]) + '%';
+    [1,2,3].forEach(function (n) {
+      var d = document.getElementById('dot-' + n);
+      d.classList.remove('active','done');
+      if (n < step) d.classList.add('done'); else if (n === step) d.classList.add('active');
+    });
+  }
+
+  function goToStep(step) {
+    document.getElementById('step-' + currentStep).style.display = 'none';
+    currentStep = step;
+    document.getElementById('step-' + currentStep).style.display = '';
+    updateProgress(currentStep);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ---- Step 1 validation ---- */
+  function validateStep1() {
+    var pairs = [['f-categoria','err-categoria'],['f-nombre','err-nombre'],['f-descripcion','err-descripcion'],['f-zona','err-zona'],['f-pais','err-pais']];
+    pairs.forEach(function (p) { clrErr(p[0], p[1]); });
+    var ok = true;
+    pairs.forEach(function (p) {
+      if (!document.getElementById(p[0]).value.trim()) { setErr(p[0], p[1]); ok = false; }
+    });
+    return ok;
+  }
+
+  /* ---- Step 3 validation ---- */
+  function validateStep3() {
+    [['f-contact-name','err-contact-name'],['f-contact-email','err-contact-email'],['f-website','err-website']].forEach(function (p) { clrErr(p[0],p[1]); });
+    ['err-terms','err-privacy','err-veraz'].forEach(hideErr);
+    var ok = true;
+    var name  = document.getElementById('f-contact-name').value.trim();
+    var email = document.getElementById('f-contact-email').value.trim();
+    var url   = document.getElementById('f-website').value.trim();
+    if (!name)  { setErr('f-contact-name','err-contact-name'); ok = false; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setErr('f-contact-email','err-contact-email'); ok = false; }
+    if (url && !/^https?:\/\/.+/.test(url)) { setErr('f-website','err-website'); ok = false; }
+    if (!document.getElementById('terms-check').checked)   { showErr('err-terms'); ok = false; }
+    if (!document.getElementById('privacy-check').checked) { showErr('err-privacy'); ok = false; }
+    if (!document.getElementById('veraz-check').checked)   { showErr('err-veraz'); ok = false; }
+    return ok;
+  }
+
+  /* ---- Wiring ---- */
+  document.getElementById('btn-next-1').addEventListener('click', function () { if (validateStep1()) goToStep(2); });
+  document.getElementById('btn-back-2').addEventListener('click', function () { goToStep(1); });
+  document.getElementById('btn-next-2').addEventListener('click', function () { hideErr('err-fotos'); goToStep(3); updatePreview(); });
+  document.getElementById('btn-back-3').addEventListener('click', function () { goToStep(2); });
+
+  /* ---- Compress ---- */
+  function compressImage(file) {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      var objUrl = URL.createObjectURL(file);
+      img.onload = function () {
+        URL.revokeObjectURL(objUrl);
+        var MAX = 800, w = img.width, h = img.height;
+        if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        canvas.toBlob(function (blob) { resolve(blob || file); }, 'image/jpeg', 0.82);
+      };
+      img.onerror = function () { resolve(file); };
+      img.src = objUrl;
+    });
+  }
+
+  /* ---- Submit ---- */
+  document.getElementById('btn-submit').addEventListener('click', async function () {
+    if (!validateStep3()) return;
+    var btn = this;
+    btn.disabled = true;
+    var origText = btn.textContent;
+    btn.textContent = 'Publicando...';
+    hideErr('global-error');
+
+    var fd = new FormData();
+    var fieldMap = {
+      'f-categoria':'categoria','f-nombre':'nombre_proveedor','f-descripcion':'descripcion',
+      'f-zona':'zona','f-pais':'pais','f-idiomas':'idiomas','f-precio':'precio_info',
+      'f-disponibilidad':'disponibilidad','f-contact-name':'contact_name',
+      'f-contact-email':'contact_email','f-website':'website'
+    };
+    Object.keys(fieldMap).forEach(function (id) {
+      fd.append(fieldMap[id], document.getElementById(id).value.trim());
+    });
+    if (editMode) { fd.append('id', editId); fd.append('key', editKey); }
+    var token = localStorage.getItem('lv_token');
+    if (token) fd.append('auth_token', token);
+
+    for (var i = 0; i < 3; i++) {
+      if (photoFiles[i]) {
+        var blob = await compressImage(photoFiles[i]);
+        fd.append('photo_' + i, blob, 'photo_' + i + '.jpg');
+      }
+    }
+
+    try {
+      var res = await fetch('/api/providers/upsert', { method: 'POST', body: fd });
+      var data = await res.json();
+      if (res.ok && data.ok) {
+        [1,2,3].forEach(function (n) { document.getElementById('step-' + n).style.display = 'none'; });
+        document.getElementById('wizard-progress').style.display = 'none';
+        document.getElementById('progress-track').style.display = 'none';
+        document.getElementById('step-success').style.display = '';
+      } else {
+        var ERRS = { invalid_body:'Los datos enviados no son validos.', name_required:'El nombre del proveedor es obligatorio.', unauthorized:'Debes iniciar sesion para publicar.' };
+        var msg = ERRS[data.error] || data.message || 'Error inesperado. Intentalo de nuevo.';
+        var el = document.getElementById('global-error');
+        el.textContent = msg; el.style.display = '';
+        btn.disabled = false; btn.textContent = origText;
+      }
+    } catch (err) {
+      var el = document.getElementById('global-error');
+      el.textContent = 'Error de conexion. Comprueba tu red e intentalo de nuevo.';
+      el.style.display = '';
+      btn.disabled = false; btn.textContent = origText;
+    }
+  });
+
+})();
 </script>
 
 </body>

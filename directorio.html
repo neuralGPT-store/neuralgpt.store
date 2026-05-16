@@ -281,64 +281,92 @@
   var params = new URLSearchParams(window.location.search);
   var catParam = params.get('cat') || '';
   var qParam = params.get('q') || '';
+  var countryParam = params.get('country') || '';
 
   var catSelect = document.getElementById('filter-cat');
   var zoneInput = document.getElementById('filter-zone');
+  var countrySelect = document.getElementById('filter-country');
   var searchBtn = document.getElementById('filter-btn');
+  var grid = document.getElementById('directory-grid');
+  var loading = document.getElementById('directory-loading');
+  var empty = document.getElementById('directory-empty');
 
   if (catParam && catSelect) catSelect.value = catParam;
   if (qParam && zoneInput) zoneInput.value = qParam;
+  if (countryParam && countrySelect) countrySelect.value = countryParam;
 
-  function filterDirectory() {
-    var cat = catSelect ? catSelect.value : '';
-    var zone = zoneInput ? zoneInput.value.toLowerCase().trim() : '';
-    var country = document.getElementById('filter-country');
-    var countryVal = country ? country.value : '';
-    var cards = document.querySelectorAll('.card-provider');
-    var visible = 0;
+  var CATEGORY_LABELS = {
+    cuidador: 'Cuidador', residencia: 'Residencia', sanitario: 'Sanitario',
+    hogar: 'Adaptacion hogar', transporte: 'Transporte', legal: 'Legal',
+    farmacia: 'Farmacia', voluntariado: 'Voluntariado'
+  };
 
-    cards.forEach(function(card) {
-      var cardCat = (card.dataset.category || '').toLowerCase();
-      var cardZone = (card.dataset.zone || '').toLowerCase();
-      var cardCountry = (card.dataset.country || '').toLowerCase();
-
-      var matchCat = !cat || cat === 'todos' || cardCat === cat;
-      var matchZone = !zone || cardZone.includes(zone) || (card.textContent || '').toLowerCase().includes(zone);
-      var matchCountry = !countryVal || countryVal === 'todos' || cardCountry === countryVal.toLowerCase();
-
-      var show = matchCat && matchZone && matchCountry;
-      card.style.display = show ? '' : 'none';
-      if (show) visible++;
-    });
-
-    var empty = document.getElementById('directory-empty');
-    var loading = document.getElementById('directory-loading');
-    if (empty) empty.style.display = visible === 0 ? '' : 'none';
-    if (loading) loading.style.display = 'none';
+  function avatarColor(cat) {
+    var colors = { cuidador:'#4a7c9e', residencia:'#7c6e9e', sanitario:'#4a9e7c',
+      hogar:'#9e7c4a', transporte:'#9e4a4a', legal:'#6e9e4a', farmacia:'#4a6e9e', voluntariado:'#9e4a7c' };
+    return colors[cat] || '#003399';
   }
 
-  if (searchBtn) searchBtn.addEventListener('click', filterDirectory);
-  if (catSelect) catSelect.addEventListener('change', filterDirectory);
-  if (document.getElementById('filter-country')) {
-    document.getElementById('filter-country').addEventListener('change', filterDirectory);
+  function renderCard(p) {
+    var initial = (p.provider_name || '?')[0].toUpperCase();
+    var cat = CATEGORY_LABELS[p.category] || p.category;
+    var color = avatarColor(p.category);
+    return '<div class="card-provider" data-id="' + p.id + '" data-category="' + (p.category||'') + '" data-zone="' + (p.zone||'').toLowerCase() + '" data-country="' + (p.country||'').toLowerCase() + '" style="cursor:pointer">' +
+      '<div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)">' +
+      '<div style="width:48px;height:48px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:var(--font-size-xl);color:#fff;flex-shrink:0">' + initial + '</div>' +
+      '<div><div style="font-weight:700;color:var(--color-text)">' + escHtml(p.provider_name) + '</div>' +
+      '<span class="badge badge-sage" style="font-size:var(--font-size-xs)">' + escHtml(cat) + '</span></div></div>' +
+      '<p style="font-size:var(--font-size-sm);color:var(--color-text-muted);margin-bottom:var(--space-3)">' + escHtml((p.description||'').slice(0,120)) + (p.description && p.description.length>120?'...':'') + '</p>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;font-size:var(--font-size-xs);color:var(--color-text-muted)">' +
+      '<span>' + escHtml(p.zone) + ', ' + escHtml(p.country) + '</span>' +
+      (p.price_info ? '<span style="color:var(--color-eu-gold)">' + escHtml(p.price_info) + '</span>' : '') + '</div></div>';
   }
-  if (zoneInput) zoneInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') filterDirectory();
-  });
 
-  // Aplica filtros al cargar si vienen por URL
-  if (catParam || qParam) filterDirectory();
+  function escHtml(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
 
-  // Cada card lleva a su ficha
-  document.querySelectorAll('.card-provider').forEach(function(card) {
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', function() {
-      var id = card.dataset.id || '';
-      if (id) window.location.href = '/listing-provider.html?id=' + id;
-    });
-  });
+  function showLoading() { if(loading) loading.style.display=''; if(grid) grid.innerHTML=''; if(empty) empty.style.display='none'; }
+  function showEmpty() { if(loading) loading.style.display='none'; if(empty) empty.style.display=''; }
+  function hideLoading() { if(loading) loading.style.display='none'; }
 
-  // Nav toggle mobile
+  async function loadProviders() {
+    showLoading();
+    var cat = catSelect ? catSelect.value : catParam;
+    var q = zoneInput ? zoneInput.value.trim() : qParam;
+    var country = countrySelect ? countrySelect.value : countryParam;
+
+    var url = '/api/providers/list?limit=20';
+    if (cat && cat !== 'todos') url += '&cat=' + encodeURIComponent(cat);
+    if (q) url += '&q=' + encodeURIComponent(q);
+    if (country && country !== 'todos') url += '&country=' + encodeURIComponent(country);
+
+    try {
+      var res = await fetch(url);
+      var data = await res.json();
+      hideLoading();
+      if (!data.ok || !data.providers || data.providers.length === 0) {
+        showEmpty();
+        return;
+      }
+      grid.innerHTML = data.providers.map(renderCard).join('');
+      grid.querySelectorAll('.card-provider').forEach(function(card) {
+        card.addEventListener('click', function() {
+          window.location.href = '/listing-provider.html?id=' + card.dataset.id;
+        });
+      });
+    } catch(e) {
+      hideLoading();
+      showEmpty();
+    }
+  }
+
+  if (searchBtn) searchBtn.addEventListener('click', loadProviders);
+  if (catSelect) catSelect.addEventListener('change', loadProviders);
+  if (countrySelect) countrySelect.addEventListener('change', loadProviders);
+  if (zoneInput) zoneInput.addEventListener('keydown', function(e) { if(e.key==='Enter') loadProviders(); });
+
+  // Nav toggle
   var toggle = document.getElementById('nav-toggle');
   var mobileMenu = document.getElementById('mobile-menu');
   if (toggle && mobileMenu) {
@@ -348,20 +376,18 @@
     });
   }
 
-  // Lang selector
+  // Lang
   var currentLang = new URLSearchParams(window.location.search).get('lang') || 'es';
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
-    if (btn.dataset.lang === currentLang) {
-      btn.style.fontWeight = '700';
-      btn.style.color = 'var(--color-eu-gold)';
-      btn.setAttribute('aria-pressed', 'true');
-    }
+    if (btn.dataset.lang === currentLang) { btn.style.fontWeight='700'; btn.style.color='var(--color-eu-gold)'; }
     btn.addEventListener('click', function() {
       var url = new URL(window.location.href);
       url.searchParams.set('lang', btn.dataset.lang);
       window.location.href = url.toString();
     });
   });
+
+  loadProviders();
 })();
 </script>
 

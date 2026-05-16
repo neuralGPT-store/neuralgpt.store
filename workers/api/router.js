@@ -35,7 +35,7 @@ function requireApiKey(request, env) {
   return { authenticated: true };
 }
 
-function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers, authHandlers) {
+function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers, authHandlers, providersHandlers) {
   return async function route(request, env) {
     const url = new URL(request.url);
     const method = request.method;
@@ -133,6 +133,22 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsors
     if (path === '/api/stripe/webhook') {
       if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
       return stripeHandlers.webhook(request);
+    }
+
+    // Providers routes (public)
+    if (path === '/api/providers/upsert') {
+      if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
+      return providersHandlers.upsert(request);
+    }
+
+    if (path === '/api/providers/list') {
+      if (method !== 'GET') return sendError(405, 'method_not_allowed', null, request);
+      return providersHandlers.list(request);
+    }
+
+    if (path === '/api/providers/get') {
+      if (method !== 'GET') return sendError(405, 'method_not_allowed', null, request);
+      return providersHandlers.getProvider(request);
     }
 
     // Sponsor click tracking (public)
