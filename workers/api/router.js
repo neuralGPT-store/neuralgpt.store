@@ -35,7 +35,7 @@ function requireApiKey(request, env) {
   return { authenticated: true };
 }
 
-function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers, authHandlers, providersHandlers) {
+function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsorsHandlers, authHandlers, providersHandlers, chanyHandlers) {
   return async function route(request, env) {
     const url = new URL(request.url);
     const method = request.method;
@@ -136,6 +136,11 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsors
     }
 
     // Providers routes (public)
+    if (path === '/api/chany') {
+      if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
+      return chanyHandlers.chat(request);
+    }
+
     if (path === '/api/providers/upsert') {
       if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
       return providersHandlers.upsert(request);
