@@ -99,25 +99,32 @@ function createProvidersHandlers(env) {
     const country = url.searchParams.get('country') || '';
     const q = (url.searchParams.get('q') || '').toLowerCase();
     const limit = Math.min(parseInt(url.searchParams.get('limit') || '20'), 50);
+    const statusFilter = url.searchParams.get('status') || 'active';
+
+    if (statusFilter !== 'active') {
+      const apiKey = request.headers.get('x-api-key') || '';
+      if (apiKey !== env.ADMIN_API_KEY) return sendError(403, 'forbidden', null, request);
+    }
 
     let ids = [];
-    if (cat) {
+    if (cat && statusFilter === 'active') {
       ids = JSON.parse(await env.LOVENTY_KV.get('providers:cat:' + cat) || '[]');
     } else {
       const allKey = await env.LOVENTY_KV.list({ prefix: 'provider:' });
       ids = allKey.keys.map(k => k.name.replace('provider:', ''));
     }
 
+    const isAdmin = statusFilter !== 'active';
     const providers = [];
     for (const id of ids) {
       if (providers.length >= limit) break;
       const raw = await env.LOVENTY_KV.get('provider:' + id);
       if (!raw) continue;
       const p = JSON.parse(raw);
-      if (p.status !== 'active') continue;
+      if (p.status !== statusFilter) continue;
       if (country && p.country !== country.toUpperCase()) continue;
       if (q && !p.provider_name.toLowerCase().includes(q) && !p.description.toLowerCase().includes(q) && !p.zone.toLowerCase().includes(q)) continue;
-      providers.push({
+      const entry = {
         id: p.id,
         provider_name: p.provider_name,
         category: p.category,
@@ -127,7 +134,9 @@ function createProvidersHandlers(env) {
         price_info: p.price_info,
         photos: p.photos.slice(0, 1),
         created_at: p.created_at
-      });
+      };
+      if (isAdmin) entry.contact_email = p.contact_email;
+      providers.push(entry);
     }
 
     return sendJson(200, { ok: true, providers, total: providers.length }, request);

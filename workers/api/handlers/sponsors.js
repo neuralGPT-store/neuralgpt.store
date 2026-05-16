@@ -34,6 +34,26 @@ function createSponsorsHandlers(env) {
     const sponsor = String(url.searchParams.get('sponsor') || '').trim().slice(0, 64);
     if (!sponsor) return sendError(400, 'sponsor_required', null, request);
 
+    const apiKey = request.headers.get('x-api-key') || '';
+    if (apiKey !== env.ADMIN_API_KEY) return sendError(403, 'forbidden', null, request);
+
+    if (sponsor === 'ALL') {
+      const allList = await env.LOVENTY_KV.list({ prefix: 'sponsor_click:' });
+      const totals = {};
+      const lastDate = {};
+      for (const key of allList.keys) {
+        const after = key.name.slice('sponsor_click:'.length);
+        const lastColon = after.lastIndexOf(':');
+        const name = after.slice(0, lastColon);
+        const date = after.slice(lastColon + 1);
+        const val = await env.LOVENTY_KV.get(key.name);
+        totals[name] = (totals[name] || 0) + parseInt(val || '0');
+        if (!lastDate[name] || date > lastDate[name]) lastDate[name] = date;
+      }
+      const sponsors = Object.keys(totals).map(s => ({ sponsor: s, total: totals[s], last_date: lastDate[s] }));
+      return sendJson(200, { ok: true, sponsors }, request);
+    }
+
     const prefix = 'sponsor_click:' + sponsor + ':';
     const list = await env.LOVENTY_KV.list({ prefix });
 

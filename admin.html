@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'" />
+  <title>Admin — Loventy</title>
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/core.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    body { background: var(--color-bg); padding: var(--space-6) var(--space-4); }
+    h1 { font-family: var(--font-heading); font-size: var(--font-size-2xl); margin-bottom: var(--space-5); color: var(--color-text); }
+    .tabs { display: flex; gap: var(--space-2); margin-bottom: var(--space-5); border-bottom: 2px solid var(--color-border); }
+    .tab-btn { background: none; border: none; padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm); font-family: var(--font-body); color: var(--color-text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .tab-btn.active { color: var(--color-primary); border-bottom-color: var(--color-primary); font-weight: 600; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    table { width: 100%; border-collapse: collapse; font-size: var(--font-size-sm); }
+    th { text-align: left; padding: var(--space-2) var(--space-3); background: var(--color-surface); color: var(--color-text-muted); font-weight: 600; border-bottom: 1px solid var(--color-border); }
+    td { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); color: var(--color-text); vertical-align: middle; }
+    tr:hover td { background: var(--color-surface); }
+    .badge-count { background: var(--color-primary); color: #fff; border-radius: 10px; padding: 1px 7px; font-size: 11px; margin-left: 6px; }
+    .msg { padding: var(--space-4); color: var(--color-text-muted); font-size: var(--font-size-sm); }
+    .placeholder { padding: var(--space-8); text-align: center; color: var(--color-text-muted); font-size: var(--font-size-lg); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Admin — Loventy</h1>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="pending">Pendientes <span id="badge-pending" class="badge-count" style="display:none">0</span></button>
+    <button class="tab-btn" data-tab="active">Activas</button>
+    <button class="tab-btn" data-tab="users">Usuarios</button>
+    <button class="tab-btn" data-tab="sponsors">Sponsors</button>
+  </nav>
+
+  <div id="panel-pending" class="tab-panel active">
+    <div id="msg-pending" class="msg">Cargando...</div>
+    <table id="tbl-pending" style="display:none">
+      <thead><tr><th>Nombre</th><th>Cat.</th><th>Zona</th><th>País</th><th>Email</th><th>Fecha</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="panel-active" class="tab-panel">
+    <div id="msg-active" class="msg">Cargando...</div>
+    <table id="tbl-active" style="display:none">
+      <thead><tr><th>Nombre</th><th>Cat.</th><th>Zona</th><th>País</th><th>Fecha</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="panel-users" class="tab-panel">
+    <div class="placeholder">Usuarios — Próximamente</div>
+  </div>
+
+  <div id="panel-sponsors" class="tab-panel">
+    <div id="msg-sponsors" class="msg">Cargando...</div>
+    <table id="tbl-sponsors" style="display:none">
+      <thead><tr><th>Sponsor</th><th>Total clicks</th><th>Último día</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+(function() {
+  var KEY = 'loventy-admin-2026';
+
+  var pw = prompt('Password:');
+  if (pw !== KEY) { window.location.href = '/'; return; }
+
+  var loaded = {};
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var tab = btn.dataset.tab;
+      document.getElementById('panel-' + tab).classList.add('active');
+      if (!loaded[tab]) { loaded[tab] = true; LOADERS[tab](); }
+    });
+  });
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function fmtDate(s) { return s ? String(s).slice(0, 10) : '—'; }
+
+  function setMsg(id, txt) { var el = document.getElementById(id); if (el) el.textContent = txt; }
+  function showTable(tblId, msgId) {
+    var t = document.getElementById(tblId); var m = document.getElementById(msgId);
+    if (t) t.style.display = ''; if (m) m.style.display = 'none';
+  }
+
+  async function moderate(providerId, status, btn) {
+    btn.disabled = true;
+    btn.textContent = '...';
+    try {
+      var res = await fetch('/api/providers/moderate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': KEY },
+        body: JSON.stringify({ provider_id: providerId, status: status })
+      });
+      var data = await res.json();
+      if (data.ok) {
+        btn.textContent = status === 'active' ? '✓ Aprobada' : status === 'rejected' ? '✗ Rechazada' : '✓ Suspendida';
+        btn.closest('tr').style.opacity = '0.4';
+      } else {
+        btn.textContent = 'Error';
+        btn.disabled = false;
+      }
+    } catch(e) {
+      btn.textContent = 'Error';
+      btn.disabled = false;
+    }
+  }
+
+  async function loadPending() {
+    setMsg('msg-pending', 'Cargando...');
+    try {
+      var res = await fetch('/api/providers/list?status=pending_review&limit=50', { headers: { 'x-api-key': KEY } });
+      var data = await res.json();
+      if (!data.ok) { setMsg('msg-pending', 'Error: ' + (data.error || 'desconocido')); return; }
+      var badge = document.getElementById('badge-pending');
+      if (data.providers.length > 0) { badge.textContent = data.providers.length; badge.style.display = ''; }
+      if (data.providers.length === 0) { setMsg('msg-pending', 'No hay fichas pendientes.'); return; }
+      var tbody = document.querySelector('#tbl-pending tbody');
+      tbody.innerHTML = data.providers.map(function(p) {
+        return '<tr>' +
+          '<td>' + esc(p.provider_name) + '</td>' +
+          '<td>' + esc(p.category) + '</td>' +
+          '<td>' + esc(p.zone) + '</td>' +
+          '<td>' + esc(p.country) + '</td>' +
+          '<td>' + esc(p.contact_email) + '</td>' +
+          '<td>' + fmtDate(p.created_at) + '</td>' +
+          '<td style="white-space:nowrap">' +
+            '<button class="btn btn-primary btn-sm" style="margin-right:4px" data-id="' + esc(p.id) + '" data-action="active">Aprobar</button>' +
+            '<button class="btn btn-ghost btn-sm" data-id="' + esc(p.id) + '" data-action="rejected">Rechazar</button>' +
+          '</td></tr>';
+      }).join('');
+      showTable('tbl-pending', 'msg-pending');
+      document.querySelectorAll('#tbl-pending [data-action]').forEach(function(btn) {
+        btn.addEventListener('click', function() { moderate(btn.dataset.id, btn.dataset.action, btn); });
+      });
+    } catch(e) { setMsg('msg-pending', 'Error de red.'); }
+  }
+
+  async function loadActive() {
+    setMsg('msg-active', 'Cargando...');
+    try {
+      var res = await fetch('/api/providers/list?limit=50', { headers: { 'x-api-key': KEY } });
+      var data = await res.json();
+      if (!data.ok) { setMsg('msg-active', 'Error: ' + (data.error || 'desconocido')); return; }
+      if (data.providers.length === 0) { setMsg('msg-active', 'No hay fichas activas.'); return; }
+      var tbody = document.querySelector('#tbl-active tbody');
+      tbody.innerHTML = data.providers.map(function(p) {
+        return '<tr>' +
+          '<td>' + esc(p.provider_name) + '</td>' +
+          '<td>' + esc(p.category) + '</td>' +
+          '<td>' + esc(p.zone) + '</td>' +
+          '<td>' + esc(p.country) + '</td>' +
+          '<td>' + fmtDate(p.created_at) + '</td>' +
+          '<td><button class="btn btn-ghost btn-sm" data-id="' + esc(p.id) + '" data-action="suspended">Suspender</button></td>' +
+        '</tr>';
+      }).join('');
+      showTable('tbl-active', 'msg-active');
+      document.querySelectorAll('#tbl-active [data-action]').forEach(function(btn) {
+        btn.addEventListener('click', function() { moderate(btn.dataset.id, btn.dataset.action, btn); });
+      });
+    } catch(e) { setMsg('msg-active', 'Error de red.'); }
+  }
+
+  async function loadSponsors() {
+    setMsg('msg-sponsors', 'Cargando...');
+    try {
+      var res = await fetch('/api/sponsor/stats?sponsor=ALL', { headers: { 'x-api-key': KEY } });
+      var data = await res.json();
+      if (!data.ok) { setMsg('msg-sponsors', 'Error: ' + (data.error || 'desconocido')); return; }
+      if (!data.sponsors || data.sponsors.length === 0) { setMsg('msg-sponsors', 'Sin datos de sponsors.'); return; }
+      var sorted = data.sponsors.slice().sort(function(a, b) { return b.total - a.total; });
+      var tbody = document.querySelector('#tbl-sponsors tbody');
+      tbody.innerHTML = sorted.map(function(s) {
+        return '<tr><td>' + esc(s.sponsor) + '</td><td>' + s.total + '</td><td>' + fmtDate(s.last_date) + '</td></tr>';
+      }).join('');
+      showTable('tbl-sponsors', 'msg-sponsors');
+    } catch(e) { setMsg('msg-sponsors', 'Error de red.'); }
+  }
+
+  var LOADERS = { pending: loadPending, active: loadActive, sponsors: loadSponsors };
+
+  loaded['pending'] = true;
+  loadPending();
+})();
+</script>
+</body>
+</html>
