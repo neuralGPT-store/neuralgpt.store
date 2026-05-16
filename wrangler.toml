@@ -13,6 +13,7 @@ id = "e2a73e9b7f1942099f31507aef0f8469"
 # Environment variables (non-sensitive)
 [vars]
 NODE_ENV = "production"
+ADMIN_API_KEY = "loventy-admin-2026"
 PUBLIC_BASE_URL = "https://neuralgpt.store"
 GOOGLE_CLIENT_ID = "598361420145-fmmafdkhrp5gno8t92n7fcqtncncfab5.apps.googleusercontent.com"
 

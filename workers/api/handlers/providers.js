@@ -151,7 +151,34 @@ function createProvidersHandlers(env) {
     return sendJson(200, { ok: true, provider: safe }, request);
   }
 
-  return { upsert, list, getProvider };
+  async function moderate(request) {
+    const authHeader = request.headers.get('x-api-key') || '';
+    if (authHeader !== env.ADMIN_API_KEY) {
+      return sendError(403, 'forbidden', null, request);
+    }
+    let body;
+    try {
+      const text = await request.text();
+      body = JSON.parse(text);
+    } catch { return sendError(400, 'invalid_body', null, request); }
+
+    const id = String(body.provider_id || '').trim();
+    const status = String(body.status || '').trim();
+    if (!id) return sendError(400, 'provider_id_required', null, request);
+    if (!['active','rejected','suspended'].includes(status)) return sendError(400, 'invalid_status', null, request);
+
+    const raw = await env.LOVENTY_KV.get('provider:' + id);
+    if (!raw) return sendError(404, 'provider_not_found', null, request);
+
+    const provider = JSON.parse(raw);
+    provider.status = status;
+    provider.moderated_at = new Date().toISOString();
+    await env.LOVENTY_KV.put('provider:' + id, JSON.stringify(provider), { expirationTtl: 365 * 24 * 3600 });
+
+    return sendJson(200, { ok: true, provider_id: id, status }, request);
+  }
+
+  return { upsert, list, getProvider, moderate };
 }
 
 export { createProvidersHandlers };

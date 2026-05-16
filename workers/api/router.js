@@ -151,6 +151,11 @@ function createRouter(listingsHandlers, stripeHandlers, alertsHandlers, sponsors
       return providersHandlers.getProvider(request);
     }
 
+    if (path === '/api/providers/moderate') {
+      if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
+      return providersHandlers.moderate(request);
+    }
+
     // Sponsor click tracking (public)
     if (path === '/api/sponsor/click') {
       if (method !== 'POST') return sendError(405, 'method_not_allowed', null, request);
