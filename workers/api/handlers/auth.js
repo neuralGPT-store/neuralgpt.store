@@ -3,7 +3,7 @@ import { sendJson, sendError, readJsonBody } from '../lib/http.js';
 const MAX_JSON_BYTES = 8192;
 const SESSION_TTL = 7 * 24 * 3600; // 7 días
 
-function createAuthHandlers(env) {
+function createAuthHandlers(env, emailHandlers) {
 
   async function hashPassword(password, salt) {
     const enc = new TextEncoder();
@@ -62,6 +62,10 @@ function createAuthHandlers(env) {
     const token = await generateToken();
     const session = { userId, email, name, account_type, created_at: new Date().toISOString() };
     await env.LOVENTY_KV.put('session:' + token, JSON.stringify(session), { expirationTtl: SESSION_TTL });
+
+    if (emailHandlers) {
+      emailHandlers.sendEmail({ to: email, subject: 'Bienvenido a neuralgpt.store', html: emailHandlers.welcomeEmail(name) }).catch(() => {});
+    }
 
     return sendJson(201, { ok: true, token, user: { id: userId, email, name, account_type } }, request);
   }

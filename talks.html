@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="neural-api-base" content="https://neuralgpt.store/api" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; frame-src none" />
+  <title>Loventy Talks — neuralgpt.store</title>
+  <meta name="description" content="Loventy Talks conecta voluntarios con personas mayores a traves de llamadas regulares. Una llamada. Dos vidas. Una historia." />
+  <link rel="canonical" href="https://neuralgpt.store/talks.html" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/design-tokens.css">
+  <link rel="stylesheet" href="/css/core.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<header class="site-header">
+  <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0">
+    <a href="/" style="font-family:var(--font-heading);font-size:var(--font-size-xl);color:var(--color-sage-dark)">Loventy</a>
+    <span style="font-size:var(--font-size-xs);color:var(--color-text-muted)">El cuidado que todo mayor merece</span>
+  </div>
+  <nav class="main-nav" id="main-nav" aria-label="Principal">
+    <ul class="nav-links">
+      <li><a href="/directorio.html">Directorio</a></li>
+      <li><a href="/voluntariado.html">Voluntariado</a></li>
+      <li><a href="/talks.html" aria-current="page">Loventy Talks</a></li>
+      <li><a href="/sponsors.html">Sponsors</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+    </ul>
+    <div style="display:flex;gap:var(--space-1);margin-left:var(--space-4)">
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="es">ES</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="en">EN</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="fr">FR</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="de">DE</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="it">IT</button>
+      <button class="lang-btn btn btn-ghost btn-sm" data-lang="pt">PT</button>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu movil">
+  <ul style="display:flex;flex-direction:column;gap:var(--space-4)">
+    <li><a href="/directorio.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Directorio</a></li>
+    <li><a href="/voluntariado.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Voluntariado</a></li>
+    <li><a href="/talks.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Loventy Talks</a></li>
+    <li><a href="/sponsors.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Sponsors</a></li>
+    <li><a href="/pricing.html" style="font-size:var(--font-size-lg);color:var(--color-text)">Pricing</a></li>
+  </ul>
+  <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6)">
+    <a href="/register.html" class="btn btn-ghost">Entrar</a>
+    <a href="/edit.html" class="btn btn-primary">Publicar ficha</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- Hero oscuro -->
+  <section style="background:var(--color-bg-secondary);padding:var(--space-20) var(--space-4);text-align:center">
+    <div style="margin-bottom:var(--space-4)">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="#c9a84c" aria-hidden="true">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+    </div>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem);line-height:1.15;margin-bottom:var(--space-4)">Una llamada. Dos vidas. Una historia.</h1>
+    <p style="font-size:var(--font-size-lg);color:var(--color-text-muted);max-width:560px;margin:0 auto">Loventy Talks conecta voluntarios con personas mayores para conversaciones regulares. Sin aplicaciones. Sin tecnicismos. Solo personas.</p>
+  </section>
+
+  <!-- Como funciona -->
+  <section class="section">
+    <div class="container">
+      <h2 style="text-align:center;margin-bottom:var(--space-10)">Como funciona</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-6)">
+        <div style="text-align:center;padding:var(--space-5)">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--color-primary);color:#fff;font-family:var(--font-heading);font-size:var(--font-size-xl);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4)">1</div>
+          <h3 style="font-size:var(--font-size-base);margin-bottom:var(--space-2)">Voluntario propone horario</h3>
+          <p style="color:var(--color-text-muted);font-size:var(--font-size-sm)">Elige los dias y horas en que estas disponible cada semana.</p>
+        </div>
+        <div style="text-align:center;padding:var(--space-5)">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--color-primary);color:#fff;font-family:var(--font-heading);font-size:var(--font-size-xl);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4)">2</div>
+          <h3 style="font-size:var(--font-size-base);margin-bottom:var(--space-2)">Mayor acepta</h3>
+          <p style="color:var(--color-text-muted);font-size:var(--font-size-sm)">La persona mayor o su familia confirma la llamada desde la plataforma.</p>
+        </div>
+        <div style="text-align:center;padding:var(--space-5)">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--color-primary);color:#fff;font-family:var(--font-heading);font-size:var(--font-size-xl);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4)">3</div>
+          <h3 style="font-size:var(--font-size-base);margin-bottom:var(--space-2)">Recordatorio 15 min antes</h3>
+          <p style="color:var(--color-text-muted);font-size:var(--font-size-sm)">Ambas partes reciben una notificacion para prepararse con tiempo.</p>
+        </div>
+        <div style="text-align:center;padding:var(--space-5)">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--color-primary);color:#fff;font-family:var(--font-heading);font-size:var(--font-size-xl);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4)">4</div>
+          <h3 style="font-size:var(--font-size-base);margin-bottom:var(--space-2)">Llamada via web o app</h3>
+          <p style="color:var(--color-text-muted);font-size:var(--font-size-sm)">La llamada se realiza directamente desde el navegador. Sin instalaciones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Para el mayor / Para el voluntario -->
+  <section class="section" style="background:var(--color-bg-secondary)">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--space-8)">
+        <div style="padding:var(--space-6);background:var(--color-bg);border-radius:var(--radius-md)">
+          <h2 style="margin-bottom:var(--space-4)">Para el mayor</h2>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3)">
+            <li style="display:flex;gap:var(--space-3);align-items:flex-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:var(--color-text-muted)">Compania real, sin salir de casa</span>
+            </li>
+            <li style="display:flex;gap:var(--space-3);align-items:flex-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:var(--color-text-muted)">Sin descargas ni instalaciones</span>
+            </li>
+            <li style="display:flex;gap:var(--space-3);align-items:flex-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:var(--color-text-muted)">Sin tecnicismos — solo una llamada de telefono</span>
+            </li>
+            <li style="display:flex;gap:var(--space-3);align-items:flex-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:var(--color-text-muted)">Voluntario verificado y de confianza</span>
+            </li>
+          </ul>
+        </div>
+        <div style="padding:var(--space-6);background:var(--color-bg);border-radius:var(--radius-md)">
+          <h2 style="margin-bottom:var(--space-4)">Para el voluntario</h2>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3)">
+            <li style="display:flex;gap:var(--space-3);align-items:flex-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:var(--color-text-muted)">Aprende de quien vivio mas que tu</span>
+            </li>
+            <li style="display:flex;gap:var(--space-3);align-items:flex-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:var(--color-text-muted)">Practica idiomas con hablantes nativos</span>
+            </li>
+            <li style="display:flex;gap:var(--space-3);align-items:flex-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:var(--color-text-muted)">Historias que no estan en ningun libro</span>
+            </li>
+            <li style="display:flex;gap:var(--space-3);align-items:flex-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:var(--color-text-muted)">Solo treinta minutos a la semana</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seguridad -->
+  <section class="section">
+    <div class="container" style="max-width:720px;margin:0 auto">
+      <h2 style="margin-bottom:var(--space-6)">Seguridad primero</h2>
+      <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+        <div style="display:flex;gap:var(--space-4);align-items:flex-start;padding:var(--space-4);background:var(--color-bg-secondary);border-radius:var(--radius-md)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div>
+            <p style="font-weight:600;margin:0 0 4px">Voluntario registrado con nombre real</p>
+            <p style="color:var(--color-text-muted);font-size:var(--font-size-sm);margin:0">Todos los voluntarios pasan por un proceso de verificacion de identidad antes de participar.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--space-4);align-items:flex-start;padding:var(--space-4);background:var(--color-bg-secondary);border-radius:var(--radius-md)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div>
+            <p style="font-weight:600;margin:0 0 4px">Boton de reporte inmediato</p>
+            <p style="color:var(--color-text-muted);font-size:var(--font-size-sm);margin:0">Cualquier comportamiento inapropiado puede reportarse con un solo clic durante o despues de la llamada.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--space-4);align-items:flex-start;padding:var(--space-4);background:var(--color-bg-secondary);border-radius:var(--radius-md)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <div>
+            <p style="font-weight:600;margin:0 0 4px">Primera llamada con familiar opcional</p>
+            <p style="color:var(--color-text-muted);font-size:var(--font-size-sm);margin:0">Las familias pueden estar presentes en la primera llamada para mayor tranquilidad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA doble -->
+  <section class="section" style="background:var(--color-primary);text-align:center">
+    <div class="container" style="max-width:600px">
+      <h2 style="color:#fff;margin-bottom:var(--space-4)">Un pequeno gesto. Una gran diferencia.</h2>
+      <p style="color:rgba(255,255,255,0.8);font-size:var(--font-size-lg);margin-bottom:var(--space-8)">Unete a Loventy Talks hoy.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:center">
+        <a href="/voluntariado.html" class="btn btn-lg" style="background:#c9a84c;color:#0a0e1a;border:none">Soy voluntario</a>
+        <a href="/contact.html?tipo=companía" class="btn btn-lg" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4)">Busco compania para un mayor</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aviso privacidad -->
+  <section style="padding:var(--space-8) var(--space-4);text-align:center">
+    <div class="container" style="max-width:600px">
+      <p style="font-size:var(--font-size-sm);color:var(--color-text-muted);line-height:1.7">Las llamadas de Loventy Talks no son grabadas ni almacenadas. Solo se registra la duracion de la sesion con fines estadisticos. Consulta nuestra <a href="/privacy.html">politica de privacidad</a>.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="/" class="footer-logo">Loventy</a>
+        <p class="footer-brand-desc">La plataforma europea de cuidado para personas mayores. Conectamos familias con los mejores profesionales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Directorio</h4>
+        <ul>
+          <li><a href="/directorio.html">Todos los servicios</a></li>
+          <li><a href="/voluntariado.html">Voluntariado</a></li>
+          <li><a href="/talks.html">Loventy Talks</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/legal.html">Aviso legal</a></li>
+          <li><a href="/privacy.html">Privacidad</a></li>
+          <li><a href="/terms.html">Terminos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:loventy@neuralgpt.store">loventy@neuralgpt.store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Loventy. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var toggle = document.getElementById('nav-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function() {
+      var open = mobileMenu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+  var currentLang = new URLSearchParams(window.location.search).get('lang') || 'es';
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    if (btn.dataset.lang === currentLang) { btn.style.fontWeight = '700'; btn.style.color = 'var(--color-eu-gold)'; }
+    btn.addEventListener('click', function() {
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', btn.dataset.lang);
+      window.location.href = url.toString();
+    });
+  });
+})();
+</script>
+
+<script src="/js/chany.js"></script>
+</body>
+</html>

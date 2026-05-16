@@ -11,6 +11,7 @@ import { createSponsorsHandlers } from './handlers/sponsors.js';
 import { createAuthHandlers } from './handlers/auth.js';
 import { createProvidersHandlers } from './handlers/providers.js';
 import { createChanyHandlers } from './handlers/chany.js';
+import { createEmailHandlers } from './handlers/email.js';
 import { getEnv } from './config/env.js';
 import { applyCors, setSecurityHeaders } from './lib/http.js';
 
@@ -33,8 +34,9 @@ export default {
       const stripeHandlers = createStripeHandlers(env);
       const alertsHandlers = createAlertsHandlers(env);
       const sponsorsHandlers = createSponsorsHandlers(env);
-      const authHandlers = createAuthHandlers(env);
-      const providersHandlers = createProvidersHandlers(env);
+      const emailHandlers = createEmailHandlers(env);
+      const authHandlers = createAuthHandlers(env, emailHandlers);
+      const providersHandlers = createProvidersHandlers(env, emailHandlers);
       const chanyHandlers = createChanyHandlers(env);
 
       // Create router

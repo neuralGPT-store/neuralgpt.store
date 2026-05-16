@@ -2,7 +2,7 @@ import { sendJson, sendError, readMultipartBody } from '../lib/http.js';
 
 const MAX_MULTIPART_BYTES = 8 * 1024 * 1024;
 
-function createProvidersHandlers(env) {
+function createProvidersHandlers(env, emailHandlers) {
 
   async function upsert(request) {
     let parsed;
@@ -196,6 +196,15 @@ function createProvidersHandlers(env) {
     provider.status = status;
     provider.moderated_at = new Date().toISOString();
     await env.LOVENTY_KV.put('provider:' + id, JSON.stringify(provider), { expirationTtl: 365 * 24 * 3600 });
+
+    if (emailHandlers && provider.contact_email) {
+      if (status === 'active') {
+        emailHandlers.sendEmail({ to: provider.contact_email, subject: 'Tu ficha ha sido aprobada — neuralgpt.store', html: emailHandlers.providerApprovedEmail(provider.provider_name) }).catch(() => {});
+      } else if (status === 'rejected') {
+        const reason = provider.auto_moderation?.reason || 'no cumple los criterios de la plataforma';
+        emailHandlers.sendEmail({ to: provider.contact_email, subject: 'Tu ficha necesita ajustes — neuralgpt.store', html: emailHandlers.providerRejectedEmail(provider.provider_name, reason) }).catch(() => {});
+      }
+    }
 
     return sendJson(200, { ok: true, provider_id: id, status }, request);
   }
